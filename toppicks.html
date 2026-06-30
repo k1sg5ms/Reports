@@ -1,0 +1,1489 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3Q26 미국 주식 Top Picks</title>
+<style>
+  :root{
+    --brand:#0a2a6b;
+    --brand-deep:#06173d;
+    --accent:#2f7bff;
+    --accent2:#5b8fd6;
+    --paper:#f4f6f9;
+    --card:#ffffff;
+    --ink:#1b1e24;
+    --ink-soft:#525866;
+    --line:#dde3ec;
+    --buy:#1f7a4d;
+    --bear:#c0392b;
+    --bull:#1f6fb2;
+    --warn:#8a4b15;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Helvetica Neue','Pretendard','Noto Sans KR',Arial,sans-serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  .serif{font-family:'Georgia','Noto Serif KR',serif;}
+
+  .topbar{
+    background:var(--brand-deep);color:#fff;padding:14px 6vw;
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;
+    border-bottom:3px solid var(--accent);position:sticky;top:0;z-index:50;
+  }
+  .topbar .logo{font-weight:700;font-size:18px;letter-spacing:0.5px;}
+  .topbar .logo span{color:var(--accent);}
+  .topbar nav{display:flex;gap:8px;flex-wrap:wrap;}
+  .topbar nav a{
+    color:#cfd8e6;text-decoration:none;font-size:12.5px;
+    padding:6px 12px;border:1px solid rgba(255,255,255,0.2);border-radius:20px;transition:all .15s;
+  }
+  .topbar nav a:hover{background:var(--accent);color:#fff;border-color:var(--accent);}
+
+  .wrap{max-width:980px;margin:0 auto;padding:40px 6vw 90px;}
+
+  .intro{border-left:4px solid var(--accent);padding:8px 0 8px 20px;margin-bottom:40px;}
+  .intro .eyebrow{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent2);font-weight:700;}
+  .intro h1{font-size:27px;margin:8px 0 6px;color:var(--brand);}
+  .intro p{margin:6px 0 0;color:var(--ink-soft);font-size:14.5px;}
+
+  /* perf snapshot */
+  .perf{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:24px 26px;margin-bottom:48px;}
+  .perf h3{margin:0 0 16px;font-size:16px;color:var(--brand);}
+  .perf-grid{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:18px;}
+  .perf-big{flex:1;min-width:200px;border:1px solid var(--line);border-radius:8px;padding:16px 18px;background:#fafbfd;}
+  .perf-big .num{font-size:30px;font-weight:700;color:var(--brand);line-height:1.1;}
+  .perf-big .lab{font-size:12.5px;color:var(--ink-soft);margin-top:4px;}
+
+  /* section dividers */
+  .sec-div{margin:54px 0 26px;scroll-margin-top:74px;}
+  .sec-div .kicker{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent2);font-weight:700;}
+  .sec-div h2{margin:4px 0 0;font-size:24px;color:var(--brand);border-bottom:2px solid var(--accent);padding-bottom:10px;}
+
+  /* company card */
+  .co{margin-bottom:26px;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--card);}
+  .co-head{background:linear-gradient(135deg,var(--brand) 0%, var(--brand-deep) 100%);color:#fff;padding:18px 22px;}
+  .co-head .tag{font-size:10.5px;letter-spacing:0.8px;text-transform:uppercase;color:#9fb4d4;font-weight:700;}
+  .co-head h3{margin:5px 0 8px;font-size:19px;line-height:1.3;display:flex;align-items:center;gap:9px;flex-wrap:wrap;}
+  .co-head .new{font-size:10px;font-weight:700;letter-spacing:0.5px;background:var(--accent);color:#fff;padding:2px 8px;border-radius:10px;vertical-align:middle;}
+  .co-head .lede{font-family:'Georgia',serif;font-size:13.5px;color:#e3ebf6;border-top:1px solid rgba(255,255,255,0.16);padding-top:10px;margin:0;}
+  .co-body{padding:20px 22px;}
+
+  .chips{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:18px;}
+  .chip{border:1px solid var(--line);border-radius:8px;padding:8px 14px;background:#fafbfd;flex:1;min-width:108px;}
+  .chip .k{font-size:10px;letter-spacing:0.4px;text-transform:uppercase;color:var(--ink-soft);}
+  .chip .v{font-size:17px;font-weight:700;color:var(--brand);margin-top:2px;}
+  .chip .v.buy{color:var(--buy);}
+  .chip .s{font-size:10.5px;color:var(--ink-soft);}
+  .chip .s.up{color:var(--buy);font-weight:600;}
+
+  h4.sub{font-size:13px;color:var(--brand);margin:18px 0 8px;font-weight:700;letter-spacing:0.3px;}
+  ul.pts{margin:0;padding:0;list-style:none;}
+  ul.pts li{position:relative;padding:6px 0 6px 18px;font-size:13.7px;border-bottom:1px dashed var(--line);}
+  ul.pts li:last-child{border-bottom:none;}
+  ul.pts li::before{content:"—";position:absolute;left:0;color:var(--accent2);font-weight:700;}
+  ul.pts b{color:var(--brand);}
+
+  .meta{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px;}
+  @media(max-width:640px){.meta{grid-template-columns:1fr;}}
+  .meta .box{background:#f7f9fc;border:1px solid var(--line);border-radius:8px;padding:12px 14px;}
+  .meta .box .t{font-size:10.5px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:var(--ink-soft);margin-bottom:5px;}
+  .meta .box p{margin:0;font-size:12.7px;color:var(--ink-soft);line-height:1.55;}
+  .meta .box.risk{background:var(--brand);border-color:var(--brand);}
+  .meta .box.risk .t{color:#9fb4d4;}
+  .meta .box.risk p{color:#dde6f3;}
+
+  table.tbl{width:100%;border-collapse:collapse;font-size:12.5px;margin:6px 0 4px;}
+  table.tbl th{background:var(--brand);color:#fff;text-align:left;padding:7px 9px;font-weight:600;}
+  table.tbl td{padding:6px 9px;border-bottom:1px solid var(--line);}
+  table.tbl tr:nth-child(even) td{background:#f7f9fc;}
+  table.tbl td.num{text-align:right;font-variant-numeric:tabular-nums;}
+  .tbl-wrap{overflow-x:auto;margin:8px 0;}
+  .chart-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:18px 20px 12px;margin:10px 0;}
+  .chart-card .ct{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:10px;}
+  .chart-src{font-size:10.5px;color:#9aa3b2;margin-top:6px;}
+
+  footer{border-top:1px solid var(--line);margin-top:54px;padding-top:20px;font-size:11px;color:#9aa3b2;line-height:1.6;}
+
+  @media(max-width:560px){.intro h1{font-size:21px;}.co-head h3{font-size:17px;}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">Research<span>·</span>Digest</div>
+  <nav>
+    <a href="#consumer">Consumer</a>
+    <a href="#financials">Financials</a>
+    <a href="#healthcare">Healthcare</a>
+    <a href="#industrials">Industrials</a>
+    <a href="#tmt">TMT</a>
+  </nav>
+</div>
+
+<div class="wrap">
+
+  <div class="intro">
+    <div class="eyebrow">26 June 2026</div>
+    <h1>3Q26 미국 주식 Top Picks</h1>
+    <p>5개 섹터(Consumer · Financials & FinTech · Healthcare · Industrials · TMT)에 걸쳐 각 애널리스트가 향후 12개월 보유를 전제로 선정한 36개 Top Pick. 전 종목 Buy. NEW 표기는 이번 분기 신규 편입 아이디어.</p>
+  </div>
+
+  <!-- ===== Performance Snapshot ===== -->
+  <div class="perf">
+    <h3>리스트 성과 (Performance Snapshot)</h3>
+    <div class="perf-grid">
+      <div class="perf-big">
+        <div class="num">+17.8%</div>
+        <div class="lab">최근 12개월 rolling 수익률 (S&amp;P 500 +19.75%)</div>
+      </div>
+      <div class="perf-big">
+        <div class="num">+387%</div>
+        <div class="lab">2017년 3Q 출범 이후 누적 (S&amp;P 500 +351%)</div>
+      </div>
+    </div>
+    <div class="tbl-wrap">
+    <table class="tbl">
+      <thead><tr><th>분기 리스트</th><th class="num">리스트 수익률</th><th class="num">S&amp;P 500</th></tr></thead>
+      <tbody>
+        <tr><td>2Q26</td><td class="num">+12.65%</td><td class="num">+13.12%</td></tr>
+        <tr><td>1Q26</td><td class="num">-10.80%</td><td class="num">-7.74%</td></tr>
+        <tr><td>4Q25</td><td class="num">+8.90%</td><td class="num">+4.45%</td></tr>
+        <tr><td>3Q25</td><td class="num">+4.77%</td><td class="num">+8.23%</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="chart-src">최종 성과는 각 리스트 발간 후 12개월 기준으로 측정.</div>
+  </div>
+
+  <!-- ===== 상승여력 차트 ===== -->
+  <div class="chart-card">
+    <div class="ct">목표가 기준 상승여력 — 현재가 대비 (%)</div>
+    <svg viewBox="0 0 860 760" width="100%" font-family="Helvetica Neue, Arial, sans-serif">
+      <!-- baseline -->
+      <line x1="150" y1="10" x2="150" y2="730" stroke="#cfd6e0"/>
+      <!-- gridlines at 20/40/60/80/100 (scale: 150px = 0%, 6.6px per %) -->
+      <g stroke="#eef1f6" stroke-width="1">
+        <line x1="282" y1="10" x2="282" y2="730"/>
+        <line x1="414" y1="10" x2="414" y2="730"/>
+        <line x1="546" y1="10" x2="546" y2="730"/>
+        <line x1="678" y1="10" x2="678" y2="730"/>
+        <line x1="810" y1="10" x2="810" y2="730"/>
+      </g>
+      <g font-size="9" fill="#9aa3b2" text-anchor="middle">
+        <text x="150" y="745">0</text><text x="282" y="745">20</text><text x="414" y="745">40</text>
+        <text x="546" y="745">60</text><text x="678" y="745">80</text><text x="810" y="745">100</text>
+      </g>
+      <!-- bars: x=150 start, width = upside*6.6, row height 17, y start 16 -->
+      <g font-size="9.5" fill="#1b1e24">
+        <!-- ORCL 96.8 -->
+        <rect x="150" y="16" width="639" height="11" fill="#0a2a6b"/><text x="146" y="25" text-anchor="end">ORCL</text><text x="793" y="25" fill="#0a2a6b" font-weight="700">+97%</text>
+        <!-- LUNR 81.8 -->
+        <rect x="150" y="33" width="540" height="11" fill="#0a2a6b"/><text x="146" y="42" text-anchor="end">LUNR</text><text x="694" y="42" fill="#0a2a6b" font-weight="700">+82%</text>
+        <!-- TMUS 56.9 -->
+        <rect x="150" y="50" width="376" height="11" fill="#1d4a9c"/><text x="146" y="59" text-anchor="end">TMUS</text><text x="530" y="59">+57%</text>
+        <!-- SHOP 56.8 -->
+        <rect x="150" y="67" width="375" height="11" fill="#1d4a9c"/><text x="146" y="76" text-anchor="end">SHOP</text><text x="529" y="76">+57%</text>
+        <!-- RIVN 54.8 -->
+        <rect x="150" y="84" width="362" height="11" fill="#1d4a9c"/><text x="146" y="93" text-anchor="end">RIVN</text><text x="516" y="93">+55%</text>
+        <!-- SYRE 52.3 -->
+        <rect x="150" y="101" width="345" height="11" fill="#1d4a9c"/><text x="146" y="110" text-anchor="end">SYRE</text><text x="499" y="110">+52%</text>
+        <!-- APP 48.0 -->
+        <rect x="150" y="118" width="317" height="11" fill="#2f7bff"/><text x="146" y="127" text-anchor="end">APP</text><text x="471" y="127">+48%</text>
+        <!-- SPGI 43.2 -->
+        <rect x="150" y="135" width="285" height="11" fill="#2f7bff"/><text x="146" y="144" text-anchor="end">SPGI</text><text x="439" y="144">+43%</text>
+        <!-- THC 41.3 -->
+        <rect x="150" y="152" width="273" height="11" fill="#2f7bff"/><text x="146" y="161" text-anchor="end">THC</text><text x="427" y="161">+41%</text>
+        <!-- SITE 39.1 -->
+        <rect x="150" y="169" width="258" height="11" fill="#2f7bff"/><text x="146" y="178" text-anchor="end">SITE</text><text x="412" y="178">+39%</text>
+        <!-- SCHW 36.4 -->
+        <rect x="150" y="186" width="240" height="11" fill="#2f7bff"/><text x="146" y="195" text-anchor="end">SCHW</text><text x="394" y="195">+36%</text>
+        <!-- OMF 33.6 -->
+        <rect x="150" y="203" width="222" height="11" fill="#2f7bff"/><text x="146" y="212" text-anchor="end">OMF</text><text x="376" y="212">+34%</text>
+        <!-- XYL 32.5 -->
+        <rect x="150" y="220" width="215" height="11" fill="#5b8fd6"/><text x="146" y="229" text-anchor="end">XYL</text><text x="369" y="229">+33%</text>
+        <!-- WCN 32.4 -->
+        <rect x="150" y="237" width="214" height="11" fill="#5b8fd6"/><text x="146" y="246" text-anchor="end">WCN</text><text x="368" y="246">+32%</text>
+        <!-- V 30.1 -->
+        <rect x="150" y="254" width="199" height="11" fill="#5b8fd6"/><text x="146" y="263" text-anchor="end">V</text><text x="353" y="263">+30%</text>
+        <!-- GLNG 29.9 -->
+        <rect x="150" y="271" width="197" height="11" fill="#5b8fd6"/><text x="146" y="280" text-anchor="end">GLNG</text><text x="351" y="280">+30%</text>
+        <!-- DHR 29.4 -->
+        <rect x="150" y="288" width="194" height="11" fill="#5b8fd6"/><text x="146" y="297" text-anchor="end">DHR</text><text x="348" y="297">+29%</text>
+        <!-- IQV 28.7 -->
+        <rect x="150" y="305" width="189" height="11" fill="#5b8fd6"/><text x="146" y="314" text-anchor="end">IQV</text><text x="343" y="314">+29%</text>
+        <!-- MPWR 28.7 -->
+        <rect x="150" y="322" width="189" height="11" fill="#5b8fd6"/><text x="146" y="331" text-anchor="end">MPWR</text><text x="343" y="331">+29%</text>
+        <!-- HBAN 25.7 -->
+        <rect x="150" y="339" width="170" height="11" fill="#5b8fd6"/><text x="146" y="348" text-anchor="end">HBAN</text><text x="324" y="348">+26%</text>
+        <!-- DXCM 25.3 -->
+        <rect x="150" y="356" width="167" height="11" fill="#5b8fd6"/><text x="146" y="365" text-anchor="end">DXCM</text><text x="321" y="365">+25%</text>
+        <!-- FTAI 24.8 -->
+        <rect x="150" y="373" width="164" height="11" fill="#5b8fd6"/><text x="146" y="382" text-anchor="end">FTAI</text><text x="318" y="382">+25%</text>
+        <!-- CTVA 22.5 -->
+        <rect x="150" y="390" width="149" height="11" fill="#7ba4d9"/><text x="146" y="399" text-anchor="end">CTVA</text><text x="303" y="399">+23%</text>
+        <!-- WH 21.9 -->
+        <rect x="150" y="407" width="145" height="11" fill="#7ba4d9"/><text x="146" y="416" text-anchor="end">WH</text><text x="299" y="416">+22%</text>
+        <!-- SW 21.7 -->
+        <rect x="150" y="424" width="143" height="11" fill="#7ba4d9"/><text x="146" y="433" text-anchor="end">SW</text><text x="297" y="433">+22%</text>
+        <!-- AIG 21.6 -->
+        <rect x="150" y="441" width="143" height="11" fill="#7ba4d9"/><text x="146" y="450" text-anchor="end">AIG</text><text x="297" y="450">+22%</text>
+        <!-- JBHT 20.1 -->
+        <rect x="150" y="458" width="133" height="11" fill="#7ba4d9"/><text x="146" y="467" text-anchor="end">JBHT</text><text x="287" y="467">+20%</text>
+        <!-- CSTM 18.6 -->
+        <rect x="150" y="475" width="123" height="11" fill="#7ba4d9"/><text x="146" y="484" text-anchor="end">CSTM</text><text x="277" y="484">+19%</text>
+        <!-- HUM 17.3 -->
+        <rect x="150" y="492" width="114" height="11" fill="#7ba4d9"/><text x="146" y="501" text-anchor="end">HUM</text><text x="268" y="501">+17%</text>
+        <!-- SBUX 16.3 -->
+        <rect x="150" y="509" width="108" height="11" fill="#7ba4d9"/><text x="146" y="518" text-anchor="end">SBUX</text><text x="262" y="518">+16%</text>
+        <!-- VTR 14.4 -->
+        <rect x="150" y="526" width="95" height="11" fill="#a9c4e6"/><text x="146" y="535" text-anchor="end">VTR</text><text x="249" y="535">+14%</text>
+        <!-- DLR 14.3 -->
+        <rect x="150" y="543" width="94" height="11" fill="#a9c4e6"/><text x="146" y="552" text-anchor="end">DLR</text><text x="248" y="552">+14%</text>
+        <!-- EWBC 12.9 -->
+        <rect x="150" y="560" width="85" height="11" fill="#a9c4e6"/><text x="146" y="569" text-anchor="end">EWBC</text><text x="239" y="569">+13%</text>
+        <!-- ESE 12.7 -->
+        <rect x="150" y="577" width="84" height="11" fill="#a9c4e6"/><text x="146" y="586" text-anchor="end">ESE</text><text x="238" y="586">+13%</text>
+        <!-- JCI 12.7 -->
+        <rect x="150" y="594" width="84" height="11" fill="#a9c4e6"/><text x="146" y="603" text-anchor="end">JCI</text><text x="238" y="603">+13%</text>
+        <!-- PG 9.8 -->
+        <rect x="150" y="611" width="65" height="11" fill="#a9c4e6"/><text x="146" y="620" text-anchor="end">PG</text><text x="219" y="620">+10%</text>
+        <!-- KO 9.6 -->
+        <rect x="150" y="628" width="63" height="11" fill="#a9c4e6"/><text x="146" y="637" text-anchor="end">KO</text><text x="217" y="637">+10%</text>
+        <!-- SLG 9.6 -->
+        <rect x="150" y="645" width="63" height="11" fill="#a9c4e6"/><text x="146" y="654" text-anchor="end">SLG</text><text x="217" y="654">+10%</text>
+        <!-- EVR 8.0 -->
+        <rect x="150" y="662" width="53" height="11" fill="#c4d6ec"/><text x="146" y="671" text-anchor="end">EVR</text><text x="207" y="671">+8%</text>
+        <!-- RL 6.6 -->
+        <rect x="150" y="679" width="44" height="11" fill="#c4d6ec"/><text x="146" y="688" text-anchor="end">RL</text><text x="198" y="688">+7%</text>
+        <!-- LTH 5.4 -->
+        <rect x="150" y="696" width="36" height="11" fill="#c4d6ec"/><text x="146" y="705" text-anchor="end">LTH</text><text x="190" y="705">+5%</text>
+        <!-- ONTO 4.7 -->
+        <rect x="150" y="713" width="31" height="11" fill="#c4d6ec"/><text x="146" y="722" text-anchor="end">ONTO</text><text x="185" y="722">+5%</text>
+      </g>
+    </svg>
+    <div class="chart-src">목표가 ÷ 현재가 기준 산출. 현재가는 발간 직전 종가 기준.</div>
+  </div>
+
+  <!-- ============================== CONSUMER ============================== -->
+  <div class="sec-div" id="consumer"><div class="kicker">01</div><h2>Consumer</h2></div>
+
+  <!-- KO -->
+  <section class="co">
+    <div class="co-head">
+      <div class="tag">Consumer Staples · US</div>
+      <h3>코카콜라 (KO)</h3>
+      <p class="lede">'전천후 전략'과 단순화된 운영으로 CPG 동종 대비 최선의 변동성 방어력 — FCF 전환율 구조적 개선 국면.</p>
+    </div>
+    <div class="co-body">
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Buy</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$88</div></div>
+        <div class="chip"><div class="k">Current Price</div><div class="v">$80.27</div><div class="s up">+9.6%</div></div>
+        <div class="chip"><div class="k">Market Cap</div><div class="v">$346bn</div></div>
+      </div>
+      <ul class="pts">
+        <li>FY26 호조 출발 — unit case +3%, EPS 가이던스 상향. 브랜드·혁신·RGM·생산성 등 '컨트롤러블' 장악력 재확인</li>
+        <li>fairlife 증설로 글로벌 organic 성장 연간 <b>+1pt</b>(북미 +3pt) 기여 전망</li>
+        <li>자본집약적 보틀링 자산 매각(CCBA refranchising 2H26, HCCH IPO 가능성 FY27)으로 FCF 전환율 <b>90~95%</b> 정상화 inflection</li>
+        <li>중동발 원가(에너지·알루미늄·감미료) 압력에도 mix·premiumization과 System 차원 조달규모로 마진 방어·확대 가능</li>
+      </ul>
+      <div class="meta">
+        <div class="box"><div class="t">Valuation</div><p>DCF 기반. normalized 매출 +4%·EBIT +6%, WACC 6.75%, terminal 1.75%. 13~24개월 forward EPS 기준 P/E ~25x, EV/EBITDA ~19.5x.</p></div>
+        <div class="box risk"><div class="t">Key Risks</div><p>경쟁 심화, 매크로 수요 변동, IRS 세금소송 항소 불리 판결, 점유율 상실, 원자재·FX 비용 변동, USD 강세.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LTH -->
+  <section class="co">
+    <div class="co-head">
+      <div class="tag">Consumer Discretionary · US</div>
+      <h3>라이프타임 그룹 (LTH)</h3>
+      <p class="lede">프리미엄 피트니스 프리미엄 제품·실행력·견조한 재무로 동종 대비 밸류에이션 갭 축소(re-rate) 여력.</p>
+    </div>
+    <div class="co-body">
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Buy</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$42</div></div>
+        <div class="chip"><div class="k">Current Price</div><div class="v">$39.86</div><div class="s up">+5.4%</div></div>
+        <div class="chip"><div class="k">Market Cap</div><div class="v">$8bn</div></div>
+      </div>
+      <ul class="pts">
+        <li>프리미엄 피트니스를 secular winner로 판단 — 고소득층 wallet share 확대, Leisure 동종 대비 성장·EV/EBITDA 우위</li>
+        <li>대형 포맷 클럽은 진입장벽 높아 HVLP 세그먼트와 달리 신규 경쟁 거의 없음. 향후 2~3년 두 자릿수 매출·EBITDA 성장 가시성</li>
+        <li>In-center 매출 확대 기회(PT·wellness·MIORA·영양·카페), 온라인 리테일(수억 달러 잠재), 디지털 앱 monetization</li>
+        <li>sale-leaseback으로 성숙 클럽 가치 실현 후 우호적 경제성의 신규 클럽으로 자본 재투입</li>
+      </ul>
+      <div class="meta">
+        <div class="box"><div class="t">Valuation</div><p>2027 EBITDA에 10.5x 적용 → 순부채 차감·완전희석 주식수로 나눠 산출. adj. EBITDA 10% 변동 = PT ~$4, multiple 1pt = ~$4.</p></div>
+        <div class="box risk"><div class="t">Key Risks</div><p>wellness 트렌드 변동, 홈 피트니스 장비·앱 성장, sale-leaseback 미달, 부지 확보 제약, 인건비 인플레, capex·개발비 초과.</p></div>
+      </div>
+      <div class="chart-card">
+        <div class="ct">성장 프로파일 — 2026E vs 2027E</div>
+        <svg viewBox="0 0 600 230" width="100%" font-family="Helvetica Neue, Arial, sans-serif">
+          <line x1="55" y1="190" x2="580" y2="190" stroke="#cfd6e0"/>
+          <g font-size="10" fill="#9aa3b2" text-anchor="end">
+            <text x="48" y="194">0%</text><text x="48" y="150">4%</text><text x="48" y="106">8%</text><text x="48" y="62">12%</text>
+          </g>
+          <g stroke="#eef1f6"><line x1="55" y1="146" x2="580" y2="146"/><line x1="55" y1="102" x2="580" y2="102"/><line x1="55" y1="58" x2="580" y2="58"/></g>
+          <!-- 2026E: Comp 7.5, Total 11, EBITDA 11.9 -->
+          <rect x="120" y="107.5" width="40" height="82.5" fill="#a9c4e6"/>
+          <rect x="165" y="69" width="40" height="121" fill="#1d4a9c"/>
+          <rect x="210" y="59.1" width="40" height="130.9" fill="#0a2a6b"/>
+          <text x="185" y="210" font-size="11" fill="#1b1e24" text-anchor="middle">2026E</text>
+          <!-- 2027E: Comp 5.3, Total 10.5, EBITDA 10.7 -->
+          <rect x="380" y="131.7" width="40" height="58.3" fill="#a9c4e6"/>
+          <rect x="425" y="74.5" width="40" height="115.5" fill="#1d4a9c"/>
+          <rect x="470" y="72.3" width="40" height="117.7" fill="#0a2a6b"/>
+          <text x="445" y="210" font-size="11" fill="#1b1e24" text-anchor="middle">2027E</text>
+          <g font-size="10" transform="translate(0,0)">
+            <rect x="120" y="14" width="11" height="11" fill="#a9c4e6"/><text x="135" y="23" fill="#525866">Comparable Club Rev</text>
+            <rect x="285" y="14" width="11" height="11" fill="#1d4a9c"/><text x="300" y="23" fill="#525866">Total Rev</text>
+            <rect x="410" y="14" width="11" height="11" fill="#0a2a6b"/><text x="425" y="23" fill="#525866">Adj. EBITDA</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- PG -->
+  <section class="co">
+    <div class="co-head">
+      <div class="tag">Consumer Staples · US</div>
+      <h3>프록터앤갬블 (PG) <span class="new">NEW</span></h3>
+      <p class="lede">정상 궤도의 구조조정이 혁신 주도 성장 어젠다를 뒷받침, 유가 하락이 원가 부담 완화 — FY27+ 알고리즘 성장 경로.</p>
+    </div>
+    <div class="co-body">
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Buy</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$163</div></div>
+        <div class="chip"><div class="k">Current Price</div><div class="v">$148.50</div><div class="s up">+9.8%</div></div>
+        <div class="chip"><div class="k">Market Cap</div><div class="v">$351bn</div></div>
+      </div>
+      <ul class="pts">
+        <li>12개월 전 착수한 구조조정(FY27까지)이 혁신 어젠다에 집중·자금 제공 → 제품 우위 회복·점유율 확대 경로</li>
+        <li>US Baby Care 등 핵심 난제 체계적 대응, 다수 브랜드/리테일러 조합이 향후 12~18개월 점유율 확대 계획 정렬</li>
+        <li>Brent 유가 <b>~$75/배럴</b> 하락으로 FY27 마진 전망에 실질적 완화 — 기존 $100 유가 기준 ~<b>$13억</b> 세전 비용 부담 경감</li>
+      </ul>
+      <div class="meta">
+        <div class="box"><div class="t">Valuation</div><p>DCF 기반. normalized 매출 +3.5%·EBIT +4.5%, WACC 7%, terminal 1.75%. 13~24개월 forward EPS P/E ~22x, EV/EBITDA ~16.5x.</p></div>
+        <div class="box risk"><div class="t">Key Risks</div><p>실행 리스크, staples 비중 축소, 원가 변동·원자재 부족, USD 강세, 소비 trade down, 비효율적 자본배분, 경쟁 심화.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RL -->
+  <section class="co">
+    <div class="co-head">
+      <div class="tag">Consumer Discretionary · US</div>
+      <h3>랄프로렌 (RL) <span class="new">NEW</span></h3>
+      <p class="lede">고ROI 브랜드 투자·럭셔리 trade down·AI 활용 효율화로 FY27 추정 상향 사이클 지속 전망.</p>
+    </div>
+    <div class="co-body">
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Buy</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$437</div></div>
+        <div class="chip"><div class="k">Current Price</div><div class="v">$410.11</div><div class="s up">+6.6%</div></div>
+        <div class="chip"><div class="k">Market Cap</div><div class="v">$24bn</div></div>
+      </div>
+      <ul class="pts">
+        <li>FY26 다년 목표 초과 달성 → "Next Great Chapter: Drive" 2년차 추가 outperformance 기대. EMEA 약세·중국 둔화·중동 전쟁에도 견조</li>
+        <li>작년 한 해 신규 DTC 고객 <b>640만명</b> 순증, 가격민감도 낮은 Gen Z로 mix 이동 → +DD% AUR 성장, pricing elasticity 하락</li>
+        <li>여성·핸드백·아우터 등 고잠재 카테고리 확장, 럭셔리 trade down·드레시 룩 트렌드 tailwind</li>
+        <li>AI 기회 — 소비자 대면 agentic 챗봇 UPT·전환율 개선, 글로벌 물류·통합 사업계획 효율화 초기 단계</li>
+      </ul>
+      <div class="meta">
+        <div class="box"><div class="t">Valuation</div><p>2027 Adj. EPS에 24x 적용한 $437. 현재 FY1 P/E 20.6x(1년 blended forward 평균 20.0x). 일관된 추정 상향·brand heat·pricing power로 프리미엄 정당화.</p></div>
+        <div class="box risk"><div class="t">Key Risks</div><p>AUR 성장 둔화, 고가 럭셔리 경쟁사발 가격 압력, 예상 초과 재투자 부담.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SBUX -->
+  <section class="co">
+    <div class="co-head">
+      <div class="tag">Consumer Discretionary · US</div>
+      <h3>스타벅스 (SBUX)</h3>
+      <p class="lede">고객 경험 재집중·원가 인프라 개선으로 지속가능한 SSS 플러스·역사적 마진 수준 회복 경로.</p>
+    </div>
+    <div class="co-body">
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Buy</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$120</div></div>
+        <div class="chip"><div class="k">Current Price</div><div class="v">$103.16</div><div class="s up">+16.3%</div></div>
+        <div class="chip"><div class="k">Market Cap</div><div class="v">$114bn</div></div>
+      </div>
+      <ul class="pts">
+        <li>Green Apron 서비스 모델 전면 도입, 잦은 신제품 cadence, 재설계 로열티 프로그램 → inflection 도달</li>
+        <li>본사 인력 축소·북미 부진점포 <b>550~600개</b> 폐점으로 SSS·마진 개선, P&amp;L 전반 마진 unlock(원가절감·기술 생산성)</li>
+        <li>FY28 목표 달성 가능 판단 — EPS $3.35~4.00 상단·영업마진 17~18% 회복 가시성이 long-term bull case 핵심</li>
+      </ul>
+      <div class="meta">
+        <div class="box"><div class="t">Valuation</div><p>12개월 후 NTM EPS ~35x 기준 $120(NTM EBITDA ~20x). 역사 20~30x 상회 — 다년 outsized 성장·turnaround·CEO 프리미엄 반영.</p></div>
+        <div class="box risk"><div class="t">Key Risks</div><p>소비 둔화(재량소비·경기), 경쟁(체인·독립·식료품·편의점), 원자재·인건비 인플레.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WH -->
+  <section class="co">
+    <div class="co-head">
+      <div class="tag">Consumer Discretionary · US</div>
+      <h3>윈덤 호텔 (WH) <span class="new">NEW</span></h3>
+      <p class="lede">YTD 언더퍼폼은 과도 — 이벤트 수요·공공/민간 투자·완화되는 비교 기저로 Economy RevPAR inflection.</p>
+    </div>
+    <div class="co-body">
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Buy</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$105</div></div>
+        <div class="chip"><div class="k">Current Price</div><div class="v">$86.12</div><div class="s up">+21.9%</div></div>
+        <div class="chip"><div class="k">Market Cap</div><div class="v">$6.2bn</div></div>
+      </div>
+      <ul class="pts">
+        <li>YTD WH +9% vs Lodging C-Corps +20% — 낙폭 과도, 매력적 진입점</li>
+        <li>월드컵·America 250·Route 66 100주년이 Economy RevPAR 견인. 6/13 주간 RevPAR +5.2% YoY(금/토 +8.4%/+11.8%)</li>
+        <li>분기 비교 기저 점진 완화 — 1Q +2.5% → 2Q -3.5% → 3Q -5.0% → 4Q -7.9%. 휘발유 가격 하락도 tailwind</li>
+        <li>밸류에이션 매력 — 2026/2027 EV/EBITDA 11.8x/10.8x(2022년 이후 평균 12.2x 하회), FCF yield 6.1%/6.7%</li>
+      </ul>
+      <div class="meta">
+        <div class="box"><div class="t">Valuation</div><p>SOTP — 2027 EBITDA에 royalty·franchise 15.0x, mgmt fee 10.0x 등 적용한 blended 12.9x. equity value ~$7.6bn 산출. EBITDA 10% 변동 = PT ~$15.</p></div>
+        <div class="box risk"><div class="t">Key Risks</div><p>여행 경기 침체, 어려운 자금조달 환경, self-funding 경쟁 심화, 모델링 난해한 기타 fee, 지정학 리스크.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== FINANCIALS ============================== -->
+  <div class="sec-div" id="financials"><div class="kicker">02</div><h2>Financials &amp; FinTech</h2></div>
+
+  <!-- AIG -->
+  <section class="co">
+    <div class="co-head">
+      <div class="tag">Insurance · US</div>
+      <h3>AIG <span class="new">NEW</span></h3>
+      <p class="lede">EPS 모멘텀·근거리 촉매·부담없는 밸류에이션 — 비대칭적 risk/reward.</p>
+    </div>
+    <div class="co-body">
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Buy</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$91</div></div>
+        <div class="chip"><div class="k">Current Price</div><div class="v">$74.85</div><div class="s up">+21.6%</div></div>
+        <div class="chip"><div class="k">Market Cap</div><div class="v">$5.1bn</div></div>
+      </div>
+      <ul class="pts">
+        <li>재보험 비용 하락이 primary rate 압력 부분 상쇄 — 1Q26 미 부동산 요율 -10%(cat 노출 -16%)에도 1월 갱신 risk-adjusted &gt;15% 인하, 6월 갱신 최대 -25%</li>
+        <li>신임 CEO Eric Andersen(6/1 취임) 9월 투자자 engagement가 underappreciated 3Q 촉매</li>
+        <li>Lexington(E&amp;S)의 pricing 규율 → 저가 인수 회피로 자본 확보, buyback 재원. 작년 주주환원 $68억(buyback $58억)</li>
+      </ul>
+      <div class="meta">
+        <div class="box"><div class="t">Valuation</div><p>2026 core operating BVPS $71.64에 1.38x 적용 후 1년 할인. 수정 Gordon Growth(adj. ROE 11%, cost of equity 8.5%, terminal 2%).</p></div>
+        <div class="box risk"><div class="t">Key Risks</div><p>활발한 catastrophe 시즌, primary 인하폭이 재보험 절감 초과, casualty 준비금 악화, 자본의 M&amp;A 전용, CEO engagement 지연.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EVR -->
+  <section class="co">
+    <div class="co-head">
+      <div class="tag">Capital Markets · US</div>
+      <h3>에버코어 (EVR)</h3>
+      <p class="lede">대형 M&amp;A 우위 환경 지속의 최선호주 — 프리미엄 밸류에이션 정당화하는 return 프로파일.</p>
+    </div>
+    <div class="co-body">
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Buy</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$375</div></div>
+        <div class="chip"><div class="k">Current Price</div><div class="v">$347.31</div><div class="s up">+8.0%</div></div>
+        <div class="chip"><div class="k">Market Cap</div><div class="v">$14.5bn</div></div>
+      </div>
+      <ul class="pts">
+        <li>대형/transformational M&amp;A 노출이 최선호 근거 — 2025·YTD 모두 mega 딜이 미들마켓 상회</li>
+        <li>독립계 IB 중 평균 딜 규모·MD 생산성 최상위로 large/strategic 딜 노출 최적</li>
+        <li>sponsor-backed M&amp;A 회복 시 강한 플랫폼 scale로 추가 outperform 여력</li>
+      </ul>
+      <div class="meta">
+        <div class="box"><div class="t">Valuation</div><p>FY26 EPS ~20x 적용. 현재 밸류·peer 대비 modest 10~15% 프리미엄.</p></div>
+        <div class="box risk"><div class="t">Key Risks</div><p>M&amp;A 시장 지연·cyclical downturn, recruiting 과열에 따른 비용 압력, advice 중심 IB 모델에 대한 AI 잠재 disruption.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EWBC -->
+  <section class="co">
+    <div class="co-head">
+      <div class="tag">Banks · US</div>
+      <h3>이스트웨스트뱅코프 (EWBC)</h3>
+      <p class="lede">강한 경쟁 moat(미·중 cross-border)·견조 대차대조표·자본 여력으로 다양한 매크로 시나리오에서 peer 상회.</p>
+    </div>
+    <div class="co-body">
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Buy</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$147</div></div>
+        <div class="chip"><div class="k">Current Price</div><div class="v">$130.24</div><div class="s up">+12.9%</div></div>
+        <div class="chip"><div class="k">Market Cap</div><div class="v">$18bn</div></div>
+      </div>
+      <ul class="pts">
+        <li>대형은행급 ROTCE·ROA, 업계 최저 손실/최고 reserve, peer 상회 자본 — 고품질 midcap</li>
+        <li>NII 성장은 견조한 대출성장과 우호적 deposit repricing이 견인. 산업 평균 상회 대출성장 + 우수 자산건전성</li>
+        <li>잉여자본이 대차대조표 성장·자사주매입·배당 인상 지원. Basel 3로 자본비율 160~180bps 개선 가능(peer 대비 50~75bps 추가)</li>
+      </ul>
+      <div class="meta">
+        <div class="box"><div class="t">Valuation</div><p>2026E EPS 14x 적용. midcap peer 11.0~11.5x(2026 컨센) 대비 프리미엄 — 높은 ROTCE·ROA, 낮은 efficiency ratio, 견고한 자본 반영.</p></div>
+        <div class="box risk"><div class="t">Key Risks</div><p>매크로 악화, 미·중 무역/관세 긴장 심화, 예상 초과 비용 성장, deposit cost 상승에 따른 NIM/NII 악영향.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HBAN -->
+  <section class="co">
+    <div class="co-head">
+      <div class="tag">Banks · US</div>
+      <h3>헌팅턴 (HBAN)</h3>
+      <p class="lede">커버리지 내 가장 dislocated된 주가 — 우려는 대부분 가격 반영·해소 중, 강한 트랙레코드.</p>
+    </div>
+    <div class="co-body">
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Buy</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$22.50</div></div>
+        <div class="chip"><div class="k">Current Price</div><div class="v">$17.90</div><div class="s up">+25.7%</div></div>
+        <div class="chip"><div class="k">Market Cap</div><div class="v">$35bn</div></div>
+      </div>
+      <ul class="pts">
+        <li>대출 가이던스 우려는 과도 — 2Q 소폭 반등 후 3Q·4Q 가속, Cadence 런오프 완화로 4Q 이후 분기 1.5~2%(연 6~8%) 가능</li>
+        <li>딜 리스크 낮음 — FY26 10.8x·FY27 9.0x(peer 대비 10~15% 할인). 경영진 "4년에 1건"이 적정 M&amp;A 페이스 시사</li>
+        <li>1Q 유동성 $5b는 중동 전쟁 불확실성 대비 일시적 — 향후 분기 축소되며 대출성장·deposit cost 방어에 활용</li>
+      </ul>
+      <div class="meta">
+        <div class="box"><div class="t">Valuation</div><p>대형 regional 그룹 multiple S&amp;P 500 대비 60% 가정(역사 60~75% 레인지 — 60%는 다소 보수적).</p></div>
+        <div class="box risk"><div class="t">Key Risks</div><p>신용 악화(부적절한 타이밍의 대출성장), 경기침체, CADE·VBTX 통합 리스크, 추가 은행 딜 가능성.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OMF -->
+  <section class="co">
+    <div class="co-head">
+      <div class="tag">Consumer Finance · US</div>
+      <h3>원메인 홀딩스 (OMF) <span class="new">NEW</span></h3>
+      <p class="lede">은행 charter 승인 가능성 높음 — addressable market 의미있게 확대 전망.</p>
+    </div>
+    <div class="co-body">
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Buy</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$80</div></div>
+        <div class="chip"><div class="k">Current Price</div><div class="v">$59.89</div><div class="s up">+33.6%</div></div>
+        <div class="chip"><div class="k">Market Cap</div><div class="v">$7bn</div></div>
+      </div>
+      <ul class="pts">
+        <li>non-prime 전문 대부업체 — 경기 안정화로 core 트렌드 우호적, recession 우려에 따른 YTD 언더퍼폼 반전 기대</li>
+        <li>안정적 신용·강한 성장 — mid~high-single digit receivables 성장, NCO <b>7.4~7.9%</b> → low-teens EPS 성장·ROE 24%·배당수익률 7.2%</li>
+        <li>Utah ILC 은행 charter 승인 시 FDIC 예금·전국 단위 운영 가능. 3월 2025 신청 후 현 행정부에서 4건 승인, 가장 오래된 대기건으로 다음 차례 — 수개월 내 결정 예상</li>
+        <li>현재 2027E 7x 미만 거래 — charter 승인이 추정·멀티플 동반 상향 유발 전망</li>
+      </ul>
+      <div class="meta">
+        <div class="box"><div class="t">Valuation</div><p>FY27 core(C&amp;I) EPS에 target P/E ~9x 적용($80) — 장기 역사 평균 수준. ILC 효익은 미반영.</p></div>
+        <div class="box risk"><div class="t">Key Risks</div><p>개인대출 시장 ceiling(~20% 점유), 도매 자금조달 한계(non-bank), unsecured nonprime 신용 변동, 자금시장 접근성.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCHW -->
+  <section class="co">
+    <div class="co-head">
+      <div class="tag">Capital Markets · US</div>
+      <h3>찰스슈왑 (SCHW)</h3>
+      <p class="lede">강한 성장 궤도 + 매력적 밸류에이션 — 커버리지 내 top value pick.</p>
+    </div>
+    <div class="co-body">
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Buy</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$122</div></div>
+        <div class="chip"><div class="k">Current Price</div><div class="v">$89.44</div><div class="s up">+36.4%</div></div>
+        <div class="chip"><div class="k">Market Cap</div><div class="v">$165bn</div></div>
+      </div>
+      <ul class="pts">
+        <li>다각화 성장 엔진 — Forge Global 인수로 private market 진출, spot crypto, CBOE와 prediction marketplace 파트너십. 거래량 견조·관리진 기대 상회</li>
+        <li>NII 프로파일 최적화 — margin loan 잔고 증가, 4개월 연속 client cash deposit 예상 상회. 관리진 NIM 가이던스 <b>3.00~3.10%</b></li>
+        <li>관리진 2026 매출성장 가이던스 <b>14~15%</b>(organic + 다각화). AI 활용 4배 확대 계획, 배당·기회적 자사주매입 병행</li>
+      </ul>
+      <div class="meta">
+        <div class="box"><div class="t">Valuation</div><p>2027 EPS 기반 1년 후 거래 가격. relative P/E 75%(S&amp;P 500 대비 25% 할인) — 1년 평균과 -1 표준편차 사이.</p></div>
+        <div class="box risk"><div class="t">Key Risks</div><p>FOMC 급격한 금리인하, 예상 초과 cash sorting, 주식시장 급락, 미 경기 약화, organic 성장 둔화·client attrition, 예금 이탈, 거래·자산운용 가격경쟁.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLG -->
+  <section class="co">
+    <div class="co-head">
+      <div class="tag">REITs (Office) · US</div>
+      <h3>SL 그린 리얼티 (SLG)</h3>
+      <p class="lede">금융·자산매각 시장의 추가 촉매 — NYC 집중 포트폴리오의 pricing power 여전히 저평가.</p>
+    </div>
+    <div class="co-body">
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Buy</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$55</div></div>
+        <div class="chip"><div class="k">Current Price</div><div class="v">$50.17</div><div class="s up">+9.6%</div></div>
+        <div class="chip"><div class="k">Market Cap</div><div class="v">$3.5bn</div></div>
+      </div>
+      <ul class="pts">
+        <li>전량 NYC 기반 포트폴리오가 펀더멘털·capital market 모멘텀 수혜 → NAV 대비 <b>37% 할인</b> 축소 기대</li>
+        <li>맨해튼 오피스 강세 지속 — YTD 리싱(5월까지) +9.6% YoY, asking rent +5.8% YoY. 2000년 이후 최고 페이스</li>
+        <li>2Q26 실적 시 FY26 리싱(1.7M SF)·YE leased rate(95.0%) 목표 상향 가능. cash leasing spread 목표 상단(+7.5~12.5%)</li>
+        <li>2026/2027 FFO/sh $4.59/$4.87(컨센 $4.58/$4.82 상회). $55 PT는 2027 FAD 22.2x</li>
+      </ul>
+      <div class="meta">
+        <div class="box"><div class="t">Valuation</div><p>DDM(3년 명시 예측 + terminal, CAPM cap rate). P/FFO·P/AFFO·NAV 보조 활용.</p></div>
+        <div class="box risk"><div class="t">Key Risks</div><p>de-lever용 자산매각 실패·열위 가격, Mamdani 시장 정책 여파, AI 인력 최적화에 따른 테넌트 축소, 경기침체.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPGI -->
+  <section class="co">
+    <div class="co-head">
+      <div class="tag">Financial Data · US</div>
+      <h3>S&amp;P 글로벌 (SPGI) <span class="new">NEW</span></h3>
+      <p class="lede">다각화·디펜시브 고품질 earnings compounder — 시장 appreciation·발행 트렌드 upside를 매력적 진입점에.</p>
+    </div>
+    <div class="co-body">
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Buy</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$566</div></div>
+        <div class="chip"><div class="k">Current Price</div><div class="v">$395.14</div><div class="s up">+43.2%</div></div>
+        <div class="chip"><div class="k">Market Cap</div><div class="v">$123bn</div></div>
+      </div>
+      <ul class="pts">
+        <li>Mobility 분사 후 Ratings·Index·Energy·Market Intelligence 집중 entity로 재편</li>
+        <li>Market Intelligence — 벤더 통합으로 wallet share 확대, AI 모델 소비에 최적화된 데이터. 매출의 6%만 데이터 배포, 나머지는 강한 moat</li>
+        <li>Ratings — 과점 구조·brand·규제 moat. $8T 만기벽 + 기회적 발행(M&amp;A·LBO·AI 인프라) 회복, private credit 등 신규 자산군 진입</li>
+        <li>Indices — 영업마진 70% 고성장·고마진, active→passive secular tailwind. ETF·멀티에셋 인덱스 리더</li>
+      </ul>
+      <div class="meta">
+        <div class="box"><div class="t">Valuation</div><p>DCF base case $566 — normalized 매출 6.5%·EBIT 8%, WACC 9.25%, terminal 3.5%. 13~24개월 EPS P/E ~24x.</p></div>
+        <div class="box risk"><div class="t">Key Risks</div><p>매크로·end-market 수요 변화, 가격 압력, 기술(사이버보안 포함), 경쟁 강도.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- V -->
+  <section class="co">
+    <div class="co-head">
+      <div class="tag">Payments / FinTech · US</div>
+      <h3>비자 (V)</h3>
+      <p class="lede">점유율 확대·cash→digital 전환·VAS 침투·견조 펀더멘털로 outperform 위치.</p>
+    </div>
+    <div class="co-body">
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Buy</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$430</div></div>
+        <div class="chip"><div class="k">Current Price</div><div class="v">$330.52</div><div class="s up">+30.1%</div></div>
+        <div class="chip"><div class="k">Market Cap</div><div class="v">$634bn</div></div>
+      </div>
+      <ul class="pts">
+        <li>소비 데이터 견조·월드컵 boost — CY2Q26 미 소비지출 Q/Q 가속, 또 한 번 강한 분기 setup</li>
+        <li>AI disintermediation 리스크 제한적, 오히려 agentic commerce·agent-to-agent 거래로 VAS attach 증가 수혜</li>
+        <li>merchant settlement 예비 승인이 overhang 제거·심리 개선·미 규제 리스크 완화. 최종 승인 시(late 2026~early 2027) 2027 중후반 시행</li>
+        <li>YTD 언더퍼폼은 AI·stablecoin·"payments nationalism" 복합 overhang 때문 — 광범한 네트워크·구조적 moat 감안 시 과장</li>
+      </ul>
+      <div class="meta">
+        <div class="box"><div class="t">Valuation</div><p>CY27 EPS ~28x — payments peer 상회. 업계 선도 모델·성장률·수익성으로 정당화.</p></div>
+        <div class="box risk"><div class="t">Key Risks</div><p>규제 강화, cash→digital 성숙에 따른 미 볼륨 둔화, cross-border 둔화, 소비·신용 약화, 딜 인센티브 증가, stablecoin 등 대체 rail 경쟁.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VTR -->
+  <section class="co">
+    <div class="co-head">
+      <div class="tag">REITs (Healthcare) · US</div>
+      <h3>벤타스 (VTR)</h3>
+      <p class="lede">규율있는 실행·전략적 인수·우호적 senior housing 수급으로 가속화되는 earnings 성장.</p>
+    </div>
+    <div class="co-body">
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Buy</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$100</div></div>
+        <div class="chip"><div class="k">Current Price</div><div class="v">$87.43</div><div class="s up">+14.4%</div></div>
+        <div class="chip"><div class="k">Market Cap</div><div class="v">$41bn</div></div>
+      </div>
+      <ul class="pts">
+        <li>'1-2-3 전략' 결실 — senior housing 인수·SHOP 실행(우호적 수급)·내부 성장(Brookdale Triple-Net→SHOP 전환 등)이 earnings 가속 견인</li>
+        <li>2026 FFO/sh 가이던스 상향 — 4월 $3.84~3.89(중간 $3.86). SS NOI 전망 16%(기존 15%)·인수 outlook $3.0B(기존 $2.5B)</li>
+        <li>YTD 인수 $1.7B 완료, 강한 cost of capital·유동성 $5.5B로 추가 upside. SHOP 점유율 87%로 occupancy gain 여지</li>
+        <li>P/FFO 20.4x(5년 평균 17.1x) — 개선된 SHOP·인수 가속으로 프리미엄 정당화, peer WELL(31.4x) 대비 갭 축소 기회</li>
+      </ul>
+      <div class="meta">
+        <div class="box"><div class="t">Valuation</div><p>DDM(earnings·배당·CF 예측 + CAPM cap rate). FFO/AFFO·NAV 보조 활용.</p></div>
+        <div class="box risk"><div class="t">Key Risks</div><p>신규 COVID 변이 등 질병으로 occupancy 하락, 금리 상승에 따른 refinancing 부담, SHOP 비용(인플레·인력) 상승, 임대료 규제.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== HEALTHCARE ============================== -->
+  <div class="sec-div" id="healthcare"><div class="kicker">03</div><h2>Healthcare</h2></div>
+
+  <!-- DHR -->
+  <section class="co">
+    <div class="co-head">
+      <div class="tag">Life Science Tools · US</div>
+      <h3>다나허 (DHR) <span class="new">NEW</span></h3>
+      <p class="lede">기대치 낮고 심리 더 낮음 — 시장이 다가오는 reshoring tailwind를 놓치고 있음.</p>
+    </div>
+    <div class="co-body">
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Buy</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$250</div></div>
+        <div class="chip"><div class="k">Current Price</div><div class="v">$193.21</div><div class="s up">+29.4%</div></div>
+        <div class="chip"><div class="k">Market Cap</div><div class="v">$125bn</div></div>
+      </div>
+      <ul class="pts">
+        <li>YTD -22%로 Tools peer 회복에 후행 — 1Q26·2Q26 organic 가이드 +2%가 buy side 기대 하회</li>
+        <li>시장이 Biotech·Life Sciences 상향과 2027 진입 mid-single digit exit를 간과. A&amp;G 고객 spend·심리 개선</li>
+        <li>1Q26 bioprocessing 장비 주문 &gt;+30% YoY, 중국 +mid-single, 비호흡기 Cepheid +mid-teens, 반도체 filtration 강세</li>
+        <li>2H26 쉬운 비교 기저로 4Q26 +mid-single digit organic 복귀(모델 +5%), 2027 mid-to-high single 가속 가능. 현재 20x 2027E EPS는 5년 평균 25x 대비 큰 할인</li>
+      </ul>
+      <div class="meta">
+        <div class="box"><div class="t">Valuation</div><p>2027 EPS 28x($250) — Veralto 분사 후 구조적 성장 end-market·추정 상향·대차대조표 optionality 반영(5년 평균 60th percentile 프리미엄).</p></div>
+        <div class="box risk"><div class="t">Key Risks</div><p>bioprocessing 수요 둔화, C19 사업 backfill 실패, 지정학·검역 정책에 따른 사업 중단.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DXCM -->
+  <section class="co">
+    <div class="co-head">
+      <div class="tag">MedTech · US</div>
+      <h3>덱스컴 (DXCM) <span class="new">NEW</span></h3>
+      <p class="lede">core 매출 견조 + 15-day 모델 마진 tailwind — 연말 CMS T2 non-insulin 커버리지 발표가 2027년까지 US 커버 대상자 2배.</p>
+    </div>
+    <div class="co-body">
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Buy</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$86</div></div>
+        <div class="chip"><div class="k">Current Price</div><div class="v">$68.65</div><div class="s up">+25.3%</div></div>
+        <div class="chip"><div class="k">Market Cap</div><div class="v">$26.6bn</div></div>
+      </div>
+      <ul class="pts">
+        <li>core 물량 성장 견조 유지, US channel mix 기인 price/mix 압력은 낮은 수준으로 step down</li>
+        <li>OUS 모멘텀 — 신규 디바이스 Flex 출시로 연말 가속 잠재. LRP의 double-digit 매출 성장 달성 가능</li>
+        <li>연말 type-2 non-insulin CMS 커버리지 발표가 핵심 촉매 — US 커버 대상 <b>15M → 30M</b>(2027년말)으로 2배. 15-day wear time 롤아웃이 마진 확대·EPS 성장 뒷받침</li>
+      </ul>
+      <div class="meta">
+        <div class="box"><div class="t">Valuation</div><p>2027E EV/EBITDA 16x 적용($86) — 1년 평균 대비 low-double-digit 할인이나 MedTech 상단. 프리미엄 성장·마진 확대로 정당화.</p></div>
+        <div class="box risk"><div class="t">Key Risks</div><p>CGM 시장 성장 둔화, ABT 점유율 상실, US 약국 mix net pricing 압력, OUS price/mix 압력, GLP-1 영향, DME 경쟁입찰, T2 커버리지 엄격화.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HUM -->
+  <section class="co">
+    <div class="co-head">
+      <div class="tag">Managed Care · US</div>
+      <h3>휴매나 (HUM) <span class="new">NEW</span></h3>
+      <p class="lede">독보적 Stars 개선 잠재·멤버십 품질 집중·마진 규율 — 향후 2년 최선 MCO 후보, earnings recovery 스토리.</p>
+    </div>
+    <div class="co-body">
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Buy</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$441</div></div>
+        <div class="chip"><div class="k">Current Price</div><div class="v">$376</div><div class="s up">+17.3%</div></div>
+        <div class="chip"><div class="k">Market Cap</div><div class="v">$43bn</div></div>
+      </div>
+      <ul class="pts">
+        <li>Stars 개선이 earnings recovery 경로 — 2028 top-quartile 복귀 목표, 1Q26말 HEDIS gap closure 전년比 ~5% 앞섬</li>
+        <li>4+ Star 비중 40% 미만 → 70% 초과 시 보너스 unlock — EPS tailwind 약 <b>$12~18</b> 추정</li>
+        <li>MA 멤버십 예상 초과 성장으로 cushion 확보 → 2027 마진 회복·retention 우선. 4.5 Star 플랜 비중 확대로 future earnings de-risk</li>
+        <li>Managed Care 산업 안정화 — benefit redesign·pricing·bid 규율로 마진 재구축, 우호적 underwriting cycle</li>
+      </ul>
+      <div class="meta">
+        <div class="box"><div class="t">Valuation</div><p>2028 EPS 12x($441) — near-term trough earnings의 normalized multiple. 2026이 EPS bottom·rebasing 해일 가능성. 소비 재량·recession 리스크 거의 없음.</p></div>
+        <div class="box risk"><div class="t">Key Risks</div><p>MA pricing·utilization 압력, Stars 목표 미달, 향후 rate notice 변경, MA 시장 성장 둔화, 예상 초과 churn, 경쟁 심화, 의료보장 개혁.</p></div>
+      </div>
+      <div class="chart-card">
+        <div class="ct">Adj. EPS 영향 — Bonus Payment Flow-through × 4+ Star 비중</div>
+        <div class="tbl-wrap">
+        <table class="tbl">
+          <thead><tr><th>4+ Star 비중 \ Flow-through</th><th class="num">45%</th><th class="num">55%</th><th class="num">65%</th><th class="num">75%</th></tr></thead>
+          <tbody>
+            <tr><td>62.5%</td><td class="num">$7.84</td><td class="num">$9.58</td><td class="num">$11.33</td><td class="num">$13.07</td></tr>
+            <tr><td>67.5%</td><td class="num">$8.76</td><td class="num">$10.71</td><td class="num">$12.66</td><td class="num">$14.61</td></tr>
+            <tr><td>72.5%</td><td class="num">$9.69</td><td class="num">$11.84</td><td class="num">$13.99</td><td class="num">$16.14</td></tr>
+            <tr><td>77.5%</td><td class="num">$10.61</td><td class="num">$12.97</td><td class="num">$15.32</td><td class="num">$17.68</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IQV -->
+  <section class="co">
+    <div class="co-head">
+      <div class="tag">Healthcare Services (CRO) · US</div>
+      <h3>아이큐비아 (IQV)</h3>
+      <p class="lede">AI 내러티브가 펀더멘털과 괴리 — 시장 리더를 ~1x PEG에.</p>
+    </div>
+    <div class="co-body">
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Buy</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$240</div></div>
+        <div class="chip"><div class="k">Current Price</div><div class="v">$186.43</div><div class="s up">+28.7%</div></div>
+        <div class="chip"><div class="k">Market Cap</div><div class="v">$28bn</div></div>
+      </div>
+      <ul class="pts">
+        <li>YTD -26%로 AI disintermediation 우려에 CRO peer 하회 — 우려 과장, 규제산업 내 proprietary data moat 리더가 PEG ~1x</li>
+        <li>AI가 오히려 outsourcing 증가·신약 개수 확대 견인 가능. IQV는 AI agent &gt;190개 배포(YE27 ~500 목표), top 20 pharma 중 19곳 사용</li>
+        <li>AI 직접 위험은 사업의 일부(~$100mm)뿐이며 1Q26에도 +mid-single 성장. 2026 마진 bridge 우려는 +60bps 운영 레버리지 간과</li>
+      </ul>
+      <div class="meta">
+        <div class="box"><div class="t">Valuation</div><p>2027 EBITDA 13x($240) — 5년 평균 대비 할인. 현재 10x 2027E EBITDA로 5년 평균 13x 대비 3x turn 할인.</p></div>
+        <div class="box risk"><div class="t">Key Risks</div><p>대형 pharma 파이프라인 우선순위 조정, R&amp;D 삭감, biotech 자금 약화, outsourcing 침투 하락, 가격 압력, 점유율 상실, 규제·지정학, 마진 압력.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SYRE -->
+  <section class="co">
+    <div class="co-head">
+      <div class="tag">Biotech · US</div>
+      <h3>스파이어 테라퓨틱스 (SYRE) <span class="new">NEW</span></h3>
+      <p class="lede">IBD combo 요법 best-in-class 잠재 + 2H26~2027 임상 촉매 다수, rheumatology 확장이 underappreciated upside.</p>
+    </div>
+    <div class="co-body">
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Buy</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$135</div></div>
+        <div class="chip"><div class="k">Current Price</div><div class="v">$88.67</div><div class="s up">+52.3%</div></div>
+        <div class="chip"><div class="k">Market Cap</div><div class="v">$8.4bn</div></div>
+      </div>
+      <ul class="pts">
+        <li>IBD combo best-in-class 잠재 — risk-adjusted UC/CD peak sales 합산 ~$6.3B. Ph2 SKYLINE SPY001(α4β7) 12주 임상 관해 40%로 기대 상회</li>
+        <li>친숙한 mechanism(α4β7·TL1A·IL-23) 3종 combo(SPY120/130/230)로 경쟁우위·매력적 M&amp;A 프로파일. 경쟁사 안전성 시그널이 SYRE 포지셔닝 강화</li>
+        <li>rheumatology SPY072(TL1A) underappreciated — risk-adjusted ~$380M peak. 3Q26 Ph2 SKYWAY RA 데이터에 +20~25% 주가 잠재</li>
+        <li>3Q26 SPY003(IL-23) open-label 데이터로 pairwise combo 기대치 구체화, 2027 placebo-controlled Part B 대기</li>
+      </ul>
+      <div class="meta">
+        <div class="box"><div class="t">Valuation</div><p>risk-adjusted DCF(2040년까지 CF). WACC 15%(risk-free 4.0%, ERP 8.7%, beta 1.5), terminal 0% — small/mid-cap biotech 리스크 반영.</p></div>
+        <div class="box risk"><div class="t">Key Risks</div><p>임상 실패(SPY001/002/003/120/130/230/072), 규제 승인 지연·실패, 상업화 시 경쟁우위·reimbursement 상실, 경쟁 압력, 추가 자금조달 희석.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THC -->
+  <section class="co">
+    <div class="co-head">
+      <div class="tag">Healthcare Facilities · US</div>
+      <h3>테넷 헬스케어 (THC) <span class="new">NEW</span></h3>
+      <p class="lede">fund flow발 광범위 매도 압력이 펀더멘털과 괴리된 과도한 약세 심리 형성 — 우호적 risk-reward.</p>
+    </div>
+    <div class="co-body">
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Buy</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$260</div></div>
+        <div class="chip"><div class="k">Current Price</div><div class="v">$183.94</div><div class="s up">+41.3%</div></div>
+        <div class="chip"><div class="k">Market Cap</div><div class="v">$15.4bn</div></div>
+      </div>
+      <ul class="pts">
+        <li>3개월간 -25% — HIX payor mix headwind·utilization 둔화 우려. AI 주식 추격 위한 자금원으로 활용된 영향도</li>
+        <li>현재 6.3x NTM EBITDA(3년 평균 -1.6 표준편차) → NTM FCF yield <b>19.1%</b></li>
+        <li>관리진 펀더멘털·가이던스 confidence 재확인, 자체 4월 데이터는 안정화 시사, diagnostic lab HIX 볼륨 악화 없음</li>
+        <li>매크로가 우려만큼 나쁘지 않으면 multiple 빠른 re-rating, 19% FCF yield·자본배분 유연성이 downside backstop</li>
+      </ul>
+      <div class="meta">
+        <div class="box"><div class="t">Valuation</div><p>2027 EBITDA 7.7x($260) — 역사 평균 소폭 상회나 ASC 노출 확대·leverage 감소로 정당화(규제 headwind 일부 상쇄).</p></div>
+        <div class="box risk"><div class="t">Key Risks</div><p>입원 둔화, 인건비 마진 압력, 통합 실행 리스크, 점유율 상실, payer mix 악화, reimbursement 규제 조치.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== INDUSTRIALS ============================== -->
+  <div class="sec-div" id="industrials"><div class="kicker">04</div><h2>Industrials</h2></div>
+
+  <!-- CSTM -->
+  <section class="co">
+    <div class="co-head">
+      <div class="tag">Metals (Aluminium) · EU/US</div>
+      <h3>콘스텔리움 (CSTM)</h3>
+      <p class="lede">scrap spread·Aerospace 방산 mix·우호적 end-market으로 추가 upside, 근거리 tailwind 다수.</p>
+    </div>
+    <div class="co-body">
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Buy</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$40</div></div>
+        <div class="chip"><div class="k">Current Price</div><div class="v">$33.73</div><div class="s up">+18.6%</div></div>
+        <div class="chip"><div class="k">Market Cap</div><div class="v">$4.6bn</div></div>
+      </div>
+      <ul class="pts">
+        <li>scrap spread 개선이 1Q26부터 반영 → 2026 adj. EBITDA 가이던스 <b>15%</b> 상향. 2H 50% 락인·보수적 가정으로 2Q/3Q 추가 상향 여지(분기 $15~20m)</li>
+        <li>A&amp;T 구조적 고마진 — 1Q 마진 ~$1,700/t(+9% QoQ, +16% YoY), 방산(TD&amp;I)·믹스 견인</li>
+        <li>알루미늄 캔의 플라스틱·유리 대비 점유율 상승, 월드컵 음료 수요 catalyst(P&amp;ARP)</li>
+        <li>~6.3x 2026E EV/EBITDA(Kaiser ~10x), segment peer 중위 하회 — 펀더멘털 개선 대비 multiple 확대 여력</li>
+      </ul>
+      <div class="meta">
+        <div class="box"><div class="t">Valuation</div><p>SOTP — 2026e EV/EBITDA A&amp;T 9x, P&amp;ARP 6.5x, AS&amp;I 6x. midstream 특성 반영해 end-market comps에 haircut.</p></div>
+        <div class="box risk"><div class="t">Key Risks</div><p>end-market 예상 초과 약화, 불리한 cost structure, 예상 하회 비용절감, 비우호적 매크로.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTVA -->
+  <section class="co">
+    <div class="co-head">
+      <div class="tag">Agriculture / Materials · US</div>
+      <h3>코르테바 (CTVA) <span class="new">NEW</span></h3>
+      <p class="lede">곧 분사될 Seed 사업 저평가로 3~5x 할인 거래.</p>
+    </div>
+    <div class="co-body">
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Buy</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$100</div></div>
+        <div class="chip"><div class="k">Current Price</div><div class="v">$81.62</div><div class="s up">+22.5%</div></div>
+        <div class="chip"><div class="k">Market Cap</div><div class="v">$53bn</div></div>
+      </div>
+      <ul class="pts">
+        <li>분사 예정 Seed 사업은 18~20x EBITDA 적정(현재 ~15x '26E) — 3~5x 할인은 $12~20/주(15~26% upside)</li>
+        <li>촉매 경로 — 6/30 Form 10 공개, 9/15 investor day(Vylor·New Corteva), 4Q 초 Vylor 분리</li>
+        <li>Vylor — 세계 최대 pure-play seed의 scarcity value, gene editing·hybrid wheat·biofuel 미래 가치 driver로 20x EBITDA 상회 잠재</li>
+        <li>controllables·곡물/oilseed/biofuel 수요·강한 신제품 파이프라인, 13.0x '26E EBITDA·2027 $100 SOTP 대비 27% 할인</li>
+      </ul>
+      <div class="meta">
+        <div class="box"><div class="t">Valuation</div><p>SOTP — Seed 18x, Crop Protection 9x EBITDA. Seed는 시장선도 응용바이오 plat 수준, CP는 낮은 분자 집중·patent cliff 적음으로 peer 프리미엄.</p></div>
+        <div class="box risk"><div class="t">Key Risks</div><p>옥수수·대두 가격 하락, 원자재·에너지·운임 상승, 신제품 성공 미달, 기상·작황, BRL·TRY·EUR 약세·USD 강세.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ESE -->
+  <section class="co">
+    <div class="co-head">
+      <div class="tag">Aerospace &amp; Defense / Industrials · US</div>
+      <h3>ESCO 테크놀로지스 (ESE)</h3>
+      <p class="lede">디펜시브 매출 기반(상업 OE·Navy·grid) 위에 지속 HSD 매출성장 + 볼륨·pricing·BT 마진 확대, Megger 인수 가세.</p>
+    </div>
+    <div class="co-body">
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Buy</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$400</div></div>
+        <div class="chip"><div class="k">Current Price</div><div class="v">$354.95</div><div class="s up">+12.7%</div></div>
+        <div class="chip"><div class="k">Market Cap</div><div class="v">$8.9bn</div></div>
+      </div>
+      <ul class="pts">
+        <li>디펜시브 매출 기반 위 LDD~low-teens organic EPS 성장 알고리즘, mid-teens+ upside. Megger(2026.4 발표)로 EPS CAGR 20%+ 진입</li>
+        <li>A&amp;D(post-Megger ~35%) — 잠수함(Virginia/Columbia/SSN AUKUS)·상업 OE(737/777/A350)·군용기(F-35/F-15/F-47) 수요</li>
+        <li>USG(post-Megger ~52%) — 미 grid 테스트 솔루션 선도 점유, 노후 grid 연장·신규 설치 수혜. Megger F1Q27 클로징 시 USG 2배·글로벌 확장</li>
+      </ul>
+      <div class="meta">
+        <div class="box"><div class="t">Valuation</div><p>2028 pro-forma adj. EPS $11.76에 34x($400) — peer 평균 forward 대비 소폭 할인. Megger accretion 포함. BWXT·CW 대비 6~20% 할인.</p></div>
+        <div class="box risk"><div class="t">Key Risks</div><p>cyclical end-market 침체, Navy build rate 둔화, 점유율 상실, M&amp;A 볼륨 하회, 규제 승인 실패, 공급망 병목.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FTAI -->
+  <section class="co">
+    <div class="co-head">
+      <div class="tag">Aerospace Aftermarket · US</div>
+      <h3>FTAI 에비에이션 (FTAI) <span class="new">NEW</span></h3>
+      <p class="lede">CFM56·V2500 핵심 aftermarket 서비스 사업자 — 엔진 역량·자산 보유 flywheel + FTAI Power의 AI 데이터센터 성장.</p>
+    </div>
+    <div class="co-body">
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Buy</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$335</div></div>
+        <div class="chip"><div class="k">Current Price</div><div class="v">$268.40</div><div class="s up">+24.8%</div></div>
+        <div class="chip"><div class="k">Market Cap</div><div class="v">~$28bn</div></div>
+      </div>
+      <ul class="pts">
+        <li>고성장 EBITDA compounder — 1Q26 Aerospace EBITDA +70% YoY. aftermarket·leasing 수요 견조(중동 영향 우려보다 경미)</li>
+        <li>module 생산 YoY ~2배, 2026 1,050개 생산 트랙(1Q26 270개). 2026 total adj. EBITDA 목표 ~$16.25억(SCI 포함)</li>
+        <li>FTAI Power — 100 unit 목표 도달 시 연 $5억~10억 adj. EBITDA 잠재. aeroderivative 터빈(25MW/unit)으로 AI 전력 수요 대응, 4Q26 첫 Power unit 인도 트랙</li>
+      </ul>
+      <div class="meta">
+        <div class="box"><div class="t">Valuation</div><p>2026·2027 평균 EBITDA에 blended ~20x(leasing ~9x, aerospace ~25x, asset-mgmt ~17x 가중) 적용.</p></div>
+        <div class="box risk"><div class="t">Key Risks</div><p>aerospace 서비스 ramp-up 지연, SCI I·II $12B+ 자본 배치 실패, 경기 약화에 따른 항공사 고객 재량지출 둔화, FAA PMA 잔여 부품 승인 거절.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GLNG -->
+  <section class="co">
+    <div class="co-head">
+      <div class="tag">Energy (LNG) · US-listed</div>
+      <h3>골라 LNG (GLNG) <span class="new">NEW</span></h3>
+      <p class="lede">신규 floating liquefaction 자산 관련 근거리 촉매 파이프라인이 밸류에이션 개선.</p>
+    </div>
+    <div class="co-body">
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Buy</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$65</div></div>
+        <div class="chip"><div class="k">Current Price</div><div class="v">$50.05</div><div class="s up">+29.9%</div></div>
+        <div class="chip"><div class="k">Market Cap</div><div class="v">$5.1bn</div></div>
+      </div>
+      <ul class="pts">
+        <li>4번째 자산·장기계약 관련 근거리 촉매 연속 — long-lead item 이미 발주, 이번 Fall FID 예상</li>
+        <li>유일한 FLNG-as-a-service 사업자. 현 3개 FLNG 모두 2028년까지 20년 장기계약, pro-forma run-rate adj. EBITDA ~$800MM</li>
+        <li>자산 수 적어 신규 FID·계약이 EBITDA에 step-change. MK II(3.4 Mtpa) 4번째 자산 — 남미·서아프리카·중동 late-stage 논의. 자산당 $10~15/주 가치</li>
+      </ul>
+      <div class="meta">
+        <div class="box"><div class="t">Valuation</div><p>SOTP($65) — Mauritania/Senegal nameplate 이상 생산, 신규 MK II FID(5.5x EBITDA/Build, 전환비용 ~$2.4Bn) 가정. 목표 build cost 5.0~6.0x EBITDA(15~20년 계약).</p></div>
+        <div class="box risk"><div class="t">Key Risks</div><p>4번째 자산 FID 지연·미진행 또는 계약조건 commercial hurdle. 지정학 리스크·에너지 안보가 thesis 핵심 변수.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- JBHT -->
+  <section class="co">
+    <div class="co-head">
+      <div class="tag">Transportation / Logistics · US</div>
+      <h3>J.B. 헌트 (JBHT) <span class="new">NEW</span></h3>
+      <p class="lede">확대되는 intermodal 비용 우위가 truck→rail 전환 견인 — 미 최대 intermodal 사업자의 볼륨 가속·마진 확대·multiple re-rate.</p>
+    </div>
+    <div class="co-body">
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Buy</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$330</div></div>
+        <div class="chip"><div class="k">Current Price</div><div class="v">$274.68</div><div class="s up">+20.1%</div></div>
+        <div class="chip"><div class="k">Market Cap</div><div class="v">$26bn</div></div>
+      </div>
+      <ul class="pts">
+        <li>intermodal 구조적 inflection — truckload 대비 ~<b>35%</b> 절감(고유가·트럭 capacity 타이트)으로 화물 전환 가속, multi-year 성장 cycle</li>
+        <li>지배적 scale·서비스 리더십으로 fragmented intermodal 시장 점유율 확대. multi-year pre-funded 투자로 underutilized capacity → 볼륨 회복 시 큰 operating leverage</li>
+        <li>intermodal rate가 truckload에 후행하는 우호적 pricing으로 마진 확대·향후 수년 earnings 거의 2배. 자본집약도 완화로 ROIC step-change</li>
+        <li>개선된 payout ratio·FCF로 headline P/E 매력 — 최근 주가 강세에도 밸류에이션 매력 유지</li>
+      </ul>
+      <div class="meta">
+        <div class="box"><div class="t">Valuation</div><p>2027 EPS 32x($330) — best-in-class 운송사 수준. ROIC·earnings 갭 축소 가정.</p></div>
+        <div class="box risk"><div class="t">Key Risks</div><p>경기 악화, western rail 파트너의 성장 둔화·마진 최적화 선택, class I eastern rail 서비스 중단·계약 분쟁.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- JCI -->
+  <section class="co">
+    <div class="co-head">
+      <div class="tag">Industrials (HVAC) · US</div>
+      <h3>존슨컨트롤스 (JCI) <span class="new">NEW</span></h3>
+      <p class="lede">신임 CEO의 빠르고 의미있는 운영 개선 — ~500bps 마진 개선 잠재, 데이터센터 노출이 매출 성장 가속.</p>
+    </div>
+    <div class="co-body">
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Buy</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$164</div></div>
+        <div class="chip"><div class="k">Current Price</div><div class="v">$145.49</div><div class="s up">+12.7%</div></div>
+        <div class="chip"><div class="k">Market Cap</div><div class="v">$89bn</div></div>
+      </div>
+      <ul class="pts">
+        <li>신임 CEO Joakim Weidemanis(전 DHR, 2025.3 합류)의 운영 개선 기회 — peer 대비 장기 마진 갭 축소</li>
+        <li>~<b>500bps</b> 영업마진 개선 잠재는 컨센에 거의 미반영 — 2025~2030 EPS 2배(~$9) 가능, 컨센 대비 ~DD upside</li>
+        <li>데이터센터 노출(2025 매출 12% → 수년 내 1/3)로 매출 가속. 2026.6 investor day에서 장기 성장 목표 MSD→HSD 상향</li>
+        <li>~27x NTM P/E로 best-in-class HVAC peer TT(~32x) 대비 여전히 저평가</li>
+      </ul>
+      <div class="meta">
+        <div class="box"><div class="t">Valuation</div><p>12개월 후 NTM EPS 26x($164) — peer median 소폭 프리미엄. 마진 개선·데이터센터 tailwind 반영(best-in-class 대비 갭 일부 축소 가정).</p></div>
+        <div class="box risk"><div class="t">Key Risks</div><p>마진 개선 실행 부진, 주문 성장 둔화, 희석적 포트폴리오 변경, 인플레 환경의 price/cost headwind.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LUNR -->
+  <section class="co">
+    <div class="co-head">
+      <div class="tag">Space / Defense Tech · US</div>
+      <h3>인튜이티브 머신스 (LUNR)</h3>
+      <p class="lede">달 NASA 인프라 awards·C-band 재할당 GEO 위성 수주에 유리한 위치.</p>
+    </div>
+    <div class="co-body">
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Buy</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$34</div></div>
+        <div class="chip"><div class="k">Current Price</div><div class="v">$18.70</div><div class="s up">+81.8%</div></div>
+        <div class="chip"><div class="k">Market Cap</div><div class="v">$4bn</div></div>
+      </div>
+      <ul class="pts">
+        <li>달 경제 secular 기회 — 미·중 space race로 미 달 탐사 지출 2030년 $10bn(5% CAGR), Blue Sky 2035E TAM $25~30bn</li>
+        <li>NASA가 legacy→상업 파트너로 예산 재배분 — core LUNR 파이프라인 2025~29E 40% CAGR로 &gt;$8bn 전망</li>
+        <li>Lanteris(1월 클로징) underappreciated — FCC의 Upper C-band 100MHz 정리(2027.7 이내) 수혜. 총 9~11기(기당 ~$200m) 중 3~5기 수주 가능</li>
+      </ul>
+      <div class="meta">
+        <div class="box"><div class="t">Valuation</div><p>blended — 2030E EV/revenue 12x(track record로 peer 할인) + 2030E EV/EBITDA 30x, 4년 할인.</p></div>
+        <div class="box risk"><div class="t">Key Risks</div><p>contracting·timing·운영 실행, 주요 계약 수주 실패, 임무 수행 중 anomaly, 경쟁 심화.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RIVN -->
+  <section class="co">
+    <div class="co-head">
+      <div class="tag">Autos (EV) · US</div>
+      <h3>리비안 (RIVN) <span class="new">NEW</span></h3>
+      <p class="lede">$12.5억 Uber robotaxi 파트너십·내재화 자율주행·자본효율적 R2 양산으로 software-defined EV pure-play 입지 강화.</p>
+    </div>
+    <div class="co-body">
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Buy</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$23</div></div>
+        <div class="chip"><div class="k">Current Price</div><div class="v">$14.86</div><div class="s up">+54.8%</div></div>
+        <div class="chip"><div class="k">Market Cap</div><div class="v">$20bn</div></div>
+      </div>
+      <ul class="pts">
+        <li>thesis 3축 — R2 롤아웃(올해 저볼륨, 대부분 이해됨), 내재화 자율주행($1.25bn Uber robotaxi 파트너십 검증), VW JV·DoE 자금으로 de-risk된 대차대조표</li>
+        <li>R2(Normal, IL)로 프리미엄 niche→고볼륨 전환 — $45k~high $50k 가격대로 Model Y·중형 SUV 경쟁. 향후 인도량 성장 견인</li>
+        <li>미 중형 SUV/CUV 연 5m+ 시장 — 점유율 1pt당 ~50k대. 장기적으로 RAV4(~400k)·Model Y(300k+) 규모 잠재</li>
+        <li>VW 현금·DoE $6bn 대출로 capital runway 2028년까지 연장 — 과거 bear 논리였던 대차대조표 transformed. 매크로 변동 속 내부 마일스톤 기반 거래</li>
+      </ul>
+      <div class="meta">
+        <div class="box"><div class="t">Valuation</div><p>2027E 매출 ~2.5x 기반 $23(현금 미반영).</p></div>
+        <div class="box risk"><div class="t">Key Risks</div><p>EV 수요 리스크, 경쟁 심화(완성차·배터리), R2·자율주행 플랫폼 실행 리스크.</p></div>
+      </div>
+      <div class="chart-card">
+        <div class="ct">Rivian 인도량 추이 (대)</div>
+        <svg viewBox="0 0 620 240" width="100%" font-family="Helvetica Neue, Arial, sans-serif">
+          <line x1="55" y1="200" x2="600" y2="200" stroke="#cfd6e0"/>
+          <g font-size="9.5" fill="#9aa3b2" text-anchor="end">
+            <text x="48" y="204">0</text><text x="48" y="155">100k</text><text x="48" y="110">200k</text><text x="48" y="65">300k</text>
+          </g>
+          <g stroke="#eef1f6"><line x1="55" y1="155" x2="600" y2="155"/><line x1="55" y1="110" x2="600" y2="110"/><line x1="55" y1="65" x2="600" y2="65"/></g>
+          <!-- approx values: 2023 50k, 2024 51k, 2025 42k, 2026E 64k, 2027E 118k, 2028E 250k -->
+          <g fill="#1d4a9c">
+            <rect x="80" y="177.5" width="60" height="22.5"/>
+            <rect x="170" y="177" width="60" height="23"/>
+            <rect x="260" y="181" width="60" height="19"/>
+            <rect x="350" y="171" width="60" height="29"/>
+            <rect x="440" y="147" width="60" height="53"/>
+            <rect x="530" y="87.5" width="60" height="112.5"/>
+          </g>
+          <g font-size="10" fill="#1b1e24" text-anchor="middle">
+            <text x="110" y="216">2023</text><text x="200" y="216">2024</text><text x="290" y="216">2025</text>
+            <text x="380" y="216">2026E</text><text x="470" y="216">2027E</text><text x="560" y="216">2028E</text>
+          </g>
+        </svg>
+        <div class="chart-src">2026E 이후는 추정치.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SITE -->
+  <section class="co">
+    <div class="co-head">
+      <div class="tag">Distribution / Industrials · US</div>
+      <h3>사이트원 랜드스케이프 (SITE) <span class="new">NEW</span></h3>
+      <p class="lede">보수적 가이던스·할인된 밸류에이션·EBITDA upside·investor day 촉매가 cyclical headwind 상쇄.</p>
+    </div>
+    <div class="co-body">
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Buy</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$160</div></div>
+        <div class="chip"><div class="k">Current Price</div><div class="v">$114.99</div><div class="s up">+39.1%</div></div>
+        <div class="chip"><div class="k">Market Cap</div><div class="v">$5bn</div></div>
+      </div>
+      <ul class="pts">
+        <li>조경 supply 산업 roll-up 리더 — 안정적 유지보수·고객기반 확대·M&amp;A 성장. cyclical headwind로 둔화했으나 보수적 가이던스로 매력적 진입점</li>
+        <li>주가 반응 과도 — in-line 1Q·가이던스 유지 후 ~15% 하락(XHB -3%, Russell 3000 -0.15%). 시장이 incremental M&amp;A 감안 시 암묵적 cut으로 해석</li>
+        <li>가이던스 upside — gross margin 확대·SG&amp;A leverage로 EBITDA $425~455m 상단 가능</li>
+        <li>~11x NTM EBITDA(4년 평균 ~16x 대비 ~30% 할인, 상장 이후 18x 대비 더 큰 할인). 6/23~24 investor day(13% 마진 목표 경로)가 촉매</li>
+      </ul>
+      <div class="meta">
+        <div class="box"><div class="t">Valuation</div><p>NTM EBITDA 16x($160) — 4년 평균 수준, 장기 평균 ~18x 하회(최근 성장·마진 둔화 반영).</p></div>
+        <div class="box risk"><div class="t">Key Risks</div><p>M&amp;A 둔화, EBITDA 마진 압력 지속, 매크로 불확실성에 따른 조경 supply 수요 둔화.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SW -->
+  <section class="co">
+    <div class="co-head">
+      <div class="tag">Packaging / Materials · US</div>
+      <h3>스머핏 웨스트락 (SW) <span class="new">NEW</span></h3>
+      <p class="lede">검증된 owner-operator 모델 롤아웃에 따른 다년 마진 확대로 매력적 주주가치 창출 기회.</p>
+    </div>
+    <div class="co-body">
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Buy</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$57</div></div>
+        <div class="chip"><div class="k">Current Price</div><div class="v">$46.84</div><div class="s up">+21.7%</div></div>
+        <div class="chip"><div class="k">Market Cap</div><div class="v">$24bn</div></div>
+      </div>
+      <ul class="pts">
+        <li>핵심 촉매 — Smurfit Kappa의 owner-operator 모델을 북미 자산에 적용. 분권화·local P&amp;L 책임으로 적자 공장 합병 시 ~70% → ~30%(1Q26)로 축소</li>
+        <li>북미 마진 2030년까지 400bps+ 확대(→~20%) 목표. 고마진 LATAM 등 international이 안정적 CF·운영 playbook 제공</li>
+        <li>2030년까지 adj. EBITDA ~$7bn·마진 ~300bps 확대 계획. 2030년까지 배당 ~$5bn·2027년 buyback 개시</li>
+        <li>containerboard 가격 올해 +$100/톤 — 강한 pricing 환경 수혜</li>
+      </ul>
+      <div class="meta">
+        <div class="box"><div class="t">Valuation</div><p>2026 EBITDA 현재 7.4x → target 8.5x 적정(5년 평균 6.7x~peak 8.5x). WestRock 자산 가치 unlock·peer 대비 우수 마진(~16% vs ~13%) 반영.</p></div>
+        <div class="box risk"><div class="t">Key Risks</div><p>EBITDA 급락(고에너지·경기침체·경쟁), 고유가·매크로 둔화에 따른 multiple 축소.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WCN -->
+  <section class="co">
+    <div class="co-head">
+      <div class="tag">Waste / Industrials · US</div>
+      <h3>웨이스트 커넥션스 (WCN)</h3>
+      <p class="lede">북미 3위·업계 최고 EBITDA 마진. M&amp;A·원자재 회복·내부 효율로 2026+ earnings upside.</p>
+    </div>
+    <div class="co-body">
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Buy</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$220</div></div>
+        <div class="chip"><div class="k">Current Price</div><div class="v">$166.21</div><div class="s up">+32.4%</div></div>
+        <div class="chip"><div class="k">Market Cap</div><div class="v">$40bn</div></div>
+      </div>
+      <ul class="pts">
+        <li>차별화 전략 — 경쟁 치열한 대도시 회피, 고점유 시장 타깃. 분권화·local P&amp;L 자율로 우수 결과</li>
+        <li>AI 기술 투자로 디지털화·효율 — 2026 dynamic routing·고객 connectivity 플랫폼 롤아웃, 중기 마진 확대</li>
+        <li>상대적으로 작은 규모로 incremental M&amp;A 최대 수혜. NYC 계약·Arrowhead 매립지 rail 접근으로 동부 인수 시장 확대</li>
+        <li>FY27 FCF 전환율 ~50% 개선 전망(Chiquita 비용 감소·capex 하락·RNG). FY27 FCF yield ~4.5% — AI 리스크 없는 디펜시브 우량주로 매력</li>
+      </ul>
+      <div class="meta">
+        <div class="box"><div class="t">Valuation</div><p>DCF — normalized 매출 ~5%·EBIT ~8%, WACC 7.5%, 10년 후 terminal 3.25%. 13~24개월 EV/EBITDA ~17x.</p></div>
+        <div class="box risk"><div class="t">Key Risks</div><p>불리한 매크로, 사업/지역별 경쟁 압력, cost 인플레 상회 pricing 능력, 인력 안전·확보, M&amp;A 실행, Chiquita 비용 초과, 규제 변화.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- XYL -->
+  <section class="co">
+    <div class="co-head">
+      <div class="tag">Water Tech / Industrials · US</div>
+      <h3>자일럼 (XYL)</h3>
+      <p class="lede">80/20 기반 outsized 마진 확대(추정 상향 사이클)·디펜시브 end-market·buyback tailwind·달성가능 가이던스·매력적 밸류에이션.</p>
+    </div>
+    <div class="co-body">
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Buy</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$155</div></div>
+        <div class="chip"><div class="k">Current Price</div><div class="v">$117</div><div class="s up">+32.5%</div></div>
+        <div class="chip"><div class="k">Market Cap</div><div class="v">$27bn</div></div>
+      </div>
+      <ul class="pts">
+        <li>80/20 마진 확대 early~mid-innings — 과거 case study는 5년+ 마진 확대. 다년 positive earnings 추정 사이클</li>
+        <li>디펜시브 end-market — 매출 ~50%가 안정적 water utility(노후 인프라 secular tailwind, opex 중심)</li>
+        <li>net cash 근접·신규 $1.5bn buyback(최근 수년 첫 의미있는 매입, ~5% EPS accretive 가능)</li>
+        <li>2026 가이던스 달성가능(organic 2~4%, EBITDA 마진 +70~110bps). ~20x 2026 P/E(MI/EE·Water peer ~23x 대비 ~15% 할인, pre-COVID 이후 최저권)</li>
+      </ul>
+      <div class="meta">
+        <div class="box"><div class="t">Valuation</div><p>2026 EPS 28x($155) — peer median 대비 20% 프리미엄(역사 10~45% 레인지 중간). 80/20·Evoqua 시너지·utility 노출로 정당화.</p></div>
+        <div class="box risk"><div class="t">Key Risks</div><p>M&amp;A 통합 차질, 매크로 수요 둔화, FX 노출, 원가 급변.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== TMT ============================== -->
+  <div class="sec-div" id="tmt"><div class="kicker">05</div><h2>Technology, Media &amp; Telecoms</h2></div>
+
+  <!-- APP -->
+  <section class="co">
+    <div class="co-head">
+      <div class="tag">Internet / AdTech · US</div>
+      <h3>앱러빈 (APP) <span class="new">NEW</span></h3>
+      <p class="lede">가속하는 gaming·부상하는 consumer advertising·복리적 AI 모델 개선이 추동하는 unique scaled Internet 자산.</p>
+    </div>
+    <div class="co-body">
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Buy</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$660</div></div>
+        <div class="chip"><div class="k">Current Price</div><div class="v">$445.93</div><div class="s up">+48.0%</div></div>
+        <div class="chip"><div class="k">Market Cap</div><div class="v">$155bn</div></div>
+      </div>
+      <ul class="pts">
+        <li>매출 +50%+ YoY·EBITDA 마진 mid-80s — core gaming UA + 부상하는 consumer advertising 양쪽 성장 기회</li>
+        <li>1Q26 핵심 — LT thesis 기둥(gaming 수요 가속·hybrid monetization·consumer tooling·모델 개선)이 동시 개선. early AXON 2.0 시기 연상</li>
+        <li>Consumer self-service 플랫폼 GA(6월 트랙)로 GenAI creative tooling·cost-per-lead 최적화 제약 해소 → flywheel 강화(광고주↑→데이터↑→정확도↑→예산↑)</li>
+        <li>Consumer는 작은 base지만 더 큰 광고 풀 타깃, 데이터 침투 상승 시 가파른 모델 개선 곡선 — 영웅적 침투 없이도 material 가능</li>
+      </ul>
+      <div class="meta">
+        <div class="box"><div class="t">Valuation</div><p>2027E Adj. EBITDA 25x·GAAP EPS 30x 기반 $660 — 논쟁이 '성장 지속 여부'에서 '플랫폼 규모 한계'로 이동.</p></div>
+        <div class="box risk"><div class="t">Key Risks</div><p>eCommerce 솔루션 GA 지연, 경쟁 심화, eCommerce 광고 take rate 하회, 규제 헤드라인 변동, 성장 둔화 시 multiple 축소.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DLR -->
+  <section class="co">
+    <div class="co-head">
+      <div class="tag">REITs (Data Center) · US</div>
+      <h3>디지털 리얼티 (DLR)</h3>
+      <p class="lede">긍정적 펀더멘털 tailwind로 low double-digit 수익(AFFO/주 성장 + 배당) 전달 확신.</p>
+    </div>
+    <div class="co-body">
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Buy</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$220</div></div>
+        <div class="chip"><div class="k">Current Price</div><div class="v">$192.44</div><div class="s up">+14.3%</div></div>
+        <div class="chip"><div class="k">Market Cap</div><div class="v">$69bn</div></div>
+      </div>
+      <ul class="pts">
+        <li>leasing 매출 성장 10.7% DBE(2026, 2025 9.6% 위)·AFFO/주 2028까지 10.4% CAGR. hyperscale cloud·AI 모멘텀, $1B+ backlog</li>
+        <li>AI inference가 data center leasing에 기여 시작 — 0-1 MW 신규 signing 1Q26 +40% YoY, AI 비중 21%(1Q25 low-double 대비)</li>
+        <li>Amazon·MS·Google·Meta·Oracle 합산 capex 올해 $680B+(+83% YoY)로 1MW+ leasing 모멘텀 지속</li>
+        <li>6/22 거래 — Kansas City 1.4K에이커(전력 확보), Teraco 지분 확대, Columbia Capital 인수($9B fund commitment 추가, 기존 ~$30B private capital)</li>
+      </ul>
+      <div class="meta">
+        <div class="box"><div class="t">Valuation</div><p>2027 AFFO/주 $8.01에 27.5x($220) — 긍정적 펀더멘털로 역사 평균 레인지 소폭 상회.</p></div>
+        <div class="box risk"><div class="t">Key Risks</div><p>대형 capacity leasing(AI 포함) 수요 둔화, hyperscale 고객 집중, pricing power 약화, 전력·개발비 상승, higher-for-longer 금리.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MPWR -->
+  <section class="co">
+    <div class="co-head">
+      <div class="tag">Semiconductors (Analog) · US</div>
+      <h3>모놀리식 파워 시스템스 (MPWR) <span class="new">NEW</span></h3>
+      <p class="lede">AI 전력 시장 리더십·꾸준한 점유율 확대·다각화 성장 프로파일로 의미있는 outperformance 지속.</p>
+    </div>
+    <div class="co-body">
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Buy</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$1,850</div></div>
+        <div class="chip"><div class="k">Current Price</div><div class="v">$1,438</div><div class="s up">+28.7%</div></div>
+        <div class="chip"><div class="k">Market Cap</div><div class="v">$75.8bn</div></div>
+      </div>
+      <ul class="pts">
+        <li>Analog 최고속 성장주 — 1Q26 매출 컨센 +3%·2Q 가이드 Street +10% 상회. AI Enterprise Data(ED) 성장 outlook <b>+85% YoY 이상</b>(직전 &gt;50%)으로 상향</li>
+        <li>GPU·XPU·server CPU 등 다각화 AI 애플리케이션 design-win·주문 모멘텀. 데이터센터 800VDC 전환에서 content·점유율 확대 최적 위치</li>
+        <li>AI 외 — Communications(광 모듈·스위치 전력관리) 1Q26 +56% YoY. capacity 목표 $4B → <b>$6B</b> 상향, backlog 3Q26까지 가시성</li>
+      </ul>
+      <div class="meta">
+        <div class="box"><div class="t">Valuation</div><p>CY27E P/E ~60x($1,850) — analog peer 프리미엄이나 일관된 실행·best-in-class 성장·다각화·마진 확대로 정당화.</p></div>
+        <div class="box risk"><div class="t">Key Risks</div><p>automotive·industrial·consumer cyclical 노출, 빠른 기술변화·가격 하락·수요 변동, 높은 점유율 기대 미달, 재고조정·가격압력, core DC/DC·AC/DC 점유율 상실.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ONTO -->
+  <section class="co">
+    <div class="co-head">
+      <div class="tag">Semicap (Metrology) · US</div>
+      <h3>온토 이노베이션 (ONTO) <span class="new">NEW</span></h3>
+      <p class="lede">advanced packaging·WFE 회복 secular tailwind에 차별화 process control·전략적 시장 확장으로 capitalize.</p>
+    </div>
+    <div class="co-body">
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Buy</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$350</div></div>
+        <div class="chip"><div class="k">Current Price</div><div class="v">$334.24</div><div class="s up">+4.7%</div></div>
+        <div class="chip"><div class="k">Market Cap</div><div class="v">$15bn</div></div>
+      </div>
+      <ul class="pts">
+        <li>advanced packaging secular tailwind — shrink→stack(2.5D/3D, HBM, co-packaged optics) 전환으로 metrology·inspection 수요. 2026 advanced packaging 50%+ 성장, ONTO 노출 2025 ~30% → 2028 ~50%</li>
+        <li>제품 혁신·신규 수주로 점유율 회복 — Dragonfly® G5·Atlas® G6 qualification, photonics·co-packaged optics 등 SAM 확장</li>
+        <li>Above-Street 성장 — 2027·2028 매출 Street +5%/+9%, EPS $10.80/$12.25(Street 대비 +11%/+21% upside)</li>
+      </ul>
+      <div class="meta">
+        <div class="box"><div class="t">Valuation</div><p>~29x CY27 EPS(컨센 ~32x) — process control peer·semicap 그룹(mid/high-30s) 대비 큰 할인. traction 입증 시 축소 전망.</p></div>
+        <div class="box risk"><div class="t">Key Risks</div><p>process-control intensity 완화·WFE 둔화, advanced 전환 지연·KLAC 점유율 상실, 매크로·수출규제, 인수 통합 차질.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ORCL -->
+  <section class="co">
+    <div class="co-head">
+      <div class="tag">Software / Cloud · US</div>
+      <h3>오라클 (ORCL)</h3>
+      <p class="lede">AI 클라우드 인프라 리더십 + core cloud·apps·database의 underappreciated 강세로 의미있는 성장.</p>
+    </div>
+    <div class="co-body">
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Buy</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$300</div></div>
+        <div class="chip"><div class="k">Current Price</div><div class="v">$152.46</div><div class="s up">+96.8%</div></div>
+        <div class="chip"><div class="k">Market Cap</div><div class="v">$504bn</div></div>
+      </div>
+      <ul class="pts">
+        <li>RPO 2년 전 $98bn → <b>&gt;$635bn</b> — 대규모 GPU 클러스터 우위(parallel computing·RAC 유산), 모델 미경쟁·compute 집중으로 최대 AI 인프라 소비자에 이상적 파트너</li>
+        <li>OpenAI 관련 재무·운영 리스크는 인지하나 backlog의 ROI·기회가 상회. OpenAI $122bn 라운드도 안심 요인</li>
+        <li>비-AI OCI(~FY26 2/3)도 underappreciated — 2년간 ~40% 성장·대형 CSP 점유 잠식. multicloud(Azure/GCP/AWS) 글로벌 가용성으로 Cloud DB FY27 40%+ 가속</li>
+        <li>신임 CFO Hilary Maxson — 자본집약 사업 배경·ROIC 집중, 자금조달 투명성·균형잡힌 가이던스 기대</li>
+      </ul>
+      <div class="meta">
+        <div class="box"><div class="t">Valuation</div><p>현재 19x CY27E EPS — 가이던스 궤도 실행 시 risk가 upside로 크게 skew. DCF 기반 $300.</p></div>
+        <div class="box risk"><div class="t">Key Risks</div><p>key man 리스크, 경쟁 환경 변화, IT 지출 환경 변화, 고객 집중 심화, 클라우드 인프라 capacity ramp 능력.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SHOP -->
+  <section class="co">
+    <div class="co-head">
+      <div class="tag">Internet / E-commerce · US</div>
+      <h3>쇼피파이 (SHOP) <span class="new">NEW</span></h3>
+      <p class="lede">엔터프라이즈·international 모멘텀 + AI monetization 가격인상이라는 underappreciated 촉매로 근시일 20%+ gross profit 성장.</p>
+    </div>
+    <div class="co-body">
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Buy</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$175</div></div>
+        <div class="chip"><div class="k">Current Price</div><div class="v">$111.62</div><div class="s up">+56.8%</div></div>
+        <div class="chip"><div class="k">Market Cap</div><div class="v">$140bn</div></div>
+      </div>
+      <ul class="pts">
+        <li>e-commerce secular winner — full-stack retail OS로 진화. AI·시장 리더십 monetization으로 향후 수년 20%+ 매출·gross profit 성장</li>
+        <li>upmarket 모멘텀 — 커스터마이징·omni-channel 강화로 엔터프라이즈 공략. Barnes &amp; Noble 등 대형·복잡 리테일러 수주</li>
+        <li>international(특히 유럽) 강세 — 신규 머천트·cross-border. localized payments·생태계 개선으로 초기 단계 큰 runway</li>
+        <li>AI 어시스턴트 Sidekick을 core 구독 tier 가격인상으로 monetization 전망 — '비용 압력' 내러티브를 'AI monetization'으로 reframe</li>
+      </ul>
+      <div class="meta">
+        <div class="box"><div class="t">Valuation</div><p>15년 DCF($175) — GMV 성장 10%로 감속, attach rate 4% 확대, 영업마진 mid-20s. terminal WACC 9.8%·terminal 성장 3.5%.</p></div>
+        <div class="box risk"><div class="t">Key Risks</div><p>소비 둔화, e-commerce 소프트웨어 경쟁 심화, 수익성 압박하는 과도한 투자.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TMUS -->
+  <section class="co">
+    <div class="co-head">
+      <div class="tag">Telecom · US</div>
+      <h3>T-모바일 (TMUS)</h3>
+      <p class="lede">섹터 최고 매출·EBITDA 성장 + 매력적 밸류에이션·강한 실행·높은 FCF 전환·매력적 자본환원의 risk/reward.</p>
+    </div>
+    <div class="co-body">
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Buy</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$285</div></div>
+        <div class="chip"><div class="k">Current Price</div><div class="v">$181.57</div><div class="s up">+56.9%</div></div>
+        <div class="chip"><div class="k">Market Cap</div><div class="v">$204bn</div></div>
+      </div>
+      <ul class="pts">
+        <li>업계 선도 매출·EBITDA·FCF 성장 — value 기반 pricing·best network·고객경험 집중으로 mobile·home broadband 점유율 확대 지속</li>
+        <li>network seeker·소도시/농촌·기업·home broadband 등 underpenetrated 세그먼트가 추가 성장 동력. 타 통신사 대비 가격 할인이 latent pricing power</li>
+        <li>업계 경제·경쟁 건전성 개선 — T-Mobile·Verizon 모두 프로모션 보조 축소 지향. 2Q 경쟁강도 완화, 3Q 지속 전망(경쟁 우려는 과장)</li>
+      </ul>
+      <div class="meta">
+        <div class="box"><div class="t">Valuation</div><p>economic returns 모델(market-based DCF) — UFCF 성장을 WACC 7.3%로 capitalize. 현재 7.2x EV/2026E EBITDA·2026E UFCF yield 7.2%로 매력적.</p></div>
+        <div class="box risk"><div class="t">Key Risks</div><p>무선업계 disruptive·비합리적 경쟁(신규 진입 포함), AI 디바이스발 upgrade cycle 상승, network 개선·가입자 성장 실패.</p></div>
+      </div>
+      <div class="chart-card">
+        <div class="ct">밸류에이션 배수 추이</div>
+        <div class="tbl-wrap">
+        <table class="tbl">
+          <thead><tr><th>지표</th><th class="num">2026</th><th class="num">2027</th><th class="num">2028</th><th class="num">2029</th></tr></thead>
+          <tbody>
+            <tr><td>EV/EBITDA (CY)</td><td class="num">7.2x</td><td class="num">7.0x</td><td class="num">6.4x</td><td class="num">5.8x</td></tr>
+            <tr><td>UFCF Yield (CY)</td><td class="num">7.2%</td><td class="num">7.8%</td><td class="num">8.6%</td><td class="num">9.6%</td></tr>
+            <tr><td>Levered FCF Yield (CY)</td><td class="num">9.4%</td><td class="num">10.6%</td><td class="num">12.2%</td><td class="num">13.6%</td></tr>
+            <tr><td>Price/FCF (CY)</td><td class="num">10.6x</td><td class="num">9.4x</td><td class="num">8.2x</td><td class="num">7.4x</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div>본 문서는 투자 권유를 목적으로 하지 않습니다.</div>
+  </footer>
+
+</div>
+</body>
+</html>
