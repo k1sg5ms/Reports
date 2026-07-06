@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Investor Positioning & Flows</title>
+<style>
+  :root{
+    --brand:#0a2a5e;
+    --brand-deep:#06182e;
+    --accent:#4d7cc7;
+    --accent2:#2f5590;
+    --paper:#f4f6f9;
+    --card:#ffffff;
+    --ink:#1b1e24;
+    --ink-soft:#525866;
+    --line:#dde3ec;
+    --buy:#1f7a4d;
+    --bear:#c0392b;
+    --bull:#1f6fb2;
+    --warn:#8a4b15;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Helvetica Neue','Pretendard','Noto Sans KR',Arial,sans-serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:960px;margin:0 auto;padding:40px 6vw 90px;}
+
+  .intro{border-left:4px solid var(--accent);padding:8px 0 8px 20px;margin-bottom:48px;}
+  .intro .eyebrow{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent2);font-weight:700;}
+  .intro h1{font-size:26px;margin:8px 0 6px;color:var(--brand);}
+
+  .report{margin-bottom:64px;}
+  .report-head{background:linear-gradient(135deg,var(--brand) 0%, var(--brand-deep) 100%);color:#fff;border-radius:10px 10px 0 0;padding:28px 30px;}
+  .report-head .tag{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#9fb4d4;font-weight:700;}
+  .report-head h2{margin:8px 0 14px;font-size:23px;line-height:1.35;}
+  .report-head .lede{font-family:'Georgia',serif;font-size:15.5px;color:#e3ebf6;border-top:1px solid rgba(255,255,255,0.16);padding-top:14px;margin:0;}
+  .report-body{background:var(--card);border:1px solid var(--line);border-top:none;border-radius:0 0 10px 10px;padding:30px;}
+
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px;}
+  .chip{border:1px solid var(--line);border-radius:8px;padding:10px 16px;background:#fafbfd;flex:1;min-width:130px;}
+  .chip .k{font-size:10.5px;letter-spacing:0.5px;text-transform:uppercase;color:var(--ink-soft);}
+  .chip .v{font-size:19px;font-weight:700;color:var(--brand);margin-top:2px;}
+  .chip .v.buy{color:var(--buy);}
+  .chip .v.sell{color:var(--bear);}
+  .chip .s{font-size:11px;color:var(--ink-soft);}
+
+  h3.sec{font-size:17px;color:var(--brand);margin:30px 0 12px;padding-bottom:8px;border-bottom:1.5px solid var(--line);display:flex;align-items:center;gap:10px;}
+  h3.sec .n{background:var(--brand);color:#fff;font-size:12px;font-weight:700;width:24px;height:24px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}
+
+  ul.pts{margin:0;padding:0;list-style:none;}
+  ul.pts li{position:relative;padding:7px 0 7px 20px;font-size:14.5px;border-bottom:1px dashed var(--line);}
+  ul.pts li:last-child{border-bottom:none;}
+  ul.pts li::before{content:"—";position:absolute;left:0;color:var(--accent2);font-weight:700;}
+  ul.pts b{color:var(--brand);}
+
+  table.tbl{width:100%;border-collapse:collapse;font-size:13px;margin:6px 0 4px;}
+  table.tbl th{background:var(--brand);color:#fff;text-align:left;padding:8px 10px;font-weight:600;}
+  table.tbl td{padding:7px 10px;border-bottom:1px solid var(--line);}
+  table.tbl tr:nth-child(even) td{background:#f7f9fc;}
+  table.tbl td.num{text-align:right;font-variant-numeric:tabular-nums;}
+  table.tbl td.ow{color:var(--buy);font-weight:700;}
+  table.tbl td.uw{color:var(--bear);font-weight:700;}
+  .tbl-wrap{overflow-x:auto;}
+
+  .chart-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:22px 22px 14px;margin:14px 0;}
+  .chart-card .ct{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:12px;}
+  .chart-src{font-size:10.5px;color:#9aa3b2;margin-top:8px;}
+  .legend{display:flex;gap:18px;font-size:11.5px;color:var(--ink-soft);margin-bottom:8px;flex-wrap:wrap;}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .legend i{width:11px;height:11px;border-radius:2px;display:inline-block;}
+
+  .callout{background:#fbf6ec;border:1px solid #e8dcc3;border-radius:8px;padding:14px 18px;font-size:13px;color:var(--ink-soft);margin-top:14px;}
+  .callout .t{font-size:10.5px;font-weight:700;letter-spacing:0.6px;color:var(--warn);text-transform:uppercase;display:block;margin-bottom:5px;}
+
+  .risk-box{background:var(--brand);color:#dde6f3;border-radius:8px;padding:22px 24px;margin-top:14px;}
+  .risk-box h4{margin:0 0 10px;color:#fff;font-size:14.5px;}
+  .risk-box ul{margin:0;padding-left:18px;}
+  .risk-box li{margin-bottom:8px;font-size:13px;}
+  .risk-box li b{color:#fff;}
+
+  footer{border-top:1px solid var(--line);margin-top:50px;padding-top:20px;font-size:11px;color:#9aa3b2;line-height:1.6;}
+
+  @media(max-width:560px){.intro h1{font-size:21px;}.report-head h2{font-size:19px;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="intro">
+    <div class="eyebrow">2 July 2026</div>
+    <h1>Investor Positioning and Flows — 포지셔닝은 중립, systematic·discretionary 양분</h1>
+  </div>
+
+  <section class="report" id="rpt1">
+
+    <div class="report-head">
+      <div class="tag">Global · Asset Allocation / Strategy</div>
+      <h2>전체 주식 포지셔닝 중립 부근 유지, systematic 비중확대 vs discretionary 비중축소 · cyclicals 전반 대폭 underweight</h2>
+      <p class="lede">종합 포지셔닝은 41 percentile로 중립 수준. Systematic 전략(60 percentile)은 비중을 늘렸으나 discretionary 투자자(29 percentile)는 축소. 투자심리는 약세권으로 하락했고, 섹터는 MCG&amp;Tech·Energy만 중립, cyclicals는 구조적으로 크게 underweight.</p>
+    </div>
+
+    <div class="report-body">
+
+      <div class="chips">
+        <div class="chip"><div class="k">Aggregate Positioning</div><div class="v">41 pctl</div><div class="s">near neutral (0.03sd)</div></div>
+        <div class="chip"><div class="k">Discretionary</div><div class="v sell">29 pctl</div><div class="s">moderately UW (-0.26sd)</div></div>
+        <div class="chip"><div class="k">Systematic</div><div class="v buy">60 pctl</div><div class="s">modestly OW (0.36sd)</div></div>
+        <div class="chip"><div class="k">Sentiment (Bull-Bear)</div><div class="v sell">18 pctl</div><div class="s">bearish territory</div></div>
+        <div class="chip"><div class="k">S&amp;P 500 Target (2026)</div><div class="v">8,000</div><div class="s">EPS $342('26)/$390('27)</div></div>
+      </div>
+
+      <!-- 1) 종합 포지셔닝 -->
+      <h3 class="sec"><span class="n">1</span>종합 주식 포지셔닝 (Consolidated Equity Positioning)</h3>
+      <ul class="pts">
+        <li>종합 포지셔닝은 이번 주 중립 부근 유지 — <b>0.03sd, 41 percentile</b> (2010년 이후 기준)</li>
+        <li>Systematic 전략은 상승하여 modestly overweight 유지 — <b>0.36sd, 60 percentile</b></li>
+        <li>Discretionary 투자자는 하락하여 moderately underweight 지속 — <b>-0.26sd, 29 percentile</b></li>
+        <li>Large caps는 중립→moderately overweight로 상승 — <b>0.23sd, 57 percentile</b></li>
+        <li>Large-cap Tech도 중립→moderately overweight — <b>0.23sd, 65 percentile</b></li>
+        <li>Small caps는 소폭 상승하며 moderately overweight 유지 — <b>0.31sd, 66 percentile</b></li>
+      </ul>
+
+      <div class="chart-card">
+        <div class="ct">주요 포지셔닝 지표 percentile</div>
+        <svg viewBox="0 0 880 350" width="100%">
+          <!-- 50 median line -->
+          <line x1="210" y1="14" x2="210" y2="330" stroke="#cfd6e0" stroke-dasharray="4 4"/>
+          <text x="210" y="346" font-size="9.5" fill="#9aa3b2" text-anchor="middle">50 percentile</text>
+
+          <!-- Aggregate 41 -->
+          <text x="200" y="34" font-size="12" fill="#1b1e24" text-anchor="end">Aggregate</text>
+          <rect x="210" y="22" width="254.2" height="18" fill="#2f5590"/>
+          <text x="470.2" y="35.5" font-size="11" fill="#525866">41</text>
+          <!-- Discretionary 29 -->
+          <text x="200" y="72" font-size="12" fill="#1b1e24" text-anchor="end">Discretionary</text>
+          <rect x="210" y="60" width="179.8" height="18" fill="#c0392b"/>
+          <text x="395.8" y="73.5" font-size="11" fill="#525866">29</text>
+          <!-- Systematic 60 -->
+          <text x="200" y="110" font-size="12" fill="#1b1e24" text-anchor="end">Systematic</text>
+          <rect x="210" y="98" width="372" height="18" fill="#1f6fb2"/>
+          <text x="588" y="111.5" font-size="11" fill="#525866">60</text>
+          <!-- Vol control 70 -->
+          <text x="200" y="148" font-size="12" fill="#1b1e24" text-anchor="end">Vol control funds</text>
+          <rect x="210" y="136" width="434" height="18" fill="#1f6fb2"/>
+          <text x="650" y="149.5" font-size="11" fill="#525866">70</text>
+          <!-- CTAs 64 -->
+          <text x="200" y="186" font-size="12" fill="#1b1e24" text-anchor="end">CTAs equity</text>
+          <rect x="210" y="174" width="396.8" height="18" fill="#1f6fb2"/>
+          <text x="612.8" y="187.5" font-size="11" fill="#525866">64</text>
+          <!-- Risk parity 20 -->
+          <text x="200" y="224" font-size="12" fill="#1b1e24" text-anchor="end">Risk-parity equity</text>
+          <rect x="210" y="212" width="124" height="18" fill="#c0392b"/>
+          <text x="340" y="225.5" font-size="11" fill="#525866">20</text>
+          <!-- Call/Put ratio 34 -->
+          <text x="200" y="262" font-size="12" fill="#1b1e24" text-anchor="end">Call/Put ratio</text>
+          <rect x="210" y="250" width="210.8" height="18" fill="#c0392b"/>
+          <text x="426.8" y="263.5" font-size="11" fill="#525866">34</text>
+          <!-- AAII bull-bear 18 -->
+          <text x="200" y="300" font-size="12" fill="#1b1e24" text-anchor="end">AAII Bull-Bear</text>
+          <rect x="210" y="288" width="111.6" height="18" fill="#c0392b"/>
+          <text x="327.6" y="301.5" font-size="11" fill="#525866">18</text>
+        </svg>
+        <div class="chart-src">Source: Bloomberg Finance LP, Barron's, Haver Analytics, CBOE, SEC filings</div>
+      </div>
+
+      <!-- 2) Discretionary vs Systematic 세부 -->
+      <h3 class="sec"><span class="n">2</span>Discretionary 세부 포지셔닝</h3>
+      <ul class="pts">
+        <li>Call/Put volume ratio(5d ma) 소폭 하락 — <b>34 percentile</b>. Single-stock 옵션의 net call volume은 감소, index·ETF 옵션은 소폭 증가. Single-stock 내에서는 MCG&amp;Tech에서 거래 증가, 그 외 섹터는 변화 미미</li>
+        <li>S&amp;P 500 options skew(3m, 90%-110%)는 하락</li>
+        <li>전주 net call volume 최상위 종목 basket이 시장 대비 outperform, 최다 short 종목 basket도 outperform</li>
+        <li>투자심리(bull minus bear spread)는 다시 약세권으로 급락 — <b>18 percentile</b>. Bullish 응답 하락(29 percentile), bearish(86 percentile)·neutral(29 percentile) 상승</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">3</span>Systematic 세부 포지셔닝</h3>
+      <ul class="pts">
+        <li>Vol control funds의 주식 배분 추가 확대 — <b>70 percentile</b>. 시장 selloff에 대한 민감도도 소폭 상승해 vol 기반 drawdown에 대한 반응성 확대. 다만 역사적 극단 수준 대비 낮아 추가 매수 여력 존재</li>
+        <li>CTAs 주식 익스포저 소폭 상승, historical range 상단 절반 — <b>64 percentile</b>. 지역별로는 Europe(72 percentile) 최고, US(63), EM(57), Japan(41)은 상대적으로 낮음</li>
+        <li>CTAs 자산군별: 채권은 short 확대 유지(US bonds 14 percentile, European bonds 22), USD long은 높은 수준 유지(90 percentile), commodities에서 gold short은 축소(36), copper long(91)·oil(67)은 높은 수준 유지</li>
+        <li>Risk parity funds 주식 배분 소폭 상승(20 percentile)하나 전 지역 underweight. 채권 배분 증가(50), inflation-linked(87)·commodities(92)는 높은 수준. 여전히 채권·인플레 헤지를 주식보다 선호 → 향후 배분 재구축 시 잠재적 주식 수요원</li>
+      </ul>
+
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Systematic 지표</th><th class="num">Percentile</th><th>비중 판단</th></tr></thead>
+        <tbody>
+          <tr><td><b>Vol control funds</b></td><td class="num">70</td><td class="ow">overweight (추가 여력)</td></tr>
+          <tr><td><b>CTAs equity</b></td><td class="num">64</td><td class="ow">upper half</td></tr>
+          <tr><td><b>Risk-parity equity</b></td><td class="num">20</td><td class="uw">underweight</td></tr>
+          <tr><td><b>CTAs bonds (US)</b></td><td class="num">14</td><td class="uw">short 유지</td></tr>
+          <tr><td><b>CTAs USD long</b></td><td class="num">90</td><td class="ow">high</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <!-- 4) 섹터 포지셔닝 -->
+      <h3 class="sec"><span class="n">4</span>섹터 포지셔닝 — cyclicals 대폭 underweight</h3>
+      <ul class="pts">
+        <li>MCG&amp;Tech(0.03sd, 51 percentile)와 Energy(0.00sd, 64 percentile)는 중립으로 소폭 상승</li>
+        <li>기타 cyclical 섹터는 뚜렷한 underweight: Consumer Cyclicals(-0.78sd, 13), Industrial Cyclicals(-0.87sd, 8), Financials(-0.84sd, 10), Materials(-1.25sd, 1)</li>
+        <li>Defensive 중 Real Estate(0.46sd, 85)는 overweight로 급등, Utilities(0.05sd, 56)는 중립 부근</li>
+        <li>Consumer Staples(-0.23sd, 34)·Healthcare(-0.36sd, 32)는 modestly underweight</li>
+      </ul>
+
+      <div class="chart-card">
+        <div class="ct">섹터별 포지셔닝 percentile (high freq)</div>
+        <svg viewBox="0 0 880 320" width="100%">
+          <line x1="70" y1="280" x2="850" y2="280" stroke="#cfd6e0"/>
+          <!-- 50 median -->
+          <line x1="70" y1="155" x2="850" y2="155" stroke="#c0392b" stroke-dasharray="4 4" opacity="0.55"/>
+          <text x="852" y="158" font-size="9.5" fill="#c0392b">median 50</text>
+          <!-- y axis ticks -->
+          <text x="62" y="34" font-size="9.5" fill="#9aa3b2" text-anchor="end">100</text>
+          <text x="62" y="159" font-size="9.5" fill="#9aa3b2" text-anchor="end">50</text>
+          <text x="62" y="283" font-size="9.5" fill="#9aa3b2" text-anchor="end">0</text>
+
+          <!-- bars: sorted desc -->
+          <!-- Real Estate 85 -->
+          <rect x="86" y="67.5" width="46" height="212.5" fill="#0a2a5e"/>
+          <text x="109" y="60" font-size="10.5" fill="#0a2a5e" text-anchor="middle" font-weight="700">85</text>
+          <text x="109" y="298" font-size="9.5" fill="#525866" text-anchor="middle">Real Est</text>
+          <!-- Energy 64 -->
+          <rect x="164" y="120" width="46" height="160" fill="#0a2a5e"/>
+          <text x="187" y="112.5" font-size="10.5" fill="#0a2a5e" text-anchor="middle" font-weight="700">64</text>
+          <text x="187" y="298" font-size="9.5" fill="#525866" text-anchor="middle">Energy</text>
+          <!-- Utilities 56 -->
+          <rect x="242" y="140" width="46" height="140" fill="#0a2a5e"/>
+          <text x="265" y="132.5" font-size="10.5" fill="#0a2a5e" text-anchor="middle" font-weight="700">56</text>
+          <text x="265" y="298" font-size="9.5" fill="#525866" text-anchor="middle">Utilities</text>
+          <!-- MCG&Tech 51 -->
+          <rect x="320" y="152.5" width="46" height="127.5" fill="#4d7cc7"/>
+          <text x="343" y="145" font-size="10.5" fill="#2f5590" text-anchor="middle" font-weight="700">51</text>
+          <text x="343" y="298" font-size="9.5" fill="#525866" text-anchor="middle">MCG&amp;Tech</text>
+          <!-- Cons Staples 34 -->
+          <rect x="398" y="195" width="46" height="85" fill="#c0392b"/>
+          <text x="421" y="187.5" font-size="10.5" fill="#c0392b" text-anchor="middle" font-weight="700">34</text>
+          <text x="421" y="298" font-size="9.5" fill="#525866" text-anchor="middle">Staples</text>
+          <!-- Healthcare 32 -->
+          <rect x="476" y="200" width="46" height="80" fill="#c0392b"/>
+          <text x="499" y="192.5" font-size="10.5" fill="#c0392b" text-anchor="middle" font-weight="700">32</text>
+          <text x="499" y="298" font-size="9.5" fill="#525866" text-anchor="middle">Health</text>
+          <!-- Cons Cyc 13 -->
+          <rect x="554" y="247.5" width="46" height="32.5" fill="#c0392b"/>
+          <text x="577" y="240" font-size="10.5" fill="#c0392b" text-anchor="middle" font-weight="700">13</text>
+          <text x="577" y="298" font-size="9.5" fill="#525866" text-anchor="middle">Cons Cyc</text>
+          <!-- Financials 10 -->
+          <rect x="632" y="255" width="46" height="25" fill="#c0392b"/>
+          <text x="655" y="247.5" font-size="10.5" fill="#c0392b" text-anchor="middle" font-weight="700">10</text>
+          <text x="655" y="298" font-size="9.5" fill="#525866" text-anchor="middle">Fin</text>
+          <!-- Ind Cyc 8 -->
+          <rect x="710" y="260" width="46" height="20" fill="#c0392b"/>
+          <text x="733" y="252.5" font-size="10.5" fill="#c0392b" text-anchor="middle" font-weight="700">8</text>
+          <text x="733" y="298" font-size="9.5" fill="#525866" text-anchor="middle">Ind Cyc</text>
+          <!-- Materials 1 -->
+          <rect x="788" y="277.5" width="46" height="2.5" fill="#c0392b"/>
+          <text x="811" y="270" font-size="10.5" fill="#c0392b" text-anchor="middle" font-weight="700">1</text>
+          <text x="811" y="298" font-size="9.5" fill="#525866" text-anchor="middle">Materials</text>
+        </svg>
+        <div class="chart-src">Source: Deutsche Bank Asset Allocation 방식 기준 · high freq 측정치</div>
+      </div>
+
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>섹터</th><th class="num">Z-score (sd)</th><th class="num">Percentile</th><th>포지셔닝</th></tr></thead>
+        <tbody>
+          <tr><td><b>Real Estate</b></td><td class="num">0.46</td><td class="num">85</td><td class="ow">overweight</td></tr>
+          <tr><td><b>Energy</b></td><td class="num">0.00</td><td class="num">64</td><td>neutral</td></tr>
+          <tr><td><b>Utilities</b></td><td class="num">0.05</td><td class="num">56</td><td>neutral</td></tr>
+          <tr><td><b>MCG &amp; Tech</b></td><td class="num">0.03</td><td class="num">51</td><td>neutral</td></tr>
+          <tr><td><b>Consumer Staples</b></td><td class="num">-0.23</td><td class="num">34</td><td class="uw">modestly UW</td></tr>
+          <tr><td><b>Healthcare</b></td><td class="num">-0.36</td><td class="num">32</td><td class="uw">modestly UW</td></tr>
+          <tr><td><b>Consumer Cyclicals</b></td><td class="num">-0.78</td><td class="num">13</td><td class="uw">underweight</td></tr>
+          <tr><td><b>Financials</b></td><td class="num">-0.84</td><td class="num">10</td><td class="uw">underweight</td></tr>
+          <tr><td><b>Industrial Cyclicals</b></td><td class="num">-0.87</td><td class="num">8</td><td class="uw">underweight</td></tr>
+          <tr><td><b>Materials</b></td><td class="num">-1.25</td><td class="num">1</td><td class="uw">deeply UW</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="callout"><span class="t">주목</span>Cyclical minus defensive 포지셔닝은 12 percentile로 극단적 저점 부근. Cyclicals(7 percentile) 전반이 크게 underweight인 반면 defensives(38 percentile)는 상대적 우위 — 경기 회복 신호(예: ISM 반등) 시 되돌림 여지가 큰 구조.</div>
+
+      <!-- 5) 자금 흐름 & 선물 포지셔닝 -->
+      <h3 class="sec"><span class="n">5</span>자금 흐름 · 선물 포지셔닝 · Buybacks</h3>
+      <ul class="pts">
+        <li>Cross-asset fund flows(4w avg, z-score): Real Estate·Balanced funds·Int term bonds·Smallcap Val이 가장 강함, 반면 LT bonds·Crypto funds·Energy는 가장 약함</li>
+        <li>Cross-asset futures positioning(z-score, 2010년 이후): S&amp;P 500이 가장 net long 상단(≈+1.5), Copper·Gold·BRL·MXN도 net long. 반면 NZD·CAD·2y 국채는 가장 net short</li>
+        <li>Currency futures(net long, % OI): BRL(42 percentile)·MXN(37)·USDTW$(11)는 상대적 long, NZD(-53%)·CAD(-43%)·CHF(-38%)·GBP(-36%)·JPY(-34%)는 net short</li>
+        <li>CTAs FX z-score percentile: AUD 91(고), EUR 9·JPY 9·CAD 1(저), CHF 15·GBP 20·NZD 14</li>
+        <li>S&amp;P 500 weekly announced buybacks의 3개월 합계는 <b>$192bn</b>으로 이전 기준선 $160bn 상회 — 견조한 자사주 매입 흐름 지속</li>
+      </ul>
+
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Cross-asset 자금 흐름 (4w avg)</th><th>강한 유입</th><th>약한/유출</th></tr></thead>
+        <tbody>
+          <tr><td><b>카테고리별</b></td><td class="ow">Real Estate · Balanced · Int term bonds · Smallcap Val</td><td class="uw">LT bonds · Crypto · Energy</td></tr>
+          <tr><td><b>주식 지역 (12m 누적)</b></td><td class="ow">US · International(글로벌 mandate)</td><td>Japan · EM</td></tr>
+          <tr><td><b>채권 카테고리</b></td><td class="ow">Govt Bonds · Corp IG · EM Bonds</td><td>—</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <!-- 리스크 & 모니터링 -->
+      <h3 class="sec"><span class="n">!</span>기타 확인 요소 · 모니터링 포인트</h3>
+      <div class="risk-box">
+        <h4>포지셔닝 관점 핵심 체크</h4>
+        <ul>
+          <li><b>Systematic 추가 매수 여력:</b> Vol control(70)·CTAs(64)는 높지만 역사적 극단 대비 여력 존재 → 시장 상승 지속 시 systematic 매수 유입이 지지 요인</li>
+          <li><b>Discretionary 심리 악화:</b> AAII bull-bear 18 percentile, bearish 86 percentile로 심리 위축 → contrarian 관점의 반등 여지 vs 추세 약화 신호로 해석 갈림</li>
+          <li><b>Cyclicals 극단적 underweight:</b> Materials 1 · Ind Cyc 8 · Financials 10 percentile → 경기 서프라이즈 시 되돌림(스퀴즈) 리스크</li>
+          <li><b>Vol control 민감도 상승:</b> selloff 대응 민감도가 소폭 높아져 vol-driven drawdown 시 매도 압력 확대 가능성</li>
+        </ul>
+        <h4 style="margin-top:14px;">모니터링 포인트</h4>
+        <ul>
+          <li>ISM Manufacturing 등 경기 지표 (discretionary 포지셔닝과 상관계수 67%)</li>
+          <li>S&amp;P 500 realized vol / VIX — systematic 재배분 트리거 (vol과 systematic 포지셔닝 상관 -77%)</li>
+          <li>S&amp;P 500 EPS 성장률 (Q1 2026 대비 방향)과 buyback 발표 추이</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div>본 문서는 투자 권유를 목적으로 하지 않습니다.</div>
+  </footer>
+
+</div>
+</body>
+</html>
