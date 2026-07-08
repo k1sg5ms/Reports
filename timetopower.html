@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meta 클라우드 뉴스 & US Time to Power</title>
+<style>
+  :root{
+    --brand:#00264d;
+    --brand-deep:#001630;
+    --accent:#0077c8;
+    --accent2:#3f7cb5;
+    --paper:#f4f6f9;
+    --card:#ffffff;
+    --ink:#1b1e24;
+    --ink-soft:#525866;
+    --line:#dde3ec;
+    --buy:#1f7a4d;
+    --bear:#c0392b;
+    --bull:#1f6fb2;
+    --warn:#8a4b15;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Helvetica Neue','Pretendard','Noto Sans KR',Arial,sans-serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  .serif{font-family:'Georgia','Noto Serif KR',serif;}
+
+  .topbar{
+    background:var(--brand-deep);
+    color:#fff;padding:14px 6vw;
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;
+    border-bottom:3px solid var(--accent);
+    position:sticky;top:0;z-index:50;
+  }
+  .topbar .logo{font-weight:700;font-size:18px;letter-spacing:0.5px;}
+  .topbar .logo span{color:var(--accent);}
+  .topbar nav{display:flex;gap:8px;flex-wrap:wrap;}
+  .topbar nav a{
+    color:#cfd8e6;text-decoration:none;font-size:12.5px;
+    padding:6px 12px;border:1px solid rgba(255,255,255,0.2);border-radius:20px;
+    transition:all .15s;
+  }
+  .topbar nav a:hover{background:var(--accent);color:#fff;border-color:var(--accent);}
+
+  .wrap{max-width:960px;margin:0 auto;padding:40px 6vw 90px;}
+
+  .intro{border-left:4px solid var(--accent);padding:8px 0 8px 20px;margin-bottom:44px;}
+  .intro .eyebrow{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent2);font-weight:700;}
+  .intro h1{font-size:27px;margin:8px 0 6px;color:var(--brand);line-height:1.3;}
+  .intro .sub{font-size:14.5px;color:var(--ink-soft);}
+
+  .report{margin-bottom:60px;scroll-margin-top:72px;}
+  .report-head{
+    background:linear-gradient(135deg,var(--brand) 0%, var(--brand-deep) 100%);
+    color:#fff;border-radius:10px 10px 0 0;padding:26px 30px;
+  }
+  .report-head .tag{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#9fb4d4;font-weight:700;}
+  .report-head h2{margin:8px 0 14px;font-size:22px;line-height:1.35;}
+  .report-head .lede{
+    font-family:'Georgia',serif;font-size:15.5px;color:#e3ebf6;
+    border-top:1px solid rgba(255,255,255,0.16);padding-top:14px;margin:0;
+  }
+  .report-body{
+    background:var(--card);border:1px solid var(--line);border-top:none;
+    border-radius:0 0 10px 10px;padding:30px;
+  }
+
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px;}
+  .chip{border:1px solid var(--line);border-radius:8px;padding:10px 16px;background:#fafbfd;flex:1;min-width:120px;}
+  .chip .k{font-size:10.5px;letter-spacing:0.5px;text-transform:uppercase;color:var(--ink-soft);}
+  .chip .v{font-size:18px;font-weight:700;color:var(--brand);margin-top:2px;}
+  .chip .v.buy{color:var(--buy);}
+  .chip .v.sell{color:var(--bear);}
+  .chip .s{font-size:11px;color:var(--ink-soft);}
+
+  h3.sec{
+    font-size:16.5px;color:var(--brand);margin:28px 0 12px;
+    padding-bottom:8px;border-bottom:1.5px solid var(--line);
+    display:flex;align-items:center;gap:10px;
+  }
+  h3.sec .n{
+    background:var(--brand);color:#fff;font-size:12px;font-weight:700;
+    width:24px;height:24px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  ul.pts{margin:0;padding:0;list-style:none;}
+  ul.pts li{position:relative;padding:7px 0 7px 20px;font-size:14.5px;border-bottom:1px dashed var(--line);}
+  ul.pts li:last-child{border-bottom:none;}
+  ul.pts li::before{content:"—";position:absolute;left:0;color:var(--accent2);font-weight:700;}
+  ul.pts b{color:var(--brand);}
+
+  table.tbl{width:100%;border-collapse:collapse;font-size:13px;margin:6px 0 4px;}
+  table.tbl th{background:var(--brand);color:#fff;text-align:left;padding:8px 10px;font-weight:600;}
+  table.tbl td{padding:7px 10px;border-bottom:1px solid var(--line);}
+  table.tbl tr:nth-child(even) td{background:#f7f9fc;}
+  table.tbl td.num{text-align:right;font-variant-numeric:tabular-nums;}
+  table.tbl td.buy{color:var(--buy);font-weight:700;}
+  .tbl-wrap{overflow-x:auto;}
+
+  .chart-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:22px 22px 14px;margin:14px 0;}
+  .chart-card .ct{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:12px;}
+  .chart-src{font-size:10.5px;color:#9aa3b2;margin-top:8px;}
+  .legend{display:flex;gap:18px;font-size:11.5px;color:var(--ink-soft);margin-bottom:4px;flex-wrap:wrap;}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .legend i{width:11px;height:11px;border-radius:2px;display:inline-block;}
+
+  .callout{background:#fbf6ec;border:1px solid #e8dcc3;border-radius:8px;padding:14px 18px;font-size:13px;color:var(--ink-soft);margin-top:14px;}
+  .callout .t{font-size:10.5px;font-weight:700;letter-spacing:0.6px;color:var(--warn);text-transform:uppercase;display:block;margin-bottom:5px;}
+
+  .risk-box{background:var(--brand);color:#dde6f3;border-radius:8px;padding:22px 24px;margin-top:14px;}
+  .risk-box h4{margin:0 0 10px;color:#fff;font-size:14.5px;}
+  .risk-box ul{margin:0;padding-left:18px;}
+  .risk-box li{margin-bottom:8px;font-size:13px;}
+  .risk-box li b{color:#fff;}
+
+  .subhead{font-size:14px;font-weight:700;color:var(--brand);margin:22px 0 8px;}
+
+  footer{border-top:1px solid var(--line);margin-top:50px;padding-top:20px;font-size:11px;color:#9aa3b2;line-height:1.6;}
+
+  @media(max-width:560px){
+    .intro h1{font-size:21px;}
+    .report-head h2{font-size:18px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">Research<span>·</span>Digest</div>
+  <nav>
+    <a href="#thesis">개요</a>
+    <a href="#math">밸류 로직</a>
+    <a href="#power">파워·에너지</a>
+    <a href="#reit">DC REIT</a>
+    <a href="#mach">기계</a>
+    <a href="#util">유틸·클린텍</a>
+    <a href="#euro">유럽 Cap Goods</a>
+  </nav>
+</div>
+
+<div class="wrap">
+
+  <div class="intro">
+    <div class="eyebrow">7 July 2026</div>
+    <h1>Meta 클라우드 뉴스: 미국 'Time to Power' 주식에 대한 시사점</h1>
+    <div class="sub">Meta 뉴스發 파워·neocloud 주식 급락은 매수 기회 — 파워는 여전히 병목, 컴퓨트 수요는 공급을 초과</div>
+  </div>
+
+  <!-- ============ 1. 개요 / 투자 논지 ============ -->
+  <section class="report" id="thesis">
+    <div class="report-head">
+      <div class="tag">Global Thematics · AI Infrastructure / Power</div>
+      <h2>Meta 클라우드 진출 우려에 따른 'Time to Power' 급락 → 매수 기회로 판단</h2>
+      <p class="lede">Meta의 클라우드 사업 추진 보도로 파워·neocloud 주식이 급락했으나, 컴퓨트 판매의 매력적 경제성과 파워 병목이라는 구조적 논리는 오히려 강화. 컴퓨트 초과수요 지속이 파워 공급업체의 리레이팅을 뒷받침.</p>
+    </div>
+    <div class="report-body">
+
+      <div class="chips">
+        <div class="chip"><div class="k">테마</div><div class="v">Time to Power</div><div class="s">파워·컴퓨트 인프라</div></div>
+        <div class="chip"><div class="k">뷰</div><div class="v buy">매수 기회</div><div class="s">급락은 논지 강화</div></div>
+        <div class="chip"><div class="k">Meta '28 EPS 민감도</div><div class="v">+$3 (8%)</div><div class="s">250MW×1yr×$40/W 리스당</div></div>
+        <div class="chip"><div class="k">Meta Capex</div><div class="v">$175→205bn</div><div class="s">'27/'28 (from $145bn '26)</div></div>
+      </div>
+
+      <h3 class="sec"><span class="n">1</span>Meta 뉴스 개요</h3>
+      <ul class="pts">
+        <li>지난주 Bloomberg 보도 — Meta가 클라우드 사업을 추진, AWS·Azure·Google Cloud와 경쟁하는 신규 사업자로 부상 가능성. 이로 인해 'time to power'·neocloud 주식이 약세.</li>
+        <li>보도된 사업 형태는 두 가지 — <b>①</b> AWS Bedrock과 유사한 hosted API/model-access 서비스(Muse Spark 등 모델을 개발자에 제공), <b>②</b> neocloud형 raw silicon(원시 컴퓨트) 제공.</li>
+        <li>해당 사업은 지난 1월 신설된 컴퓨트 조달 담당 사업부 <b>Meta Compute</b> 산하에 위치. Meta는 관련 보도에 대해 공식 언급 없음.</li>
+        <li>Meta의 소유·운영(owned-operated) IT capacity 증분 추정 — '26/'27에 각각 ~2 GW / ~3.5 GW, YE25 기준 ~3 GW 베이스 위.</li>
+        <li>제3자(Coreweave·Nebius·GCP·ORCL 등)로부터 임차 중인 ~2.5 GW는 리스 전환이 어렵다고 보나, 자체 1P capacity를 대여할 유연성은 확대.</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">2</span>왜 'Time to Power'에 긍정적인가</h3>
+      <ul class="pts">
+        <li><b>①</b> 컴퓨트 판매 사업의 수익성이 매우 높음 — Meta 뉴스는 이 경제성 논리가 유효함을 방증.</li>
+        <li><b>②</b> 적시(timely) 파워 확보가 데이터센터 capacity 성장의 핵심 병목(숙련 인력·인허가·정치도 점차 중요 병목화).</li>
+        <li><b>③</b> Enterprise AI 도입 경제성이 매우 우호적.</li>
+        <li><b>④</b> 컴퓨트 수요가 공급 대비 큰 폭 초과 — 파워 솔루션 제공 기업의 리턴이 매력적이라는 최근 거래 사례와 부합.</li>
+        <li>최근 Bitcoin-to-DC 거래 분석상 필요 capex 조달 대비 가치창출이 투입 자기자본의 <b>&gt;700%</b>에 달할 수 있다는 추정.</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">3</span>Meta EPS 브릿지 & Capex 시사점</h3>
+      <ul class="pts">
+        <li>희소 자원(잉여 컴퓨트) 대여의 EPS 상승 효과는 유의미 — 250MW를 1년간 $40/Watt에 리스할 때마다 Meta '28 EPS에 ~$3(8%) 기여.</li>
+        <li>다만 Meta에 대한 비중확대(OW) 뷰는 neocloud 여부에 근거하지 않음 — 플랫폼向 신제품(MetaAI, business agents/messengers, diffusion, 구독 매출 등)에 따른 다년 engagement·매출 성장이 핵심. 잉여 컴퓨트 대여는 신제품 스케일업까지의 'EPS 브릿지'로 해석.</li>
+        <li>모델은 neocloud를 영구 사업이 아닌 한시적 stop-gap으로 가정 — Meta가 이 기회에 본격 집중할 경우 '27/'28 capex에 상방 압력.</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">4</span>지난주 파워·neocloud 주식 약세폭</h3>
+      <div class="chart-card">
+        <div class="ct">Meta 뉴스發 주요 종목 주간 낙폭 (%)</div>
+        <svg viewBox="0 0 720 300" width="100%">
+          <line x1="60" y1="250" x2="700" y2="250" stroke="#cfd6e0"/>
+          <!-- baseline at y=250 (0%), each 10% = 40px downward -->
+          <line x1="60" y1="250" x2="60" y2="40" stroke="#cfd6e0"/>
+          <text x="52" y="254" font-size="10" fill="#9aa3b2" text-anchor="end">0%</text>
+          <text x="52" y="214" font-size="10" fill="#9aa3b2" text-anchor="end">-10%</text>
+          <text x="52" y="174" font-size="10" fill="#9aa3b2" text-anchor="end">-20%</text>
+          <!-- bars descend from 250 -->
+          <!-- CIFR -22% -> 88px -->
+          <rect x="110" y="250" width="90" height="88" fill="var(--bear)"/>
+          <text x="155" y="352" font-size="12" fill="#1b1e24" text-anchor="middle">CIFR</text>
+          <text x="155" y="243" font-size="12" fill="#fff" text-anchor="middle" font-weight="700">-22%</text>
+          <!-- WULF -19% -> 76px -->
+          <rect x="255" y="250" width="90" height="76" fill="var(--bear)"/>
+          <text x="300" y="340" font-size="12" fill="#1b1e24" text-anchor="middle">WULF</text>
+          <text x="300" y="243" font-size="12" fill="#fff" text-anchor="middle" font-weight="700">-19%</text>
+          <!-- SEI -15% -> 60px -->
+          <rect x="400" y="250" width="90" height="60" fill="var(--bear)"/>
+          <text x="445" y="324" font-size="12" fill="#1b1e24" text-anchor="middle">SEI</text>
+          <text x="445" y="243" font-size="12" fill="#fff" text-anchor="middle" font-weight="700">-15%</text>
+          <!-- VST -10% -> 40px -->
+          <rect x="545" y="250" width="90" height="40" fill="var(--bear)"/>
+          <text x="590" y="304" font-size="12" fill="#1b1e24" text-anchor="middle">VST</text>
+          <text x="590" y="243" font-size="12" fill="#fff" text-anchor="middle" font-weight="700">-10%</text>
+        </svg>
+      </div>
+
+      <h3 class="sec"><span class="n">5</span>선호 종목 (Overweight)</h3>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>카테고리</th><th>종목</th></tr></thead>
+        <tbody>
+          <tr><td><b>Bitcoin</b></td><td>CIFR, WULF, GLXY</td></tr>
+          <tr><td><b>Power (IPP)</b></td><td>CEG, TLN, VST, NEE</td></tr>
+          <tr><td><b>파워 발전설비</b></td><td>BE, Innio, GEV, INIO, CMI</td></tr>
+          <tr><td><b>에너지(가스 공급)</b></td><td>WMB, EQT, CVX, XOM</td></tr>
+          <tr><td><b>파워 솔루션</b></td><td>SEI, Schneider Electric, LBRT, HAL</td></tr>
+          <tr><td><b>DC REIT / neocloud</b></td><td>EQIX (OW, Top Pick) · NBIS·CRWV는 Equal-weight</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="callout"><span class="t">DC REIT 관전 포인트</span>Meta 클라우드 뉴스의 REIT 영향은 혼재 — 컴퓨트 판매 리턴 강세는 긍정적이나, 대형·자금력 있는 신규 진입자 증가는 클라우드 capex 상단을 제약할 수 있음. 다만 근·중기 컴퓨트 공급 부족으로 리스 거래는 매력적 가격대 지속 전망.</div>
+
+    </div>
+  </section>
+
+  <!-- ============ 2. 밸류 창출 로직 (Math) ============ -->
+  <section class="report" id="math">
+    <div class="report-head">
+      <div class="tag">Thematics + Mathematics</div>
+      <h2>컴퓨트 판매의 수익성 & 'Powered Shell' 밸류 창출 수학</h2>
+      <p class="lede">토큰 경제성, 컴퓨트 수요-공급 격차, 그리고 renewable PPA 대비 데이터센터 powered shell 계약의 압도적 가치창출 배수를 정량적으로 제시.</p>
+    </div>
+    <div class="report-body">
+
+      <h3 class="sec"><span class="n">1</span>토큰 경제성 (Enterprise 도입자 & LLM 개발자)</h3>
+      <ul class="pts">
+        <li>Enterprise 도입자 관점 — 다양한 use case 연구상 평균 single use당 ~$55 비용 절감.</li>
+        <li>토큰 소모 추정 — AI Agent 1개는 query 기반 사용 대비 ~15x 토큰 소모. 전형적 query는 ~5,000 토큰 → 5~7개 Agent로 economic task 수행 시 375,000~525,000 토큰.</li>
+        <li>토큰 단가 $3-10 가정 시 task 실행 비용은 $2-5로, $55 편익의 극히 일부에 불과.</li>
+        <li>LLM 개발자 관점 — 공개 토큰 단가 기준, capex를 전액 비용화해도 Blackwell 데이터센터 마진 &gt;50%. Rubin·Feynman 데이터센터는 각각 ~80%·~90%로 상승.</li>
+        <li>Blackwell→Feynman 전환 시 hyperscaler는 토큰 단가를 75% 낮추고도 leased DC에서 동일 마진 달성 가능 — 이는 'Jevon's Paradox' 동학으로 AI 파워 수요에 구조적 강세 요인.</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">2</span>컴퓨트 수요 성장 vs 공급 성장</h3>
+      <ul class="pts">
+        <li>주요 AI 칩 공급사(NVIDIA·Google·Huawei) 생산 전망을 크게 상회하는 수요 증가율 신호 다수.</li>
+        <li>한 Google 임원 언급 — 컴퓨트를 6개월마다 2배로 늘려야 하며 "4-5년 내 1,000x"(6개월마다 2배면 5년 내 &gt;1,000x). 이는 반도체 매출 전망치를 배수로 상회하는 수요 증가율.</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">3</span>10x 컴퓨트 = 2x LLM 역량</h3>
+      <ul class="pts">
+        <li>LLM 역량의 비선형적 개선이 다양한 자산군 alpha의 핵심 동인. 10x 컴퓨트로 2x 역량 확보에 대한 완화 요인은 칩당 연산력의 급속 개선.</li>
+        <li>NVIDIA 신규 칩 세대마다 exaFLOPs +250%, 파워 사용은 +60%에 그칠 것으로 추정.</li>
+        <li>Frontier LLM은 이미 광범위 인간 지식 과제의 &gt;50%를 인간 이상 수준으로 수행. 수학 분야 사례 — 한 프레임워크가 353개 시도 중 9개 Erdős 문제를 자율 해결(56년 미해결 2건 포함, 문제당 수백 달러 추론 비용).</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">4</span>재귀적 LLM 자기개선 (Recursive Self-improvement)</h3>
+      <ul class="pts">
+        <li>주요 LLM 랩의 자기개선 아키텍처 편입이 10x:2x 관계를 깰 가능성 — 개선이 인간 작업 속도가 아닌 'machine speed'로 진행되고, 동일 규모의 추가 컴퓨트 없이도 개선 가능.</li>
+        <li>최근 한 LLM이 자체 코드를 부분적으로 최초 작성 — 완전한 재귀적 자기개선 시점은 2027년 봄~2030년 사이로 추정되나 불확실성 큼.</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">5</span>'Time to Power' 계약과 REIT 수학의 연결</h3>
+      <ul class="pts">
+        <li>investment-grade hyperscaler와의 장기(15-25년) 계약이 갖는 확대(magnifying) 효과가 시장에서 저평가. renewable PPA 유추가 가능.</li>
+        <li>태양광 15-25년 PPA — cost ~$2/watt, unlevered FCF yield ~9%, 프로젝트 레벨 80-90% 레버리지 시 mid-to-high teens levered equity return.</li>
+        <li>데이터센터 'powered shell' — cost $10-12/watt, 15-25년 고정가(에스컬레이터 포함) 계약, unlevered FCF yield 15-19%. 매우 매력적 리턴이나 Bitcoin 주식에 미반영.</li>
+      </ul>
+
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>항목</th><th>Renewable PPAs</th><th>DC 'Powered Shell' Leases</th></tr></thead>
+        <tbody>
+          <tr><td><b>Cost/watt (건설)</b></td><td>$1.50-2/watt</td><td>$10-12/watt (일부 brownfield 저비용)</td></tr>
+          <tr><td><b>Unlevered FCF yield</b></td><td>~10% (전형)</td><td>15-19%</td></tr>
+          <tr><td><b>레버리지 여력</b></td><td>80%+</td><td>80%+</td></tr>
+          <tr><td><b>15x EV/EBITDA 시 가치창출</b></td><td>$1.00/watt (총투자 50%, 자기자본 &gt;200%)</td><td>$15.50/watt (총투자 155%, 자기자본 &gt;700%)</td></tr>
+          <tr><td><b>GW당 순가치창출($m)</b></td><td class="num">$1,000</td><td class="num">$15,500</td></tr>
+          <tr><td><b>투입 자기자본 대비 %</b></td><td class="num">250%</td><td class="num">775%</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="callout"><span class="t">핵심</span>GW당 가치창출은 powered shell이 renewable 대비 ~15x. Bitcoin 기업이 hyperscaler向 DC capacity를 구축하며 이 가치창출을 주가에 제대로 반영하지 못하고 있다는 판단.</div>
+
+      <h3 class="sec"><span class="n">6</span>BTC-to-HPC 플레이어 EV/Watt</h3>
+      <div class="chart-card">
+        <div class="ct">Enterprise Value / Watt — 100MW+ Bitcoin Sites ($)</div>
+        <svg viewBox="0 0 900 320" width="100%">
+          <line x1="60" y1="270" x2="880" y2="270" stroke="#cfd6e0"/>
+          <line x1="60" y1="270" x2="60" y2="30" stroke="#cfd6e0"/>
+          <!-- scale: $6 max, 270 baseline, each $1 = 40px -->
+          <text x="52" y="274" font-size="10" fill="#9aa3b2" text-anchor="end">$0</text>
+          <text x="52" y="234" font-size="10" fill="#9aa3b2" text-anchor="end">$1</text>
+          <text x="52" y="194" font-size="10" fill="#9aa3b2" text-anchor="end">$2</text>
+          <text x="52" y="154" font-size="10" fill="#9aa3b2" text-anchor="end">$3</text>
+          <text x="52" y="114" font-size="10" fill="#9aa3b2" text-anchor="end">$4</text>
+          <text x="52" y="74" font-size="10" fill="#9aa3b2" text-anchor="end">$5</text>
+          <!-- reference line for $15.50/watt net value creation is off-scale; annotate -->
+          <!-- bars: MARA 2.96, IREN 3.07, RIOT 5.07, CIFR 3.67, BTDR 2.33, GLXY 4.81, WULF 3.26, CORZ 3.47, APLD 3.84, HUT 3.75 -->
+          <!-- x start 80, width 60, gap 18 -->
+          <g font-size="11" fill="#1b1e24" text-anchor="middle">
+            <rect x="80"  y="151.6" width="58" height="118.4" fill="var(--accent)"/><text x="109" y="286">MARA</text><text x="109" y="145" fill="var(--brand)" font-weight="700">2.96</text>
+            <rect x="158" y="147.2" width="58" height="122.8" fill="var(--accent)"/><text x="187" y="286">IREN</text><text x="187" y="141" fill="var(--brand)" font-weight="700">3.07</text>
+            <rect x="236" y="67.2"  width="58" height="202.8" fill="var(--brand)"/><text x="265" y="286">RIOT</text><text x="265" y="61" fill="var(--brand)" font-weight="700">5.07</text>
+            <rect x="314" y="123.2" width="58" height="146.8" fill="var(--accent)"/><text x="343" y="286">CIFR</text><text x="343" y="117" fill="var(--brand)" font-weight="700">3.67</text>
+            <rect x="392" y="176.8" width="58" height="93.2"  fill="var(--accent)"/><text x="421" y="286">BTDR</text><text x="421" y="170" fill="var(--brand)" font-weight="700">2.33</text>
+            <rect x="470" y="77.6"  width="58" height="192.4" fill="var(--brand)"/><text x="499" y="286">GLXY</text><text x="499" y="71" fill="var(--brand)" font-weight="700">4.81</text>
+            <rect x="548" y="139.6" width="58" height="130.4" fill="var(--accent)"/><text x="577" y="286">WULF</text><text x="577" y="133" fill="var(--brand)" font-weight="700">3.26</text>
+            <rect x="626" y="131.2" width="58" height="138.8" fill="var(--accent)"/><text x="655" y="286">CORZ</text><text x="655" y="125" fill="var(--brand)" font-weight="700">3.47</text>
+            <rect x="704" y="116.4" width="58" height="153.6" fill="var(--accent)"/><text x="733" y="286">APLD</text><text x="733" y="110" fill="var(--brand)" font-weight="700">3.84</text>
+            <rect x="782" y="120"   width="58" height="150"   fill="var(--accent)"/><text x="811" y="286">HUT</text><text x="811" y="114" fill="var(--brand)" font-weight="700">3.75</text>
+          </g>
+        </svg>
+        <div class="chart-src">Range: $2.33 (BTDR) ~ $5.07 (RIOT). 참고 — Exhibit 1의 예시 거래는 $15.50/watt 순가치창출을 시사(현행 EV/watt 대비 큰 괴리).</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ 3. 파워·에너지 ============ -->
+  <section class="report" id="power">
+    <div class="report-head">
+      <div class="tag">North American Midstream & Energy</div>
+      <h2>파워·에너지: WMB 최선호, 통합 에너지·파워 솔루션 수혜</h2>
+      <p class="lede">behind-the-meter(BTM) 파워 솔루션과 장기 take-or-pay 계약을 통해 AI 데이터센터 파워 수요를 직접 수취하는 미드스트림·에너지 기업군.</p>
+    </div>
+    <div class="report-body">
+
+      <div class="chips">
+        <div class="chip"><div class="k">WMB</div><div class="v buy">OW · $98</div><div class="s">+36.9% TR (2.9% 배당 포함)</div></div>
+        <div class="chip"><div class="k">CVX</div><div class="v buy">OW · $210</div><div class="s">현재 $168.10</div></div>
+        <div class="chip"><div class="k">XOM</div><div class="v buy">OW · $168</div><div class="s">현재 $136.44</div></div>
+        <div class="chip"><div class="k">EQT</div><div class="v buy">OW · $68</div><div class="s">현재 $51.71</div></div>
+        <div class="chip"><div class="k">LBRT</div><div class="v buy">OW · $36</div><div class="s">현재 $23.29</div></div>
+        <div class="chip"><div class="k">HAL</div><div class="v buy">OW · $42</div><div class="s">현재 $33.00</div></div>
+      </div>
+
+      <h3 class="sec"><span class="n">1</span>WMB — High Conviction (OW, $98 PT)</h3>
+      <ul class="pts">
+        <li>목표가 $98은 unlevered DCF 기반, +36.9% 1년 총수익(2.9% 배당수익률 포함)을 반영.</li>
+        <li>hyperscaler向 BTM 파워 솔루션의 선도 사업자로 부상 — 천연가스 파이프라인 lateral, 가스 공급, BTM 가스화력 발전, 광케이블, 배터리(부하 조정), CCS를 포함한 turnkey 솔루션 제공. 발전(power generation)이 미드스트림 peer 대비 핵심 차별점.</li>
+        <li>신규 투자 전반에서 <b>20%+ ROIC</b>를 장기 take-or-pay 계약(DC 프로젝트 10-15년, 가스 수송 확장 20년)으로 확보 가능하다는 판단.</li>
+        <li>발표된 5개 DC 프로젝트 중 2건은 10년 PPA, 3건은 12.5년 PPA. 향후 프로젝트는 combined cycle 터빈, 잉여 파워 revenue share 구조 도입 기대 → 단순 'bridge'가 아닌 장기 파워 솔루션.</li>
+        <li>Meta가 5개 프로젝트 대부분/전부의 고객으로 추정되며 WMB를 핵심 파워 공급자로 인식. xAI 등 신규 counterparty 확장 가능성(SpaceX 로켓向 메탄 공급과 결합 등).</li>
+        <li>연내 2-3건 추가 DC 발표 기대. 중장기 연 3-4개 프로젝트 상업화(건당 $1-2bn, ~500MW, 5x build multiple, 18-24개월 리드타임).</li>
+        <li>온사이트 파워 투자 재원 조달을 위한 Power JV(EQT-Blackstone MVP 구조 유사) 검토 — 대차대조표 부담 완화 및 성장 기회 규모 검증의 장기 긍정 요인.</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">2</span>North American Energy — 개별 종목</h3>
+      <div class="subhead">CVX (OW, $210 PT)</div>
+      <ul class="pts">
+        <li>작년 초 Engine No. 1과 co-located DC向 최대 ~4 GW 파워 계획 공개(GE Vernova 터빈 7기 slot 예약). 지난달 Microsoft와 20년 PPA 체결 — 서부 텍사스 Project Kilby, 2.67 GW 가스화력. mid-teens 리턴, 2028년 가동 예상.</li>
+      </ul>
+      <div class="subhead">XOM (OW, $168 PT)</div>
+      <ul class="pts">
+        <li>가스화력 + CCS를 결합한 통합 저탄소 파워 오퍼링 추진. Gulf Coast 지역 유일의 액상 CO₂ 파이프라인 보유가 경쟁우위. 루이지애나·미시시피 사이트 검토, 터빈 확보, YE26 FID 목표. NextEra와 1.2 GW 가스화력+CCS 개발 보도.</li>
+      </ul>
+      <div class="subhead">EQT (OW, $68 PT)</div>
+      <ul class="pts">
+        <li>'Well-to-Watt' 전략이 <b>$550MM</b> fee-based 현금흐름 성장을 뒷받침. 파워發 소비 성장 10-18 bcf/d, 그중 40%가 DC. 발표 프로젝트로 2029년 ~$250MM 연 fee-based FCF(Shippingport·Homer City 20년 계약 등). 2028년부터 Southeast 유틸리티 프리미엄 판매로 추가 ~$300MM FCF.</li>
+      </ul>
+      <div class="subhead">LBRT (OW, $36 PT)</div>
+      <ul class="pts">
+        <li>2029년까지 ~3 GW 파워 capacity 배치 계획(Liberty Power Innovations, 'Power as a Service'). Vantage Data Centers와 1 GW 계약(2027년 400MW firm). 배치 GW당 ~$5-6/sh 가치 추정. 터빈 대비 가스 왕복엔진(reciprocating engine) 선호.</li>
+      </ul>
+      <div class="subhead">HAL (OW, $42 PT)</div>
+      <ul class="pts">
+        <li>VoltaGrid ~20% 지분 및 MENA 중심 전략적 JV가 핵심 차별점. 배치 GW당(HAL 귀속) ~$300MM 증분 EBITDA·~$1/sh 가치. 2028년 인도 400MW 파워 제조 확보. 계약 발표가 근시일 catalyst.</li>
+      </ul>
+
+    </div>
+  </section>
+
+  <!-- ============ 4. DC REIT ============ -->
+  <section class="report" id="reit">
+    <div class="report-head">
+      <div class="tag">Data Center REITs</div>
+      <h2>데이터센터 REIT: EQIX 최선호(Top Pick)</h2>
+      <p class="lede">컴퓨트 초과수요 지속이 즉시 이용가능 capacity에 시장 프리미엄을 부여 — colocation 수요 견조, AI inference 워크로드가 상방 요인.</p>
+    </div>
+    <div class="report-body">
+      <div class="chips">
+        <div class="chip"><div class="k">EQIX</div><div class="v buy">Overweight</div><div class="s">Top Pick · 현재 $998.84</div></div>
+        <div class="chip"><div class="k">NBIS · CRWV</div><div class="v">Equal-weight</div><div class="s">neocloud</div></div>
+        <div class="chip"><div class="k">2Q 실적</div><div class="v">7/29</div><div class="s">bookings·2H 코멘터리 주목</div></div>
+      </div>
+      <h3 class="sec"><span class="n">1</span>투자 포인트</h3>
+      <ul class="pts">
+        <li>AI inference·agentic 컴퓨트 급증이 Tier 1 시장 colocation 사업자에 수혜. EQIX 1Q26 실적이 이를 확인 — 사상 최대 1Q bookings.</li>
+        <li>분기 최대 딜의 60%가 AI 관련, top 10 AI 모델 제공사 중 8개·top 5 neocloud 중 4개가 Equinix 시설 내 확장 중.</li>
+        <li>Meta가 독립 클라우드 사업을 출범할 경우, 멀티테넌트 DC의 cloud on-ramp 가치가 부각되며 colocation·interconnection 수요의 또 다른 동인이 될 수 있음(Equinix·Digital Realty 수혜).</li>
+        <li>2Q 실적 7/29 예정 — bookings 및 inference 수요 관련 2H 코멘터리가 주가 동인.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ 5. 기계 ============ -->
+  <section class="report" id="mach">
+    <div class="report-head">
+      <div class="tag">US Machinery & Construction</div>
+      <h2>기계: OW-rated CMI 선호</h2>
+      <p class="lede">Meta의 행보는 컴퓨트 capex 경제성을 재확인 — CMI·CAT 등 파워 설비 공급사의 'time-to-power' 수혜 지속. 밸류에이션 감안 CMI에 상대적 상방 여지.</p>
+    </div>
+    <div class="report-body">
+      <div class="chips">
+        <div class="chip"><div class="k">CMI</div><div class="v buy">OW · $752</div><div class="s">~25x 2026 EPS $30</div></div>
+        <div class="chip"><div class="k">CMI P/E</div><div class="v">~23x</div><div class="s">vs CAT ~39x</div></div>
+        <div class="chip"><div class="k">2030 발전 target</div><div class="v">55GW</div><div class="s">기존 35GW</div></div>
+        <div class="chip"><div class="k">2030 DC 매출 target</div><div class="v">$9bn+</div><div class="s">기존 $3-4bn</div></div>
+      </div>
+      <h3 class="sec"><span class="n">1</span>투자 포인트</h3>
+      <ul class="pts">
+        <li>CAT은 prime/backup 엔진·소형 산업용 터빈으로 포트폴리오가 넓으나, CAT ~39x P/E 대비 CMI ~23x로 CMI에 상대 상방 여지.</li>
+        <li>CMI 증분 수요 포착 경로 — <b>①</b> Circe Energy와 2GW 계약(fast off-grid prime power 역량 방증), <b>②</b> 최근 Investor Day에서 2030 발전 capacity target을 35GW→55GW로 상향, prime power 전용 4MW 가스 genset 플랫폼 신규, 2030 DC 매출 target $3-4bn→$9bn+로 상향.</li>
+        <li>수주 가시성이 2028-29까지 확장 — 일회성이 아닌 지속적 수요. 강한 경제성이 신규 진입자를 유인할 경우에도 이들은 즉시 설비가 필요.</li>
+        <li>$752 목표가는 OW-rated, ~25x 2026 EPS $30 반영.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ 6. 유틸·클린텍 ============ -->
+  <section class="report" id="util">
+    <div class="report-head">
+      <div class="tag">Power, Utilities & Clean Tech</div>
+      <h2>유틸리티·클린테크: 온사이트 파워 & 저평가 IPP</h2>
+      <p class="lede">grid interconnection 리드타임 장기화로 온사이트 발전이 'time to power'·'bring your own generation'의 핵심 솔루션으로 부상. IPP는 상방 대비 저평가.</p>
+    </div>
+    <div class="report-body">
+      <h3 class="sec"><span class="n">1</span>온사이트 파워 — 병목 수혜주</h3>
+      <ul class="pts">
+        <li>일부 지역 grid interconnection 리드타임이 5년 초과, DC의 직접 파워 확보·조달 압력 증대. Meta 발표 이후 온사이트 파워는 주요 전략 이니셔티브로 지속 전망.</li>
+        <li>병목 수혜 — <b>Bloom Energy(BE)·Innio(INIO)·Solaris(SEI)</b>. 온사이트 프로젝트가 더 많은 고객·대형 사이트로 확장되며 선도 공급사 backlog가 2028년 이후로 확대.</li>
+        <li>Bloom YTD 프로젝트 모멘텀 강세, Innio 2Q 강한 수주로 2029-30 backlog 확대 기대, Solaris 근시일 추가 DC 고객 확보 가능성.</li>
+      </ul>
+      <h3 class="sec"><span class="n">2</span>IPP — 저평가 & catalyst 경로</h3>
+      <ul class="pts">
+        <li>PJM 내 DC 딜 규제 명확화 진전 — 연방 규제 overhang이 가을께 해소되며 4Q 중 DC 계약 재개 가능성.</li>
+        <li><b>CEG·TLN·VST</b> OW, 연말까지 매력적 catalyst 경로. Vistra는 Helix Digital Infrastructure 파트너십으로 powered shell과 동일한 경제성 수혜 기대.</li>
+      </ul>
+      <div class="callout"><span class="t">참고</span>Innio는 초기 커버리지를 Overweight로 개시. Solaris는 목표가 $90으로 상향.</div>
+    </div>
+  </section>
+
+  <!-- ============ 7. 유럽 Cap Goods ============ -->
+  <section class="report" id="euro">
+    <div class="report-head">
+      <div class="tag">European Cap Goods</div>
+      <h2>유럽 자본재: Siemens Energy(OW) 선호 &gt; Wartsila(UW)</h2>
+      <p class="lede">'time to power' 노출 두 종목 중 가스터빈 가격 상승과 booked-out 실적 가시성을 갖춘 Siemens Energy를 선호, 가격 전가·수주가 뒤처진 Wartsila는 비중축소.</p>
+    </div>
+    <div class="report-body">
+      <div class="chips">
+        <div class="chip"><div class="k">Siemens Energy</div><div class="v buy">OW · €200</div><div class="s">현재 €170.44</div></div>
+        <div class="chip"><div class="k">Wartsila</div><div class="v sell">UW</div><div class="s">현재 €31.89</div></div>
+        <div class="chip"><div class="k">가스터빈 점유율(1Q26)</div><div class="v">37%</div><div class="s">Siemens Energy, GE 32%</div></div>
+      </div>
+
+      <h3 class="sec"><span class="n">1</span>Siemens Energy 선호 근거</h3>
+      <ul class="pts">
+        <li><b>①</b> 가스터빈 가격이 여전히 상승 중 — 2029년까지 대부분 booked out, slot 예약상 향후 6-12개월 신규 주문 가격이 계속 상승하며 2030년 인도분을 구성. EBITA 전망에 대한 confidence 뒷받침.</li>
+        <li><b>②</b> 연말까지 risk-reward가 긍정적 skew — 11월 11일 신규 target 발표를 앞두고 €200 목표가 방향의 run-up 가능성.</li>
+        <li><b>③</b> 중동 긴장 완화가 GE Vernova 대비 상대 밸류에이션에 우호적(Siemens Energy의 상대적으로 높은 중동 노출 관련 우려 완화).</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">2</span>Wartsila 부정적 근거</h3>
+      <ul class="pts">
+        <li><b>①</b> 가스터빈 제조사만큼 가격을 전가하지 못함 — Energy Division EBIT 마진이 이번 up-cycle에서 20% 미만에 머물 전망(Siemens Energy 가스 서비스 25% 2030 EBITA 마진 대비).</li>
+        <li><b>②</b> 파워 수주 성장이 시장 전반에 뒤처짐 — &lt;400MW 시장 점유율이 2019년보다 2025년에 더 낮음. 2025-26 데이터센터 관련 2.4GW 수주 vs INNIO 고속 왕복엔진 6GW.</li>
+        <li><b>③</b> 소형 터빈·엔진 진입자 증가 — primary power 엔진 시장이 2027-28 3社→5-7社로 확대, 2030년 ~25GW 엔진 capacity가 BTM DC primary power를 두고 경쟁. 신규 진입자의 가격 경쟁이 2027-28 마진 압박 요인.</li>
+      </ul>
+      <div class="callout"><span class="t">밸류에이션</span>Wartsila 2028 EV/EBITDA 12.4x — Cap Goods 섹터 대비 c.10% 프리미엄, Siemens Energy(11.5x) 대비 프리미엄. 그룹 컨센서스 상방이 없다는 점에서 비싸다는 판단.</div>
+
+      <h3 class="sec"><span class="n">3</span>가스터빈 시장 데이터</h3>
+      <div class="chart-card">
+        <div class="ct">2025 신규 수주 $/KW 가격 상승률 (YoY)</div>
+        <svg viewBox="0 0 720 300" width="100%">
+          <line x1="70" y1="210" x2="700" y2="210" stroke="#cfd6e0"/>
+          <!-- baseline 210 (0%), each 10%=40px -->
+          <text x="62" y="214" font-size="10" fill="#9aa3b2" text-anchor="end">0%</text>
+          <text x="62" y="174" font-size="10" fill="#9aa3b2" text-anchor="end">10%</text>
+          <text x="62" y="134" font-size="10" fill="#9aa3b2" text-anchor="end">20%</text>
+          <text x="62" y="94"  font-size="10" fill="#9aa3b2" text-anchor="end">30%</text>
+          <text x="62" y="54"  font-size="10" fill="#9aa3b2" text-anchor="end">40%</text>
+          <!-- Siemens single-cycle +38% -> 152px up -->
+          <rect x="120" y="58" width="120" height="152" fill="var(--brand)"/>
+          <text x="180" y="230" font-size="12" fill="#1b1e24" text-anchor="middle">Siemens (single-cycle)</text>
+          <text x="180" y="51" font-size="13" fill="var(--brand)" text-anchor="middle" font-weight="700">+38%</text>
+          <!-- GEV +48% -> 192 up -->
+          <rect x="300" y="18" width="120" height="192" fill="var(--accent)"/>
+          <text x="360" y="230" font-size="12" fill="#1b1e24" text-anchor="middle">GEV Power OE</text>
+          <text x="360" y="11" font-size="13" fill="var(--brand)" text-anchor="middle" font-weight="700">+48%</text>
+          <!-- Wartsila -4% -> 16px down -->
+          <rect x="480" y="210" width="120" height="16" fill="var(--bear)"/>
+          <text x="540" y="248" font-size="12" fill="#1b1e24" text-anchor="middle">Wartsila Energy OE</text>
+          <text x="540" y="204" font-size="13" fill="var(--bear)" text-anchor="middle" font-weight="700">-4%</text>
+        </svg>
+        <div class="chart-src">Source: Company data</div>
+      </div>
+
+      <div class="chart-card">
+        <div class="ct">2028E EV/EBITDA 밸류에이션 비교</div>
+        <svg viewBox="0 0 900 300" width="100%">
+          <line x1="60" y1="250" x2="880" y2="250" stroke="#cfd6e0"/>
+          <!-- scale max 24x, baseline 250, each 4x=36px -->
+          <text x="52" y="254" font-size="10" fill="#9aa3b2" text-anchor="end">0x</text>
+          <text x="52" y="200" font-size="10" fill="#9aa3b2" text-anchor="end">6x</text>
+          <text x="52" y="146" font-size="10" fill="#9aa3b2" text-anchor="end">12x</text>
+          <text x="52" y="92"  font-size="10" fill="#9aa3b2" text-anchor="end">18x</text>
+          <text x="52" y="38"  font-size="10" fill="#9aa3b2" text-anchor="end">24x</text>
+          <!-- each 1x = 9px. bars -->
+          <g font-size="10.5" fill="#1b1e24" text-anchor="middle">
+            <rect x="78"  y="43.9"  width="66" height="206.1" fill="#8fa3bd"/><text x="111" y="266">GE Vernova</text><text x="111" y="37" fill="var(--brand)" font-weight="700">22.9x</text>
+            <rect x="162" y="69.1"  width="66" height="180.9" fill="#8fa3bd"/><text x="195" y="266">Caterpillar</text><text x="195" y="62" fill="var(--brand)" font-weight="700">20.1x</text>
+            <rect x="246" y="138.4" width="66" height="111.6" fill="var(--bear)"/><text x="279" y="266">Wartsila</text><text x="279" y="131" fill="var(--brand)" font-weight="700">12.4x</text>
+            <rect x="330" y="142.9" width="66" height="107.1" fill="#8fa3bd"/><text x="363" y="266">Prysmian</text><text x="363" y="136" fill="var(--brand)" font-weight="700">11.9x</text>
+            <rect x="414" y="146.5" width="66" height="103.5" fill="var(--brand)"/><text x="447" y="266">Siemens En.</text><text x="447" y="140" fill="var(--brand)" font-weight="700">11.5x</text>
+            <rect x="498" y="177.1" width="66" height="72.9"  fill="#8fa3bd"/><text x="531" y="266">NKT</text><text x="531" y="170" fill="var(--brand)" font-weight="700">8.1x</text>
+            <rect x="582" y="178.9" width="66" height="71.1"  fill="#8fa3bd"/><text x="615" y="266">Nordex</text><text x="615" y="172" fill="var(--brand)" font-weight="700">7.9x</text>
+            <rect x="666" y="185.2" width="66" height="64.8"  fill="#8fa3bd"/><text x="699" y="266">Vestas</text><text x="699" y="178" fill="var(--brand)" font-weight="700">7.2x</text>
+            <rect x="750" y="196"   width="66" height="54"    fill="#8fa3bd"/><text x="783" y="266">Nexans</text><text x="783" y="189" fill="var(--brand)" font-weight="700">6.0x</text>
+          </g>
+        </svg>
+        <div class="chart-src">Source: Visible Alpha. Note: as of 3 July 2026</div>
+      </div>
+
+      <div class="risk-box">
+        <h4>모니터링 포인트</h4>
+        <ul>
+          <li><b>Siemens Energy 11월 11일 신규 target</b> — 컨센서스 upgrade trigger 여부(단, 2025 CMD 대비 upgrade 폭은 낮을 전망).</li>
+          <li><b>primary power 엔진 시장 경쟁</b> — 2027-28 신규 진입자 가격 경쟁에 따른 마진 압박 여부.</li>
+          <li><b>가스터빈 점유율</b> — 1Q26 Siemens Energy 37%, GE 32%. 점유율 추이 지속 확인.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div>본 문서는 투자 권유를 목적으로 하지 않습니다.</div>
+  </footer>
+
+</div>
+</body>
+</html>
