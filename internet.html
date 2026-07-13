@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meta 캐파 확장 & 2Q 인터넷 실적 프리뷰</title>
+<style>
+  :root{
+    --brand:#0a2340;
+    --brand-deep:#061626;
+    --accent:#5a7ea8;
+    --accent2:#3a5578;
+    --paper:#f4f6f9;
+    --card:#ffffff;
+    --ink:#1b1e24;
+    --ink-soft:#525866;
+    --line:#dde3ec;
+    --buy:#1f7a4d;
+    --bear:#c0392b;
+    --bull:#1f6fb2;
+    --warn:#8a4b15;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Helvetica Neue','Pretendard','Noto Sans KR',Arial,sans-serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  .serif{font-family:'Georgia','Noto Serif KR',serif;}
+
+  .topbar{
+    background:var(--brand-deep);
+    color:#fff;padding:14px 6vw;
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;
+    border-bottom:3px solid var(--accent);
+    position:sticky;top:0;z-index:50;
+  }
+  .topbar .logo{font-weight:700;font-size:18px;letter-spacing:0.5px;}
+  .topbar .logo span{color:var(--accent);}
+  .topbar nav{display:flex;gap:8px;flex-wrap:wrap;}
+  .topbar nav a{
+    color:#cfd8e6;text-decoration:none;font-size:12.5px;
+    padding:6px 12px;border:1px solid rgba(255,255,255,0.2);border-radius:20px;
+    transition:all .15s;
+  }
+  .topbar nav a:hover{background:var(--accent);color:#fff;border-color:var(--accent);}
+
+  .wrap{max-width:960px;margin:0 auto;padding:40px 6vw 90px;}
+
+  .intro{
+    border-left:4px solid var(--accent);
+    padding:8px 0 8px 20px;margin-bottom:48px;
+  }
+  .intro .eyebrow{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent2);font-weight:700;}
+  .intro h1{font-size:26px;margin:8px 0 6px;color:var(--brand);}
+
+  .report{margin-bottom:64px;scroll-margin-top:70px;}
+  .report-head{
+    background:linear-gradient(135deg,var(--brand) 0%, var(--brand-deep) 100%);
+    color:#fff;border-radius:10px 10px 0 0;padding:28px 30px;
+  }
+  .report-head .tag{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#9fb4d4;font-weight:700;}
+  .report-head h2{margin:8px 0 14px;font-size:23px;line-height:1.35;}
+  .report-head .lede{
+    font-family:'Georgia',serif;font-size:15.5px;color:#e3ebf6;
+    border-top:1px solid rgba(255,255,255,0.16);padding-top:14px;margin:0;
+  }
+  .report-body{
+    background:var(--card);border:1px solid var(--line);border-top:none;
+    border-radius:0 0 10px 10px;padding:30px;
+  }
+
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px;}
+  .chip{border:1px solid var(--line);border-radius:8px;padding:10px 16px;background:#fafbfd;flex:1;min-width:130px;}
+  .chip .k{font-size:10.5px;letter-spacing:0.5px;text-transform:uppercase;color:var(--ink-soft);}
+  .chip .v{font-size:19px;font-weight:700;color:var(--brand);margin-top:2px;}
+  .chip .v.buy{color:var(--buy);}
+  .chip .v.sell{color:var(--bear);}
+  .chip .s{font-size:11px;color:var(--ink-soft);}
+
+  h3.sec{
+    font-size:17px;color:var(--brand);margin:30px 0 12px;
+    padding-bottom:8px;border-bottom:1.5px solid var(--line);
+    display:flex;align-items:center;gap:10px;
+  }
+  h3.sec .n{
+    background:var(--brand);color:#fff;font-size:12px;font-weight:700;
+    width:24px;height:24px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  ul.pts{margin:0;padding:0;list-style:none;}
+  ul.pts li{position:relative;padding:7px 0 7px 20px;font-size:14.5px;border-bottom:1px dashed var(--line);}
+  ul.pts li:last-child{border-bottom:none;}
+  ul.pts li::before{content:"—";position:absolute;left:0;color:var(--accent2);font-weight:700;}
+  ul.pts b{color:var(--brand);}
+
+  table.tbl{width:100%;border-collapse:collapse;font-size:13px;margin:6px 0 4px;}
+  table.tbl th{background:var(--brand);color:#fff;text-align:left;padding:8px 10px;font-weight:600;}
+  table.tbl td{padding:7px 10px;border-bottom:1px solid var(--line);}
+  table.tbl tr:nth-child(even) td{background:#f7f9fc;}
+  table.tbl td.num{text-align:right;font-variant-numeric:tabular-nums;}
+  table.tbl td.buy{color:var(--buy);font-weight:700;}
+  table.tbl td.neu{color:var(--ink-soft);font-weight:700;}
+  .tbl-wrap{overflow-x:auto;}
+
+  .chart-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:22px 22px 14px;margin:14px 0;}
+  .chart-card .ct{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:12px;}
+  .chart-src{font-size:10.5px;color:#9aa3b2;margin-top:8px;}
+  .legend{display:flex;gap:18px;font-size:11.5px;color:var(--ink-soft);margin-bottom:4px;flex-wrap:wrap;}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .legend i{width:11px;height:11px;border-radius:2px;display:inline-block;}
+
+  .callout{background:#fbf6ec;border:1px solid #e8dcc3;border-radius:8px;padding:14px 18px;font-size:13px;color:var(--ink-soft);margin-top:14px;}
+  .callout .t{font-size:10.5px;font-weight:700;letter-spacing:0.6px;color:var(--warn);text-transform:uppercase;display:block;margin-bottom:5px;}
+
+  .risk-box{background:var(--brand);color:#dde6f3;border-radius:8px;padding:22px 24px;margin-top:14px;}
+  .risk-box h4{margin:0 0 10px;color:#fff;font-size:14.5px;}
+  .risk-box ul{margin:0;padding-left:18px;}
+  .risk-box li{margin-bottom:8px;font-size:13px;}
+  .risk-box li b{color:#fff;}
+
+  footer{border-top:1px solid var(--line);margin-top:50px;padding-top:20px;font-size:11px;color:#9aa3b2;line-height:1.6;}
+
+  @media(max-width:560px){
+    .intro h1{font-size:21px;}
+    .report-head h2{font-size:19px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">Research<span>·</span>Digest</div>
+  <nav>
+    <a href="#rpt-meta">META · 캐파/커스텀칩</a>
+    <a href="#rpt-preview">2Q Internet 프리뷰</a>
+  </nav>
+</div>
+
+<div class="wrap">
+
+  <div class="intro">
+    <div class="eyebrow">10–11 July 2026</div>
+    <h1>Meta 캐파 확장 &amp; 2Q 인터넷 실적 프리뷰</h1>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- REPORT 1 : META capacity / custom silicon -->
+  <!-- ============================================================ -->
+  <section class="report" id="rpt-meta">
+
+    <div class="report-head">
+      <div class="tag">US Internet / Large-cap Tech · Meta Platforms (META)</div>
+      <h2>Reuters 보도가 시사하는 칩 개발 진전과 대규모 캐파 확장</h2>
+      <p class="lede">커스텀 실리콘칩 개발 진전과 예상보다 낮은 GW당 캐파 구축 비용 가능성이 Buy 논리를 강화 — AI 인프라 투자의 수익성 가시화가 리레이팅 촉매.</p>
+    </div>
+
+    <div class="report-body">
+
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">BUY</div><div class="s">유지</div></div>
+        <div class="chip"><div class="k">Price Objective</div><div class="v">$835</div><div class="s">약 +32% 업사이드</div></div>
+        <div class="chip"><div class="k">Price (10 Jul)</div><div class="v">$631.48</div><div class="s">52주 $520.26–$796.25</div></div>
+        <div class="chip"><div class="k">Valuation</div><div class="v">24x</div><div class="s">FY27E GAAP EPS + net cash</div></div>
+        <div class="chip"><div class="k">Mkt Cap</div><div class="v">$1.64T</div><div class="s">Shares Out 2,599mn</div></div>
+      </div>
+
+      <h3 class="sec"><span class="n">1</span>2026~2027년 14GW 캐파 증설 목표 가능성</h3>
+      <ul class="pts">
+        <li>Reuters가 입수한 내부 메모 기준, Meta는 커스텀 실리콘칩 개발을 포함한 전략의 일환으로 <b>2026~2027년 총 14GW</b>의 컴퓨팅 캐파 증설을 추진</li>
+        <li>메모상 Meta는 2026년 현재까지 <b>1GW</b>를 배치했고, 2026년 하반기 추가로 <b>5.5GW</b> 배치 예정 → 2026년 캐파 증설 규모 약 6.5GW</li>
+        <li>이 GW 추정치가 정확하다면 2026년 Capex($145bn) 기준 <b>GW당 약 $22bn</b>으로, 2026년 GW당 $45bn 추정치를 크게 하회</li>
+        <li>메모상 2026년 6.5GW 캐파 증설은 추정치(2.6GW)를 큰 폭 상회 — 사실에 근접할 경우 Meta가 GW당 캐파 비용을 시장·Street 기대치 대비 크게 낮췄음을 시사</li>
+        <li>모든 캐파가 동일하지는 않으나, <b>GW당 $30bn 미만</b>의 AI 캐파 구축은 경쟁사 대비 유의미한 경제성 확보 가능 — Amazon·Google의 연간 클라우드 매출/GW $10–16bn, 최근 SpaceX 캐파 딜 $40–50bn/GW와 대비</li>
+      </ul>
+
+      <div class="chart-card">
+        <div class="ct">2026년 캐파 증설 규모 비교 (GW)</div>
+        <div class="legend">
+          <span><i style="background:var(--brand)"></i>메모 시사치</span>
+          <span><i style="background:var(--accent)"></i>추정치</span>
+        </div>
+        <svg viewBox="0 0 880 300" width="100%">
+          <line x1="120" y1="250" x2="840" y2="250" stroke="#cfd6e0"/>
+          <!-- y gridlines -->
+          <line x1="120" y1="190" x2="840" y2="190" stroke="#eef1f5"/>
+          <line x1="120" y1="130" x2="840" y2="130" stroke="#eef1f5"/>
+          <line x1="120" y1="70"  x2="840" y2="70"  stroke="#eef1f5"/>
+          <text x="112" y="254" text-anchor="end" font-size="12" fill="#9aa3b2">0</text>
+          <text x="112" y="194" text-anchor="end" font-size="12" fill="#9aa3b2">2</text>
+          <text x="112" y="134" text-anchor="end" font-size="12" fill="#9aa3b2">4</text>
+          <text x="112" y="74"  text-anchor="end" font-size="12" fill="#9aa3b2">6</text>
+          <!-- bar: memo 6.5GW  (scale: 30px per GW) -->
+          <rect x="230" y="55"  width="160" height="195" fill="var(--brand)"/>
+          <text x="310" y="45" text-anchor="middle" font-size="15" font-weight="700" fill="var(--brand)">6.5GW</text>
+          <text x="310" y="272" text-anchor="middle" font-size="13" fill="var(--ink-soft)">메모 시사치</text>
+          <!-- bar: est 2.6GW -->
+          <rect x="560" y="172" width="160" height="78" fill="var(--accent)"/>
+          <text x="640" y="162" text-anchor="middle" font-size="15" font-weight="700" fill="var(--accent2)">2.6GW</text>
+          <text x="640" y="272" text-anchor="middle" font-size="13" fill="var(--ink-soft)">추정치</text>
+        </svg>
+        <div class="chart-src">Source: Company data, Reuters</div>
+      </div>
+
+      <h3 class="sec"><span class="n">2</span>GW당 캐파 구축 비용 — 경제성 관점</h3>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>구분</th><th>GW당 금액 ($bn)</th><th>비고</th></tr></thead>
+        <tbody>
+          <tr><td><b>메모 시사 Meta 구축비용 (2026)</b></td><td class="num buy">~22</td><td>$145bn Capex ÷ 6.5GW</td></tr>
+          <tr><td>추정치 구축비용 (2026)</td><td class="num">45</td><td>기존 추정</td></tr>
+          <tr><td>긍정적 경제성 임계값</td><td class="num">&lt;30</td><td>이하면 유의미한 경제성</td></tr>
+          <tr><td>SpaceX 캐파 딜</td><td class="num">40–50</td><td>참고 벤치마크</td></tr>
+          <tr><td>Amazon·Google 클라우드 매출/GW</td><td class="num">10–16</td><td>수익화(매출) 기준</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-card">
+        <div class="ct">GW당 구축비용 vs 임계값 ($bn/GW)</div>
+        <svg viewBox="0 0 880 320" width="100%">
+          <line x1="120" y1="260" x2="840" y2="260" stroke="#cfd6e0"/>
+          <line x1="120" y1="200" x2="840" y2="200" stroke="#eef1f5"/>
+          <line x1="120" y1="140" x2="840" y2="140" stroke="#eef1f5"/>
+          <line x1="120" y1="80"  x2="840" y2="80"  stroke="#eef1f5"/>
+          <text x="112" y="264" text-anchor="end" font-size="12" fill="#9aa3b2">0</text>
+          <text x="112" y="204" text-anchor="end" font-size="12" fill="#9aa3b2">20</text>
+          <text x="112" y="144" text-anchor="end" font-size="12" fill="#9aa3b2">40</text>
+          <text x="112" y="84"  text-anchor="end" font-size="12" fill="#9aa3b2">60</text>
+          <!-- scale: 3px per $bn -->
+          <!-- memo 22 -->
+          <rect x="180" y="194" width="120" height="66" fill="var(--buy)"/>
+          <text x="240" y="184" text-anchor="middle" font-size="14" font-weight="700" fill="var(--buy)">~22</text>
+          <text x="240" y="282" text-anchor="middle" font-size="12" fill="var(--ink-soft)">메모 시사</text>
+          <!-- est 45 -->
+          <rect x="360" y="125" width="120" height="135" fill="var(--accent)"/>
+          <text x="420" y="115" text-anchor="middle" font-size="14" font-weight="700" fill="var(--accent2)">45</text>
+          <text x="420" y="282" text-anchor="middle" font-size="12" fill="var(--ink-soft)">추정치</text>
+          <!-- spacex 45 (range 40-50) -->
+          <rect x="540" y="125" width="120" height="135" fill="#8a93a3"/>
+          <text x="600" y="115" text-anchor="middle" font-size="14" font-weight="700" fill="#5a6472">40–50</text>
+          <text x="600" y="282" text-anchor="middle" font-size="12" fill="var(--ink-soft)">SpaceX 딜</text>
+          <!-- threshold line at 30 -> y=260-90=170 -->
+          <line x1="150" y1="170" x2="720" y2="170" stroke="var(--bear)" stroke-width="2" stroke-dasharray="6 4"/>
+          <text x="726" y="174" font-size="12" font-weight="700" fill="var(--bear)">임계값 $30</text>
+        </svg>
+        <div class="chart-src">Source: Company data, Reuters</div>
+      </div>
+      <div class="callout"><span class="t">주목</span>메모상 GW당 구축비용(~$22bn)은 추정치($45bn) 및 경제성 임계값($30bn)을 모두 하회. 사실이라면 AI 캐파 투자의 ROIC가 기대 대비 크게 개선될 여지.</div>
+
+      <h3 class="sec"><span class="n">3</span>커스텀칩 'Iris' — 센티먼트에 긍정적</h3>
+      <ul class="pts">
+        <li>긍정적 테스트 이후, Meta는 GPU 구매를 보완하기 위해 커스텀칩 <b>'Iris'</b>를 가을(9월) 양산 개시 예정</li>
+        <li>Iris는 Meta의 <b>MTIA(Meta Training and Inference Accelerator) 로드맵</b>상 4개 칩 세대 중 하나로, 차세대 AI 학습·추론 역량 강화가 목적</li>
+        <li>Meta는 2027년까지 <b>약 6개월마다</b> 신규 커스텀칩을 출시할 계획이며, 파트너사(Broadcom, TSMC 등)와 다년 공급 계약 확보</li>
+        <li>Iris 양산이 9월 시작인 점을 고려하면 2026년 캐파 비용 절감을 크게 견인할 가능성은 낮아, 메모상 캐파 GW 추정치는 다소 낙관적일 수 있음</li>
+        <li>다만 칩 개발 진전 자체는 Meta에 큰 긍정 요인(TPU·Trainium의 클라우드 마진 기여 사례 참고)이며, 캐파 투자 수익성에 대한 경영진 낙관론을 뒷받침</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">4</span>투자의견 & 밸류에이션</h3>
+      <ul class="pts">
+        <li>핵심 시사점 3가지: (1) Meta가 예상보다 큰 캐파(GW)를 구축, (2) 예상보다 낮은 비용으로 구축 가능성, (3) 커스텀칩 개발이 긍정적 변곡점 진입 가능성</li>
+        <li>2027년 GW 캐파 확대가 <b>2027년 Capex 증가</b>로 이어질 리스크는 있으나, 커스텀칩이 GW당 비용을 낮추는 요인으로 작용 → <b>2027년 Capex 추정치 $185bn 유지</b></li>
+        <li>최근 Meta를 최선호 종목 리스트에 편입 — 광고·구독·엔터프라이즈 전반의 캐파 관련 업사이드 감안 시 AI 인프라 구축에 대해 긍정적</li>
+        <li>캐파 수익화 전략 가시성 개선(2Q 컨퍼런스콜에서 신규 공시 기대)이 Street의 밸류에이션 상향 및 멀티플 리레이팅으로 이어질 수 있음</li>
+        <li>목표주가 <b>$835</b> = 24x 2027E GAAP EPS + net cash. S&amp;P 500 대비 소폭 프리미엄(높은 성장률·AI 기회 반영)</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">!</span>리스크 & 모니터링 포인트</h3>
+      <div class="risk-box">
+        <h4>Key Risks to Rating & Price Target</h4>
+        <ul>
+          <li><b>광고 의존도:</b> 디지털 광고 매출 의존도가 높아 매크로 여건에 민감</li>
+          <li><b>AI 투자 부담:</b> AI 이니셔티브 관련 지출 확대가 마진에 부정적 영향 가능</li>
+          <li><b>고정자산 확대:</b> 고정자산 증가로 매크로 둔화 시 비용 유연성 저하</li>
+          <li><b>자사주 매입 둔화:</b> AI 투자 확대로 자사주 매입 속도 둔화 가능</li>
+          <li><b>경쟁 심화:</b> AI 네이티브 플랫폼과의 사용자 참여·광고 예산 경쟁 심화</li>
+          <li><b>규제 리스크:</b> 청소년 안전 관련 신규 소송·규제 및 진행 중 소송의 불리한 결과 가능성</li>
+        </ul>
+        <h4 style="margin-top:14px;">모니터링 포인트</h4>
+        <ul>
+          <li>2Q 컨퍼런스콜에서의 캐파 수익화 전략 관련 신규 공시</li>
+          <li>Iris 양산 진행 및 실제 GW당 구축비용 확인</li>
+          <li>2027년 Capex 가이던스 방향성</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- REPORT 2 : 2Q Mega/Large-cap Internet previews -->
+  <!-- ============================================================ -->
+  <section class="report" id="rpt-preview">
+
+    <div class="report-head">
+      <div class="tag">Global Internet · Industry Report</div>
+      <h2>2Q 메가캡·라지캡 프리뷰: AMZN·META·MELI·DASH·UBER 셋업 선호</h2>
+      <p class="lede">2Q 실적은 컨센서스 부합~소폭 상회 전망. 광고 회복·클라우드 가속에 더해 FY27E 초기 코멘터리가 Street 추정치를 끌어올리는 리레이팅 촉매가 될 전망.</p>
+    </div>
+
+    <div class="report-body">
+
+      <div class="chips">
+        <div class="chip"><div class="k">메가캡 선호순위</div><div class="v" style="font-size:16px">AMZN &gt; META &gt; GOOGL</div><div class="s">Remain Bullish</div></div>
+        <div class="chip"><div class="k">라지캡 OW</div><div class="v" style="font-size:16px">MELI · UBER · DASH</div><div class="s">Reiterate OW</div></div>
+        <div class="chip"><div class="k">커버리지</div><div class="v">10종목</div><div class="s">OW 6 · Neutral 4</div></div>
+        <div class="chip"><div class="k">FY27E Capex 추정</div><div class="v">+17%</div><div class="s">메가캡 평균, vs Street</div></div>
+      </div>
+
+      <h3 class="sec"><span class="n">1</span>하우스 뷰 & 셋업</h3>
+      <ul class="pts">
+        <li>2Q 실적은 메가캡 기준 컨센서스 <b>부합~소폭 상회</b> 전망. 디지털 광고 수요는 1분기 말 둔화에서 회복되어 견조</li>
+        <li>클라우드(GCP·AWS)는 2Q에도 매출 가속 및 백로그 성장 지속. 3Q 가이던스도 유사한 흐름 반영 예상</li>
+        <li>FY26E opex·capex는 2Q에서 큰 변동 없을 전망이나, <b>FY27E 초기 코멘터리가 Street 추정치를 상향</b>시킬 전망(추정치 기준 FY27E 메가캡 평균 Capex가 Street 대비 +17%)</li>
+        <li>인터넷 메가캡은 AI 관련 지출 우려로 YTD 나스닥을 평균 <b>6%p</b> 언더퍼폼 — 매출 가속·신제품·모델 출시를 통한 ROIC 개선이 하반기 리레이팅 촉매</li>
+        <li>라지캡은 2Q 톱라인이 대체로 컨센 소폭 상회 전망. 이커머스·모빌리티·여행 소비 견조 + World Cup 수혜. UBER·DASH는 YTD 나스닥 대비 각각 22%·28% 언더퍼폼</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">2</span>등급 & 목표가 요약</h3>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Ticker</th><th>등급</th><th>현재가</th><th>목표가</th><th>Upside</th><th>밸류에이션</th></tr></thead>
+        <tbody>
+          <tr><td><b>AMZN</b></td><td class="buy">OW</td><td class="num">$245.34</td><td class="num">$330</td><td class="num">+35%</td><td>35x EPS</td></tr>
+          <tr><td><b>UBER</b></td><td class="buy">OW</td><td class="num">$74.54</td><td class="num">$98</td><td class="num">+31%</td><td>25x EPS</td></tr>
+          <tr><td><b>GOOGL</b></td><td class="buy">OW</td><td class="num">$357.18</td><td class="num">$435 <span style="color:#9aa3b2">(↓$465)</span></td><td class="num">+22%</td><td>32x EPS (↓35x)</td></tr>
+          <tr><td><b>DASH</b></td><td class="buy">OW</td><td class="num">$191.82</td><td class="num">$230 <span style="color:#9aa3b2">(↑$220)</span></td><td class="num">+20%</td><td>24x EBITDA (↑22x)</td></tr>
+          <tr><td><b>MELI</b></td><td class="buy">OW</td><td class="num">$1,852.22</td><td class="num">$2,150</td><td class="num">+16%</td><td>24x EBIT</td></tr>
+          <tr><td><b>META</b></td><td class="buy">OW</td><td class="num">$669.21</td><td class="num">$770 <span style="color:#9aa3b2">(↑$750)</span></td><td class="num">+15%</td><td>26x EPS (↑25x)</td></tr>
+          <tr><td><b>SPOT</b></td><td class="neu">N</td><td class="num">$479.77</td><td class="num">$510 <span style="color:#9aa3b2">(↓$520)</span></td><td class="num">+6%</td><td>25x EBIT</td></tr>
+          <tr><td><b>SHOP</b></td><td class="neu">N</td><td class="num">$122.54</td><td class="num">$127 <span style="color:#9aa3b2">(↑$115)</span></td><td class="num">+4%</td><td>20x GP (↑18x)</td></tr>
+          <tr><td><b>BKNG</b></td><td class="neu">N</td><td class="num">$178.39</td><td class="num">$175</td><td class="num">-2%</td><td>16x EPS</td></tr>
+          <tr><td><b>ABNB</b></td><td class="neu">N</td><td class="num">$148.62</td><td class="num">$140 <span style="color:#9aa3b2">(↓$150)</span></td><td class="num">-6%</td><td>25x EPS</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-src">현재가 기준: 7/10/26 종가. 목표가 괄호는 직전 목표가.</div>
+
+      <h3 class="sec"><span class="n">3</span>메가캡 상세</h3>
+      <ul class="pts">
+        <li><b>GOOGL (OW, PT ↓$435):</b> 2Q 검색 매출은 대체로 컨센 부합하나 GCP가 컨센 상회 전망. 클라우드 매출 성장률 <b>2Q 70% 초과 가능</b>(1Q 63%). FY26E Capex $180–190B 유지, FY27E는 "significant growth" 콜(추정치 Street +12%). 총매출 +19% ex-FX $115B(컨센 $117B 하회). FY27E Capex 추정 $283B(+53% y/y, Street $252B)</li>
+        <li><b>AMZN (OW, PT $330, 최선호):</b> AWS 가속, ex-FX <b>mid-30% 성장 가능</b>(1Q 28%). 2Q 총매출 +18% ex-FX $197B, OI $23.6B(마진 12.0%), AWS EBIT 마진 31.9%. FY26E Capex $204B, FY27E $271B(+33% y/y, Street $233B). 2Q 진입 시 비중확대 권고</li>
+        <li><b>META (OW, PT ↑$770):</b> 2Q 실적 컨센 상회 및 가이던스 상단 초과 가능. 2Q 매출 +24% y/y ex-FX $59.8B, EBIT $20.2B(마진 33.9%), EPS $6.98(컨센 3% 하회). FY27E opex·capex 코멘터리가 Street 상향 견인(추정치 FY27E opex·capex Street +5%·+21%). FY26E Capex $143B → FY27E $200B(+40% y/y, Street $165B). FY27E 캐파 = AI 컴퓨트 11GW + 레거시 1.5GW + 렌탈 1.5GW로 상향</li>
+      </ul>
+
+      <div class="chart-card">
+        <div class="ct">FY27E Capex: 추정치 vs Street ($B)</div>
+        <div class="legend">
+          <span><i style="background:var(--brand)"></i>추정치</span>
+          <span><i style="background:var(--accent)"></i>Street(컨센)</span>
+        </div>
+        <svg viewBox="0 0 880 320" width="100%">
+          <line x1="120" y1="260" x2="840" y2="260" stroke="#cfd6e0"/>
+          <line x1="120" y1="200" x2="840" y2="200" stroke="#eef1f5"/>
+          <line x1="120" y1="140" x2="840" y2="140" stroke="#eef1f5"/>
+          <line x1="120" y1="80"  x2="840" y2="80"  stroke="#eef1f5"/>
+          <text x="112" y="264" text-anchor="end" font-size="12" fill="#9aa3b2">0</text>
+          <text x="112" y="204" text-anchor="end" font-size="12" fill="#9aa3b2">100</text>
+          <text x="112" y="144" text-anchor="end" font-size="12" fill="#9aa3b2">200</text>
+          <text x="112" y="84"  text-anchor="end" font-size="12" fill="#9aa3b2">300</text>
+          <!-- scale: 0.6px per $B -->
+          <!-- GOOGL 283 / 252 -->
+          <rect x="200" y="90"  width="70" height="170" fill="var(--brand)"/>
+          <rect x="275" y="109" width="70" height="151" fill="var(--accent)"/>
+          <text x="235" y="82" text-anchor="middle" font-size="12" font-weight="700" fill="var(--brand)">283</text>
+          <text x="310" y="102" text-anchor="middle" font-size="12" fill="var(--accent2)">252</text>
+          <text x="272" y="282" text-anchor="middle" font-size="13" fill="var(--ink-soft)">GOOGL</text>
+          <!-- AMZN 271 / 233 -->
+          <rect x="420" y="97"  width="70" height="163" fill="var(--brand)"/>
+          <rect x="495" y="120" width="70" height="140" fill="var(--accent)"/>
+          <text x="455" y="89" text-anchor="middle" font-size="12" font-weight="700" fill="var(--brand)">271</text>
+          <text x="530" y="113" text-anchor="middle" font-size="12" fill="var(--accent2)">233</text>
+          <text x="492" y="282" text-anchor="middle" font-size="13" fill="var(--ink-soft)">AMZN</text>
+          <!-- META 200 / 165 -->
+          <rect x="640" y="140" width="70" height="120" fill="var(--brand)"/>
+          <rect x="715" y="161" width="70" height="99"  fill="var(--accent)"/>
+          <text x="675" y="132" text-anchor="middle" font-size="12" font-weight="700" fill="var(--brand)">200</text>
+          <text x="750" y="154" text-anchor="middle" font-size="12" fill="var(--accent2)">165</text>
+          <text x="712" y="282" text-anchor="middle" font-size="13" fill="var(--ink-soft)">META</text>
+        </svg>
+        <div class="chart-src">Source: Visible Alpha</div>
+      </div>
+      <div class="callout"><span class="t">주목</span>FY27E Capex 추정치가 메가캡 전반에서 Street를 큰 폭 상회(GOOGL +12%·AMZN +16%·META +21%). 실적 발표 시 컨센 상향 여지 → AI 수익화 가시화 시 밸류 리레이팅 촉매.</div>
+
+      <h3 class="sec"><span class="n">4</span>라지캡 & 기타 종목</h3>
+      <ul class="pts">
+        <li><b>MELI (OW, PT $2,150):</b> 2Q GMV 컨센 상회, EBIT 마진 ~7%. GMV +33% ex-FX $21.2B, EBIT $686m(마진 7.1%). Fintech TPV +49% y/y ex-FX(6pt 둔화), 크레딧 포트폴리오 +60%. 마진 하향 사이클 종료 기대, 비중확대 권고</li>
+        <li><b>UBER (OW, PT $98):</b> 2Q Gross Bookings +21% ex-FX. Mobility GB +21% y/y ex-FX, Eats +23% ex-FX, GB EBITDA 마진 +30bps 4.8%. AV 파트너십·M&amp;A 전략이 센티먼트 변수</li>
+        <li><b>DASH (OW, PT ↑$230):</b> 2Q GOV 가이던스 상단 근접, +37% y/y(23% ex-ROO). Core 주문 +16% y/y, EBITDA $849m(GOV 대비 2.57%). 주문 성장 둔화 우려는 과도, 비중확대 권고</li>
+        <li><b>SHOP (Neutral, PT ↑$127):</b> 2Q 매출·GMV 컨센 소폭 상회. GMV·매출 +28%/+25% y/y, GP +26% y/y $1.65B, 2Q EBIT $430m. YTD 나스닥 37%p 언더퍼폼, AI 효과 가시화 시 리레이팅 가능</li>
+        <li><b>BKNG (Neutral, PT $175):</b> 2Q RN·GB 가이던스 상단 근접. RN +3.5% y/y, GB +4% ex-FX, EBITDA $2.56B(마진 35.6%), EPS $2.31. 매크로 우려는 예상보다 양호</li>
+        <li><b>ABNB (Neutral, PT ↓$140):</b> 2Q RN·GB 가이던스 소폭 상회. RN·GB +8.5% y/y·+10% ex-FX, EBITDA 마진 +60bps 34.3%, GAAP EPS $1.18. 호텔 기여 시점이 관건</li>
+        <li><b>SPOT (Neutral, PT ↓$510):</b> 2Q 매출·EBIT 컨센 부합. 매출 +15% y/y ex-FX, Premium GM +170bps 34.8%, EBIT EUR 643m(ex-social, 마진 13.4%). AI 음악 생성 제품 로드맵이 초점</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">!</span>2Q 실적 체크포인트 & 리스크</h3>
+      <div class="risk-box">
+        <h4>Top 5 Things Watching On 2Q Prints</h4>
+        <ul>
+          <li><b>AI 투자:</b> FY26E는 이미 반영, FY27E 성장률이 높게 유지될지 — 초기 코멘터리가 Street 추정치 상향 견인 여부</li>
+          <li><b>AI 엔터프라이즈 수요:</b> 하이퍼스케일러의 2Q 매출 가속 + 백로그 성장, 엔터프라이즈 내 AI 확산 속도</li>
+          <li><b>AI 제품·수익화 로드맵:</b> APIs·모델·agentic 오퍼링 등에서의 증분 매출 가시성</li>
+          <li><b>소비 환경:</b> 라지캡의 볼륨 성장(RNs·trips·orders) vs 가격(ADR·AOV) — 볼륨 가속 시 멀티플 확장</li>
+          <li><b>AI 비용:</b> AI 비용 증가가 FY26E 수익성에 부담 — 가드레일·attribution 도입에 따른 P&amp;L 영향 및 회수 시점</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div>본 문서는 투자 권유를 목적으로 하지 않습니다.</div>
+  </footer>
+
+</div>
+</body>
+</html>
