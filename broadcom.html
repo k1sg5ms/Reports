@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Broadcom (AVGO) — ASIC/TPU 점유율</title>
+<style>
+  :root{
+    --brand:#00264d;
+    --brand-deep:#001730;
+    --accent:#0077c8;
+    --accent2:#2f6fa8;
+    --paper:#f4f6f9;
+    --card:#ffffff;
+    --ink:#1b1e24;
+    --ink-soft:#525866;
+    --line:#dde3ec;
+    --buy:#1f7a4d;
+    --bear:#c0392b;
+    --bull:#1f6fb2;
+    --warn:#8a4b15;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Helvetica Neue','Pretendard','Noto Sans KR',Arial,sans-serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:960px;margin:0 auto;padding:40px 6vw 90px;}
+
+  .intro{border-left:4px solid var(--accent);padding:8px 0 8px 20px;margin-bottom:44px;}
+  .intro .eyebrow{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent2);font-weight:700;}
+  .intro h1{font-size:26px;margin:8px 0 6px;color:var(--brand);}
+
+  .report{margin-bottom:64px;scroll-margin-top:70px;}
+  .report-head{background:linear-gradient(135deg,var(--brand) 0%, var(--brand-deep) 100%);color:#fff;border-radius:10px 10px 0 0;padding:28px 30px;}
+  .report-head .tag{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#9fb4d4;font-weight:700;}
+  .report-head h2{margin:8px 0 14px;font-size:23px;line-height:1.35;}
+  .report-head .lede{font-family:'Georgia',serif;font-size:15.5px;color:#e3ebf6;border-top:1px solid rgba(255,255,255,0.16);padding-top:14px;margin:0;}
+  .report-body{background:var(--card);border:1px solid var(--line);border-top:none;border-radius:0 0 10px 10px;padding:30px;}
+
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px;}
+  .chip{border:1px solid var(--line);border-radius:8px;padding:10px 16px;background:#fafbfd;flex:1;min-width:130px;}
+  .chip .k{font-size:10.5px;letter-spacing:0.5px;text-transform:uppercase;color:var(--ink-soft);}
+  .chip .v{font-size:19px;font-weight:700;color:var(--brand);margin-top:2px;}
+  .chip .v.buy{color:var(--buy);}
+  .chip .v.sell{color:var(--bear);}
+  .chip .s{font-size:11px;color:var(--ink-soft);}
+
+  h3.sec{font-size:17px;color:var(--brand);margin:30px 0 12px;padding-bottom:8px;border-bottom:1.5px solid var(--line);display:flex;align-items:center;gap:10px;}
+  h3.sec .n{background:var(--brand);color:#fff;font-size:12px;font-weight:700;width:24px;height:24px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}
+
+  ul.pts{margin:0;padding:0;list-style:none;}
+  ul.pts li{position:relative;padding:7px 0 7px 20px;font-size:14.5px;border-bottom:1px dashed var(--line);}
+  ul.pts li:last-child{border-bottom:none;}
+  ul.pts li::before{content:"—";position:absolute;left:0;color:var(--accent2);font-weight:700;}
+  ul.pts b{color:var(--brand);}
+
+  table.tbl{width:100%;border-collapse:collapse;font-size:13px;margin:6px 0 4px;}
+  table.tbl th{background:var(--brand);color:#fff;text-align:left;padding:8px 10px;font-weight:600;}
+  table.tbl td{padding:7px 10px;border-bottom:1px solid var(--line);}
+  table.tbl tr:nth-child(even) td{background:#f7f9fc;}
+  table.tbl td.num{text-align:right;font-variant-numeric:tabular-nums;}
+  table.tbl td.buy{color:var(--buy);font-weight:700;}
+  .tbl-wrap{overflow-x:auto;}
+
+  .chart-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:22px 22px 14px;margin:14px 0;}
+  .chart-card .ct{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:12px;}
+  .chart-src{font-size:10.5px;color:#9aa3b2;margin-top:8px;}
+  .legend{display:flex;gap:18px;font-size:11.5px;color:var(--ink-soft);margin-bottom:4px;flex-wrap:wrap;}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .legend i{width:11px;height:11px;border-radius:2px;display:inline-block;}
+
+  .bbgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0;}
+  @media(max-width:680px){.bbgrid{grid-template-columns:1fr;}}
+  .bb{border-radius:8px;padding:16px;border:1px solid var(--line);background:#fafbfd;}
+  .bb.bull{border-top:3px solid var(--bull);}
+  .bb.base{border-top:3px solid var(--ink-soft);}
+  .bb.bear{border-top:3px solid var(--bear);}
+  .bb .lbl{font-size:11px;letter-spacing:0.6px;text-transform:uppercase;font-weight:700;color:var(--ink-soft);}
+  .bb .px{font-size:22px;font-weight:700;color:var(--brand);margin:4px 0;}
+  .bb .ret{font-size:13px;font-weight:600;}
+  .bb.bull .ret{color:var(--bull);}
+  .bb.bear .ret{color:var(--bear);}
+  .bb .prob{font-size:11px;color:var(--ink-soft);margin-top:2px;}
+  .bb ul{margin:8px 0 0;padding-left:16px;font-size:12px;color:var(--ink-soft);}
+  .bb li{margin-bottom:4px;}
+
+  .callout{background:#fbf6ec;border:1px solid #e8dcc3;border-radius:8px;padding:14px 18px;font-size:13px;color:var(--ink-soft);margin-top:14px;}
+  .callout .t{font-size:10.5px;font-weight:700;letter-spacing:0.6px;color:var(--warn);text-transform:uppercase;display:block;margin-bottom:5px;}
+
+  .risk-box{background:var(--brand);color:#dde6f3;border-radius:8px;padding:22px 24px;margin-top:14px;}
+  .risk-box h4{margin:0 0 10px;color:#fff;font-size:14.5px;}
+  .risk-box ul{margin:0;padding-left:18px;}
+  .risk-box li{margin-bottom:8px;font-size:13px;}
+  .risk-box li b{color:#fff;}
+
+  footer{border-top:1px solid var(--line);margin-top:50px;padding-top:20px;font-size:11px;color:#9aa3b2;line-height:1.6;}
+
+  @media(max-width:560px){
+    .intro h1{font-size:21px;}
+    .report-head h2{font-size:19px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="intro">
+    <div class="eyebrow">14 July 2026</div>
+    <h1>Broadcom(AVGO): TPU 점유율 방어 논리</h1>
+  </div>
+
+  <section class="report" id="rpt1">
+
+    <div class="report-head">
+      <div class="tag">Semiconductors · United States</div>
+      <h2>AVGO의 ASIC 점유율 방어 — MediaTek 참여는 현실이나 대체 우려는 시기상조</h2>
+      <p class="lede">MediaTek의 Google TPU 참여는 실재하지만 Broadcom 점유율 붕괴로 연결하는 것은 과도하다. AVGO는 시간이 지나도 ~80% TPU 점유율을 유지하며 강한 AI 성장과 NVDA에 이은 확고한 #2 컴퓨트 지위를 지킬 것.</p>
+    </div>
+
+    <div class="report-body">
+
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Overweight</div><div class="s">유지 · Industry View: Attractive</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$502.00</div><div class="s">+30.7% upside</div></div>
+        <div class="chip"><div class="k">Price (Jul 13 '26)</div><div class="v">$384.05</div><div class="s">52주 $269.58–495.00</div></div>
+        <div class="chip"><div class="k">Valuation</div><div class="v">28x</div><div class="s">CY27e ModelWare EPS $17.92</div></div>
+        <div class="chip"><div class="k">Mkt Cap</div><div class="v">$1.87T</div><div class="s">$1,872,628mm</div></div>
+      </div>
+
+      <!-- 1 -->
+      <h3 class="sec"><span class="n">1</span>핵심 논지 — MediaTek 참여 vs Broadcom 점유율 방어</h3>
+      <ul class="pts">
+        <li>AVGO는 시간이 지나도 TPU에서 <b>~80% 점유율</b>을 유지할 것으로 전망. 일부 공급망 체크가 시사하는 급격한 점유율 하락과는 반대 시각.</li>
+        <li>YTD 주가 부진이 다소 의외 — AI 성장 궤적은 견조하나, ① AI 반도체 내 성장성 높은 "bottleneck" 스토리에 대한 투자자 선호, ② MediaTek vs Broadcom의 Google TPU 점유율 논쟁이 최대 overhang.</li>
+        <li>50% 이하로의 점유율 하락 또는 궁극적 완전 대체를 주장하는 bearish 시각은 <b>시기상조</b>로 판단.</li>
+        <li>지난해 MRVL/Alchip 논쟁과 유사 — 시장이 신규 공급사 참여를 극단적 대체 시나리오로 확대 해석. Marvell이 의미 있는 Trainium 점유율을 잃긴 했으나 "완전 대체" 시각은 지나치게 draconian했던 것으로 확인됨.</li>
+        <li>핵심 쟁점은 "MediaTek이 참여하느냐"가 아니라 "그 참여가 Broadcom의 <b>광범위한 AI ASIC 성장 궤적을 훼손하느냐</b>" — 훼손하지 않을 것으로 판단.</li>
+      </ul>
+
+      <!-- 2 -->
+      <h3 class="sec"><span class="n">2</span>TPU 점유율 논쟁 — 대체가 어려운 이유</h3>
+      <ul class="pts">
+        <li>MediaTek의 역할 자체는 인정. Google은 원가 의식적이고 공급사 다변화(supplier optionality)를 원하며, 복수의 TPU 이터레이션을 개발 중.</li>
+        <li>Taiwan 공급망 관점의 유효한 포인트 — MediaTek은 신뢰할 만한 <b>3nm TPU 기회</b>를 보유, Google은 Broadcom 의존도 축소 유인, 첨단 패키징 제약이 대안 모색 이유로 작용.</li>
+        <li>다만 이 사실들을 "Broadcom 점유율 붕괴 시나리오"로 전환하는 데는 동의하지 않음. Base case는 Broadcom이 시간이 지나도 <b>약 80% TPU 점유율 유지</b>.</li>
+        <li>이는 MediaTek이 공개적으로 밝힌 <b>장기 15–20% 점유율 목표</b>와도 부합. 시장은 Broadcom의 점유율 상실 규모와 속도를 과장하고 있음.</li>
+        <li>scaled TPU 플랫폼에서 Broadcom을 대체하는 난이도를 투자자들이 과소평가 — 단순히 칩 tape-out이나 초기 매출 창출 여부의 문제가 아님.</li>
+        <li>진짜 관건: 칩이 <b>at scale로 안정 작동</b>, 제약된 메모리 공급 확보, 시스템 레벨 qualify, 대형 TPU pod 전반 배치를 Google의 AI 인프라 로드맵 차질 없이 달성 가능한가 — 훨씬 높은 허들.</li>
+        <li>AVGO는 <b>2H27</b>에 복수의 신규 ASIC 고객 램프업 예정 → 성장 뒷받침.</li>
+      </ul>
+
+      <!-- 3 -->
+      <h3 class="sec"><span class="n">3</span>원가/HBM & 패키징(EMIB/CoWoS)</h3>
+      <ul class="pts">
+        <li>MediaTek 채택의 주된 동기는 <b>원가 절감</b> — 특정 commodity 부품을 Broadcom pass-through 매출 대신 별도 조달하려는 목적.</li>
+        <li>다만 기대한 절감분 실현이 특히 <b>HBM</b>에서 쉽지 않을 수 있음. HBM 시장 타이트화와 open-market 가격 상승으로 오픈마켓 조달이 더 이상 원가 우위가 아님. Broadcom은 기존 계약 하에 이미 공급을 확보 → 경쟁 솔루션의 원가 우위 확보가 어려움.</li>
+        <li>공격적 MediaTek 성장과 높은 2nm TPU 기대치는 패키징 경로가 더 명확히 de-risk되기 전까지 신중 접근 필요.</li>
+        <li>Taiwan semis 시각: MediaTek은 2nm TPU 최소 생산용 <b>CoWoS</b> 캐파를 일부 확보할 전망. <b>EMIB</b>는 "잘 실행될 경우"의 2029년 볼륨·원가 unlock 성격으로, Google이 요구하는 복잡도 수준에서 여전히 불확실.</li>
+        <li>substrate 캐파가 잠재적 병목, CoWoS가 보다 신뢰할 fallback으로 평가. EMIB가 불가능하다는 것이 아니라, 검증 전 대규모 2nm 램프를 가정하는 것은 과도한 신뢰를 요구.</li>
+      </ul>
+
+      <!-- 4 -->
+      <h3 class="sec"><span class="n">4</span>AI 매출 & XPU 전망</h3>
+      <ul class="pts">
+        <li>FY27 AVGO AI 매출 <b>약 $120bn</b> 전망. 이 중 TPU(Google 내부 배치 + 외부 기회)가 AI 배치 10GW의 <b>약 75%</b> 차지.</li>
+        <li>GW당 원가 약 $10–12bn 가정 → 내년 <b>약 $80bn</b>의 TPU 관련 매출로 환산.</li>
+        <li>FY28엔 최소 15GW AI 배치 지원이 가능할 전망. 이 경우 TPU 비중은 AI 매출의 <b>약 60%</b>로 하락 — TPU 약화가 아니라 신규 ASIC 고객의 본격 램프업 때문.</li>
+        <li>경영진(Hock)이 직전 실적 콜에서 FY28에 대해 점진적으로 bullish한 톤. bias는 상방이나 신규 ASIC 프로그램별 실행 리스크·optionality로 보수적 접근 견지. 다만 "credible shots on goal"은 다수.</li>
+      </ul>
+
+      <div class="chart-card">
+        <div class="ct">AVGO XPU GW 배치 전망 (고객별, GW)</div>
+        <div class="legend">
+          <span><i style="background:var(--brand)"></i>TPU</span>
+          <span><i style="background:#bcd3ea"></i>Other XPUs</span>
+        </div>
+        <svg viewBox="0 0 880 340" width="100%">
+          <!-- y grid 0~18, step 2 -->
+          <line x1="70" y1="300" x2="850" y2="300" stroke="#cfd6e0"/>
+          <g font-size="11" fill="#9aa3b2" font-family="Arial">
+            <text x="60" y="304" text-anchor="end">-</text>
+            <text x="60" y="273" text-anchor="end">2</text>
+            <text x="60" y="242" text-anchor="end">4</text>
+            <text x="60" y="211" text-anchor="end">6</text>
+            <text x="60" y="180" text-anchor="end">8</text>
+            <text x="60" y="149" text-anchor="end">10</text>
+            <text x="60" y="118" text-anchor="end">12</text>
+            <text x="60" y="87" text-anchor="end">14</text>
+            <text x="60" y="56" text-anchor="end">16</text>
+            <text x="60" y="25" text-anchor="end">18</text>
+          </g>
+          <g stroke="#eef1f6">
+            <line x1="70" y1="269" x2="850" y2="269"/>
+            <line x1="70" y1="238" x2="850" y2="238"/>
+            <line x1="70" y1="207" x2="850" y2="207"/>
+            <line x1="70" y1="176" x2="850" y2="176"/>
+            <line x1="70" y1="145" x2="850" y2="145"/>
+            <line x1="70" y1="114" x2="850" y2="114"/>
+            <line x1="70" y1="83" x2="850" y2="83"/>
+            <line x1="70" y1="52" x2="850" y2="52"/>
+            <line x1="70" y1="21" x2="850" y2="21"/>
+          </g>
+          <!-- scale: 15.5px per unit; y=300 baseline -->
+          <!-- 2026: TPU 4.5 -> 69.75px -->
+          <rect x="180" y="230.25" width="120" height="69.75" fill="var(--brand)"/>
+          <!-- 2027: TPU 7.5 -> 116.25; Other 2.5 -> 38.75 -->
+          <rect x="400" y="183.75" width="120" height="116.25" fill="var(--brand)"/>
+          <rect x="400" y="145" width="120" height="38.75" fill="#bcd3ea"/>
+          <!-- 2028: TPU 9.5 -> 147.25; Other 6 -> 93 -->
+          <rect x="620" y="152.75" width="120" height="147.25" fill="var(--brand)"/>
+          <rect x="620" y="59.75" width="120" height="93" fill="#bcd3ea"/>
+          <g font-size="12" fill="#525866" font-family="Arial" text-anchor="middle">
+            <text x="240" y="318">2026</text>
+            <text x="460" y="318">2027</text>
+            <text x="680" y="318">2028</text>
+          </g>
+          <g font-size="11.5" fill="#fff" font-family="Arial" text-anchor="middle" font-weight="700">
+            <text x="240" y="270">4.5</text>
+            <text x="460" y="248">7.5</text>
+            <text x="680" y="235">9.5</text>
+          </g>
+          <g font-size="11" fill="#2f6fa8" font-family="Arial" text-anchor="middle">
+            <text x="460" y="138">~10 total</text>
+            <text x="680" y="53">~15.5 total</text>
+          </g>
+        </svg>
+      </div>
+
+      <div class="chart-card">
+        <div class="ct">AVGO AI 매출 & XPU GW 전망 (AI Revenue $M, 좌축 / GW, 우축)</div>
+        <div class="legend">
+          <span><i style="background:var(--brand)"></i>AI Revenue ($M)</span>
+          <span><i style="background:#d0a54a;height:3px;width:16px;border-radius:0"></i>GW Estimate</span>
+        </div>
+        <svg viewBox="0 0 880 340" width="100%">
+          <line x1="80" y1="300" x2="800" y2="300" stroke="#cfd6e0"/>
+          <!-- left axis 0~180,000 -->
+          <g font-size="11" fill="#9aa3b2" font-family="Arial">
+            <text x="70" y="304" text-anchor="end">-</text>
+            <text x="70" y="269" text-anchor="end">40k</text>
+            <text x="70" y="238" text-anchor="end">80k</text>
+            <text x="70" y="207" text-anchor="end">120k</text>
+            <text x="70" y="176" text-anchor="end">160k</text>
+          </g>
+          <!-- right axis GW 0~18 -->
+          <g font-size="11" fill="#c79a3f" font-family="Arial">
+            <text x="812" y="304">0</text>
+            <text x="812" y="230">6</text>
+            <text x="812" y="156">12</text>
+            <text x="812" y="82">18</text>
+          </g>
+          <g stroke="#eef1f6">
+            <line x1="80" y1="269" x2="800" y2="269"/>
+            <line x1="80" y1="238" x2="800" y2="238"/>
+            <line x1="80" y1="207" x2="800" y2="207"/>
+            <line x1="80" y1="176" x2="800" y2="176"/>
+          </g>
+          <!-- bars: scale 300 - (val/180000*160). FY26 55000 ->48.9 ->y251; FY27 118000->104.9->y195; FY28 163000->144.9->y155 -->
+          <rect x="150" y="251" width="110" height="49" fill="var(--brand)"/>
+          <rect x="380" y="195" width="110" height="105" fill="var(--brand)"/>
+          <rect x="610" y="155" width="110" height="145" fill="var(--brand)"/>
+          <!-- GW line: right axis, y = 300 - gw/18*222 (top ~78). FY26 5 ->238; FY27 10 ->177; FY28 15.5 ->109 -->
+          <polyline points="205,238 435,177 665,109" fill="none" stroke="#d0a54a" stroke-width="3"/>
+          <circle cx="205" cy="238" r="4" fill="#d0a54a"/>
+          <circle cx="435" cy="177" r="4" fill="#d0a54a"/>
+          <circle cx="665" cy="109" r="4" fill="#d0a54a"/>
+          <g font-size="12" fill="#525866" font-family="Arial" text-anchor="middle">
+            <text x="205" y="318">FY26</text>
+            <text x="435" y="318">FY27</text>
+            <text x="665" y="318">FY28</text>
+          </g>
+          <g font-size="11.5" fill="#fff" font-family="Arial" text-anchor="middle" font-weight="700">
+            <text x="205" y="272">~55k</text>
+            <text x="435" y="216">~118k</text>
+            <text x="665" y="176">~163k</text>
+          </g>
+        </svg>
+      </div>
+
+      <!-- 5 -->
+      <h3 class="sec"><span class="n">5</span>실적 추정</h3>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>연간 (10월 결산)</th><th>Oct'25</th><th>Oct'26e</th><th>Oct'27e</th><th>Oct'28e</th></tr></thead>
+        <tbody>
+          <tr><td><b>GAAP Revenue ($mm)</b></td><td class="num">63,887</td><td class="num">105,746</td><td class="num">167,484</td><td class="num">214,313</td></tr>
+          <tr><td><b>Gross Margin (%)</b></td><td class="num">77.3</td><td class="num">74.0</td><td class="num">70.3</td><td class="num">69.8</td></tr>
+          <tr><td><b>ModelWare EPS ($)</b></td><td class="num">5.39</td><td class="num">9.98</td><td class="num">16.63</td><td class="num">21.48</td></tr>
+          <tr><td><b>P/E (x)</b></td><td class="num">68.6</td><td class="num">38.5</td><td class="num">23.1</td><td class="num">17.9</td></tr>
+          <tr><td><b>Inventory ($mm)</b></td><td class="num">2,270</td><td class="num">7,864</td><td class="num">10,715</td><td class="num">12,477</td></tr>
+          <tr><td><b>DOI (일)</b></td><td class="num">57.2</td><td class="num">104.3</td><td class="num">78.6</td><td class="num">70.3</td></tr>
+          <tr><td><b>Div yield (%)</b></td><td class="num">0.7</td><td class="num">0.7</td><td class="num">0.7</td><td class="num">0.8</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="tbl-wrap" style="margin-top:16px;">
+      <table class="tbl">
+        <thead><tr><th>분기 EPS ($)</th><th>2025</th><th>2026e</th><th>2027e</th></tr></thead>
+        <tbody>
+          <tr><td><b>Q1</b></td><td class="num">1.60</td><td class="num">2.05a</td><td class="num">4.14</td></tr>
+          <tr><td><b>Q2</b></td><td class="num">1.58</td><td class="num">2.44a</td><td class="num">4.28</td></tr>
+          <tr><td><b>Q3</b></td><td class="num">1.69</td><td class="num">3.24</td><td class="num">4.72</td></tr>
+          <tr><td><b>Q4</b></td><td class="num">1.95</td><td class="num">3.85</td><td class="num">5.14</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="callout"><span class="t">추정치 vs 컨센서스 (FY Oct'26e)</span>
+        Sales/Revenue $105,746mm(컨센 $105,801mm) · EBITDA $71,397mm(컨센 $71,197mm) · Net income $57,329mm(컨센 $56,849mm) · EPS $11.59(컨센 $11.55) — 추정치가 컨센서스에 대체로 부합하거나 소폭 상회.
+      </div>
+
+      <!-- 6 -->
+      <h3 class="sec"><span class="n">6</span>밸류에이션 & Bull/Base/Bear 시나리오</h3>
+      <ul class="pts">
+        <li>목표가 <b>$502</b>는 CY27e ModelWare EPS $17.92의 <b>28x</b> (non-GAAP EPS $19.59 기준 약 26x) — AI 피어 그룹 대비 대체로 in-line 또는 하회.</li>
+        <li>컨센서스 목표가 분포 $215.88–$643.23, 평균 약 $509.84. Consensus Rating: <b>Overweight 92% / Equal-weight 8% / Underweight 0%</b>.</li>
+      </ul>
+      <div class="bbgrid">
+        <div class="bb bull"><div class="lbl">🐂 Bull</div><div class="px">$637</div><div class="ret">+65.9% Upside</div><div class="prob">Prob(&gt;$637) ~4.6%</div>
+          <ul><li>2027e Bull EPS $20.55 × 31x</li><li>신규 xPU 고객 램프·networking 강세·VMware 시너지로 매출 상방 서프라이즈, 멀티플 확장</li></ul></div>
+        <div class="bb base"><div class="lbl">⊕ Base</div><div class="px">$502</div><div class="ret">+30.7%</div><div class="prob">Prob(&gt;$502) ~16.8%</div>
+          <ul><li>2027e Base EPS $17.92 × 28x</li><li>xPU·Networking·소프트웨어 성장으로 CY26–27 견조한 매출 성장</li></ul></div>
+        <div class="bb bear"><div class="lbl">🐻 Bear</div><div class="px">$308</div><div class="ret">−19.8% Downside</div><div class="prob">Prob(&lt;$308) ~38.3%</div>
+          <ul><li>2027e Bear EPS $15.40 × 20x</li><li>매출 성장 실망·시너지 미흡, 신규 고객 engagement가 양산 도달 실패</li></ul></div>
+      </div>
+      <div class="chart-card">
+        <div class="ct">Risk-Reward (12M) — 현재가 $384.05 대비 시나리오</div>
+        <svg viewBox="0 0 880 300" width="100%">
+          <line x1="70" y1="260" x2="850" y2="260" stroke="#cfd6e0"/>
+          <!-- axis 0~800, y=260 base, scale 260-(val/800*220) -> top40 -->
+          <g font-size="11" fill="#9aa3b2" font-family="Arial">
+            <text x="60" y="264" text-anchor="end">0</text>
+            <text x="60" y="205" text-anchor="end">200</text>
+            <text x="60" y="150" text-anchor="end">400</text>
+            <text x="60" y="95" text-anchor="end">600</text>
+            <text x="60" y="45" text-anchor="end">800</text>
+          </g>
+          <!-- current price line 384.05 -> 260-105.6=154.4 -->
+          <line x1="70" y1="154.4" x2="850" y2="154.4" stroke="var(--accent)" stroke-dasharray="4 4"/>
+          <text x="80" y="149" font-size="11" fill="var(--accent)" font-family="Arial">현재가 $384.05</text>
+          <!-- bull 637 -> 260-175.2=84.8 -->
+          <line x1="500" y1="84.8" x2="820" y2="84.8" stroke="var(--bull)" stroke-width="2"/>
+          <circle cx="500" cy="84.8" r="5" fill="var(--bull)"/>
+          <text x="640" y="79" font-size="12" fill="var(--bull)" font-family="Arial" font-weight="700">Bull $637 (+65.9%)</text>
+          <!-- base 502 -> 260-138.05=121.95 -->
+          <line x1="500" y1="121.95" x2="820" y2="121.95" stroke="var(--brand)" stroke-width="2"/>
+          <circle cx="500" cy="121.95" r="5" fill="var(--brand)"/>
+          <text x="640" y="116" font-size="12" fill="var(--brand)" font-family="Arial" font-weight="700">Base $502 (+30.7%)</text>
+          <!-- bear 308 -> 260-84.7=175.3 -->
+          <line x1="500" y1="175.3" x2="820" y2="175.3" stroke="var(--bear)" stroke-width="2"/>
+          <circle cx="500" cy="175.3" r="5" fill="var(--bear)"/>
+          <text x="640" y="192" font-size="12" fill="var(--bear)" font-family="Arial" font-weight="700">Bear $308 (−19.8%)</text>
+          <!-- connector fan -->
+          <line x1="500" y1="154.4" x2="500" y2="84.8" stroke="#ccd4e0"/>
+          <line x1="500" y1="154.4" x2="500" y2="175.3" stroke="#ccd4e0"/>
+          <circle cx="500" cy="154.4" r="5" fill="var(--accent)"/>
+          <g font-size="11" fill="#525866" font-family="Arial" text-anchor="middle">
+            <text x="200" y="278">Jul '26</text>
+            <text x="660" y="278">Jul '27</text>
+          </g>
+        </svg>
+        <div class="chart-src">Source: Refinitiv. 시나리오 확률은 2026-07-13 기준 옵션 내재변동성 기반 risk-neutral 추정치.</div>
+      </div>
+
+      <!-- risk -->
+      <h3 class="sec"><span class="n">!</span>리스크 & 모니터링 포인트</h3>
+      <div class="risk-box">
+        <h4>Risks to PT & Rating</h4>
+        <ul>
+          <li><b>Upside:</b> AI 매출 강세, 코어 semis 경기 회복 가속, VMware 시너지 실현.</li>
+          <li><b>Downside:</b> Networking 점유율을 Nvidia(Mellanox)에 상실, ASIC 칩 경쟁력 약화로 고객 이탈, VMware 인수 실행 리스크.</li>
+        </ul>
+        <h4 style="margin-top:14px;">"What would make us wrong?" (약세 전환 트리거)</h4>
+        <ul>
+          <li>MediaTek 실리콘이 기대 대비 <b>현저히 우수한 성능</b>을 입증.</li>
+          <li>Google/MediaTek이 경쟁력 있는 <b>HBM 공급</b>을 확보.</li>
+          <li><b>EMIB</b>가 scaled 2nm 램프를 뒷받침할 만큼 신뢰성 확보.</li>
+          <li>고객 배치가 risk silicon → 양산으로 과거 AI 가속기 램프보다 빠르게 이동.</li>
+          <li>→ 이 조건 전까지는 MediaTek을 2nd-source 다변화 스토리로 보며, Broadcom TPU 지위의 구조적 훼손 근거로 보지 않음.</li>
+        </ul>
+        <h4 style="margin-top:14px;">Ownership Positioning</h4>
+        <ul>
+          <li>Inst. Owners %Active <b>53.1%</b> · HF Sector Long/Short Ratio <b>2.1x</b> · HF Sector Net Exposure <b>29.5%</b>.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div>본 문서는 투자 권유를 목적으로 하지 않습니다.</div>
+  </footer>
+
+</div>
+</body>
+</html>
