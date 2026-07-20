@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>China AI Models — Kimi K3</title>
+<style>
+  :root{
+    --brand:#1a2b4a;
+    --brand-deep:#0e1729;
+    --accent:#6b8cae;
+    --accent2:#3d5a80;
+    --paper:#f4f6f9;
+    --card:#ffffff;
+    --ink:#1b1e24;
+    --ink-soft:#525866;
+    --line:#dde3ec;
+    --buy:#1f7a4d;
+    --bear:#c0392b;
+    --bull:#1f6fb2;
+    --warn:#8a4b15;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Helvetica Neue','Pretendard','Noto Sans KR',Arial,sans-serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:960px;margin:0 auto;padding:40px 6vw 90px;}
+
+  .intro{border-left:4px solid var(--accent);padding:8px 0 8px 20px;margin-bottom:48px;}
+  .intro .eyebrow{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent2);font-weight:700;}
+  .intro h1{font-size:26px;margin:8px 0 6px;color:var(--brand);}
+
+  .report{margin-bottom:64px;scroll-margin-top:70px;}
+  .report-head{
+    background:linear-gradient(135deg,var(--brand) 0%, var(--brand-deep) 100%);
+    color:#fff;border-radius:10px 10px 0 0;padding:28px 30px;
+  }
+  .report-head .tag{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#9fb4d4;font-weight:700;}
+  .report-head h2{margin:8px 0 14px;font-size:23px;line-height:1.35;}
+  .report-head .lede{
+    font-family:'Georgia',serif;font-size:15.5px;color:#e3ebf6;
+    border-top:1px solid rgba(255,255,255,0.16);padding-top:14px;margin:0;
+  }
+  .report-body{
+    background:var(--card);border:1px solid var(--line);border-top:none;
+    border-radius:0 0 10px 10px;padding:30px;
+  }
+
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px;}
+  .chip{border:1px solid var(--line);border-radius:8px;padding:10px 16px;background:#fafbfd;flex:1;min-width:150px;}
+  .chip .k{font-size:10.5px;letter-spacing:0.5px;text-transform:uppercase;color:var(--ink-soft);}
+  .chip .v{font-size:19px;font-weight:700;color:var(--brand);margin-top:2px;}
+  .chip .v.buy{color:var(--buy);}
+  .chip .v.sell{color:var(--bear);}
+  .chip .s{font-size:11px;color:var(--ink-soft);}
+
+  h3.sec{
+    font-size:17px;color:var(--brand);margin:30px 0 12px;
+    padding-bottom:8px;border-bottom:1.5px solid var(--line);
+    display:flex;align-items:center;gap:10px;
+  }
+  h3.sec .n{
+    background:var(--brand);color:#fff;font-size:12px;font-weight:700;
+    width:24px;height:24px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  ul.pts{margin:0;padding:0;list-style:none;}
+  ul.pts li{position:relative;padding:7px 0 7px 20px;font-size:14.5px;border-bottom:1px dashed var(--line);}
+  ul.pts li:last-child{border-bottom:none;}
+  ul.pts li::before{content:"—";position:absolute;left:0;color:var(--accent2);font-weight:700;}
+  ul.pts b{color:var(--brand);}
+
+  table.tbl{width:100%;border-collapse:collapse;font-size:13px;margin:6px 0 4px;}
+  table.tbl th{background:var(--brand);color:#fff;text-align:left;padding:8px 10px;font-weight:600;}
+  table.tbl td{padding:7px 10px;border-bottom:1px solid var(--line);}
+  table.tbl tr:nth-child(even) td{background:#f7f9fc;}
+  table.tbl td.num{text-align:right;font-variant-numeric:tabular-nums;}
+  table.tbl td.buy{color:var(--buy);font-weight:700;}
+  .tbl-wrap{overflow-x:auto;}
+
+  .chart-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:22px 22px 14px;margin:14px 0;}
+  .chart-card .ct{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:12px;}
+  .chart-src{font-size:10.5px;color:#9aa3b2;margin-top:8px;}
+  .legend{display:flex;gap:18px;font-size:11.5px;color:var(--ink-soft);margin-bottom:4px;}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .legend i{width:11px;height:11px;border-radius:2px;display:inline-block;}
+
+  .bbgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0;}
+  @media(max-width:680px){.bbgrid{grid-template-columns:1fr;}}
+  .bb{border-radius:8px;padding:16px;border:1px solid var(--line);background:#fafbfd;}
+  .bb.c1{border-top:3px solid var(--bull);}
+  .bb.c2{border-top:3px solid var(--accent2);}
+  .bb.c3{border-top:3px solid var(--ink-soft);}
+  .bb .lbl{font-size:11px;letter-spacing:0.6px;text-transform:uppercase;font-weight:700;color:var(--ink-soft);}
+  .bb .px{font-size:16px;font-weight:700;color:var(--brand);margin:4px 0;}
+  .bb ul{margin:8px 0 0;padding-left:16px;font-size:12px;color:var(--ink-soft);}
+  .bb li{margin-bottom:4px;}
+
+  .callout{background:#fbf6ec;border:1px solid #e8dcc3;border-radius:8px;padding:14px 18px;font-size:13px;color:var(--ink-soft);margin-top:14px;}
+  .callout .t{font-size:10.5px;font-weight:700;letter-spacing:0.6px;color:var(--warn);text-transform:uppercase;display:block;margin-bottom:5px;}
+
+  .risk-box{background:var(--brand);color:#dde6f3;border-radius:8px;padding:22px 24px;margin-top:14px;}
+  .risk-box h4{margin:0 0 10px;color:#fff;font-size:14.5px;}
+  .risk-box ul{margin:0;padding-left:18px;}
+  .risk-box li{margin-bottom:8px;font-size:13px;}
+  .risk-box li b{color:#fff;}
+
+  footer{border-top:1px solid var(--line);margin-top:50px;padding-top:20px;font-size:11px;color:#9aa3b2;line-height:1.6;}
+
+  @media(max-width:560px){
+    .intro h1{font-size:21px;}
+    .report-head h2{font-size:19px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="intro">
+    <div class="eyebrow">18 July 2026</div>
+    <h1>중국 AI 모델 — Kimi K3의 새로운 프론티어</h1>
+  </div>
+
+  <section class="report" id="rpt1">
+
+    <div class="report-head">
+      <div class="tag">China Internet / AI Models</div>
+      <h2>Kimi K3가 연 새로운 프론티어 — 비용 효율에서 모델 지능, 그리고 중국 모델의 pricing power로</h2>
+      <p class="lede">중국 AI 모델의 경쟁 축이 '저가 경쟁'에서 '프론티어 성능 기반 가격 결정력'으로 이동. Kimi K3가 코딩·agentic 영역에서 글로벌 선두권에 오르며 중국 모델 중 최고가 API 가격을 책정.</p>
+    </div>
+
+    <div class="report-body">
+
+      <div class="chips">
+        <div class="chip"><div class="k">Kimi K3 파라미터</div><div class="v">2.8조</div><div class="s">open-weight, 7월 17일 공개</div></div>
+        <div class="chip"><div class="k">K3 Blended API 가격</div><div class="v">US$2.3</div><div class="s">per 1M tokens, 중국 모델 최고가</div></div>
+        <div class="chip"><div class="k">AI 모델 Top Pick</div><div class="v buy">MiniMax</div><div class="s">Buy, TP HK$860</div></div>
+        <div class="chip"><div class="k">선호 Sub-sector</div><div class="v">Cloud &amp; DC</div><div class="s">Alibaba/GDS/VNET/Kingsoft Cloud</div></div>
+      </div>
+
+      <h3 class="sec"><span class="n">1</span>Kimi K3 — 성능 프론티어와 가격 결정력의 동시 확보</h3>
+      <ul class="pts">
+        <li>7월 17일 <b>Kimi K3 open-weight 모델</b> 공개. 총 파라미터 <b>2.8조(2.8trn)</b> 규모로, Arena.ai 코딩 랭킹과 Artificial Analysis Intelligence Score 기준 <b>코딩 및 일부 agentic 역량에서 글로벌 신(新) 프론티어</b> 형성</li>
+        <li>이에 맞춰 K3의 blended API 가격은 <b>1M tokens당 US$2.3</b>로 중국 모델 중 최고 수준 책정 — Qwen3.7 Max US$1.4, Zhipu GLM5.2 US$0.9, MiniMax M3 US$0.22, DeepSeek V4 Pro US$0.18 대비 큰 폭 상회</li>
+        <li>다만 K3 가격도 <b>글로벌 SOTA 모델 대비로는 여전히 낮은 수준</b>. 중국 모델의 가격 인상 여력이 아직 남아 있음을 시사</li>
+        <li>중국의 open-source/open-weight 모델이 <b>글로벌 확산(proliferation)을 위한 지능 성능의 임계점</b>에 도달했다는 판단 유지</li>
+        <li>2H26 signpost로 제시했던 <b>고사양 코딩 세그먼트 경쟁 심화</b>(코딩 데이터 flywheel + 2~5조 파라미터급 스케일업) 시나리오가 현실화되는 국면</li>
+      </ul>
+
+      <div class="chart-card">
+        <div class="ct">Code Arena 글로벌 랭킹 — 모델별 점수 (2026년 7월 16일 기준)</div>
+        <svg viewBox="0 0 880 340" width="100%">
+          <line x1="80" y1="290" x2="860" y2="290" stroke="#cfd6e0"/>
+          <line x1="80" y1="40" x2="80" y2="290" stroke="#cfd6e0"/>
+          <g font-size="11" fill="#8b94a3">
+            <text x="70" y="294" text-anchor="end">1300</text>
+            <text x="70" y="232" text-anchor="end">1400</text>
+            <text x="70" y="170" text-anchor="end">1500</text>
+            <text x="70" y="108" text-anchor="end">1600</text>
+            <text x="70" y="46" text-anchor="end">1700</text>
+          </g>
+          <g stroke="#eef1f6">
+            <line x1="80" y1="228" x2="860" y2="228"/>
+            <line x1="80" y1="166" x2="860" y2="166"/>
+            <line x1="80" y1="104" x2="860" y2="104"/>
+            <line x1="80" y1="42" x2="860" y2="42"/>
+          </g>
+          <!-- bars: baseline 1300 at y=290, 100pts = 62px -->
+          <rect x="100" y="54"  width="46" height="236" fill="#3d5a80"/>
+          <rect x="176" y="116" width="46" height="174" fill="#6b8cae"/>
+          <rect x="252" y="147" width="46" height="143" fill="#8f2c3a"/>
+          <rect x="328" y="153" width="46" height="137" fill="#6b8cae"/>
+          <rect x="404" y="159" width="46" height="131" fill="#e08b4a"/>
+          <rect x="480" y="166" width="46" height="124" fill="#6b8cae"/>
+          <rect x="556" y="175" width="46" height="115" fill="#8f2c3a"/>
+          <rect x="632" y="185" width="46" height="105" fill="#e08b4a"/>
+          <rect x="708" y="191" width="46" height="99"  fill="#f0c39a"/>
+          <rect x="784" y="198" width="46" height="92"  fill="#f0c39a"/>
+          <g font-size="12" font-weight="700" font-style="italic" fill="#1a2b4a" text-anchor="middle">
+            <text x="123" y="46">#1</text>
+            <text x="199" y="108">#4</text>
+            <text x="275" y="139">#14</text>
+            <text x="351" y="145">#17</text>
+            <text x="503" y="158">#20</text>
+            <text x="731" y="183">#25</text>
+            <text x="807" y="190">#29</text>
+          </g>
+          <g font-size="10.5" fill="#525866" text-anchor="end">
+            <text transform="translate(126,300) rotate(-35)">Kimi-K3</text>
+            <text transform="translate(202,300) rotate(-35)">GLM-5.2</text>
+            <text transform="translate(278,300) rotate(-35)">Seed 2.1 Pro</text>
+            <text transform="translate(354,300) rotate(-35)">GLM-5.1</text>
+            <text transform="translate(430,300) rotate(-35)">Qwen 3.7 Max</text>
+            <text transform="translate(506,300) rotate(-35)">Kimi-K2.6</text>
+            <text transform="translate(582,300) rotate(-35)">MiniMax-M3</text>
+            <text transform="translate(658,300) rotate(-35)">Qwen 3.6 Max</text>
+            <text transform="translate(734,300) rotate(-35)">MiMo-V2.5 Pro</text>
+            <text transform="translate(810,300) rotate(-35)">DeepSeek V4 Pro</text>
+          </g>
+        </svg>
+        <div class="chart-src">Source: LMArena</div>
+      </div>
+
+      <div class="chart-card">
+        <div class="ct">Artificial Analysis Intelligence Index — 글로벌 SOTA 수준 근접</div>
+        <svg viewBox="0 0 880 300" width="100%">
+          <line x1="70" y1="250" x2="860" y2="250" stroke="#cfd6e0"/>
+          <line x1="70" y1="30" x2="70" y2="250" stroke="#cfd6e0"/>
+          <g font-size="11" fill="#8b94a3">
+            <text x="60" y="254" text-anchor="end">0</text>
+            <text x="60" y="217" text-anchor="end">10</text>
+            <text x="60" y="181" text-anchor="end">20</text>
+            <text x="60" y="144" text-anchor="end">30</text>
+            <text x="60" y="108" text-anchor="end">40</text>
+            <text x="60" y="71" text-anchor="end">50</text>
+            <text x="60" y="35" text-anchor="end">60</text>
+          </g>
+          <g stroke="#eef1f6">
+            <line x1="70" y1="213" x2="860" y2="213"/>
+            <line x1="70" y1="177" x2="860" y2="177"/>
+            <line x1="70" y1="140" x2="860" y2="140"/>
+            <line x1="70" y1="104" x2="860" y2="104"/>
+            <line x1="70" y1="67" x2="860" y2="67"/>
+            <line x1="70" y1="31" x2="860" y2="31"/>
+          </g>
+          <!-- 60 units = 220px -> 1 unit = 3.667px -->
+          <rect x="100" y="41"  width="70" height="209" fill="#3d5a80"/>
+          <rect x="210" y="63"  width="70" height="187" fill="#6b8cae"/>
+          <rect x="320" y="82"  width="70" height="168" fill="#e08b4a"/>
+          <rect x="430" y="89"  width="70" height="161" fill="#8f2c3a"/>
+          <rect x="540" y="89"  width="70" height="161" fill="#5aa9dd"/>
+          <rect x="650" y="89"  width="70" height="161" fill="#5aa9dd"/>
+          <rect x="760" y="96"  width="70" height="154" fill="#f0c39a"/>
+          <g font-size="11.5" font-weight="700" fill="#1a2b4a" text-anchor="middle">
+            <text x="135" y="34">57</text><text x="245" y="56">51</text><text x="355" y="75">46</text>
+            <text x="465" y="82">44</text><text x="575" y="82">44</text><text x="685" y="82">44</text><text x="795" y="89">42</text>
+          </g>
+          <g font-size="11" fill="#525866" text-anchor="middle">
+            <text x="135" y="268">Kimi-K3</text>
+            <text x="245" y="268">GLM-5.2</text>
+            <text x="355" y="268">Qwen 3.7 Max</text>
+            <text x="465" y="268">MiniMax M3</text>
+            <text x="575" y="268">DeepSeek V4 Pro</text>
+            <text x="685" y="268">Kimi K2.6</text>
+            <text x="795" y="268">MiMo V2.5 Pro</text>
+          </g>
+        </svg>
+        <div class="chart-src">Source: Artificial Analysis</div>
+      </div>
+
+      <h3 class="sec"><span class="n">2</span>API 가격 및 태스크 비용 비교</h3>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>모델</th><th>Blended 1M 토큰 가격 (US$)</th><th>AA Intelligence 벤치마크 태스크당 비용 (US$)</th></tr></thead>
+        <tbody>
+          <tr><td><b>Kimi K3</b></td><td class="num">2.3</td><td class="num">0.9</td></tr>
+          <tr><td><b>Qwen 3.7 Max</b></td><td class="num">1.4</td><td class="num">1.0</td></tr>
+          <tr><td><b>Zhipu GLM-5.2</b></td><td class="num">0.9</td><td class="num">0.5</td></tr>
+          <tr><td><b>Kimi K2.6</b></td><td class="num">—</td><td class="num">0.3</td></tr>
+          <tr><td><b>MiniMax M3</b></td><td class="num">0.22</td><td class="num">0.1</td></tr>
+          <tr><td><b>DeepSeek V4 Pro</b></td><td class="num">0.18</td><td class="num">0.04</td></tr>
+          <tr><td><b>MiMo V2.5 Pro</b></td><td class="num">—</td><td class="num">0.03</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="callout"><span class="t">주목</span>AA Intelligence 벤치마크 완주에 드는 총비용은 API 가격 인상과 동일한 스케일로 <b>약 3배 상승</b>. 즉 프론티어 성능은 토큰 단가뿐 아니라 태스크당 총 소비 비용 측면에서도 프리미엄을 발생시키고 있으며, 저가 세그먼트와의 비용 격차가 구조적으로 확대되는 중.</div>
+
+      <div class="chart-card">
+        <div class="ct">AA Intelligence 벤치마크 태스크당 비용 (US$)</div>
+        <svg viewBox="0 0 880 280" width="100%">
+          <line x1="70" y1="230" x2="860" y2="230" stroke="#cfd6e0"/>
+          <line x1="70" y1="30" x2="70" y2="230" stroke="#cfd6e0"/>
+          <g font-size="11" fill="#8b94a3">
+            <text x="60" y="234" text-anchor="end">0.0</text>
+            <text x="60" y="201" text-anchor="end">0.2</text>
+            <text x="60" y="168" text-anchor="end">0.4</text>
+            <text x="60" y="135" text-anchor="end">0.6</text>
+            <text x="60" y="102" text-anchor="end">0.8</text>
+            <text x="60" y="69" text-anchor="end">1.0</text>
+            <text x="60" y="36" text-anchor="end">1.2</text>
+          </g>
+          <g stroke="#eef1f6">
+            <line x1="70" y1="197" x2="860" y2="197"/>
+            <line x1="70" y1="164" x2="860" y2="164"/>
+            <line x1="70" y1="131" x2="860" y2="131"/>
+            <line x1="70" y1="98" x2="860" y2="98"/>
+            <line x1="70" y1="65" x2="860" y2="65"/>
+            <line x1="70" y1="32" x2="860" y2="32"/>
+          </g>
+          <!-- 1.2 = 198px -> 1.0 = 165px -->
+          <rect x="100" y="65"  width="70" height="165" fill="#e08b4a"/>
+          <rect x="210" y="81"  width="70" height="149" fill="#3d5a80"/>
+          <rect x="320" y="147" width="70" height="83"  fill="#5aa9dd"/>
+          <rect x="430" y="181" width="70" height="49"  fill="#6b8cae"/>
+          <rect x="540" y="214" width="70" height="16"  fill="#8f2c3a"/>
+          <rect x="650" y="223" width="70" height="7"   fill="#a9d3ee"/>
+          <rect x="760" y="225" width="70" height="5"   fill="#f0c39a"/>
+          <g font-size="11.5" font-weight="700" fill="#1a2b4a" text-anchor="middle">
+            <text x="135" y="58">1.0</text><text x="245" y="74">0.9</text><text x="355" y="140">0.5</text>
+            <text x="465" y="174">0.3</text><text x="575" y="207">0.1</text><text x="685" y="216">0.04</text><text x="795" y="218">0.03</text>
+          </g>
+          <g font-size="11" fill="#525866" text-anchor="middle">
+            <text x="135" y="248">Qwen 3.7 Max</text>
+            <text x="245" y="248">Kimi-K3</text>
+            <text x="355" y="248">GLM-5.2</text>
+            <text x="465" y="248">Kimi K2.6</text>
+            <text x="575" y="248">MiniMax M3</text>
+            <text x="685" y="248">DeepSeek V4 Pro</text>
+            <text x="795" y="248">MiMo V2.5 Pro</text>
+          </g>
+        </svg>
+        <div class="chart-src">Source: Artificial Analysis</div>
+      </div>
+
+      <h3 class="sec"><span class="n">3</span>주가 반응 및 시장 해석</h3>
+      <ul class="pts">
+        <li><b>Knowledge Atlas/Zhipu</b>: 7월 17일 <b>-28%</b> (최근 Neutral로 커버리지 개시)</li>
+        <li><b>MiniMax</b>: 7월 17일 <b>-16%</b> (Buy 유지)</li>
+        <li>급락의 배경은 중국 AI 모델 간 경쟁 심화 우려와 <b>장기 승자 불확실성</b> — 경쟁 구도와 모델사 리더십의 지속 가능성이 매우 유동적(highly dynamic)이라는 인식</li>
+        <li>독립 AI 모델 기업들은 Competitive Positioning framework 상에서 여전히 <b>차별적 우위</b>를 보유한다는 평가 유지</li>
+        <li>상하이 WAIC 개막식에서의 시진핑 발언은 긍정적 read — AI의 사회적 영향을 전기·증기기관 발명에 비유하고 개도국에 중국 기술 인프라 제공 의지를 표명(개방 기조 유지). 다만 인간의 감독·통제와 리스크 완화 필요성도 함께 언급</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">4</span>Competitive Positioning framework — 3대 평가 축</h3>
+      <div class="bbgrid">
+        <div class="bb c1"><div class="lbl">Pricing Power</div><div class="px">가격 결정력</div>
+          <ul><li>Time to market</li><li>Arena score</li><li>Pricing</li></ul></div>
+        <div class="bb c2"><div class="lbl">Cost Advantage</div><div class="px">비용 우위</div>
+          <ul><li>Token volume</li><li>Throughput / Cache hit rate</li><li>Parameter size / activation ratio</li><li>Inference GPM</li></ul></div>
+        <div class="bb c3"><div class="lbl">Financial Strength</div><div class="px">재무 체력</div>
+          <ul><li>Cash on hand</li><li>Net cash as % of asset</li><li>Valuation multiples</li></ul></div>
+      </div>
+      <ul class="pts">
+        <li>저가 세그먼트의 출혈 경쟁이 지속되면서 <b>financial strength가 pricing power·cost efficiency와 함께 3대 핵심 지표</b>로 부상</li>
+        <li>주요 모델별 포지셔닝 특징 — <b>Alibaba Qwen</b>: 멀티이어 AI/클라우드 업사이드를 갖춘 full-stack 플레이어, 대부분 항목에서 선두 / <b>Tencent Hunyuan</b>: AI 전략 재정비 후 강력한 도전자, Weixin AI agent에서의 잠재력 / <b>MiniMax M-series</b>: 독립 플레이어 중 독보적 full-modal 역량, 비용 효율적 컴퓨팅 아키텍처 / <b>Zhipu GLM</b>: 코딩·agentic 시나리오에서의 선도적 모델 역량 / <b>DeepSeek</b>: 경쟁적 가격에서 확장 가능한 토큰 사용량을 지탱하는 극한의 비용 효율 / <b>Kimi K-series</b>: Arena score·pricing 축에서의 강점</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">5</span>2H26 관전 포인트 — 어디를 봐야 하나</h3>
+      <ul class="pts">
+        <li><b>Harness/agentic 애플리케이션</b>: 모델사들이 특히 코딩 영역에서 harness/agentic 앱을 핵심 진입점으로 포지셔닝. Zhipu <b>ZCode</b>, Tencent <b>Workbuddy</b>, Alibaba <b>Qoder</b> 등 전체 AI 모델 스위트를 지원하는 통합 플랫폼이 대표 사례 — 실사용 코딩·agentic 데이터를 확보해 스케일링 루프를 닫으려는 시도. 다음 우선순위는 co-work 및 산업별 전문가형 agentic 제품</li>
+        <li><b>대형 파라미터 고사양 코딩 모델의 연속 출시</b>: K3 이후 2H26 중 Zhipu GLM, Alibaba Qwen, MiniMax M3 Pro 등 <b>2~5조 파라미터급</b> 신모델 출시 예상. 코딩/프로그래밍 세그먼트 경쟁은 계속 치열할 전망이며, <b>멀티모달·시각 이해 기능 추가</b>가 다음 업그레이드 축</li>
+        <li><b>중국 밖에서의 최상위 모델 접근 제한 가능성</b>: 가장 앞선 중국 AI 모델에 대한 해외 접근이 더 엄격해질 소지</li>
+        <li><b>저가 agentic 세그먼트의 API 가격 압박 지속</b>: 1M 토큰당 <b>US$0.1~0.2</b> 구간의 가격·GPM은 하반기에도 압박 지속 예상. 대규모 자금조달로 확보한 현금 버퍼가 공격적 가격 보조를 가능하게 하는 구조</li>
+        <li><b>멀티모달/비디오 생성 — ARR 램프업</b>: 파운데이션 텍스트 모델과 달리 비디오 생성 영역은 <b>건전한 산업 가격과 GPM 유지</b>. ByteDance <b>SeeDance</b>(GPM 약 70%, 최근 ARR run-rate US$20억), Kuaishou(Buy) <b>Kling</b>, MiniMax(Buy) <b>Hailuo</b> 및 출시 예정 <b>H3</b>가 2H26 견조한 성장 전망 — 비디오 생성과 LLM 결합 등 신기능 돌파구와 수요가 캐파를 크게 상회하는 타이트한 컴퓨팅 수급이 배경</li>
+        <li><b>기타 swing factor</b>: 국내(중국) ASIC 공급 증가, 서구 시장의 중국 모델 관련 정책, 모델 학습용 고사양 컴퓨팅 접근성 — 중국 AI 모델의 토큰/매출 성장 궤적을 좌우</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">6</span>Key Ideas &amp; 종목 뷰</h3>
+      <ul class="pts">
+        <li><b>Cloud &amp; Data Centers</b>(China Internet 내 최선호 sub-sector): 2H26 AI 하이퍼스케일러 capex 확대를 배경으로 <b>Alibaba, GDS, VNET, Kingsoft Cloud</b>를 key idea로 유지</li>
+        <li><b>AI 모델 내 최선호는 MiniMax</b> — upside skew된 risk-reward. Competitive positioning 개선의 key swing factor는 최근 완료한 자금조달로 강화된 재무 체력에 기반한 <b>pricing power</b></li>
+        <li>MiniMax 향후 드라이버: <b>H3 비디오 생성 모델</b>(텍스트 모델 대비 우호적인 산업 환경에서 임박한 출시) 성능 및 time-to-market, <b>M3 업데이트</b>(post-training/RL을 통한 코딩 지능 향상, 7~8월 예상), 2H26 후반 <b>대형 파라미터 M3 Pro</b> 출시</li>
+      </ul>
+
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>종목</th><th>등급</th><th>12개월 목표가</th><th>밸류에이션 방법론</th></tr></thead>
+        <tbody>
+          <tr><td><b>MiniMax Group</b></td><td class="buy">Buy</td><td class="num">HK$860</td><td>DCF (WACC 12%, terminal growth 2%)</td></tr>
+          <tr><td><b>Knowledge Atlas Technology</b></td><td>Neutral</td><td class="num">HK$1,880</td><td>DCF (WACC 12%, terminal growth 2%)</td></tr>
+          <tr><td><b>Tencent Holdings (0700.HK)</b></td><td class="buy">Buy</td><td class="num">HK$700</td><td>SOTP</td></tr>
+          <tr><td><b>Alibaba Group (BABA / 9988.HK)</b></td><td class="buy">Buy</td><td class="num">US$186 / HK$180</td><td>SOTP (FY27E 기준)</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3 class="sec"><span class="n">!</span>리스크 &amp; 모니터링 포인트</h3>
+      <div class="risk-box">
+        <h4>Key Risks</h4>
+        <ul>
+          <li><b>MiniMax:</b> 글로벌 파운데이션 모델 경쟁 속 모델 성능 부진, 이익 가시성 확보 지연, 상업화 역량 미흡, IP/콘텐츠 생성 관련 리스크, cash burn 및 self-funding 역량, 미중 기술 경쟁 심화에 따른 지정학 리스크</li>
+          <li><b>Knowledge Atlas:</b> (+) 예상 상회 모델 지능, 이익 가시성 조기 확보, 추가 non-inference take rate 매출원, 상업화 역량 강화 / (-) 글로벌 파운데이션 모델 경쟁, 높은 R&amp;D 비용에 따른 단기 이익 가시성 제약, cash burn·self-funding 역량, 지정학 리스크</li>
+          <li><b>Tencent:</b> 성과형 광고 경쟁 심화, 게임 출시/판호 승인 지연, FinTech·클라우드 성장 둔화, AI 개발 진척 지연, 재투자 리스크</li>
+          <li><b>Alibaba:</b> 매크로·경쟁에 따른 GMV 성장 둔화, 중국 리테일 모네타이제이션 지연, 핵심 전략 투자 실행력 미흡, 클라우드 매출 성장 감속</li>
+        </ul>
+        <h4 style="margin-top:14px;">모니터링 포인트</h4>
+        <ul>
+          <li>2H26 중 Zhipu GLM·Alibaba Qwen·MiniMax M3 Pro 등 2~5조 파라미터급 신모델의 출시 시점과 벤치마크 성능</li>
+          <li>고가 세그먼트의 가격 유지 여부 — K3의 US$2.3 가격이 시장에서 수용되는지가 중국 모델 pricing power의 리트머스</li>
+          <li>저가 세그먼트(US$0.1~0.2/1M 토큰) 가격 경쟁 강도와 이에 따른 GPM 훼손 폭</li>
+          <li>비디오 생성 영역의 ARR 램프업 및 GPM 유지 여부 (SeeDance·Kling·Hailuo/H3)</li>
+          <li>중국 내 ASIC 공급 확대 속도, 학습용 고사양 컴퓨팅 접근성, 서구 시장의 중국 모델 관련 규제 동향</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div>본 문서는 투자 권유를 목적으로 하지 않습니다.</div>
+  </footer>
+
+</div>
+</body>
+</html>
