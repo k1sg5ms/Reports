@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>반도체/반도체 장비 2Q26 프리뷰</title>
+<title>U.S. 반도체 — 2Q26 실적 프리뷰</title>
 <style>
   :root{
-    --brand:#0a2240;
-    --brand-deep:#06182e;
-    --accent:#5c1a26;
-    --accent2:#2e4a6b;
+    --brand:#00395d;
+    --brand-deep:#00243b;
+    --accent:#00aeef;
+    --accent2:#0077b0;
     --paper:#f4f6f9;
     --card:#ffffff;
     --ink:#1b1e24;
@@ -29,8 +29,6 @@
     line-height:1.65;
     -webkit-font-smoothing:antialiased;
   }
-  .serif{font-family:'Georgia','Noto Serif KR',serif;}
-
   .topbar{
     background:var(--brand-deep);
     color:#fff;padding:14px 6vw;
@@ -50,9 +48,9 @@
 
   .wrap{max-width:960px;margin:0 auto;padding:40px 6vw 90px;}
 
-  .intro{border-left:4px solid var(--accent);padding:8px 0 8px 20px;margin-bottom:40px;}
+  .intro{border-left:4px solid var(--accent);padding:8px 0 8px 20px;margin-bottom:48px;}
   .intro .eyebrow{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent2);font-weight:700;}
-  .intro h1{font-size:25px;margin:8px 0 6px;color:var(--brand);line-height:1.4;}
+  .intro h1{font-size:26px;margin:8px 0 6px;color:var(--brand);}
 
   .report{margin-bottom:64px;scroll-margin-top:70px;}
   .report-head{
@@ -60,7 +58,7 @@
     color:#fff;border-radius:10px 10px 0 0;padding:28px 30px;
   }
   .report-head .tag{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#9fb4d4;font-weight:700;}
-  .report-head h2{margin:8px 0 14px;font-size:22px;line-height:1.4;}
+  .report-head h2{margin:8px 0 14px;font-size:23px;line-height:1.35;}
   .report-head .lede{
     font-family:'Georgia',serif;font-size:15.5px;color:#e3ebf6;
     border-top:1px solid rgba(255,255,255,0.16);padding-top:14px;margin:0;
@@ -69,18 +67,18 @@
     background:var(--card);border:1px solid var(--line);border-top:none;
     border-radius:0 0 10px 10px;padding:30px;
   }
-
   .chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px;}
-  .chip{border:1px solid var(--line);border-radius:8px;padding:10px 16px;background:#fafbfd;flex:1;min-width:140px;}
+  .chip{border:1px solid var(--line);border-radius:8px;padding:10px 16px;background:#fafbfd;flex:1;min-width:130px;}
   .chip .k{font-size:10.5px;letter-spacing:0.5px;text-transform:uppercase;color:var(--ink-soft);}
-  .chip .v{font-size:18px;font-weight:700;color:var(--brand);margin-top:2px;}
+  .chip .v{font-size:19px;font-weight:700;color:var(--brand);margin-top:2px;}
   .chip .v.buy{color:var(--buy);}
+  .chip .v.sell{color:var(--bear);}
   .chip .s{font-size:11px;color:var(--ink-soft);}
 
   h3.sec{
-    font-size:17px;color:var(--brand);margin:34px 0 12px;
+    font-size:17px;color:var(--brand);margin:30px 0 12px;
     padding-bottom:8px;border-bottom:1.5px solid var(--line);
-    display:flex;align-items:center;gap:10px;scroll-margin-top:70px;
+    display:flex;align-items:center;gap:10px;
   }
   h3.sec .n{
     background:var(--brand);color:#fff;font-size:12px;font-weight:700;
@@ -92,7 +90,7 @@
   ul.pts li::before{content:"—";position:absolute;left:0;color:var(--accent2);font-weight:700;}
   ul.pts b{color:var(--brand);}
 
-  table.tbl{width:100%;border-collapse:collapse;font-size:12.5px;margin:6px 0 4px;}
+  table.tbl{width:100%;border-collapse:collapse;font-size:13px;margin:6px 0 4px;}
   table.tbl th{background:var(--brand);color:#fff;text-align:left;padding:8px 10px;font-weight:600;}
   table.tbl td{padding:7px 10px;border-bottom:1px solid var(--line);}
   table.tbl tr:nth-child(even) td{background:#f7f9fc;}
@@ -104,9 +102,23 @@
   .chart-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:22px 22px 14px;margin:14px 0;}
   .chart-card .ct{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:12px;}
   .chart-src{font-size:10.5px;color:#9aa3b2;margin-top:8px;}
-  .legend{display:flex;gap:18px;font-size:11.5px;color:var(--ink-soft);margin-bottom:4px;flex-wrap:wrap;}
+  .legend{display:flex;gap:18px;font-size:11.5px;color:var(--ink-soft);margin-bottom:4px;}
   .legend span{display:inline-flex;align-items:center;gap:6px;}
   .legend i{width:11px;height:11px;border-radius:2px;display:inline-block;}
+
+  .bbgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0;}
+  @media(max-width:680px){.bbgrid{grid-template-columns:1fr;}}
+  .bb{border-radius:8px;padding:16px;border:1px solid var(--line);background:#fafbfd;}
+  .bb.bull{border-top:3px solid var(--bull);}
+  .bb.base{border-top:3px solid var(--ink-soft);}
+  .bb.bear{border-top:3px solid var(--bear);}
+  .bb .lbl{font-size:11px;letter-spacing:0.6px;text-transform:uppercase;font-weight:700;color:var(--ink-soft);}
+  .bb .px{font-size:22px;font-weight:700;color:var(--brand);margin:4px 0;}
+  .bb .ret{font-size:13px;font-weight:600;}
+  .bb.bull .ret{color:var(--bull);}
+  .bb.bear .ret{color:var(--bear);}
+  .bb ul{margin:8px 0 0;padding-left:16px;font-size:12px;color:var(--ink-soft);}
+  .bb li{margin-bottom:4px;}
 
   .callout{background:#fbf6ec;border:1px solid #e8dcc3;border-radius:8px;padding:14px 18px;font-size:13px;color:var(--ink-soft);margin-top:14px;}
   .callout .t{font-size:10.5px;font-weight:700;letter-spacing:0.6px;color:var(--warn);text-transform:uppercase;display:block;margin-bottom:5px;}
@@ -120,8 +132,8 @@
   footer{border-top:1px solid var(--line);margin-top:50px;padding-top:20px;font-size:11px;color:#9aa3b2;line-height:1.6;}
 
   @media(max-width:560px){
-    .intro h1{font-size:20px;}
-    .report-head h2{font-size:18px;}
+    .intro h1{font-size:21px;}
+    .report-head h2{font-size:19px;}
   }
 </style>
 </head>
@@ -130,303 +142,587 @@
 <div class="topbar">
   <div class="logo">Research<span>·</span>Digest</div>
   <nav>
-    <a href="#s1">투자논거</a>
-    <a href="#s2">AI/컴퓨팅</a>
-    <a href="#s3">메모리</a>
-    <a href="#s4">네트워킹</a>
-    <a href="#s5">Semicap</a>
-    <a href="#s6">CPU</a>
-    <a href="#s9">밸류에이션</a>
+    <a href="#overview">Overview</a>
+    <a href="#optical">Optical / LITE</a>
+    <a href="#alab">ALAB vs CRDO</a>
+    <a href="#analog">Analog</a>
+    <a href="#algm">ALGM</a>
+    <a href="#peng">PENG</a>
   </nav>
 </div>
 
 <div class="wrap">
 
   <div class="intro">
-    <div class="eyebrow">10 July 2026</div>
-    <h1>반도체/반도체 장비 2Q26 프리뷰: 15% 주가 조정이 하반기 아웃퍼폼의 발판 — AI 주도 모멘텀과 광범위한 경기 회복 속 긍정적 실적 상향 사이클 지속</h1>
+    <div class="eyebrow">20 July 2026</div>
+    <h1>2Q26 실적 프리뷰 — '28년 눈높이는 이번 실적으로 움직이지 않는다</h1>
   </div>
 
-  <section class="report" id="rpt1">
-
+  <!-- ============ 1. Overview ============ -->
+  <section class="report" id="overview">
     <div class="report-head">
-      <div class="tag">Semiconductors / Semi Cap Equipment · IT Hardware</div>
-      <h2>실적 상향 사이클 지속 + AI·경기 회복 모멘텀 → 하반기 반도체 아웃퍼폼 전망</h2>
-      <p class="lede">최근 13~15% 조정은 눈높이 리셋 효과. 2Q 실적·3Q 가이던스 컨센서스 상회가 예상되는 가운데, AI 인프라 수요와 광범위한 경기 회복이 CY26 반도체 아웃퍼폼을 뒷받침. 메모리·네트워킹·Semicap으로 강세 확산.</p>
+      <div class="tag">U.S. Semiconductors &amp; Semiconductor Capital Equipment</div>
+      <h2>건전한 조정 국면 — Compute·Interconnect·Analog에서 선별적 재진입, LITE 상향 / ALGM·PENG 하향</h2>
+      <p class="lede">"지금(now)"보다 "나중(later)"이 주가를 움직이는 실적 시즌. 강한 숫자는 이미 컨센서스이며, 웨이퍼 할당·메모리 확보력·장기 TAM 상향 코멘트가 beat &amp; raise보다 주가에 더 큰 영향을 줄 국면.</p>
     </div>
 
     <div class="report-body">
 
       <div class="chips">
-        <div class="chip"><div class="k">Sector View</div><div class="v buy">긍정적 (Constructive)</div><div class="s">CY26 아웃퍼폼 유지</div></div>
-        <div class="chip"><div class="k">반도체 매출 성장</div><div class="v">+30%+ Y/Y</div><div class="s">2026 ex-memory · +28% 전체</div></div>
-        <div class="chip"><div class="k">Top-4 DC Capex</div><div class="v">+80% Y/Y</div><div class="s">2026 · 2027 최소 +50%</div></div>
-        <div class="chip"><div class="k">WFE 성장</div><div class="v">+28% / +29%</div><div class="s">2026E / 2027E (upside risk)</div></div>
-        <div class="chip"><div class="k">Top Picks</div><div class="v" style="font-size:14px;">AVGO·MRVL·ADI·MU·KLAC·SNPS</div><div class="s">추가 선호 NVDA·LRCX·CDNS·AMAT·WDC·ALAB</div></div>
+        <div class="chip"><div class="k">Industry View</div><div class="v">Neutral</div><div class="s">Unchanged</div></div>
+        <div class="chip"><div class="k">SOX 1H26</div><div class="v">+97%</div><div class="s">vs. SPX +10%</div></div>
+        <div class="chip"><div class="k">고점 대비 조정</div><div class="v">~-20%</div><div class="s">SOX 기준, 재진입 구간</div></div>
+        <div class="chip"><div class="k">등급 변경</div><div class="v">3건</div><div class="s">LITE↑ / ALGM↓ / PENG↓</div></div>
+        <div class="chip"><div class="k">SOX 상대성과</div><div class="v">+54%</div><div class="s">2Q 시작 이후 vs. S&amp;P</div></div>
       </div>
 
-      <!-- 1 -->
-      <h3 class="sec" id="s1"><span class="n">1</span>투자 논거 & 2Q26 실적 프리뷰</h3>
+      <h3 class="sec"><span class="n">1</span>핵심 논지 — 실적 시즌 프레임</h3>
       <ul class="pts">
-        <li>2Q 실적(매출·마진·EPS)은 컨센서스 <b>상회</b> 예상, 3Q 가이던스도 AI/가속 컴퓨팅 수요와 경기 세그먼트의 above-seasonal 성장에 힘입어 컨센서스 상회 전망</li>
-        <li>ex-memory out-year EPS 추정치는 지난 두 실적 시즌 동안 semis/semicaps 기준 <b>+20~40% 상향</b> — 상향 cadence 지속 전망</li>
-        <li>WSTS 5월 매출 <b>+119% Y/Y</b>(ex-memory +34% Y/Y), 4월 +106%에서 가속. Q/Q 성장은 10년 계절 평균을 <b>10개 분기 연속</b> 상회, 실적 beat rate는 수 분기 연속 70% 상회</li>
-        <li>최근 <b>13~15% 조정</b>이 실적 전 과도한 눈높이를 리셋 → 강한 긍정적 실적 상향 + 우호적 forward commentary가 2H26 아웃퍼폼 지지</li>
-        <li>매크로 우호적: 글로벌 GDP +2.4%(2026/2027), 6월 글로벌 제조업 PMI 53(5년 고점 대비 소폭 하락)</li>
+        <li>1H26 사상 최고 수준의 랠리(<b>SOX +97%</b> vs. SPX +10%) 이후 SOX가 고점 대비 <b>~20%</b> 조정. 펀더멘털은 강화되고 있으나 valuation이 확장되면서 시장의 시선이 가시성이 낮은 <b>CY28</b>로 이동</li>
+        <li>기업이 2Q 실적에서 '28년에 대해 말할 수 있는 내용이 제한적 → <b>beat &amp; raise보다 웨이퍼 할당·메모리 조달 능력·장기 TAM 상향 코멘트</b>가 주가를 더 크게 움직일 전망</li>
+        <li>강한 숫자는 전 업종에 걸쳐 이미 기대치에 반영. <b>긍정적 주가 반응을 얻기 어려운 실적 시즌</b>이라는 것이 기본 전제</li>
+        <li>펀더멘털만 보면 Analog가 실적 시즌 최선호 구간이나, <b>positioning이 max-long</b> 상태여서 실수 여지가 거의 없음</li>
+        <li>Semi Cap은 1Q와 유사하게 <b>CY26 숫자와 WFE를 재차 상향</b>해야 하며, 그렇지 못하면 하방 편향. Memory를 제외하면 조정 국면에서 <b>Optical이 가장 매력적인 sub-sector</b></li>
+        <li>Upside 예상 종목: <b>AMD, CBRS, CRDO, LITE, NXPI</b> / Downside 예상 종목: <b>ALAB, ALGM, PENG</b></li>
       </ul>
 
+      <h3 class="sec"><span class="n">2</span>등급·목표주가 변경</h3>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Ticker</th><th>등급 변경</th><th class="num">신규 PT</th><th class="num">기존 PT</th><th class="num">PT vs. 현재가</th></tr></thead>
+        <tbody>
+          <tr><td><b>LITE</b></td><td class="buy">EW → OW</td><td class="num">$1,000</td><td class="num">$1,000</td><td class="num">+37%</td></tr>
+          <tr><td><b>ALGM</b></td><td class="sell">OW → EW</td><td class="num">$48</td><td class="num">$48</td><td class="num">+1%</td></tr>
+          <tr><td><b>PENG</b></td><td class="sell">EW → UW</td><td class="num">$40</td><td class="num">$40</td><td class="num">-37%</td></tr>
+          <tr><td><b>ALAB</b></td><td>변경 없음 (EW)</td><td class="num">$325</td><td class="num">$200</td><td class="num">+6%</td></tr>
+          <tr><td><b>CRDO</b></td><td>변경 없음 (OW)</td><td class="num">$300</td><td class="num">$260</td><td class="num">+47%</td></tr>
+          <tr><td><b>KLAC</b></td><td>변경 없음 (OW)</td><td class="num">$225</td><td class="num">$2,250</td><td class="num">+5%</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="callout"><span class="t">주목</span>KLAC의 목표주가 변경은 <b>10:1 액면분할</b> 반영에 따른 조정이며, 밸류에이션 스탠스 변화는 아님(30x CY27E EPS $7.45 유지). MU 모델은 12월 개시 예정인 자사주 매입을 반영해 업데이트.</div>
+
+      <h3 class="sec"><span class="n">3</span>sub-sector별 성과 — 무엇이 이미 움직였나</h3>
       <div class="chart-card">
-        <div class="ct">산업 Q/Q 성장 vs 10년 계절 평균 — 4Q23 이후 지속 상회</div>
-        <div class="legend">
-          <span><i style="background:var(--brand)"></i>실제 Q/Q</span>
-          <span><i style="background:var(--accent)"></i>10년 평균</span>
-        </div>
-        <svg viewBox="0 0 880 300" width="100%" role="img" aria-label="Q/Q 성장 추이">
-          <line x1="60" y1="150" x2="850" y2="150" stroke="#cfd6e0"/>
-          <text x="52" y="60" font-size="11" fill="#9aa3b2" text-anchor="end">30%</text>
-          <text x="52" y="154" font-size="11" fill="#9aa3b2" text-anchor="end">0%</text>
-          <text x="52" y="248" font-size="11" fill="#9aa3b2" text-anchor="end">-10%</text>
-          <!-- 최근 8개 분기: 3Q24 10.8, 4Q24 3.6, 1Q25 -3.4, 2Q25 7.9, 3Q25 15.8, 4Q25 13.6, 1Q26 26.2 (10y avg 대비) -->
-          <!-- 막대: 실제, 마커: 10y avg -->
+        <div class="ct">Coverage Sub-Sector Performance Since Start of Q2 (as of 7/17/26)</div>
+        <svg viewBox="0 0 880 330" width="100%">
+          <line x1="70" y1="280" x2="860" y2="280" stroke="#cfd6e0"/>
+          <line x1="70" y1="30" x2="70" y2="280" stroke="#cfd6e0"/>
+          <g font-size="11" fill="#8a93a3">
+            <text x="40" y="284">0%</text><text x="30" y="232">20%</text><text x="30" y="182">40%</text>
+            <text x="30" y="132">60%</text><text x="30" y="82">80%</text><text x="24" y="34">100%</text>
+          </g>
+          <g stroke="#eef1f6"><line x1="70" y1="232" x2="860" y2="232"/><line x1="70" y1="182" x2="860" y2="182"/><line x1="70" y1="132" x2="860" y2="132"/><line x1="70" y1="82" x2="860" y2="82"/><line x1="70" y1="34" x2="860" y2="34"/></g>
+          <!-- bars: 0%=280, 100%=34 -> px per % = 2.46 -->
+          <rect x="100" y="248" width="62" height="32" fill="#00395d"/>
+          <rect x="196" y="196" width="62" height="84" fill="#00395d"/>
+          <rect x="292" y="196" width="62" height="84" fill="#00395d"/>
+          <rect x="388" y="157" width="62" height="123" fill="#c0392b"/>
+          <rect x="484" y="155" width="62" height="125" fill="#00395d"/>
+          <rect x="580" y="83" width="62" height="197" fill="#00395d"/>
+          <rect x="676" y="51" width="62" height="229" fill="#00395d"/>
+          <rect x="772" y="41" width="62" height="239" fill="#00395d"/>
+          <g font-size="11.5" font-weight="700" fill="#3d4553" text-anchor="middle">
+            <text x="131" y="242">13%</text><text x="227" y="190">34%</text><text x="323" y="190">34%</text>
+            <text x="419" y="151">50%</text><text x="515" y="149">51%</text><text x="611" y="77">80%</text>
+            <text x="707" y="45">93%</text><text x="803" y="35">97%</text>
+          </g>
+          <g font-size="11" fill="#525866" text-anchor="middle">
+            <text x="131" y="298">Handsets</text><text x="227" y="298">Semi Cap</text><text x="323" y="298">Analog</text>
+            <text x="419" y="298">SOX</text><text x="515" y="298">Interconnect</text><text x="611" y="298">Compute</text>
+            <text x="707" y="298">Storage/Mem</text><text x="803" y="298">SMID</text>
+          </g>
+        </svg>
+        <div class="chart-src">Source: Bloomberg</div>
+      </div>
+      <ul class="pts">
+        <li>커버리지 내에서 <b>SMID(PENG, SITM, SLAB, SYNA)</b>와 <b>Storage/Memory</b>가 시장을 크게 상회했고 Compute가 근소하게 뒤따름. <b>Handsets</b>는 2Q 시작 이후 부진</li>
+        <li>YTD 기준으로는 CPU 트레이드에 연동된 Compute와 Storage/Memory가 상승을 주도했고, Handsets 및 일부 대형 Compute는 언더퍼폼</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">4</span>sub-sector별 실적 시즌 체크포인트</h3>
+      <ul class="pts">
+        <li><b>Analog</b> — 분기 진입 시점 기준 가장 많이 보유된 섹터. Industrial은 가격 인상이 재고 재축적에 반영되며 숫자가 매우 양호할 전망, Auto도 안정적. positioning이 상대적으로 균형 잡힌 <b>NXPI</b>가 가장 매력적이며 2Q26~CY27 평균 Q/Q 성장률이 Analog 내 최고 수준. PMI 50 상회 국면에서 유의미한 아웃퍼폼 이력</li>
+        <li><b>Networking / Optics</b> — 조정 구간에서 가장 매력적인 그룹으로 판단. LITE 상향의 근거이며, <b>CRDO를 ALAB보다 선호</b>하는 스탠스 유지</li>
+        <li><b>Semi Cap</b> — Memory 관련 3Q beat보다 <b>2027년 WFE</b>가 중요. 해당 종목군은 구조적으로 저렴해지지 않으나, 실적 진입 시점의 기대 눈높이가 극도로 높다는 점이 부담</li>
+        <li><b>Compute</b> — <b>CBRS</b>가 추가 DC 캐파(200MW) 확보에도 주가 반응이 없어 주목. CY28 EV/Sales <b>~5x</b>로 Compute 내 최저. 총 확보 캐파 360MW로 OAI 딜의 절반 가까이를 커버하며 핵심 bear risk 완화. AMZN은 아직 숫자에 미반영 → 2H27·CY28 상방 여지</li>
+        <li><b>AMD</b> — CPU 스토리에서 아직 풀릴 서사가 남아 있음. Street의 내년 CPU 매출 추정치가 <b>~$23B</b>인 반면 실제 착지는 <b>~$30B</b>에 근접할 것으로 판단</li>
+        <li><b>MRVL</b> — NVDA CEO 코멘트로 급등한 뒤 원위치. 실적 구간까지 상승 트레이드 여지</li>
+        <li>IBM 잠정 실적 코멘트: 6월 마지막 몇 주간 고객들이 가격 인상을 앞두고 공급 제약 인프라를 확보하기 위해 <b>서버·스토리지·메모리 구매로 분기 capex를 이동</b>시킨 정황</li>
+      </ul>
+
+    </div>
+  </section>
+
+  <!-- ============ 2. Optical ============ -->
+  <section class="report" id="optical">
+    <div class="report-head">
+      <div class="tag">Optical / Networking</div>
+      <h2>Optical: 조정을 사라 — LITE를 Overweight으로 상향</h2>
+      <p class="lede">CPO 지연 논쟁은 단기 숫자에 유의미한 영향을 주지 않는다. 트랜시버·레이저 수요 기반은 견조하며, 멀티플이 크게 축소된 지금이 리스크/리워드상 매력적인 구간.</p>
+    </div>
+    <div class="report-body">
+
+      <div class="chips">
+        <div class="chip"><div class="k">LITE Rating</div><div class="v buy">Overweight</div><div class="s">↑ from Equal Weight</div></div>
+        <div class="chip"><div class="k">LITE Target</div><div class="v">$1,000</div><div class="s">40x CY27 EPS $25.21</div></div>
+        <div class="chip"><div class="k">LITE Price (7/17)</div><div class="v">$732.82</div><div class="s">+37% upside</div></div>
+        <div class="chip"><div class="k">COHR Rating</div><div class="v buy">Overweight</div><div class="s">PT $350 유지</div></div>
+      </div>
+
+      <h3 class="sec"><span class="n">1</span>주가 조정의 성격 — 펀더멘털 훼손이 아니다</h3>
+      <ul class="pts">
+        <li>최근 1개월 SOX 대비 언더퍼폼: <b>COHR -27%, LITE -16%</b> (SOX -13%). 최근 3개월 기준으로도 COHR ~-20%, LITE ~-18% (SOX +22%)</li>
+        <li>원인은 다른 AI 병목(Memory, power semis)으로의 로테이션과 <b>CPO 지연 및 Kyber 지연 논의</b>. 다만 GTC/OFC 이후 유지해온 기본 가정은 <b>scale-up 물량이 2029~2030년까지 유의미해지지 않는다</b>는 것</li>
+        <li>지난 3개월간 멀티플이 <b>COHR ~12턴, LITE ~17턴</b> 축소. 펀더멘털 변화가 없는 상태에서의 멀티플 축소이므로 현 레벨은 훨씬 매력적</li>
+        <li>해당 종목군은 우선적으로 <b>레이저/트랜시버 기업</b>이며 CPO는 2020년대 말에 얹히는 add-on. CPO의 HVM 시점은 디케이드 후반으로 판단</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">2</span>수요 — 포트 카운트 성장은 여전히 견조</h3>
+      <ul class="pts">
+        <li>Eoptolink는 CY26·CY27 <b>포트 카운트 2배</b> 성장을 제시, LightCounting은 CY26 <b>~55%</b>, CY27 <b>~30%</b> 성장 전망</li>
+        <li>GOOGL의 캐파 임차, AMZN의 신규 조달 등 대규모 빌드아웃 지속 신호가 확인되며 "double and double" 시나리오에 무게</li>
+        <li>유닛 기준으로 할인하더라도 <b>1.6T 전환에 따른 ASP 상승</b>이 Datacom 매출 총액을 끌어올림. LITE·COHR 모두 <b>OCS 램프</b>가 대기 중</li>
+        <li>LITE에 따르면 <b>EML 수급 불균형은 30% 이상</b>. 캐파가 빠르게 증설되더라도 시장이 따라잡기까지 상당한 시간이 필요하며, 펀더멘털 상향 변곡의 초입 단계</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">3</span>COHR — 캐파 확대와 매출/마진의 두 갈래 시나리오</h3>
+      <ul class="pts">
+        <li>COHR은 CY26·CY27 총 InP 캐파를 각각 2배로 확대할 계획. 다만 과거 매출 확대가 공급 확대에 미치지 못했던 점이 미결 이슈</li>
+        <li><b>시나리오 1</b>: 내부 InP 생산이 이미 트랜시버 공급의 과반 → 캐파 2배 시 CY26 Datacom 매출이 Y/Y <b>100%에 근접</b> (Street 내재 ~55% Y/Y). 6인치 전환에 따른 마진 개선, 외부 InP 비중 축소</li>
+        <li><b>시나리오 2</b>: 내부 조달 비중을 크게 늘려 매출 성장은 100%에 못 미치나, 내부 소싱·6인치 믹스로 <b>마진이 개선</b></li>
+        <li>두 시나리오 모두 긍정적으로 해석 가능하나, 지금까지 실망스러웠던 <b>GM 확대 여부</b>가 투자자 관심의 최우선</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">4</span>LITE를 선호하는 이유</h3>
+      <ul class="pts">
+        <li><b>운영 프로파일 우위</b>: LITE GM은 지난 1년간 <b>~1,300bps 확대되어 ~48%</b>, COHR은 100bps 개선에 그친 <b>39.6%</b></li>
+        <li>공급 부족 국면의 <b>EML 레이저 가격 상승</b> 및 OCS에서 LITE 고유의 수혜. 양사 모두 원가 절감·가동률 개선의 self-help 스토리를 보유하나 LITE의 실행력이 더 우수</li>
+        <li><b>밸류에이션</b>: 양사 모두 high-20s / low-30s 배수로 하락. LITE가 COHR 대비 프리미엄을 받아야 한다고 판단 — 더 강한 GM 확대 스토리와 업계 최상위권 성장 프로파일</li>
+        <li>실적 추정 상향: CY26 매출/EPS <b>$4,235M/$13.28</b> (기존 $4,201M/$13.14), CY27 <b>$7,416M/$25.21</b> (기존 $7,307M/$24.76)</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">5</span>LITE 밸류에이션 &amp; 시나리오</h3>
+      <div class="bbgrid">
+        <div class="bb bull"><div class="lbl">🐂 Bull</div><div class="px">$1,300</div><div class="ret">+77% Upside</div>
+          <ul><li>43x CY27 EPS $30.00</li><li>Telecom 개선</li><li>DC 레이저/모듈 사업 상방</li></ul></div>
+        <div class="bb base"><div class="lbl">⊕ Base (PT)</div><div class="px">$1,000</div><div class="ret">+37%</div>
+          <ul><li>40x CY27 EPS $25.21</li><li>EML/OCS 램프 지속</li></ul></div>
+        <div class="bb bear"><div class="lbl">🐻 Bear</div><div class="px">$550</div><div class="ret">-25% Downside</div>
+          <ul><li>Telecom 약세</li><li>DC 레이저/모듈 하방</li><li>신규 고객 확보 부진</li></ul></div>
+      </div>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>LITE ($mn)</th><th class="num">2025A</th><th class="num">2026E</th><th class="num">2027E</th><th class="num">2028E</th></tr></thead>
+        <tbody>
+          <tr><td><b>Revenue</b></td><td class="num">1,645</td><td class="num">2,993</td><td class="num">5,650</td><td class="num">8,881</td></tr>
+          <tr><td>EBIT (adj)</td><td class="num">160</td><td class="num">884</td><td class="num">2,243</td><td class="num">3,812</td></tr>
+          <tr><td>EBIT margin (%)</td><td class="num">9.7</td><td class="num">29.5</td><td class="num">39.7</td><td class="num">42.9</td></tr>
+          <tr><td><b>EPS (adj, $)</b></td><td class="num">2.04</td><td class="num">8.15</td><td class="num">18.56</td><td class="num">30.88</td></tr>
+          <tr><td>Free cash flow</td><td class="num">-105</td><td class="num">144</td><td class="num">1,190</td><td class="num">2,637</td></tr>
+          <tr><td>P/E (adj, x)</td><td class="num">N/A</td><td class="num">89.9</td><td class="num">39.5</td><td class="num">23.7</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-src">Source: Company data, Bloomberg</div>
+
+    </div>
+  </section>
+
+  <!-- ============ 3. ALAB vs CRDO ============ -->
+  <section class="report" id="alab">
+    <div class="report-head">
+      <div class="tag">Interconnect — Content Analysis</div>
+      <h2>ALAB T3 컨텐츠 분석: 주가에 무엇이 반영됐나, 그리고 CRDO를 선호하는 이유</h2>
+      <p class="lede">AMZN 전량을 반영해도 ALAB은 ~36x, CXL까지 얹어도 ~31x. CRDO는 2년 선행 ~21x로 10턴 저렴하며 고객 기반이 훨씬 넓다.</p>
+    </div>
+    <div class="report-body">
+
+      <div class="chips">
+        <div class="chip"><div class="k">ALAB Rating</div><div class="v">Equal Weight</div><div class="s">유지</div></div>
+        <div class="chip"><div class="k">ALAB Target</div><div class="v">$325</div><div class="s">↑ from $200 · 40x CY27E EPS $8.19</div></div>
+        <div class="chip"><div class="k">CRDO Rating</div><div class="v buy">Overweight</div><div class="s">유지</div></div>
+        <div class="chip"><div class="k">CRDO Target</div><div class="v">$300</div><div class="s">↑ from $260 · 29x CY27E EPS $10.23</div></div>
+      </div>
+
+      <h3 class="sec"><span class="n">1</span>ALAB — 주가에 반영된 컨텐츠 가정 해부</h3>
+      <ul class="pts">
+        <li>ALAB은 YTD <b>+83%</b>로 강세였으나 6/30 고점 $500 대비 <b>~40%</b> 조정. Scorpio X 대규모 램프 기대와 CXL 관련 기대가 주가를 끌어올린 구조</li>
+        <li>AWS 144 2U-rack(72 XPUs)의 disaggregated 한쪽 기준 컨텐츠 <b>~$74k</b>, 가속기당 컨텐츠 <b>$1,025</b> (회사 코멘트 ">$1k"와 부합)</li>
+        <li>CY27 Trainium 전망과 결합 시 <b>AMZN 단독 매출 기회 &gt;$3B</b>. AMZN 단독 EPS 영향 <b>~$6.85</b>, AMZN이 매출의 ~80%라 가정해 gross-up하면 CY27 총 EPS <b>~$8.50</b> (Street $4.48)</li>
+        <li>이 시나리오에서도 CXL 매출을 전혀 반영하지 않은 상태에서 <b>~36x</b>에 거래. CXL은 CY28/29 스토리로 판단</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">2</span>랙 단위 분해 — 컨텐츠 산출 근거</h3>
+      <ul class="pts">
+        <li>AWS Trainium3 UltraServer 72x2 랙 = 72 XPU 랙 2개, 각 랙은 <b>18개 compute tray + 10개 switch tray</b>로 구성</li>
+        <li><b>Aries 리타이머</b> 랙당 92개 (XPU당 1개 = 72, switch tray당 2개 = 20). Aries PCIe 케이블·Taurus 이더넷 케이블 각각 XPU당 1개(각 72)</li>
+        <li><b>Scorpio</b>: P-Series는 compute tray당 10개로 총 180개, X-Series는 switch tray당 2개로 총 20개</li>
+        <li>Scorpio P-Series ASP는 32-lane 제품 기준이며 320-lane 솔루션 ~$700을 compute tray당 10개 32-lane 제품으로 나눠 <b>~$70</b> 산출. 이더넷 케이블 전체 ASP ~$250 중 Taurus 몫은 편측 <b>~$125</b></li>
+      </ul>
+
+      <h3 class="sec"><span class="n">3</span>AMZN 매출 기회 시나리오</h3>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>CY27 Trainium 성장 시나리오</th><th class="num">10%</th><th class="num">20%</th><th class="num">28% (Base)</th><th class="num">40%</th><th class="num">50%</th></tr></thead>
+        <tbody>
+          <tr><td>CY27 Trainium Units</td><td class="num">3.30M</td><td class="num">3.60M</td><td class="num">3.83M</td><td class="num">4.20M</td><td class="num">4.50M</td></tr>
+          <tr><td>CY27 내재 AWS UltraServer Racks</td><td class="num">45,833</td><td class="num">50,000</td><td class="num">53,191</td><td class="num">58,333</td><td class="num">62,500</td></tr>
+          <tr><td>총 매출 기회 ($M)</td><td class="num">3,383</td><td class="num">3,691</td><td class="num">3,927</td><td class="num">4,306</td><td class="num">4,614</td></tr>
+          <tr><td><b>점유율 반영 후 매출 ($M)</b></td><td class="num">2,732</td><td class="num">2,981</td><td class="num">3,171</td><td class="num">3,477</td><td class="num">3,726</td></tr>
+          <tr><td><b>EPS ($)</b></td><td class="num">5.90</td><td class="num">6.44</td><td class="num">6.85</td><td class="num">7.51</td><td class="num">8.05</td></tr>
+          <tr><td>EPS Grossed up ($)</td><td class="num">7.38</td><td class="num">8.05</td><td class="num">8.56</td><td class="num">9.39</td><td class="num">10.06</td></tr>
+          <tr><td>Implied Multiple (x)</td><td class="num">41.2</td><td class="num">37.7</td><td class="num">35.5</td><td class="num">32.3</td><td class="num">30.2</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <ul class="pts">
+        <li>랙당 컨텐츠 가정: Aries 리타이머 $3,220 / Aries PCIe 케이블 $9,000 / Taurus $9,000 / Scorpio P-Series $12,600 / X-Series $40,000</li>
+        <li>AMZN 생태계 내 점유율 가정: <b>리타이머 50%</b>, PCIe·이더넷 케이블 각 <b>30%</b>, P/X 스위치 <b>100%</b></li>
+        <li>아시아 채널 체크 기준 CY26 Trainium 유닛 <b>~3M</b> (CY25 2.2~2.5M) → 중간값 기준 <b>~28% Y/Y</b>를 CY27 base case로 적용, CY27 ~3.8M 유닛 기준 총 기회 <b>~$3.9B</b>, 점유율 반영 시 <b>~$3.2B</b> (기존 CY27 총 매출 추정 $2.13B)</li>
+        <li>AMZN은 CY25 말 기준 ALAB 매출의 ~70%였으며 T3 램프에 따라 비중 상승 전망. Leo 제품군의 CXL은 현재 미미하나, MRVL이 제시한 CY27 CXL 매출 ~$1B의 50%(~$500M)를 ALAB이 달성한다고 가정하면 gross-up EPS <b>$9.91</b>, 2년 선행 PER <b>~31x</b></li>
+      </ul>
+
+      <h3 class="sec"><span class="n">4</span>CRDO — Interconnect 트레이드의 선택지</h3>
+      <ul class="pts">
+        <li>2년 선행 PER 기준 양사 스프레드가 다시 <b>36턴 할인</b>까지 확대. 2년 선행 EV/Sales 기준으로는 ALAB의 역사적 프리미엄이 <b>3.5턴</b>이었으나 현재 <b>~10턴</b>까지 확대 → 축소되어야 할 프리미엄으로 판단</li>
+        <li>AMZN 외 하이퍼스케일 기회에 대한 추가 신호가 제한적이고 CXL 매출도 아직 미미한 점이 근거. CRDO의 <b>구리/광 하이브리드 포트폴리오와 넓은 하이퍼스케일 고객 기반</b>을 선호</li>
+        <li>CRDO AEC 포트폴리오는 CY27 <b>+26% Y/Y</b> 성장하며 총 매출의 최대 비중(<b>$2.19B</b>) 유지. 성장 동력은 빠르게 램프하는 옵틱스 포트폴리오</li>
+        <li><b>ZF Optics</b>: FY26(C1Q27) 종료 시점 월 <b>~10만 유닛</b>·mid-hundreds ASP 예상 → ASP $500 가정 시 CY27 초 연환산 <b>$600M</b>. FY28(C1Q28) 종료 시점 월 유닛 2~3배 → 2H27 월 20만 유닛, CY27 말 연환산 <b>$1.2B</b></li>
+        <li>광 DSP·SiPho PIC 기여를 더해 CY27 총 옵틱스 매출 추정을 <b>$1.73B</b>로 상향(기존 $1.55B). 궁극적으로 <b>$2B+</b>에 근접할 것으로 판단</li>
+        <li>CY27 총 매출 <b>$4.01B</b>, EPS <b>$10.23</b>. 현재 2년 선행 PER <b>~21x</b>로, $500M CXL을 반영한 ALAB ~31x 대비 10턴 할인</li>
+      </ul>
+
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>비교 ($mn)</th><th class="num">ALAB 2026E</th><th class="num">ALAB 2027E</th><th class="num">CRDO 2026A</th><th class="num">CRDO 2027E</th><th class="num">CRDO 2028E</th></tr></thead>
+        <tbody>
+          <tr><td>Revenue</td><td class="num">1,550</td><td class="num">3,334</td><td class="num">1,335</td><td class="num">2,489</td><td class="num">4,422</td></tr>
+          <tr><td>EPS (adj, $)</td><td class="num">3.21</td><td class="num">8.19</td><td class="num">3.42</td><td class="num">6.14</td><td class="num">11.23</td></tr>
+          <tr><td>P/E (adj, x)</td><td class="num">94.6</td><td class="num">37.1</td><td class="num">59.3</td><td class="num">33.0</td><td class="num">18.0</td></tr>
+          <tr><td>EV/sales (x)</td><td class="num">35.3</td><td class="num">16.1</td><td class="num">28.7</td><td class="num">15.4</td><td class="num">8.2</td></tr>
+          <tr><td>Free cash flow</td><td class="num">381</td><td class="num">1,169</td><td class="num">407</td><td class="num">718</td><td class="num">2,036</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-src">Source: Company data, Bloomberg</div>
+
+    </div>
+  </section>
+
+  <!-- ============ 4. Analog ============ -->
+  <section class="report" id="analog">
+    <div class="report-head">
+      <div class="tag">Analog</div>
+      <h2>Analog — 사이클 어디쯤인가: PMI 상승 사이클은 아직 초입</h2>
+      <p class="lede">PMI가 50을 넘어선 지 6개월, 과거 평균 체류 기간은 27개월. Industrial + DC 조합을 계속 선호하되, 일부 종목은 주가가 이미 이력 대비 앞서 나갔다.</p>
+    </div>
+    <div class="report-body">
+
+      <div class="chips">
+        <div class="chip"><div class="k">PMI 50 상회 기간</div><div class="v">6개월</div><div class="s">과거 평균 27개월</div></div>
+        <div class="chip"><div class="k">NTM 상대성과 (PMI 50~55)</div><div class="v">+12%</div><div class="s">평균, vs. S&amp;P / 중위 +6%</div></div>
+        <div class="chip"><div class="k">현재 vs 역사 P/E 스프레드</div><div class="v">+4.6x</div><div class="s">커버리지 평균</div></div>
+        <div class="chip"><div class="k">Top Pick</div><div class="v">NXPI</div><div class="s">재평가에서 소외된 최저가 종목</div></div>
+      </div>
+
+      <h3 class="sec"><span class="n">1</span>매크로 — PMI 사이클 위치</h3>
+      <ul class="pts">
+        <li>미국 PMI 데이터가 견조하게 유지. 현 구간에서 Analog 종목군은 과거 NTM 기준 S&amp;P를 <b>~MSD%</b> 상회하는 경향</li>
+        <li>PMI가 50을 상회한 지 <b>6개월</b>인 반면 과거 평균 50 상회 지속 기간은 <b>27개월</b> → 상승 사이클 초기 국면</li>
+        <li>글로벌 PMI가 모두 50을 상회하는 가운데 <b>미국이 가장 강하고 유로존, 중국 순</b></li>
+        <li>Y/Y 매출 성장률과 미국 PMI의 상관성은 <b>TXN, ON, ADI</b>가 가장 높음. 커버리지 평균 상관계수 <b>56%</b> (TXN ~72%, ON ~62%, ADI ~60%, MCHP ~53%, ALGM ~45%, NXPI ~43%)</li>
+        <li>Street의 Industrial Q/Q 성장 기대는 향후 18개월간 비교적 완만하고 Y/Y는 점진 둔화, Auto Q/Q 기대는 평균 <b>~LSD%</b>로 Y/Y는 <b>LDD%</b>대에서 안정 유지</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">2</span>PMI 레벨별 NTM 주가 성과</h3>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>ISM PMI</th><th class="num">&lt;45 (Rel)</th><th class="num">45~50 (Rel)</th><th class="num">50~55 (Rel)</th><th class="num">55~60 (Rel)</th><th class="num">&gt;60 (Rel)</th></tr></thead>
+        <tbody>
+          <tr><td>ADI</td><td class="num">+18%</td><td class="num">+3%</td><td class="num">0%</td><td class="num">+4%</td><td class="num">+1%</td></tr>
+          <tr><td>ALGM</td><td class="num">-</td><td class="num">-14%</td><td class="num">+39%</td><td class="num">+28%</td><td class="num">-8%</td></tr>
+          <tr><td>MCHP</td><td class="num">+15%</td><td class="num">-5%</td><td class="num">+4%</td><td class="num">+3%</td><td class="num">-11%</td></tr>
+          <tr><td>NXPI</td><td class="num">+85%</td><td class="num">+3%</td><td class="num">+19%</td><td class="num">+9%</td><td class="num">-11%</td></tr>
+          <tr><td>ON</td><td class="num">+87%</td><td class="num">-6%</td><td class="num">+9%</td><td class="num">+16%</td><td class="num">+29%</td></tr>
+          <tr><td>TXN</td><td class="num">+23%</td><td class="num">-2%</td><td class="num">+2%</td><td class="num">+6%</td><td class="num">-4%</td></tr>
+          <tr><td><b>Average</b></td><td class="num">+45%</td><td class="num">-3%</td><td class="num"><b>+12%</b></td><td class="num">+11%</td><td class="num">-1%</td></tr>
+          <tr><td><b>Median</b></td><td class="num">+23%</td><td class="num">-3%</td><td class="num"><b>+6%</b></td><td class="num">+7%</td><td class="num">-6%</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-src">Source: Bloomberg</div>
+      <div class="callout"><span class="t">주목</span>2026년 2월 1일(PMI 50 돌파 확인 시점) 이후 성과를 보면, AI DC 수혜 인식이 강한 <b>ON·TXN·ADI</b>는 과거 3개월·12개월 평균 성과를 이미 초과 달성했고, <b>NXPI·MCHP</b>는 뒤처져 있다. 즉 상승 여력이 남아 있는 쪽은 후자.</div>
+
+      <h3 class="sec"><span class="n">3</span>밸류에이션 — 이력 대비 몇 턴 위인가</h3>
+      <div class="chart-card">
+        <div class="ct">Spread of Current P/E vs. Median Historic P/E (Blended Forward 24mo P/E)</div>
+        <svg viewBox="0 0 880 300" width="100%">
+          <line x1="70" y1="250" x2="860" y2="250" stroke="#cfd6e0"/>
+          <line x1="70" y1="20" x2="70" y2="250" stroke="#cfd6e0"/>
+          <g font-size="11" fill="#8a93a3">
+            <text x="34" y="254">0.0x</text><text x="34" y="196">2.0x</text><text x="34" y="139">4.0x</text>
+            <text x="34" y="82">6.0x</text><text x="34" y="25">8.0x</text>
+          </g>
+          <g stroke="#eef1f6"><line x1="70" y1="196" x2="860" y2="196"/><line x1="70" y1="139" x2="860" y2="139"/><line x1="70" y1="82" x2="860" y2="82"/><line x1="70" y1="25" x2="860" y2="25"/></g>
+          <!-- 0x=250, 8x=25 -> 28.125 px per turn -->
+          <rect x="105" y="56" width="66" height="194" fill="#00395d"/>
+          <rect x="203" y="109" width="66" height="141" fill="#00395d"/>
+          <rect x="301" y="115" width="66" height="135" fill="#00395d"/>
+          <rect x="399" y="126" width="66" height="124" fill="#00395d"/>
+          <rect x="497" y="140" width="66" height="110" fill="#00395d"/>
+          <rect x="595" y="177" width="66" height="73" fill="#00395d"/>
+          <rect x="693" y="244" width="66" height="6" fill="#00395d"/>
+          <rect x="791" y="121" width="66" height="129" fill="#c0392b"/>
+          <g font-size="11.5" font-weight="700" fill="#3d4553" text-anchor="middle">
+            <text x="138" y="50">6.9x</text><text x="236" y="103">5.0x</text><text x="334" y="109">4.8x</text>
+            <text x="432" y="120">4.4x</text><text x="530" y="134">3.9x</text><text x="628" y="171">2.6x</text>
+            <text x="726" y="238">0.2x</text><text x="824" y="115">4.6x</text>
+          </g>
+          <g font-size="11" fill="#525866" text-anchor="middle">
+            <text x="138" y="270">TXN</text><text x="236" y="270">ALGM</text><text x="334" y="270">ON</text>
+            <text x="432" y="270">ADI</text><text x="530" y="270">MCHP</text><text x="628" y="270">IFX</text>
+            <text x="726" y="270">NXPI</text><text x="824" y="270">Average</text>
+          </g>
+        </svg>
+        <div class="chart-src">Source: Bloomberg</div>
+      </div>
+      <ul class="pts">
+        <li>YTD 주가 성과가 EPS 리비전을 크게 앞섬 — 커버리지 평균 <b>주가 +48% vs. CY27 EPS 리비전 +13%</b> (SPX +9% YTD). 4월 22일 시점에는 주가 +37% vs. 리비전 +3%였던 것 대비 리비전이 일부 따라온 상태</li>
+        <li><b>ALGM</b>은 CY27 EPS가 하향 조정됐음에도 그룹 내 가장 강한 성과. <b>ADI</b>는 주가와 EPS 리비전이 가장 잘 부합</li>
+        <li>이 괴리는 역사 중위값 대비 몇 턴 높은 현재 밸류에이션에 반영 — Industrial 회복과 AI DC/power semis 낙관론이 주 원인</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">4</span>종목별 코멘트</h3>
+      <ul class="pts">
+        <li><b>ADI</b> — 그룹 전반 재평가 속에서 성과의 상당 부분이 <b>EPS 리비전으로 정당화</b>. 높은 Industrial 익스포저와 power·optical 양쪽에서 성장하는 DC 사업을 근거로 계속 선호</li>
+        <li><b>NXPI</b> — 재평가에서 소외된 <b>최저가 종목</b>이며 2Q26~CY27 평균 Q/Q 성장률이 가장 강할 것으로 예상. PMI 50 돌파 후 NTM 아웃퍼폼 이력도 양호</li>
+        <li><b>TXN</b> — Industrial + DC 조합에 부합하며 강한 회복(매출 Y/Y와 PMI 상관성 최고). 다만 현재 P/E와 역사적 P/E 스프레드가 <b>그룹 내 최대</b></li>
+        <li><b>ON</b> — TXN과 유사하게 PMI 상관성이 높으나, PMI 50 돌파 시 과거 대비 주가가 더 멀리 갔고 EPS 리비전이 아직 따라오지 못함. power semis 기회에 대한 코멘트가 관건</li>
+        <li><b>MCHP</b> — 커버리지 내 최고 DC 익스포저로 알려졌으나, 회사가 제공한 세부 내역상 고성장 부문의 실제 규모는 <b>절반 이하</b>. 전반적 숫자는 양호하나 엔터프라이즈 중심의 PCIe 스위치·리타이머 TAM에 흥분하기는 어려움</li>
+        <li><b>ALGM</b> — Auto가 매출의 과반이며 Street 추정치가 과도할 가능성. DC 램프와 로보틱스 낙관론이 주가와 멀티플을 견인</li>
+      </ul>
+
+    </div>
+  </section>
+
+  <!-- ============ 5. ALGM ============ -->
+  <section class="report" id="algm">
+    <div class="report-head">
+      <div class="tag">Analog — Rating Change</div>
+      <h2>ALGM을 Equal Weight으로 하향 — 기대치를 되짚어본다</h2>
+      <p class="lede">현 주가를 정당화하려면 CY28 DC 매출이 +65% 성장해야 한다. 가능은 하지만 야심찬 수치이며, 같은 테마에 더 매력적인 밸류에이션으로 참여할 방법이 있다.</p>
+    </div>
+    <div class="report-body">
+
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v sell">Equal Weight</div><div class="s">↓ from Overweight</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$48</div><div class="s">유지 · 40x CY27 P/E</div></div>
+        <div class="chip"><div class="k">Price (7/17)</div><div class="v">$46.48</div><div class="s">+1% upside</div></div>
+        <div class="chip"><div class="k">Auto 비중</div><div class="v">~2/3</div><div class="s">DC는 ~20%까지 확대 예상</div></div>
+      </div>
+
+      <h3 class="sec"><span class="n">1</span>하향 근거</h3>
+      <ul class="pts">
+        <li>YTD 아웃퍼폼의 상당 부분이 <b>AI DC·로보틱스</b>라는 구조적 성장 테마에서 비롯. 합리적 밸류에이션을 정당화하려면 CY28 DC 매출 성장률이 CY27 +40%에서 <b>+65%로 가속</b>되어야 함</li>
+        <li>로보틱스는 <b>당분간 실적에 유의미하지 않다</b>는 견해에 동의. 경쟁도 치열</li>
+        <li>Street의 Auto 부문 기대가 낙관적 — CY26/27 <b>+12%/+13.5%</b> vs. 자체 추정 <b>+9%/+9%</b></li>
+        <li>EV 성장 모멘텀 둔화: 중국 내수 <b>+MSD% Y/Y YTD</b>(2025년 +26%), 수출 <b>+68% Y/Y YTD</b>(2025년 +78%)</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">2</span>Auto — 여전히 매출의 대부분</h3>
+      <ul class="pts">
+        <li>DC가 향후 2년간 매출의 <b>~20%</b>까지 빠르게 램프하더라도 Auto는 여전히 <b>~2/3</b> 수준으로 모델링</li>
+        <li>글로벌 자동차 생산은 CY26 <b>-LSD%</b>, CY27 소폭 증가 전망(중국은 CY26 -MSD%, CY27 소폭 증가)</li>
+        <li>ALGM은 점유율·컨텐츠 확대를 통해 Auto 생산 대비 <b>7~10%p outgrowth</b>를 목표. 상단인 10% 적용 시 CY26 Auto 매출 <b>+7% Y/Y</b> (Street +12%), CY27 <b>+11% Y/Y</b> (Street +13.5%)</li>
+        <li><b>Focus Auto (ADAS + xEV)</b>가 Auto 부문의 주 동력. 투자자 설명회 기준 Focus Auto SAM은 <b>+18% CAGR</b> (ADAS +10% / xEV +23%), 최근 5년 평균 <b>~28% Y/Y</b> 성장</li>
+        <li>다만 중국 내수 NEV 성장률이 이력 대비 크게 낮고, 2026년 성장은 <b>+3~5% Y/Y</b>로 둔화될 가능성. NEV 수출은 중국 NEV 판매의 <b>~30%</b>(2025년 ~20%)로 비중 확대</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">3</span>Data Center — 빠른 성장, 그러나 작은 베이스</h3>
+      <div class="chart-card">
+        <div class="ct">Analog Coverage — DC % of Sales Exposure</div>
+        <svg viewBox="0 0 880 300" width="100%">
+          <line x1="80" y1="250" x2="860" y2="250" stroke="#cfd6e0"/>
+          <line x1="80" y1="20" x2="80" y2="250" stroke="#cfd6e0"/>
+          <g font-size="11" fill="#8a93a3">
+            <text x="46" y="254">0%</text><text x="42" y="193">5%</text><text x="36" y="135">10%</text>
+            <text x="36" y="78">15%</text><text x="36" y="24">20%</text>
+          </g>
+          <g stroke="#eef1f6"><line x1="80" y1="193" x2="860" y2="193"/><line x1="80" y1="135" x2="860" y2="135"/><line x1="80" y1="78" x2="860" y2="78"/><line x1="80" y1="24" x2="860" y2="24"/></g>
+          <!-- 0%=250, 20%=24 -> 11.3 px per % -->
+          <rect x="115" y="47" width="72" height="203" fill="#00395d"/>
+          <rect x="220" y="69" width="72" height="181" fill="#00aeef"/>
+          <rect x="325" y="92" width="72" height="158" fill="#00395d"/>
+          <rect x="430" y="114" width="72" height="136" fill="#00395d"/>
+          <rect x="535" y="157" width="72" height="93" fill="#00395d"/>
+          <rect x="640" y="160" width="72" height="90" fill="#00395d"/>
+          <rect x="745" y="205" width="72" height="45" fill="#00395d"/>
+          <g font-size="11.5" font-weight="700" fill="#3d4553" text-anchor="middle">
+            <text x="151" y="41">18%</text><text x="256" y="63">16%</text><text x="361" y="86">14%</text>
+            <text x="466" y="108">12%</text><text x="571" y="151">8.2%</text><text x="676" y="154">8%</text><text x="781" y="199">4%</text>
+          </g>
           <g font-size="10.5" fill="#525866" text-anchor="middle">
-            <!-- scale: 0% at y=150, 30%->y=60 (3px/%) ; bars -->
-            <rect x="80"  y="118" width="34" height="32"  fill="#0a2240"/><text x="97"  y="270">2Q24</text><text x="97" y="112" font-size="9">+6.5</text>
-            <rect x="180" y="118" width="34" height="32"  fill="#0a2240"/><text x="197" y="270">3Q24</text><text x="197" y="80" font-size="9">+10.8</text>
-            <rect x="180" y="118" width="34" height="0"   fill="none"/>
-            <rect x="280" y="139" width="34" height="11"  fill="#0a2240"/><text x="297" y="270">4Q24</text><text x="297" y="133" font-size="9">+3.6</text>
-            <rect x="380" y="150" width="34" height="10"  fill="#8a2534"/><text x="397" y="270">1Q25</text><text x="397" y="176" font-size="9">-3.4</text>
-            <rect x="480" y="126" width="34" height="24"  fill="#0a2240"/><text x="497" y="270">2Q25</text><text x="497" y="120" font-size="9">+7.9</text>
-            <rect x="580" y="103" width="34" height="47"  fill="#0a2240"/><text x="597" y="270">3Q25</text><text x="597" y="97" font-size="9">+15.8</text>
-            <rect x="680" y="109" width="34" height="41"  fill="#0a2240"/><text x="697" y="270">4Q25</text><text x="697" y="103" font-size="9">+13.6</text>
-            <rect x="780" y="72"  width="34" height="78"  fill="#5c1a26"/><text x="797" y="270">1Q26</text><text x="797" y="66" font-size="9">+26.2</text>
-          </g>
-          <!-- 3Q24 실제 10.8 막대 재보정 -->
-          <rect x="180" y="118" width="34" height="0" fill="none"/>
-        </svg>
-        <div class="chart-src">Source: WSTS</div>
-      </div>
-
-      <!-- 2 -->
-      <h3 class="sec" id="s2"><span class="n">2</span>AI/가속 컴퓨팅 — 수요가 공급 초과, 커스텀 XPU 점유율 확대</h3>
-      <ul class="pts">
-        <li>하이퍼스케일러·AI랩은 agentic 추론 폭증 속 <b>compute-constrained</b> 지속. 6월 토큰 물량 <b>+70% m/m</b>(5월 +33%, 4월 +5%), <b>20x y/y</b>로 가속</li>
-        <li>Top-4 US 하이퍼스케일러 DC capex <b>+80% Y/Y (2026)</b>, 2027 최소 +50% 성장(상향 여지). NVDA $1T+ Blackwell+Rubin, AVGO FY27 AI 매출 <b>$150B</b> 접근/상회 전망</li>
-        <li>Street 컨센서스 2027 top-4 총 capex <b>~$825B</b>(2026 base $675B+ 대비 low-20% Y/Y), 3개월 전 대비 $140B+ 상향 — 향후 수 분기 추가 상향 여지</li>
-        <li>워크로드 분화(latency-sensitive → 전용 HW)로 커스텀 XPU가 accelerator TAM 점유율 확대: ASIC/XPU 비중 <b>2025 32% → 2026E 42% → 2027E 53%</b></li>
-        <li>병목 요인: leading-edge foundry(3nm/4nm), HBM 공급, advanced packaging, 전력 — 이번 실적 시즌 핵심 debate</li>
-      </ul>
-
-      <div class="chart-card">
-        <div class="ct">Top-4 US 하이퍼스케일러 데이터센터 Capex ($B, 추정치)</div>
-        <svg viewBox="0 0 880 320" width="100%" role="img" aria-label="DC capex 추이">
-          <line x1="70" y1="280" x2="850" y2="280" stroke="#cfd6e0"/>
-          <g text-anchor="middle" font-size="12" fill="#525866">
-            <!-- max 900 -> 240px @ y280 base -->
-            <rect x="120" y="232" width="90" height="48"  fill="#2e4a6b"/><text x="165" y="300">2024</text><text x="165" y="222" fill="#0a2240" font-weight="700">~$179B</text><text x="165" y="208" font-size="10.5" fill="#9aa3b2">+76%</text>
-            <rect x="300" y="195" width="90" height="85"  fill="#2e4a6b"/><text x="345" y="300">2025</text><text x="345" y="185" fill="#0a2240" font-weight="700">$320B</text><text x="345" y="171" font-size="10.5" fill="#9aa3b2">+79%</text>
-            <rect x="480" y="127" width="90" height="153" fill="#0a2240"/><text x="525" y="300">2026E</text><text x="525" y="117" fill="#0a2240" font-weight="700">$575B</text><text x="525" y="103" font-size="10.5" fill="#5c1a26" font-weight="700">+80%</text>
-            <rect x="660" y="51"  width="90" height="229" fill="#0a2240"/><text x="705" y="300">2027E</text><text x="705" y="41" fill="#0a2240" font-weight="700">$860B</text><text x="705" y="27" font-size="10.5" fill="#5c1a26" font-weight="700">+50%</text>
+            <text x="151" y="268">MCHP</text><text x="151" y="282">(DC&amp;Computing)</text>
+            <text x="256" y="268">ALGM</text><text x="361" y="268">TXN</text><text x="466" y="268">ADI</text>
+            <text x="571" y="268">MCHP</text><text x="571" y="282">(DC Solutions BU)</text>
+            <text x="676" y="268">ON</text><text x="781" y="268">NXPI</text>
           </g>
         </svg>
-        <div class="chart-src">Source: 650 Group</div>
+        <div class="chart-src">Source: Company Data</div>
       </div>
+      <ul class="pts">
+        <li>ALGM의 DC 사업은 CQ1 26 종료 시점 연환산 <b>$136M</b>이며, CQ4 27 종료 시점 <b>$263M</b>으로 거의 2배 성장 예상</li>
+        <li>성장 동력은 AI DC 빌드아웃 — 특히 <b>fan driver</b> 수요(액침·수랭 확산에도 불구)가 DC 사업 대부분을 차지하며 CPU/GPU 냉각에서 전원공급장치·네트워킹 장비로 확장 중</li>
+        <li><b>current sensor</b>(DC 매출의 ~20%)도 전원공급장치·배터리 백업 유닛·커패시터 백업 유닛에서 채택·디자인윈 확대</li>
+        <li>랙당 컨텐츠는 현재 <b>~$150</b>이며, isolated gate driver 추가와 <b>800V 전환</b>에 따라 2028년 <b>~$425</b>까지 확대 전망 (2025~2028 컨텐츠 CAGR ~40%)</li>
+      </ul>
 
+      <h3 class="sec"><span class="n">4</span>내재 DC 성장 시나리오 — 무엇이 가격에 반영됐나</h3>
       <div class="tbl-wrap">
       <table class="tbl">
-        <thead><tr><th>AI accelerator 출하 (M units)</th><th>2023</th><th>2024</th><th>2025</th><th>2026E</th><th>2027E</th></tr></thead>
+        <thead><tr><th>Revenue ($M)</th><th class="num">CY26E</th><th class="num">CY27E</th><th class="num">CY28E</th></tr></thead>
         <tbody>
-          <tr><td>NVIDIA GPUs</td><td class="num">1.7</td><td class="num">4.5</td><td class="num">6.2</td><td class="num">8.9</td><td class="num">9.9</td></tr>
-          <tr><td>AMD GPUs</td><td class="num">0.1</td><td class="num">0.5</td><td class="num">0.7</td><td class="num">0.6</td><td class="num">1.0</td></tr>
-          <tr><td>Google TPUs</td><td class="num">1.2</td><td class="num">1.7</td><td class="num">1.8</td><td class="num">4.5</td><td class="num">8.0</td></tr>
-          <tr><td>AWS Inferentia + Trainium</td><td class="num">0.3</td><td class="num">0.8</td><td class="num">1.5</td><td class="num">1.9</td><td class="num">3.3</td></tr>
-          <tr><td>Meta MTIA</td><td class="num">0.0</td><td class="num">0.0</td><td class="num">0.0</td><td class="num">0.3</td><td class="num">0.5</td></tr>
-          <tr><td>Microsoft MAIA</td><td class="num">0.0</td><td class="num">0.0</td><td class="num">0.0</td><td class="num">0.2</td><td class="num">0.7</td></tr>
-          <tr><td><b>Total</b></td><td class="num"><b>3.3</b></td><td class="num"><b>7.4</b></td><td class="num"><b>10.1</b></td><td class="num"><b>16.3</b></td><td class="num"><b>23.3</b></td></tr>
-          <tr><td>Growth Y/Y</td><td class="num">—</td><td class="num">128%</td><td class="num">36%</td><td class="num">62%</td><td class="num">43%</td></tr>
-          <tr><td>GPU % total</td><td class="num">55%</td><td class="num">67%</td><td class="num">68%</td><td class="num">58%</td><td class="num">47%</td></tr>
-          <tr><td>ASIC/XPU % total</td><td class="num">45%</td><td class="num">33%</td><td class="num">32%</td><td class="num">42%</td><td class="num">53%</td></tr>
+          <tr><td>Automotive</td><td class="num">658.7</td><td class="num">718.8</td><td class="num">776.3</td></tr>
+          <tr><td>Data Center</td><td class="num">165.0</td><td class="num">230.6</td><td class="num">380.5</td></tr>
+          <tr><td>Other Industrial</td><td class="num">175.0</td><td class="num">180.5</td><td class="num">194.9</td></tr>
+          <tr><td><b>Total</b></td><td class="num"><b>998.7</b></td><td class="num"><b>1,129.9</b></td><td class="num"><b>1,351.8</b></td></tr>
+          <tr><td>Street</td><td class="num">1,020.0</td><td class="num">1,180.0</td><td class="num">1,290.0</td></tr>
+          <tr><td>DC Y/Y</td><td class="num">-</td><td class="num">+40%</td><td class="num"><b>+65%</b></td></tr>
+          <tr><td>Total Y/Y</td><td class="num">-</td><td class="num">+13%</td><td class="num">+20%</td></tr>
+          <tr><td>GM (%)</td><td class="num">50.4%</td><td class="num">52.0%</td><td class="num">55.0%</td></tr>
+          <tr><td><b>EPS ($)</b></td><td class="num"><b>0.79</b></td><td class="num"><b>1.19</b></td><td class="num"><b>1.94</b></td></tr>
+          <tr><td>Street EPS ($)</td><td class="num">0.88</td><td class="num">1.34</td><td class="num">1.62</td></tr>
+          <tr><td colspan="3">Implied CY28 P/E (계산 기준)</td><td class="num"><b>23.9x</b></td></tr>
+          <tr><td colspan="3">Implied CY28 P/E (Street EPS 기준)</td><td class="num">28.7x</td></tr>
         </tbody>
       </table>
       </div>
-      <div class="chart-src">Source: Company reports</div>
-
-      <!-- 3 -->
-      <h3 class="sec" id="s3"><span class="n">3</span>메모리 (DRAM/NAND/HBM) — 구조적 S/D 타이트니스 2028년까지 연장</h3>
+      <div class="chart-src">Source: Company Data, Bloomberg</div>
       <ul class="pts">
-        <li>DRAM·NAND 공급/수요 타이트니스가 <b>2028E까지 지속</b> 전망. 서버 CPU 수요(2030년까지 <b>35~50% CAGR</b>)와 agentic 추론이 DRAM 수요 견인, 공급은 HBM 우선 배분으로 제약</li>
-        <li>메모리 벤더는 강한 bit 출하 + 더 강한 ASP 성장으로 실적 상향 cadence 유지. Micron은 타이트니스 지속 시점을 "beyond 2026" → <b>"beyond 2027"</b>로 상향</li>
-        <li>투자자 focus는 pricing 지속성 → 신규 <b>SCAs/LTAs</b>(전략적 고객 계약/장기 계약)의 구조·조건과 cyclicality 완화·re-rating 여부로 이동</li>
-        <li>HBM TAM: <b>$65B (2026E, +94%)</b> → $129B (2027E, +99%) → $225B (2028E, +74%). CY26 물량은 late-CY25에 완판, CY27 물량도 수개월 내 소진 전망</li>
-        <li>HBM blended ASP: +13%(2026E)/+32%(2027E)/+17%(2028E). 2027 mix shift(HBM4E)이 ASP 견인 — HBM4E는 HBM3E 대비 ~61%, HBM4 대비 ~28% 프리미엄</li>
+        <li>정상화 P/E는 24개월·36개월 역사 중위 blended forward P/E <b>~20x</b>에 Analog 그룹 재평가폭과 유사한 <b>~4~5x 프리미엄</b>을 더해 보수적으로 설정. Auto·Other Industrial은 장기 목표에 부합하는 성장, GM·OpM은 장기 목표 <b>55%·32%</b> 달성 가정</li>
+        <li>이 조건에서 내재 CY28 P/E가 ~24x가 되려면 <b>DC가 CY28에 +65% Y/Y (분기당 ~15% Q/Q)</b> 성장해야 함. 컨텐츠 CAGR ~40%를 감안하면 불가능하지는 않으나, 경쟁 심한 시장에서 대규모 물량과 점유율 확보 없이는 상방을 상상하기 어려움</li>
+        <li>비교 관점: <b>ON과 IFX</b>는 Auto 익스포저가 높고 AI DC 랙 컨텐츠 성장률도 ALGM보다 빠름(65%+ CAGR vs. ALGM 40%+)에도 CY27 P/E <b>~17x / ~18x</b>에 거래 (ALGM ~29x)</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">5</span>로보틱스 — 2030년까지는 유의미하지 않다</h3>
+      <ul class="pts">
+        <li>경영진은 로보틱스에서 유의미한 매출이 <b>~2030년</b> 이전에는 발생하지 않는다고 언급. 중국이 물리적 AI를 주도(2025년 설치 휴머노이드의 <b>~85%</b>가 중국)하며 최근 중국 로보틱스 기업 2곳과 로봇 관절용 디자인윈 확보</li>
+        <li>컨텐츠 경쟁력 측면에서도 열위 — ALGM은 2030년 휴머노이드당 컨텐츠를 <b>$150+</b>로 제시(현재 공장 로봇 $55)하는 반면, ADI·MCHP·TXN 등은 <b>수천 달러</b> 규모를 언급</li>
+        <li>Automation &amp; Robotics SAM은 <b>$1.8B, 34% CAGR</b>이며 이 중 Household·Factory Automation이 $400M</li>
+        <li>2028년 로봇 신규 설치 100만 대 이상(산업+서비스) 전망 하에서도, 컨텐츠 성장이 가이던스에 부합하고 높은 점유율을 가정할 때 <b>2028년 로봇 매출은 ~$24M</b>에 그쳐 사실상 미미</li>
+      </ul>
+
+      <div class="bbgrid">
+        <div class="bb bull"><div class="lbl">🐂 Bull</div><div class="px">$65</div><div class="ret">+40% Upside</div>
+          <ul><li>43x CY26 EPS $2</li><li>신규 디자인윈 확대</li><li>Auto/DC 시장 초과 성장, power 점유율 확대</li></ul></div>
+        <div class="bb base"><div class="lbl">⊕ Base (PT)</div><div class="px">$48</div><div class="ret">+1%</div>
+          <ul><li>40x CY27 P/E</li><li>Auto 둔화를 DC가 완전히 상쇄하지 못함</li></ul></div>
+        <div class="bb bear"><div class="lbl">🐻 Bear</div><div class="px">$30</div><div class="ret">-35% Downside</div>
+          <ul><li>38x CY26E EPS $1</li><li>DC·로보틱스 디자인윈 램프 지연</li></ul></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ 6. PENG ============ -->
+  <section class="report" id="peng">
+    <div class="report-head">
+      <div class="tag">SMID / Memory Ecosystem — Rating Change</div>
+      <h2>PENG를 Underweight으로 하향 — 지나치게 멀리 갔다</h2>
+      <p class="lede">사실상 pass-through 성격의 메모리 사업이 메모리 생태계와 순수 반도체 종목 대비 큰 프리미엄에 거래될 이유가 없다. SOTP는 현 주가 정당화에 Advanced Computing ~45x P/E가 필요함을 시사.</p>
+    </div>
+    <div class="report-body">
+
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v sell">Underweight</div><div class="s">↓ from Equal Weight</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$40</div><div class="s">유지 · 13x CY27 P/E</div></div>
+        <div class="chip"><div class="k">Price (7/17)</div><div class="v">$60.41</div><div class="s">-37% downside</div></div>
+        <div class="chip"><div class="k">SOTP 내재 주가</div><div class="v">~$30</div><div class="s">가중 CY27 P/E ~8~9x</div></div>
+      </div>
+
+      <h3 class="sec"><span class="n">1</span>하향 근거 — 믹스 변화가 곧 마진 압력</h3>
+      <ul class="pts">
+        <li>메모리 가격 강세로 원가 전가가 이뤄지며 톱라인은 개선되나, 상승분의 대부분은 <b>가격 효과</b>이며 고객 기반 확대 기여는 제한적</li>
+        <li>사업 믹스가 구조적으로 변화 — <b>Memory 비중 확대</b> + Advanced Computing이 메모리 투입원가 상승의 타격을 받는 구조 → <b>GM 압박</b></li>
+        <li>CXL과 Celestial과의 협업이 부각되고 있으나 <b>현재 및 가까운 미래의 매출은 미미</b></li>
+        <li>Integrated Memory는 분기 beat의 대부분을 견인했고 초기 FY27 성장 가이던스 <b>30%</b>의 상당 부분을 차지</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">2</span>CXL과 광 메모리 어플라이언스 — 실체 점검</h3>
+      <ul class="pts">
+        <li>실적 콜에서 CXL이 주요 주제였으나, 일부 고객이 CXL 메모리 확장 카드를 구매하는 수준으로 매출 기여는 미미. 업계 관계자 대화 기준 <b>CXL 채택은 여전히 부진</b></li>
+        <li>CXL 익스포저로는 대규모 클라우드 배치에 참여하는 <b>MRVL·ALAB</b>이 더 유의미하나, 이들조차 본격 매출은 시간이 필요 (MRVL은 CY28 CXL 매출 $1B 가이던스, ALAB Leo는 CY26·CY27 +60~70% 성장하나 베이스가 작음). 삼성은 최근 <b>CXL 3.1 메모리 모듈 양산을 연기</b></li>
+        <li>MRVL의 Celestial AI와 협업 중인 광 메모리 어플라이언스는 여러 서버에 걸쳐 메모리를 풀링하고 GPU 보드와 광으로 연결하는 구조로, AMZN 로드맵상 <b>Trainium 4</b>와 접점 예상. 다만 광 스토리지 연결로 이동하는 것은 CPO 또는 scale-up 옵틱스로 이동할 때만 성립하며, <b>T4에서는 물량이 매우 작을 것</b>으로 판단</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">3</span>SOTP — 현 주가에 반영된 것</h3>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>사업부</th><th class="num">매출 비중</th><th>Comp Set</th><th class="num">Average P/E</th><th class="num">Median P/E</th></tr></thead>
+        <tbody>
+          <tr><td><b>Integrated Memory</b></td><td class="num">60%</td><td>MU (5.1x), SNDK (6.3x)</td><td class="num">5.7x</td><td class="num">5.7x</td></tr>
+          <tr><td><b>Advanced Computing</b></td><td class="num">29%</td><td>HPE, DELL, JBL, FLEX, SANM, CLS, DXC, KD</td><td class="num">12.2x</td><td class="num">14.6x</td></tr>
+          <tr><td><b>Optimized LED</b></td><td class="num">11%</td><td>ams-OSRAM, Seoul Semiconductor, Everlight</td><td class="num">11.8x</td><td class="num">11.5x</td></tr>
+          <tr><td colspan="3"><b>Weighted Multiple</b></td><td class="num"><b>8.2x</b></td><td class="num"><b>8.9x</b></td></tr>
+          <tr><td colspan="3">CY27 Street EPS</td><td class="num" colspan="2">$3.42</td></tr>
+          <tr><td colspan="3"><b>내재 주가</b></td><td class="num"><b>$28.2</b></td><td class="num"><b>$30.5</b></td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-src">Source: Bloomberg</div>
+      <ul class="pts">
+        <li>Advanced Computing의 주 동력은 <b>엔터프라이즈 AI</b>이나, 하이퍼스케일러는 자체 역량을 보유(META 이탈이 그 예). 엔터프라이즈 AI 채택 타임라인, 특히 on-prem 배치는 더 길게 전개될 것으로 판단하며 메모리 가격 상승은 지속적 역풍</li>
+        <li>7/17 종가 ~$60을 정당화하려면 Memory·LED 멀티플을 유지한 상태에서 <b>Advanced Computing이 ~45x P/E</b>로 평가되어야 함. Advanced Computing이 사업의 2/3까지 커진다고 가정해도 <b>~25x</b>가 필요</li>
+        <li>비교 실적: PENG의 전사 매출과 Integrated Memory 매출 모두 올해와 내년 <b>MU·SNDK 대비 저성장</b>. GM은 <b>high-20s%</b>이며 메모리 가격 상승 압박으로 향후 수 분기 추가 하락 가능 (MU·SNDK는 80s% 및 구조적으로 높은 GM의 LTA 체결 중)</li>
+        <li>세그먼트 GM 추이: Integrated Memory <b>34.0% → 23.0%</b>, Advanced Computing <b>31.0% → 21.0%</b>, Optimized LED <b>29.4% → 27.0%</b> (FQ2 26 → FQ1 28 추정)</li>
       </ul>
 
       <div class="tbl-wrap">
       <table class="tbl">
-        <thead><tr><th>메모리 TAM ($B)</th><th>2024</th><th>2025</th><th>2026E</th><th>2027E</th><th>2028E</th></tr></thead>
+        <thead><tr><th>PENG ($mn)</th><th class="num">2025A</th><th class="num">2026E</th><th class="num">2027E</th></tr></thead>
         <tbody>
-          <tr><td><b>DRAM</b></td><td class="num">$95</td><td class="num">$143</td><td class="num">$636</td><td class="num">$970</td><td class="num">$1,237</td></tr>
-          <tr><td>DRAM Y/Y</td><td class="num">91%</td><td class="num">51%</td><td class="num">346%</td><td class="num">53%</td><td class="num">28%</td></tr>
-          <tr><td><b>NAND</b></td><td class="num">$70</td><td class="num">$71</td><td class="num">$300</td><td class="num">$394</td><td class="num">$454</td></tr>
-          <tr><td>NAND Y/Y</td><td class="num">101%</td><td class="num">2%</td><td class="num">322%</td><td class="num">31%</td><td class="num">15%</td></tr>
-          <tr><td><b>HBM</b></td><td class="num">$17</td><td class="num">$34</td><td class="num">$65</td><td class="num">$129</td><td class="num">$225</td></tr>
-          <tr><td>HBM Y/Y</td><td class="num">98%</td><td class="num">94%</td><td class="num">94%</td><td class="num">99%</td><td class="num">74%</td></tr>
+          <tr><td>Revenue</td><td class="num">1,369</td><td class="num">1,677</td><td class="num">2,181</td></tr>
+          <tr><td>EBIT (adj)</td><td class="num">168</td><td class="num">218</td><td class="num">275</td></tr>
+          <tr><td>EBIT margin (%)</td><td class="num">12.2</td><td class="num">13.0</td><td class="num">12.6</td></tr>
+          <tr><td><b>EPS (adj, $)</b></td><td class="num">1.92</td><td class="num">2.60</td><td class="num">3.03</td></tr>
+          <tr><td>Free cash flow</td><td class="num">100</td><td class="num">116</td><td class="num">162</td></tr>
+          <tr><td>P/E (adj, x)</td><td class="num">31.5</td><td class="num">23.2</td><td class="num">19.9</td></tr>
         </tbody>
       </table>
       </div>
+      <div class="chart-src">Source: Company data, Bloomberg</div>
 
-      <div class="chart-card">
-        <div class="ct">HBM TAM Forecast ($B) — 폭발적 성장 지속</div>
-        <svg viewBox="0 0 880 300" width="100%" role="img" aria-label="HBM TAM">
-          <line x1="70" y1="260" x2="850" y2="260" stroke="#cfd6e0"/>
-          <g text-anchor="middle" font-size="12" fill="#525866">
-            <!-- max 225 -> 220px @ base y260 -->
-            <rect x="95"  y="256" width="70" height="4"   fill="#2e4a6b"/><text x="130" y="280">2023</text><text x="130" y="248" font-size="10.5" fill="#0a2240" font-weight="700">$4</text>
-            <rect x="225" y="243" width="70" height="17"  fill="#2e4a6b"/><text x="260" y="280">2024</text><text x="260" y="235" font-size="10.5" fill="#0a2240" font-weight="700">$17</text>
-            <rect x="355" y="227" width="70" height="33"  fill="#2e4a6b"/><text x="390" y="280">2025</text><text x="390" y="219" font-size="10.5" fill="#0a2240" font-weight="700">$34</text>
-            <rect x="485" y="196" width="70" height="64"  fill="#0a2240"/><text x="520" y="280">2026E</text><text x="520" y="188" font-size="10.5" fill="#0a2240" font-weight="700">$65</text>
-            <rect x="615" y="134" width="70" height="126" fill="#0a2240"/><text x="650" y="280">2027E</text><text x="650" y="126" font-size="10.5" fill="#0a2240" font-weight="700">$129</text>
-            <rect x="745" y="40"  width="70" height="220" fill="#5c1a26"/><text x="780" y="280">2028E</text><text x="780" y="32" font-size="10.5" fill="#5c1a26" font-weight="700">$225</text>
-          </g>
-        </svg>
-        <div class="chart-src">Source: Company reports</div>
+      <div class="bbgrid">
+        <div class="bb bull"><div class="lbl">🐂 Bull</div><div class="px">$75</div><div class="ret">+24% Upside</div>
+          <ul><li>19x CY27 EPS $4.00</li><li>서비스 매출 증가, 마진 개선</li><li>Memory·LED 개선</li></ul></div>
+        <div class="bb base"><div class="lbl">⊕ Base (PT)</div><div class="px">$40</div><div class="ret">-37%</div>
+          <ul><li>13x CY27 EPS $3.08</li><li>메모리 비중 확대에 따른 저마진화</li></ul></div>
+        <div class="bb bear"><div class="lbl">🐻 Bear</div><div class="px">$15</div><div class="ret">-75% Downside</div>
+          <ul><li>8x CY27 EPS $2.00</li><li>서비스 감소, 마진 악화</li><li>Memory·LED 둔화</li></ul></div>
       </div>
 
-      <div class="tbl-wrap">
-      <table class="tbl">
-        <thead><tr><th>HBM 시장 점유율</th><th>2023</th><th>2024</th><th>2025</th><th>2026E</th><th>2027E</th><th>2028E</th></tr></thead>
-        <tbody>
-          <tr><td><b>SK Hynix</b></td><td class="num">51%</td><td class="num">55%</td><td class="num">60%</td><td class="num">49%</td><td class="num">45%</td><td class="num">46%</td></tr>
-          <tr><td>Samsung</td><td class="num">49%</td><td class="num">41%</td><td class="num">20%</td><td class="num">31%</td><td class="num">35%</td><td class="num">33%</td></tr>
-          <tr><td>Micron</td><td class="num">—</td><td class="num">5%</td><td class="num">20%</td><td class="num">20%</td><td class="num">20%</td><td class="num">21%</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <div class="chart-src">Source: Company reports</div>
-
-      <div class="callout"><span class="t">NAND 밸류에이션 유의</span>NAND는 near-term 타이트니스·강한 pricing 수혜가 이어지나, 2027년 이후 신규 capacity(증설+전환)가 S/D 불균형을 바꿀 수 있어 구조적 변화로 보지 않음. 사이클 전환 시 이익 정상화 가능성 존재 → 장기 밸류에이션에는 다소 보수적. eSSD가 NAND TAM 확장의 핵심 동력(CSP AI 인프라 확대).</div>
-
-      <!-- 4 -->
-      <h3 class="sec" id="s4"><span class="n">4</span>네트워킹 — 800G→1.6T 전환, AI 스택의 최고속 성장 레이어</h3>
-      <ul class="pts">
-        <li><b>Broadcom(AVGO)</b>: cloud/hyperscale 스위칭/라우팅 실리콘 #1 점유율 <b>~70%</b>, 시장 50%+ CAGR 전망. 3nm Tomahawk 6(102.4Tbps, 1.6T optics)가 C2H26/CY27 램프 — 내년치 거의 완판. AI 네트워킹 매출 올해 >3x, 내년 >2x <b>$45B+</b></li>
-        <li>AVGO는 Google·Anthropic·OpenAI·Meta·Apple의 멀티세대 커밋으로 ASIC/XPU 컴퓨트·네트워킹 franchise 구조적 우위, FY27/FY28로 de-risk 심화</li>
-        <li><b>Marvell(MRVL)</b>: 800G/1.6T 광모듈 출하 2026년 80~90M(2x)→2027년 150~160M(2x). PAM4 DSP 점유율 800G >70%, 1.6T ~60~65% 전망. optical 매출 CY26/FY27 <b>~+70% Y/Y</b></li>
-        <li>MRVL AI 커스텀 매출 CY26 ~$1.9B(+25%)→CY27 $4B+(2x 이상). Trainium 3, MS Maia XPU(3nm), 차세대 2nm 프로그램(AWS·MS) 견인. XPU attach design win 25+ 확보</li>
-      </ul>
-
-      <!-- 5 -->
-      <h3 class="sec" id="s5"><span class="n">5</span>Semicap/WFE — 10년래 최강 사이클, 강화·장기화</h3>
-      <ul class="pts">
-        <li>AI 주도 fab buildout으로 사이클 강화·장기화. 2H26는 1H26 대비 뚜렷이 강할 전망(고객사 tool slot 선확보), CY27~28 추가 가속</li>
-        <li>WFE 성장: <b>+28%(2026E) / +29%(2027E, upside risk) / +16%(2028E)</b>. 규모: 2025 $124B → 2026E $159B → 2027E $205B → 2028E $237B</li>
-        <li>Foundry: TSMC 주도 — N2/N3 공격적 buildout. TSMC capex <b>$58B/$78B/$84B (CY26/27/28E)</b>로 상향(기존 $56/$65/$72B)</li>
-        <li>DRAM: 2026-28E 합산 capex <b>~$368B</b>, greenfield(Micron ID1/2 등) 중심. DRAM WSPM 2028년말 ~2.76M(+829k vs 1Q26)</li>
-        <li>NAND: near-term 전환(conversion) 중심, greenfield는 2H28+. 합산 capex ~$85B(2026-28E), WSPM ~1.44M(+155k vs 1Q26)</li>
-        <li>구조적 동인: GAA·backside power·high-layer 3D NAND·advanced packaging 등 복잡도 상승 → wafer 물량 flat이어도 장비 수요 증가. 선호: KLAC·AMAT·LRCX(대형), MKSI(smid)</li>
-      </ul>
-
-      <div class="chart-card">
-        <div class="ct">Wafer Fab Equipment (WFE) Spending ($B)</div>
-        <svg viewBox="0 0 880 300" width="100%" role="img" aria-label="WFE 추이">
-          <line x1="70" y1="260" x2="850" y2="260" stroke="#cfd6e0"/>
-          <g text-anchor="middle" font-size="12" fill="#525866">
-            <!-- max 237 -> 220px @ base y260 -->
-            <rect x="110" y="154" width="80" height="106" fill="#2e4a6b"/><text x="150" y="280">2024</text><text x="150" y="146" font-size="10.5" fill="#0a2240" font-weight="700">~$114</text>
-            <rect x="260" y="145" width="80" height="115" fill="#2e4a6b"/><text x="300" y="280">2025</text><text x="300" y="137" font-size="10.5" fill="#0a2240" font-weight="700">$124</text><text x="300" y="123" font-size="9.5" fill="#9aa3b2">+11%</text>
-            <rect x="410" y="113" width="80" height="147" fill="#0a2240"/><text x="450" y="280">2026E</text><text x="450" y="105" font-size="10.5" fill="#0a2240" font-weight="700">$159</text><text x="450" y="91" font-size="9.5" fill="#5c1a26" font-weight="700">+28%</text>
-            <rect x="560" y="70"  width="80" height="190" fill="#0a2240"/><text x="600" y="280">2027E</text><text x="600" y="62" font-size="10.5" fill="#0a2240" font-weight="700">$205</text><text x="600" y="48" font-size="9.5" fill="#5c1a26" font-weight="700">+29%</text>
-            <rect x="710" y="40"  width="80" height="220" fill="#0a2240"/><text x="750" y="280">2028E</text><text x="750" y="32" font-size="10.5" fill="#0a2240" font-weight="700">$237</text><text x="750" y="18" font-size="9.5" fill="#9aa3b2">+16%</text>
-          </g>
-        </svg>
-        <div class="chart-src">Source: Gartner. wafer bonder 및 기타 wafer-level packaging 장비 제외</div>
-      </div>
-
-      <!-- 6 -->
-      <h3 class="sec" id="s6"><span class="n">6</span>PC/서버 CPU — AI 추론이 traditional compute 수요 견인</h3>
-      <ul class="pts">
-        <li>PC 출하 <b>-9% Y/Y (2026)</b>, 서버 출하 <b>+25~30%</b> 전망. 메모리 가격 상승이 1H 선수요(price hike 전 재고 축적)를 유발, 2H는 below-seasonal</li>
-        <li>서버 CPU는 2026~27 강세 — agentic 추론이 traditional compute(스토리지·워크로드 orchestration) 수요 견인. AMD는 2030 서버 CPU TAM <b>$120B+</b> 제시(2025-2030 ~35% CAGR, 보수적일 가능성)</li>
-        <li>AMD는 EPYC Gen 5(Turin, mid-2Q26 N2 램프)로 INTC 대비 서버 CPU 경쟁우위 유지. INTC는 18A 램프·pricing으로 점유율 방어 일부</li>
-      </ul>
-      <div class="tbl-wrap">
-      <table class="tbl">
-        <thead><tr><th>x86 CPU 매출 점유율 (2026, 1Q 기준)</th><th>AMD</th><th>Intel</th></tr></thead>
-        <tbody>
-          <tr><td>서버 CPU</td><td class="num buy">44%</td><td class="num">56%</td></tr>
-          <tr><td>클라이언트/PC CPU</td><td class="num buy">31%</td><td class="num">69%</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <div class="chart-src">Source: IDC</div>
-
-      <!-- 7 -->
-      <h3 class="sec" id="s7"><span class="n">7</span>Analog/MCU & 스마트폰/컨슈머</h3>
-      <ul class="pts">
-        <li><b>Analog/MCU</b>: 회복 확산, pricing power 행사. 3Q 가이던스는 constructive하나 "run-rate normalization" 단계 — 본격 restocking은 아직. 산업·A&D·auto content가 동인(EV, ADAS, zonal 아키텍처, Ethernet, radar/BMS 등)</li>
-        <li>주문 quality 개선(backlog 확장, book-to-bill 개선, lead time firming)이나 아직 full restocking cycle은 아님. pricing은 cost recovery 성격</li>
-        <li><b>스마트폰/컨슈머</b>: <b>memory-driven BOM inflation</b>이 2H 핵심 overhang. 스마트폰 출하 <b>-11% Y/Y (2026)</b>. low-/mid-end Android가 가장 취약</li>
-        <li>2Q/3Q는 broadly in-line(프리미엄/iPhone sell-through 견조)이나 commentary는 cautious. Apple 관련은 AVGO가 content·share 확장 수혜(10년+ 커스텀 ASIC 관계, 2031년까지 기술 협약)</li>
-        <li>Auto/Industrial: 산업 주도 회복, lean 재고. S&P Mobility는 2026 글로벌 경상용차 생산 -1.8~2.4% 전망 — semi content 증가가 상쇄. 선호 TXN·MCHP·ADI</li>
-      </ul>
-
-      <!-- 8 -->
-      <h3 class="sec" id="s8"><span class="n">8</span>EDA/IP — debate가 "AI가 EDA를 disrupt?" → "AI가 얼마나 TAM을 확대?"로 이동</h3>
-      <ul class="pts">
-        <li>칩·시스템 복잡도 상승, AI accelerator/커스텀 ASIC 활동, 3DIC/chiplet 채택, connectivity/memory IP 수요가 fundamentals 견인</li>
-        <li>AI는 EDA 모델에 net positive — agentic 워크플로가 addressable market 확대, verification/signoff 툴 소비 증가, 엔지니어링 리소스 curve 관리</li>
-        <li>IP는 하이퍼스케일러의 커스텀 실리콘/COT 확대로 성장·수익화 lever 부상(richer fee·royalty). multi-physics/3DIC·physical-AI 워크플로도 성장 vector</li>
-        <li>EDA(SNPS·CDNS) 매출 성장 CAGR <b>10~15%</b> 전망. 종합적으로 constructive commentary·solid 가이던스 예상</li>
-      </ul>
-
-      <!-- 9 -->
-      <h3 class="sec" id="s9"><span class="n">9</span>밸류에이션 & 실적 추정</h3>
-      <ul class="pts">
-        <li>밸류에이션은 절대적으로 "cheap"은 아니나, 이익 성장 궤적 대비 defensible하며 역사적 cycle peak 수준은 아님</li>
-        <li>업종 장기 아웃퍼폼 지속: SOX 1년 <b>+131%</b>, Semicap +132%, EDA +3% (S&P500 +20%, NASDAQ +26%)</li>
-        <li>M&A: semi/semicap deal volume ~$47B(2025), ~$30B(2024). 2026 신규: TXN/Silicon Labs $7.2B, SiTime/Renesas timing $3.0B, Infineon/ams-OSRAM 센서 $0.7B, IonQ/SkyWater $1.7B 등 — 통합 지속이 밸류에이션 지지</li>
-      </ul>
-      <div class="tbl-wrap">
-      <table class="tbl">
-        <thead><tr><th>Ticker</th><th>Rating</th><th>2Q26E 매출 ($M)</th><th>Cons.</th><th>Δ%</th><th>P/E (C26E)</th></tr></thead>
-        <tbody>
-          <tr><td>NVDA</td><td class="buy">OW</td><td class="num">92,067</td><td class="num">91,614</td><td class="num">+0.5%</td><td class="num">23.1x</td></tr>
-          <tr><td>AVGO</td><td class="buy">OW</td><td class="num">29,448</td><td class="num">29,386</td><td class="num">+0.2%</td><td class="num">28.7x</td></tr>
-          <tr><td>INTC</td><td class="sell">UW</td><td class="num">14,361</td><td class="num">14,390</td><td class="num">-0.2%</td><td class="num">99.0x</td></tr>
-          <tr><td>AMD</td><td>N</td><td class="num">11,266</td><td class="num">11,279</td><td class="num">-0.1%</td><td class="num">72.0x</td></tr>
-          <tr><td>AMAT</td><td class="buy">OW</td><td class="num">8,950</td><td class="num">9,004</td><td class="num">-0.6%</td><td class="num">44.4x</td></tr>
-          <tr><td>LRCX</td><td class="buy">OW</td><td class="num">6,600</td><td class="num">6,659</td><td class="num">-0.9%</td><td class="num">50.5x</td></tr>
-          <tr><td>TXN</td><td class="buy">OW</td><td class="num">5,200</td><td class="num">5,211</td><td class="num">-0.2%</td><td class="num">38.1x</td></tr>
-          <tr><td>ADI</td><td class="buy">OW</td><td class="num">3,914</td><td class="num">3,914</td><td class="num">0.0%</td><td class="num">29.4x</td></tr>
-          <tr><td>KLAC</td><td class="buy">OW</td><td class="num">3,581</td><td class="num">3,602</td><td class="num">-0.6%</td><td class="num">53.5x</td></tr>
-          <tr><td>NXPI</td><td>N</td><td class="num">3,450</td><td class="num">3,455</td><td class="num">-0.2%</td><td class="num">19.7x</td></tr>
-          <tr><td>MRVL</td><td class="buy">OW</td><td class="num">2,716</td><td class="num">2,704</td><td class="num">+0.5%</td><td class="num">61.0x</td></tr>
-          <tr><td>SNPS</td><td class="buy">OW</td><td class="num">2,435</td><td class="num">2,439</td><td class="num">-0.2%</td><td class="num">28.9x</td></tr>
-          <tr><td>MCHP</td><td class="buy">OW</td><td class="num">1,456</td><td class="num">1,457</td><td class="num">-0.1%</td><td class="num">30.5x</td></tr>
-          <tr><td>CDNS</td><td class="buy">OW</td><td class="num">1,574</td><td class="num">1,574</td><td class="num">0.0%</td><td class="num">47.5x</td></tr>
-          <tr><td>MU*</td><td class="buy">OW</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">9.8x</td></tr>
-          <tr><td>ALAB</td><td class="buy">OW</td><td class="num">360</td><td class="num">361</td><td class="num">-0.3%</td><td class="num">140.1x</td></tr>
-          <tr><td>MKSI</td><td class="buy">OW</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">30.2x</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <div class="chart-src">Source: Bloomberg Finance L.P. · 매출/EPS는 3월 분기 보고 예정 종목 대상. *MU는 회계연도 상이로 별도 추정. Pricing 7/9/2026 기준</div>
-
-      <!-- Risk -->
-      <h3 class="sec"><span class="n">!</span>리스크 & 모니터링 포인트</h3>
+      <h3 class="sec"><span class="n">!</span>리스크 &amp; 모니터링 포인트</h3>
       <div class="risk-box">
-        <h4>모니터링 중인 주요 리스크</h4>
+        <h4>등급·목표주가 달성을 저해할 수 있는 주요 리스크</h4>
         <ul>
-          <li><b>메모리發 컨슈머 수요 파괴:</b> memory-driven BOM inflation 심화 시 PC/스마트폰 수요 destruction 확대 가능</li>
-          <li><b>AI capex 지속성:</b> CY26 이후 AI capex 지속성과 하이퍼스케일러 수익화(monetization) 속도</li>
-          <li><b>China WFE & 수출통제:</b> China WFE 정상화 및 관련 export-control 동학</li>
-          <li><b>매크로:</b> 광범위한 매크로 환경 변화</li>
+          <li><b>LITE:</b> EML 램프 지연, Telecom 약세, 모듈 사업 부진</li>
+          <li><b>ALAB:</b> AI 투자 둔화, 포트폴리오 전반의 신규 진입자 등장, 신기술 채택 속도 지연 — 다만 3개의 scale-up 프로토콜이 공존하는 시나리오도 가능</li>
+          <li><b>CRDO:</b> (상방) AEC 채택 가속, IP·칩렛 매출 확대, AI 어플리케이션의 AEC 채택 / (하방) AEC·IP 매출의 lumpy한 성격, ACC·AOC 채택 확대, 서버 지출 지연</li>
+          <li><b>ALGM:</b> 경기 순환적 자동차 시장에 대한 높은 익스포저 — 다운턴 시 직접 타격. DC·로보틱스는 신규 성장 동력</li>
+          <li><b>PENG:</b> (상방) 메모리 가격 개선, 엔터프라이즈 AI 채택 가속</li>
+          <li><b>KLAC:</b> 리딩엣지 투자의 유의미한 둔화, 리딩엣지 경쟁 심화</li>
+          <li><b>MU:</b> 플래시 수요 둔화·공급 증가에 따른 급격한 가격 하락, 3D NAND / 20nm DRAM 전환 실행 부진에 따른 비트당 원가 절감 지연</li>
         </ul>
         <h4 style="margin-top:14px;">모니터링 포인트</h4>
         <ul>
-          <li>공급망(leading-edge foundry·HBM·advanced packaging·전력) keep-pace 여부 — 이번 실적 시즌 핵심 debate</li>
-          <li>CY27+ bookings 및 supply readiness 관련 incremental 데이터포인트</li>
-          <li>신규 SCAs/LTAs 구조·조건(선수금·take-or-pay)과 cyclicality 완화 효과</li>
-          <li>반도체 balance sheet 재고 ~130일(5년 평균 122일 상회) — 재고 정상화 진행 확인</li>
+          <li><b>실적 시즌 코멘트</b>: 웨이퍼 할당, 메모리 조달 능력, 장기 TAM 상향 여부 — beat &amp; raise보다 주가 영향이 큼</li>
+          <li><b>Semi Cap</b>: 2027년 WFE 상향 여부. 상향 실패 시 종목군 전반 하방 편향</li>
+          <li><b>Analog</b>: PMI의 50 상회 지속 여부와 EPS 리비전의 주가 따라잡기 속도. positioning이 max-long인 만큼 실수 여지 제한</li>
+          <li><b>ALGM</b>: DC 랙 컨텐츠 확대($150 → ~$425)와 800V 전환 진행 속도, 중국 NEV 내수·수출 성장률</li>
+          <li><b>PENG</b>: CXL 실매출 발생 시점, Celestial 협업의 T4 접점 구체화, 세그먼트 GM 추이</li>
+          <li><b>Optical</b>: EML 수급 불균형(&gt;30%) 해소 속도, OCS 램프, CPO HVM 시점 논쟁</li>
+          <li><b>유통 채널</b>: Analog·Discretes·Memory·Passives 전반에서 리드타임과 가격이 상승 추세, Interconnect는 리드타임 안정 속 가격 상승</li>
         </ul>
       </div>
 
