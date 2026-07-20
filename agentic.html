@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Global eCommerce — Agentic Era</title>
+<style>
+  :root{
+    --brand:#00264d;
+    --brand-deep:#001a35;
+    --accent:#0077c8;
+    --accent2:#0a5c9e;
+    --paper:#f4f6f9;
+    --card:#ffffff;
+    --ink:#1b1e24;
+    --ink-soft:#525866;
+    --line:#dde3ec;
+    --buy:#1f7a4d;
+    --bear:#c0392b;
+    --bull:#1f6fb2;
+    --warn:#8a4b15;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Helvetica Neue','Pretendard','Noto Sans KR',Arial,sans-serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  .topbar{
+    background:var(--brand-deep);
+    color:#fff;padding:14px 6vw;
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;
+    border-bottom:3px solid var(--accent);
+    position:sticky;top:0;z-index:50;
+  }
+  .topbar .logo{font-weight:700;font-size:18px;letter-spacing:0.5px;}
+  .topbar .logo span{color:var(--accent);}
+  .topbar nav{display:flex;gap:8px;flex-wrap:wrap;}
+  .topbar nav a{
+    color:#cfd8e6;text-decoration:none;font-size:12.5px;
+    padding:6px 12px;border:1px solid rgba(255,255,255,0.2);border-radius:20px;
+    transition:all .15s;
+  }
+  .topbar nav a:hover{background:var(--accent);color:#fff;border-color:var(--accent);}
+
+  .wrap{max-width:960px;margin:0 auto;padding:40px 6vw 90px;}
+
+  .intro{border-left:4px solid var(--accent);padding:8px 0 8px 20px;margin-bottom:48px;}
+  .intro .eyebrow{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent2);font-weight:700;}
+  .intro h1{font-size:26px;margin:8px 0 6px;color:var(--brand);}
+
+  .report{margin-bottom:64px;scroll-margin-top:70px;}
+  .report-head{
+    background:linear-gradient(135deg,var(--brand) 0%, var(--brand-deep) 100%);
+    color:#fff;border-radius:10px 10px 0 0;padding:28px 30px;
+  }
+  .report-head .tag{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#9fb4d4;font-weight:700;}
+  .report-head h2{margin:8px 0 14px;font-size:23px;line-height:1.35;}
+  .report-head .lede{
+    font-family:'Georgia',serif;font-size:15.5px;color:#e3ebf6;
+    border-top:1px solid rgba(255,255,255,0.16);padding-top:14px;margin:0;
+  }
+  .report-body{
+    background:var(--card);border:1px solid var(--line);border-top:none;
+    border-radius:0 0 10px 10px;padding:30px;
+  }
+
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px;}
+  .chip{border:1px solid var(--line);border-radius:8px;padding:10px 16px;background:#fafbfd;flex:1;min-width:130px;}
+  .chip .k{font-size:10.5px;letter-spacing:0.5px;text-transform:uppercase;color:var(--ink-soft);}
+  .chip .v{font-size:19px;font-weight:700;color:var(--brand);margin-top:2px;}
+  .chip .v.buy{color:var(--buy);}
+  .chip .v.sell{color:var(--bear);}
+  .chip .s{font-size:11px;color:var(--ink-soft);}
+
+  h3.sec{
+    font-size:17px;color:var(--brand);margin:30px 0 12px;
+    padding-bottom:8px;border-bottom:1.5px solid var(--line);
+    display:flex;align-items:center;gap:10px;scroll-margin-top:80px;
+  }
+  h3.sec .n{
+    background:var(--brand);color:#fff;font-size:12px;font-weight:700;
+    width:24px;height:24px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  ul.pts{margin:0;padding:0;list-style:none;}
+  ul.pts li{position:relative;padding:7px 0 7px 20px;font-size:14.5px;border-bottom:1px dashed var(--line);}
+  ul.pts li:last-child{border-bottom:none;}
+  ul.pts li::before{content:"—";position:absolute;left:0;color:var(--accent2);font-weight:700;}
+  ul.pts b{color:var(--brand);}
+
+  table.tbl{width:100%;border-collapse:collapse;font-size:13px;margin:6px 0 4px;}
+  table.tbl th{background:var(--brand);color:#fff;text-align:left;padding:8px 10px;font-weight:600;}
+  table.tbl td{padding:7px 10px;border-bottom:1px solid var(--line);}
+  table.tbl tr:nth-child(even) td{background:#f7f9fc;}
+  table.tbl td.num{text-align:right;font-variant-numeric:tabular-nums;}
+  table.tbl th.num{text-align:right;}
+  table.tbl td.buy{color:var(--buy);font-weight:700;}
+  table.tbl td.neg{color:var(--bear);}
+  table.tbl tr.grp td{background:#eef2f8;font-weight:700;color:var(--brand);}
+  .tbl-wrap{overflow-x:auto;}
+  .tbl-note{font-size:10.5px;color:#9aa3b2;margin-top:6px;}
+
+  .chart-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:22px 22px 14px;margin:14px 0;}
+  .chart-card .ct{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:12px;}
+  .chart-src{font-size:10.5px;color:#9aa3b2;margin-top:8px;}
+  .legend{display:flex;gap:18px;font-size:11.5px;color:var(--ink-soft);margin-bottom:8px;flex-wrap:wrap;}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .legend i{width:11px;height:11px;border-radius:2px;display:inline-block;}
+
+  .bbgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0;}
+  @media(max-width:680px){.bbgrid{grid-template-columns:1fr;}}
+  .bb{border-radius:8px;padding:16px;border:1px solid var(--line);background:#fafbfd;}
+  .bb.bull{border-top:3px solid var(--bull);}
+  .bb.base{border-top:3px solid var(--ink-soft);}
+  .bb.bear{border-top:3px solid var(--bear);}
+  .bb .lbl{font-size:11px;letter-spacing:0.6px;text-transform:uppercase;font-weight:700;color:var(--ink-soft);}
+  .bb .px{font-size:22px;font-weight:700;color:var(--brand);margin:4px 0;}
+  .bb .ret{font-size:13px;font-weight:600;}
+  .bb.bull .ret{color:var(--bull);}
+  .bb.bear .ret{color:var(--bear);}
+  .bb ul{margin:8px 0 0;padding-left:16px;font-size:12px;color:var(--ink-soft);}
+  .bb li{margin-bottom:4px;}
+
+  .callout{background:#fbf6ec;border:1px solid #e8dcc3;border-radius:8px;padding:14px 18px;font-size:13px;color:var(--ink-soft);margin-top:14px;}
+  .callout .t{font-size:10.5px;font-weight:700;letter-spacing:0.6px;color:var(--warn);text-transform:uppercase;display:block;margin-bottom:5px;}
+
+  .risk-box{background:var(--brand);color:#dde6f3;border-radius:8px;padding:22px 24px;margin-top:14px;}
+  .risk-box h4{margin:0 0 10px;color:#fff;font-size:14.5px;}
+  .risk-box ul{margin:0;padding-left:18px;}
+  .risk-box li{margin-bottom:8px;font-size:13px;}
+  .risk-box li b{color:#fff;}
+
+  .spectrum{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:14px 0 6px;}
+  @media(max-width:760px){.spectrum{grid-template-columns:1fr;}}
+  .sp{border:1px solid var(--line);border-radius:8px;padding:14px 13px;background:#fafbfd;border-top:3px solid var(--accent);}
+  .sp .st{font-size:12px;font-weight:700;color:var(--brand);margin-bottom:6px;line-height:1.3;}
+  .sp .sd{font-size:11.5px;color:var(--ink-soft);}
+  .sp .sd b{color:var(--ink);font-weight:600;}
+  .sp-axis{display:flex;justify-content:space-between;font-size:10.5px;letter-spacing:0.5px;color:var(--accent2);font-weight:700;text-transform:uppercase;margin-top:4px;}
+
+  footer{border-top:1px solid var(--line);margin-top:50px;padding-top:20px;font-size:11px;color:#9aa3b2;line-height:1.6;}
+
+  @media(max-width:560px){
+    .intro h1{font-size:21px;}
+    .report-head h2{font-size:19px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">Research<span>·</span>Digest</div>
+  <nav>
+    <a href="#s1">Spectrum</a>
+    <a href="#s2">Sizing</a>
+    <a href="#s3">Evidence</a>
+    <a href="#s4">Economics</a>
+    <a href="#s5">Scorecard</a>
+    <a href="#s6">Valuation</a>
+    <a href="#s7">Korea</a>
+    <a href="#s8">Risks</a>
+  </nav>
+</div>
+
+<div class="wrap">
+
+  <div class="intro">
+    <div class="eyebrow">19 July 2026</div>
+    <h1>Agentic Era: 에이전틱 커머스가 여는 글로벌 eCommerce의 다음 사이클</h1>
+  </div>
+
+  <section class="report" id="rpt1">
+
+    <div class="report-head">
+      <div class="tag">Global eCommerce / Internet &amp; Retail</div>
+      <h2>에이전틱 커머스, 온라인 침투율 재가속의 촉매 — 2030년 US$7조 시장, 디레이팅된 플랫폼주에 비대칭적 기회</h2>
+      <p class="lede">시장은 에이전틱 AI를 eCommerce의 파괴 요인으로 프라이싱하고 있으나, 채택률·incrementality 프레임워크는 오히려 스케일 플랫폼의 수혜를 가리킨다.</p>
+    </div>
+
+    <div class="report-body">
+
+      <div class="chips">
+        <div class="chip"><div class="k">2030E Market Size</div><div class="v">US$7.0tn</div><div class="s">2025 대비 +US$2.5tn</div></div>
+        <div class="chip"><div class="k">'25-'30E GMV CAGR</div><div class="v">+9%</div><div class="s">↑ from +7% ('21-'25)</div></div>
+        <div class="chip"><div class="k">Agent-Influenced GMV</div><div class="v">&gt;20%</div><div class="s">5년 내, base case</div></div>
+        <div class="chip"><div class="k">TAM Uplift</div><div class="v">~6%</div><div class="s">bear ~1.5% / bull ~15%</div></div>
+        <div class="chip"><div class="k">Sector EV/Revenue</div><div class="v">2.4x</div><div class="s">과거 평균 3.7x, -1SD</div></div>
+      </div>
+
+      <!-- =============== 1 =============== -->
+      <h3 class="sec" id="s1"><span class="n">1</span>에이전틱 커머스 스펙트럼 — 무엇이 달라지는가</h3>
+      <ul class="pts">
+        <li>Agentic Commerce는 LLM 기반 자율 시스템이 사용자를 대신해 <b>탐색·비교·의사결정·결제·사후관리</b>까지 수행하는 쇼핑 방식. 질의응답형 LLM 인터페이스에서 한 단계 진화한 개념</li>
+        <li>지난 30년간 eCommerce는 모바일 접속, 마켓플레이스 공급 확대, 물류망 고도화, 디지털 결제로 마찰(friction)을 줄여왔으며, 에이전틱은 <b>키워드 검색·속성 비교·리뷰 판단·구매 결정</b>이라는 그동안 소비자 노력이 필요했던 영역을 자동화하는 다음 단계</li>
+        <li>"men's running shoes" 검색이 <b>"사이즈 10, 쿠셔닝 강한 장거리용, $75-100 세일가, 리뷰에서 착화감이 언급된 러닝화"</b>로 대체되는 것이 에이전틱 여정의 출발점</li>
+        <li>마찰 감소 → 전환율(conversion) 상승 → GMV 및 온라인 침투율 상승으로 연결되는 구조. 리포트의 핵심 논리 체인</li>
+        <li>자율성 스펙트럼은 5단계로 구분되며, 소비자 신뢰와 디지털 인프라 요구 수준은 오른쪽으로 갈수록 높아지되 <b>TAM에 대한 incrementality도 함께 상승</b></li>
+      </ul>
+
+      <div class="spectrum">
+        <div class="sp"><div class="st">Recurring Subscription</div><div class="sd">엄격한 룰 기반. 소비자가 모든 가이드라인 설정<br><b>예) 정기배송 생필품</b></div></div>
+        <div class="sp"><div class="st">Assisted Search</div><div class="sd">에이전트가 조언·제안. 소비자가 쿼리·후속 구매단계 주도<br><b>예) 니즈 맞춤 러닝화, 기기 호환 부품</b></div></div>
+        <div class="sp"><div class="st">Assembled Baskets</div><div class="sd">에이전트가 구매 직전 장바구니 구성, 소비자가 검토·승인·실행<br><b>예) 행사용 코디, 디너파티 식재료</b></div></div>
+        <div class="sp"><div class="st">Proactive Purchase</div><div class="sd">에이전트가 니즈를 예측하고 구매 실행. 소비자는 목표·예산·범위만 설정<br><b>예) 연례 생일선물, 선호 브랜드 세일 시 의류 교체</b></div></div>
+        <div class="sp"><div class="st">Autonomous Agent</div><div class="sd">에이전트 간 가격·물류·조건 협상<br><b>예) 기업 사무용품 대량조달, C2C 중고거래</b></div></div>
+      </div>
+      <div class="sp-axis"><span>◀ Agent-Influenced</span><span>Agent-Executed</span><span>Autonomous ▶</span></div>
+
+      <!-- =============== 2 =============== -->
+      <h3 class="sec" id="s2"><span class="n">2</span>시장 사이징 — 2030년 US$7조, +9% CAGR로 재가속</h3>
+      <ul class="pts">
+        <li>2025년 글로벌 eCommerce는 전체 소매판매(자동차·외식·서비스 제외)의 <b>22%</b>. 전년비 +80bps 상승으로 '24년 +100bps 대비 소폭 둔화했으나 '22·'23년 각 +50bps는 상회</li>
+        <li>2019년(팬데믹 이전) 침투율 14% 대비 +8pp, 연평균 +130bps의 침투율 상승</li>
+        <li>2030년 침투율 <b>27%</b>, 시장규모 <b>US$7.0조</b> 전망. 2025년 대비 <b>US$2.5조</b>의 증분 GMV 기회</li>
+        <li>성장률 경로: '18-'21 +20% CAGR → '21-'25 <b>+7%</b> → '25-'30E <b>+9%</b>. 에이전틱 및 여타 GenAI 이니셔티브 확산이 <b>+2pp의 가속</b>을 설명</li>
+        <li>침투율이 낮았던 카테고리(식품·음료 등)의 온라인화가 증분 성장에 기여하는 구조</li>
+      </ul>
+
+      <div class="chart-card">
+        <div class="ct">글로벌 eCommerce 침투율 추이 및 전망 (% of retail sales, 자동차·외식·서비스 제외)</div>
+        <svg viewBox="0 0 880 330" width="100%">
+          <line x1="90" y1="280" x2="850" y2="280" stroke="#cfd6e0"/>
+          <line x1="90" y1="40" x2="90" y2="280" stroke="#cfd6e0"/>
+          <g stroke="#eef1f6">
+            <line x1="90" y1="240" x2="850" y2="240"/>
+            <line x1="90" y1="200" x2="850" y2="200"/>
+            <line x1="90" y1="160" x2="850" y2="160"/>
+            <line x1="90" y1="120" x2="850" y2="120"/>
+            <line x1="90" y1="80" x2="850" y2="80"/>
+            <line x1="90" y1="40" x2="850" y2="40"/>
+          </g>
+          <g font-size="11" fill="#8b93a3" text-anchor="end">
+            <text x="82" y="284">0%</text>
+            <text x="82" y="244">5%</text>
+            <text x="82" y="204">10%</text>
+            <text x="82" y="164">15%</text>
+            <text x="82" y="124">20%</text>
+            <text x="82" y="84">25%</text>
+            <text x="82" y="44">30%</text>
+          </g>
+
+          <rect x="90" y="40" width="187.5" height="240" fill="#0077c8" opacity="0.05"/>
+          <rect x="277.5" y="40" width="250" height="240" fill="#00264d" opacity="0.04"/>
+          <rect x="527.5" y="40" width="322.5" height="240" fill="#0077c8" opacity="0.09"/>
+          <text x="183" y="58" font-size="11" fill="#0a5c9e" text-anchor="middle" font-weight="700">'18-'21 +20% CAGR</text>
+          <text x="402" y="58" font-size="11" fill="#0a5c9e" text-anchor="middle" font-weight="700">'21-'25 +7% CAGR</text>
+          <text x="688" y="58" font-size="11" fill="#00264d" text-anchor="middle" font-weight="700">'25-'30E +9% CAGR</text>
+
+          <polyline fill="none" stroke="#00264d" stroke-width="2.5"
+            points="90,176 152.5,168 215,128 277.5,128 340,120 402.5,120 465,112 527.5,104 590,96 652.5,88 715,80 777.5,72 840,64"/>
+          <g fill="#0077c8">
+            <circle cx="90" cy="176" r="3.5"/><circle cx="152.5" cy="168" r="3.5"/><circle cx="215" cy="128" r="3.5"/>
+            <circle cx="277.5" cy="128" r="3.5"/><circle cx="340" cy="120" r="3.5"/><circle cx="402.5" cy="120" r="3.5"/>
+            <circle cx="465" cy="112" r="3.5"/><circle cx="527.5" cy="104" r="4.5" fill="#00264d"/><circle cx="590" cy="96" r="3.5"/>
+            <circle cx="652.5" cy="88" r="3.5"/><circle cx="715" cy="80" r="3.5"/><circle cx="777.5" cy="72" r="3.5"/>
+            <circle cx="840" cy="64" r="4.5" fill="#00264d"/>
+          </g>
+          <g font-size="10.5" fill="#00264d" text-anchor="middle" font-weight="700">
+            <text x="90" y="192">13%</text>
+            <text x="215" y="118">19%</text>
+            <text x="527.5" y="94">22%</text>
+            <text x="840" y="54">27%</text>
+          </g>
+          <g font-size="10.5" fill="#8b93a3" text-anchor="middle">
+            <text x="90" y="298">2018</text><text x="215" y="298">2020</text><text x="340" y="298">2022</text>
+            <text x="465" y="298">2024</text><text x="527.5" y="298" fill="#00264d" font-weight="700">2025</text>
+            <text x="652.5" y="298">2027</text><text x="777.5" y="298">2029</text><text x="840" y="298" fill="#00264d" font-weight="700">2030E</text>
+          </g>
+          <text x="527.5" y="318" font-size="11" fill="#525866" text-anchor="middle">2025 US$4.5조 규모 → 2030E US$7.0조 (증분 US$2.5조)</text>
+        </svg>
+        <div class="chart-src">Source: Euromonitor, National Data Sources</div>
+      </div>
+
+      <h3 class="sec"><span class="n">3</span>Uptake &amp; Incrementality — 5년 후 GMV의 20% 이상이 에이전트 영향권</h3>
+      <ul class="pts">
+        <li>Base case 기준 5년 내 <b>AI 쇼핑 침투율 65%</b> × <b>쇼퍼 GMV 중 AI 영향 비중 33%</b> = <b>Agent-Influenced GMV 22%</b></li>
+        <li>여기에 실행 attach rate 35% 적용 시 <b>Agent-Executed GMV 8%</b>(장바구니 자동구성, 가격 알림 트리거 등), 자율 attach rate 25% 적용 시 <b>Autonomous GMV 2%</b>(에이전트 간 협상)</li>
+        <li>Incrementality는 자율성이 높을수록 상승 — Autonomous 60%, Agent-Executed 40%, Agent-Influenced 20% (base)</li>
+        <li>결과적으로 <b>5년 TAM에 ~6.2% uplift</b>, 연환산 <b>+1.2%p 성장 기여</b>. Bear 1.4% / Bull 14.2% 레인지</li>
+        <li>이 연환산 효과가 '21-'25 대비 <b>+2pp 산업 성장 가속</b> 전망과 정합</li>
+      </ul>
+
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>5년 후 Uptake (% of eCommerce GMV)</th><th class="num">Bear</th><th class="num">Base</th><th class="num">Bull</th></tr></thead>
+        <tbody>
+          <tr><td>AI Shopping Penetration</td><td class="num">40%</td><td class="num">65%</td><td class="num">80%</td></tr>
+          <tr><td>(×) AI-Influenced Share of Shoppers' GMV</td><td class="num">25%</td><td class="num">33%</td><td class="num">40%</td></tr>
+          <tr class="grp"><td>Agent-Influenced GMV</td><td class="num">10%</td><td class="num">22%</td><td class="num">32%</td></tr>
+          <tr><td>(×) Execution Attach Rate</td><td class="num">20%</td><td class="num">35%</td><td class="num">50%</td></tr>
+          <tr class="grp"><td>Agent-Executed GMV</td><td class="num">2%</td><td class="num">8%</td><td class="num">16%</td></tr>
+          <tr><td>(×) Autonomous Attach Rate</td><td class="num">15%</td><td class="num">25%</td><td class="num">30%</td></tr>
+          <tr class="grp"><td>Autonomous GMV</td><td class="num">0.3%</td><td class="num">2%</td><td class="num">5%</td></tr>
+          <tr><td>Incrementality — Autonomous</td><td class="num">40%</td><td class="num">60%</td><td class="num">80%</td></tr>
+          <tr><td>Incrementality — Agent-Executed (non-Auto)</td><td class="num">30%</td><td class="num">40%</td><td class="num">50%</td></tr>
+          <tr><td>Incrementality — Agent-Influenced (non-Exec)</td><td class="num">10%</td><td class="num">20%</td><td class="num">30%</td></tr>
+          <tr class="grp"><td>Incrementality to 5-Year TAM</td><td class="num">1.4%</td><td class="num">6.2%</td><td class="num">14.2%</td></tr>
+          <tr class="grp"><td>Annual Growth Impact</td><td class="num">0.3%</td><td class="num">1.2%</td><td class="num">2.7%</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="chart-card">
+        <div class="ct">에이전틱 GMV 침투 시나리오 및 TAM Incrementality (5-year, % of eCommerce GMV)</div>
+        <div class="legend">
+          <span><i style="background:#b9c6d8"></i>Bear</span>
+          <span><i style="background:#0077c8"></i>Base</span>
+          <span><i style="background:#00264d"></i>Bull</span>
+        </div>
+        <svg viewBox="0 0 880 320" width="100%">
+          <line x1="60" y1="270" x2="860" y2="270" stroke="#cfd6e0"/>
+          <g stroke="#eef1f6">
+            <line x1="60" y1="210" x2="860" y2="210"/>
+            <line x1="60" y1="150" x2="860" y2="150"/>
+            <line x1="60" y1="90" x2="860" y2="90"/>
+          </g>
+          <g font-size="11" fill="#8b93a3" text-anchor="end">
+            <text x="52" y="274">0%</text><text x="52" y="214">10%</text><text x="52" y="154">20%</text><text x="52" y="94">30%</text>
+          </g>
+
+          <!-- Group 1: Agent-Influenced -->
+          <rect x="117" y="210" width="40" height="60" fill="#b9c6d8"/>
+          <rect x="159" y="138" width="40" height="132" fill="#0077c8"/>
+          <rect x="201" y="78" width="40" height="192" fill="#00264d"/>
+          <text x="137" y="203" font-size="11" fill="#525866" text-anchor="middle">10%</text>
+          <text x="179" y="131" font-size="11.5" fill="#0077c8" text-anchor="middle" font-weight="700">22%</text>
+          <text x="221" y="71" font-size="11" fill="#00264d" text-anchor="middle">32%</text>
+          <text x="179" y="290" font-size="12" fill="#1b1e24" text-anchor="middle" font-weight="600">Agent-Influenced</text>
+
+          <!-- Group 2: Agent-Executed -->
+          <rect x="317" y="258" width="40" height="12" fill="#b9c6d8"/>
+          <rect x="359" y="222" width="40" height="48" fill="#0077c8"/>
+          <rect x="401" y="174" width="40" height="96" fill="#00264d"/>
+          <text x="337" y="251" font-size="11" fill="#525866" text-anchor="middle">2%</text>
+          <text x="379" y="215" font-size="11.5" fill="#0077c8" text-anchor="middle" font-weight="700">8%</text>
+          <text x="421" y="167" font-size="11" fill="#00264d" text-anchor="middle">16%</text>
+          <text x="379" y="290" font-size="12" fill="#1b1e24" text-anchor="middle" font-weight="600">Agent-Executed</text>
+
+          <!-- Group 3: Autonomous -->
+          <rect x="517" y="268" width="40" height="2" fill="#b9c6d8"/>
+          <rect x="559" y="258" width="40" height="12" fill="#0077c8"/>
+          <rect x="601" y="240" width="40" height="30" fill="#00264d"/>
+          <text x="537" y="261" font-size="11" fill="#525866" text-anchor="middle">0.3%</text>
+          <text x="579" y="251" font-size="11.5" fill="#0077c8" text-anchor="middle" font-weight="700">2%</text>
+          <text x="621" y="233" font-size="11" fill="#00264d" text-anchor="middle">5%</text>
+          <text x="579" y="290" font-size="12" fill="#1b1e24" text-anchor="middle" font-weight="600">Autonomous</text>
+
+          <!-- Group 4: TAM incrementality -->
+          <rect x="717" y="262" width="40" height="8" fill="#b9c6d8"/>
+          <rect x="759" y="233" width="40" height="37" fill="#0077c8"/>
+          <rect x="801" y="185" width="40" height="85" fill="#00264d"/>
+          <text x="737" y="255" font-size="11" fill="#525866" text-anchor="middle">1.4%</text>
+          <text x="779" y="226" font-size="11.5" fill="#0077c8" text-anchor="middle" font-weight="700">6.2%</text>
+          <text x="821" y="178" font-size="11" fill="#00264d" text-anchor="middle">14.2%</text>
+          <text x="779" y="290" font-size="12" fill="#1b1e24" text-anchor="middle" font-weight="600">TAM Incrementality</text>
+
+          <line x1="679" y1="60" x2="679" y2="278" stroke="#dde3ec" stroke-dasharray="4 4"/>
+        </svg>
+      </div>
+
+      <!-- =============== 3 =============== -->
+      <h3 class="sec" id="s3"><span class="n">4</span>실증 데이터 — 기업들이 공시하기 시작한 uplift</h3>
+      <ul class="pts">
+        <li>Amazon Rufus(현 Alexa for Shopping) 이용자 <b>3억명 이상</b>, 4Q25 글로벌 GMV의 <b>~2%</b>와 연관. Alibaba Qwen 기반 쇼핑 경험 이용자 <b>~1.4억명</b>(2026년 2월 말 기준). 두 플랫폼 합산 이용자만으로 세계 인구의 MSD% 수준</li>
+        <li>소비자 설문 기준 <b>중국 30%</b>가 최근 1개월 내 AI로 쇼핑, <b>멕시코 24%</b>(P3M, +6pp y/y), <b>브라질 12%</b>(P3M, 전년 수준). 중국에서 AI 쇼핑은 전체 AI 활용 사례 중 중위권</li>
+        <li>미국에서는 범용 LLM의 전체 이용률이 리테일러 전용 툴을 상회하나, <b>에이전틱 구매 전환 비율은 리테일러 전용 툴이 동등 이상</b> — Sparky/Alexa/Target Shopping Assistant의 증분 성장 여지</li>
+        <li>Adobe 데이터 기준 AI 경유 트래픽의 전환율이 비AI 트래픽 대비 <b>~54% 우수</b></li>
+        <li>다만 AI 이용자가 애초에 구매 의도가 높은 집단일 수 있다는 caveat 존재. 그럼에도 탐색·발견 프로세스 개선이라는 펀더멘털 근거는 유효</li>
+      </ul>
+
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Company</th><th>공시된 에이전틱 uplift</th></tr></thead>
+        <tbody>
+          <tr><td><b>Amazon</b></td><td>Rufus 이용 쇼퍼의 구매 완료 확률 <b>60% 높음</b>(3Q25) / Rufus가 연환산 증분 매출 <b>약 US$120억</b> 기여(4Q25)</td></tr>
+          <tr><td><b>Lowe's</b></td><td>Mylow 이용 시 온라인 전환율 2배 이상(3Q25) → <b>미이용 고객의 3배</b>(1Q26)</td></tr>
+          <tr><td><b>Sea</b></td><td>1Q26 AI 툴이 구매 전환 <b>+14%</b> 기여, 고객서비스 건당 비용 <b>y/y -30%</b>, 문의의 ~80%를 챗봇이 처리</td></tr>
+          <tr><td><b>Walmart</b></td><td>Sparky 이용 고객의 AOV가 비이용 고객 대비 <b>약 35% 높음</b>(1QFY27), Sparky 귀속 GMV <b>+150%</b> 성장</td></tr>
+          <tr><td><b>Wayfair</b></td><td>개인화 추천 노출 고객의 저장·장바구니 담기·구매 확률 <b>1/3 높음</b>(3Q25)</td></tr>
+          <tr><td><b>Zalando</b></td><td>매칭 정밀도 개선으로 장바구니 담기 <b>+13%</b>(FY25)</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-src">Source: Company earnings releases &amp; transcripts</div>
+
+      <!-- =============== 4 =============== -->
+      <h3 class="sec" id="s4"><span class="n">5</span>Unit Economics — LLM 비용 대비 증분 contribution profit 2-3배</h3>
+      <ul class="pts">
+        <li>eCommerce 마켓플레이스는 파운데이션 모델을 자체 학습하지 않으므로 대규모 프로젝트성 비용은 제한적. 비용은 대부분 <b>대화 단위의 운영성 토큰 비용</b></li>
+        <li>5-turn 기준 세션당 블렌디드 LLM 비용 <b>~US$0.03</b>, 쿼리·모델 복잡도에 따라 <b>&lt;US$0.01 ~ ~US$0.25</b> 레인지. 단순 쿼리는 저비용 모델, 어려운 쿼리만 대형 모델로 에스컬레이션하는 구조 가정</li>
+        <li>기준 전환율 3.0% 대비 AI 세션 전환율 4~10% 가정. 증분 판매 1건당 LLM 비용 <b>US$0.5~3.4</b> vs 주문 단위 contribution profit <b>US$1.6~8.0</b> → <b>커버리지 2.3~3.2배</b></li>
+        <li>Stress test(비용은 중상단, uplift·AOV는 중간값)에서는 커버리지가 <b>0.5배</b>로 역전 — <b>incrementality가 핵심 변수</b>. LLM 검색이 키워드 검색을 단순 대체하면 비용만 늘고 매출은 늘지 않음</li>
+        <li>리포트는 stress 시나리오를 base 대비 가능성이 낮다고 판단. 경험 개선이 uplift 부진 리스크를 완화하고, 모델 효율화가 시간이 갈수록 비용을 낮추기 때문</li>
+      </ul>
+
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Agentic Commerce Cost-Benefit</th><th class="num">Low</th><th class="num">Mid</th><th class="num">High</th><th class="num">Stress Test</th></tr></thead>
+        <tbody>
+          <tr><td>Cost per AI-engaged Shopping Session</td><td class="num">$0.005</td><td class="num">$0.027</td><td class="num">$0.240</td><td class="num">$0.133</td></tr>
+          <tr><td>Baseline Conversion</td><td class="num">3.0%</td><td class="num">3.0%</td><td class="num">3.0%</td><td class="num">3.0%</td></tr>
+          <tr><td>AI-Engaged Conversion</td><td class="num">4.0%</td><td class="num">5.0%</td><td class="num">10.0%</td><td class="num">5.0%</td></tr>
+          <tr><td>Incremental Conversion Uplift</td><td class="num">1.0%</td><td class="num">2.0%</td><td class="num">7.0%</td><td class="num">2.0%</td></tr>
+          <tr><td>LLM Cost per Incremental Sale</td><td class="num">$0.5</td><td class="num">$1.3</td><td class="num">$3.4</td><td class="num">$6.7</td></tr>
+          <tr><td>Average Order Value</td><td class="num">$20</td><td class="num">$40</td><td class="num">$100</td><td class="num">$40</td></tr>
+          <tr><td>× Contribution Margin</td><td class="num">8%</td><td class="num">8%</td><td class="num">8%</td><td class="num">8%</td></tr>
+          <tr><td>Order-Level Contribution Profit</td><td class="num">$1.6</td><td class="num">$3.2</td><td class="num">$8.0</td><td class="num">$3.2</td></tr>
+          <tr class="grp"><td>Coverage (증분 CP ÷ LLM Cost)</td><td class="num">3.2x</td><td class="num">2.4x</td><td class="num">2.3x</td><td class="num">0.5x</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-src">Source: Dynamic Yield</div>
+
+      <div class="callout"><span class="t">플랫폼 통제권</span>주요 eCommerce 플랫폼들은 LLM 체크아웃에 전면 통합되기보다 <b>자체 온사이트 에이전트</b>와 선별적 discovery 파트너십을 선호하고 있다. MercadoLibre는 쇼핑 여정이 자사 플랫폼에서 시작되는 principality를 강조하며 전체 카탈로그 개방에는 유인이 낮다고 밝혔고, Walmart는 자체 모델을 만들지 않고 하이퍼스케일러 기술을 리테일 경험으로 감싸는 접근을 취한다. Google의 Universal Commerce Protocol(UCP, Shopify·Etsy·Wayfair·Target·Walmart 등 참여)은 폐쇄형 체크아웃이 아닌 개방형 커머스 표준으로, 리테일러가 merchant of record 지위와 재고·가격·풀필먼트 로직 통제권을 유지하는 중간 지대를 제시한다.</div>
+
+      <!-- =============== 5 =============== -->
+      <h3 class="sec" id="s5"><span class="n">6</span>5 I's 프레임워크 &amp; Agentic Commerce Scorecard</h3>
+      <ul class="pts">
+        <li><b>Inventory</b> — 크로스쇼핑·가격비교가 쉬워질수록 독점적이고 가격경쟁력 있는 재고의 중요성 상승</li>
+        <li><b>Infrastructure</b> — 빠르고 저렴한 배송을 위한 물리적 인프라 + 에이전틱 판매를 가능케 하는 디지털 인프라</li>
+        <li><b>Innovation</b> — GPU 기반 ML을 활용한 검색·발견 개선, 셀러 툴, 외부 파트너십 투자</li>
+        <li><b>Incremental Growth Opportunity</b> — 자사 addressable market 내 증분 성장 및 점유율 확대 여력</li>
+        <li><b>Income Statement / Margin Impact</b> — 에이전틱이 고마진 코어 및 retail media 광고 수익을 잠식할 리스크, 마케팅비 절감으로 일부 상쇄</li>
+        <li>스코어카드는 5 I's 점수에 스케일 지표(시장점유율, 인구 대비 앱 이용자), 트래픽 소스, 에이전트 개발 여부, LLM 통합 여부, 로열티·핀테크·물류 등 생태계 자산, 광고의 GMV 비중을 결합해 <b>35개사</b>를 평가</li>
+        <li>스코어카드상 <b>35개사 중 17개사가 이미 소비자 대면 에이전트를 배포</b>, 추가 7개사가 개발 중. 주요 LLM과의 카탈로그 통합은 미국·아시아 플랫폼이 선도하나 아직 adhesion은 낮은 편</li>
+        <li>스케일 플랫폼이 상위권 — 특히 <b>직접적 고객 관계</b>, 물류·로열티 등 보완적 생태계 서비스, 광범위한 상품 기반에 에이전트 개발비를 분산할 수 있는 기업</li>
+      </ul>
+
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Company</th><th>주요 에이전틱 속성 (스코어카드 상위 6개사, 전 종목 OW)</th></tr></thead>
+        <tbody>
+          <tr><td><b>Amazon</b><br>(AMZN)</td><td>풀필먼트(infrastructure)·Prime·광범위 셀렉션(inventory)이 견고한 에이전틱 해자 형성 / Alexa for Shopping 3억명+, 4Q25 글로벌 GMV의 ~2% 연관 / 자체 에이전트든 horizontal 에이전트든 승자와 무관하게 복제 난이도 높은 데이터·물류 자산 보유</td></tr>
+          <tr><td><b>Walmart</b><br>(WMT)</td><td>Sparky 확대 중 — Sparky 귀속 GMV +150%(1QFY27), 이용자 AOV ~35% 상회 / OpenAI·Google 파트너십으로 에이전틱 생태계 중심에 포지셔닝 / 옴니채널 데이터가 장바구니 전체 개인화와 replenishment 지원</td></tr>
+          <tr><td><b>Alibaba</b><br>(BABA)</td><td>Qwen AI 어시스턴트가 생태계 내 쇼핑·일상 업무 수행 지원 / 쇼핑·결제 앱 통합으로 intent에서 배송까지 seamless한 경로 / 최상위권 인하우스 AI 모델 역량이 UX와 장기 수익화 뒷받침</td></tr>
+          <tr><td><b>MercadoLibre</b><br>(MELI)</td><td>구매자 기반·데이터·직접 트래픽이 탐색·발견의 시작점 지위 지원 / 마켓플레이스·물류·핀테크·로열티 생태계가 고객 관계 통제권 확보 / 자체 개발 우선 기조, Pago 핀테크 에이전트 출시 및 커머스 툴 개발 중</td></tr>
+          <tr><td><b>Sea</b><br>(SE)</td><td>파트너십·적용 사례·ROI 중심의 자본효율적 AI 전략 / 구매 전환 uplift 및 고객서비스 비용 절감이라는 조기 성과 / Shopee·Monee·Garena·Migoo 전 사업부 협업으로 개인화 추진</td></tr>
+          <tr><td><b>Allegro</b><br>(ALEP.WA)</td><td>스케일·LLM 통합·로열티·금융서비스 기반 스코어카드 top-five / 광범위한 재고와 직접 engagement가 AI 주도 discovery에 유리 / 물류 백본이 외부 AI 압력을 일부 완충</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <!-- =============== 6 =============== -->
+      <h3 class="sec" id="s6"><span class="n">7</span>밸류에이션 — 디레이팅된 진입점, 재평가 촉매는 공시</h3>
+      <ul class="pts">
+        <li>선호 종목군 평균 EV/Revenue <b>2.4x</b>로 과거 평균 3.7x 대비 <b>-1 표준편차</b>, 팬데믹 이후 저점 수준으로 회귀</li>
+        <li>Nasdaq 대비 멀티플 갭 <b>-2.9x</b>로 역사적 와이드 구간. 지난 1년간 eCommerce 멀티플이 <b>-0.5x</b> 압축되었으며 상당 부분이 AI 디스럽션 우려에 기인</li>
+        <li>스코어카드 상위 6개사는 시가총액 순으로 AMZN·WMT·BABA·MELI·SE·Allegro, 전 종목 <b>OW</b>. '25-'28E 평균 <b>GMV CAGR +15%</b>(전체 bottom-up +12% 대비), <b>매출 CAGR +16%</b>, <b>EBITDA CAGR +18%</b></li>
+        <li>이 그룹은 2026E EBITDA <b>~17배</b>, 2027E <b>~13배</b>에서 거래되며 평균 목표주가 상단 여력 <b>+26%</b></li>
+        <li>추가 OW 수혜주 — 미국: Wayfair, Shopify, Chewy, Target, eBay / 해외: Meituan, Coupang, LY Corp, Mercari, FSN E-Commerce, Temple &amp; Webster</li>
+        <li>재평가 촉매는 <b>에이전틱 AI uplift에 대한 기업들의 추가 공시</b>. 정량화된 데이터가 늘어날수록 디스럽션 내러티브를 반박 가능</li>
+      </ul>
+
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr>
+          <th>Company</th><th>Ticker</th><th class="num">Last</th><th class="num">PT</th><th class="num">Up/Dn</th>
+          <th class="num">EV/Rev '26</th><th class="num">EV/Rev '27</th><th class="num">EV/EBITDA '26</th><th class="num">EV/EBITDA '27</th><th class="num">EBITDA CAGR '25-28E</th>
+        </tr></thead>
+        <tbody>
+          <tr class="grp"><td colspan="10">Agentic Scorecard Leaders</td></tr>
+          <tr><td>Amazon.com</td><td>AMZN.O</td><td class="num">247</td><td class="num">330</td><td class="num buy">33%</td><td class="num">3.2x</td><td class="num">2.8x</td><td class="num">11.9x</td><td class="num">8.8x</td><td class="num">30%</td></tr>
+          <tr><td>Walmart</td><td>WMT.O</td><td class="num">114</td><td class="num">140</td><td class="num buy">23%</td><td class="num">1.4x</td><td class="num">1.3x</td><td class="num">21.4x</td><td class="num">19.8x</td><td class="num">8%</td></tr>
+          <tr><td>Alibaba Group</td><td>BABA.N</td><td class="num">112</td><td class="num">180</td><td class="num buy">60%</td><td class="num">1.5x</td><td class="num">1.4x</td><td class="num">16.6x</td><td class="num">10.8x</td><td class="num">7%</td></tr>
+          <tr><td>MercadoLibre</td><td>MELI.O</td><td class="num">1,874</td><td class="num">2,450</td><td class="num buy">31%</td><td class="num">2.2x</td><td class="num">1.8x</td><td class="num">22.3x</td><td class="num">15.5x</td><td class="num">24%</td></tr>
+          <tr><td>Sea Ltd</td><td>SE.N</td><td class="num">109</td><td class="num">130</td><td class="num buy">19%</td><td class="num">1.9x</td><td class="num">1.6x</td><td class="num">14.8x</td><td class="num">11.8x</td><td class="num">21%</td></tr>
+          <tr><td>Allegro.eu</td><td>ALEP.WA</td><td class="num">44</td><td class="num">39</td><td class="num neg">-12%</td><td class="num">3.7x</td><td class="num">3.2x</td><td class="num">12.6x</td><td class="num">10.0x</td><td class="num">19%</td></tr>
+          <tr class="grp"><td colspan="4">Leaders Average</td><td class="num">26%</td><td class="num">2.3x</td><td class="num">2.0x</td><td class="num">16.6x</td><td class="num">12.8x</td><td class="num">18%</td></tr>
+
+          <tr class="grp"><td colspan="10">US Key Calls</td></tr>
+          <tr><td>Shopify</td><td>SHOP.O</td><td class="num">126</td><td class="num">192</td><td class="num buy">53%</td><td class="num">10.5x</td><td class="num">8.6x</td><td class="num">73.3x</td><td class="num">56.5x</td><td class="num">34%</td></tr>
+          <tr><td>Target</td><td>TGT.N</td><td class="num">134</td><td class="num">150</td><td class="num buy">12%</td><td class="num">0.7x</td><td class="num">0.6x</td><td class="num">8.8x</td><td class="num">8.4x</td><td class="num">6%</td></tr>
+          <tr><td>eBay</td><td>EBAY.O</td><td class="num">113</td><td class="num">121</td><td class="num buy">8%</td><td class="num">4.5x</td><td class="num">4.1x</td><td class="num">18.6x</td><td class="num">15.7x</td><td class="num">13%</td></tr>
+          <tr><td>Wayfair</td><td>W.N</td><td class="num">89</td><td class="num">110</td><td class="num buy">24%</td><td class="num">1.1x</td><td class="num">1.1x</td><td class="num">29.4x</td><td class="num">23.9x</td><td class="num">23%</td></tr>
+          <tr><td>Chewy</td><td>CHWY.N</td><td class="num">20</td><td class="num">42</td><td class="num buy">106%</td><td class="num">0.6x</td><td class="num">0.5x</td><td class="num">8.1x</td><td class="num">6.6x</td><td class="num">25%</td></tr>
+
+          <tr class="grp"><td colspan="10">International Key Calls</td></tr>
+          <tr><td>Meituan</td><td>3690.HK</td><td class="num">83</td><td class="num">120</td><td class="num buy">44%</td><td class="num">0.8x</td><td class="num">0.7x</td><td class="num">NM</td><td class="num">6.8x</td><td class="num">NM</td></tr>
+          <tr><td>Coupang</td><td>CPNG.N</td><td class="num">18</td><td class="num">28</td><td class="num buy">58%</td><td class="num">0.7x</td><td class="num">0.6x</td><td class="num">NM</td><td class="num">15.1x</td><td class="num">44%</td></tr>
+          <tr><td>LY Corporation</td><td>4689.T</td><td class="num">446</td><td class="num">500</td><td class="num buy">12%</td><td class="num">1.3x</td><td class="num">1.2x</td><td class="num">6.8x</td><td class="num">6.2x</td><td class="num">7%</td></tr>
+          <tr><td>FSN E-Commerce</td><td>FSNE.NS</td><td class="num">329</td><td class="num">321</td><td class="num neg">-2%</td><td class="num">9.4x</td><td class="num">7.4x</td><td class="num">NM</td><td class="num">NM</td><td class="num">53%</td></tr>
+          <tr><td>Mercari</td><td>4385.T</td><td class="num">4,693</td><td class="num">5,000</td><td class="num buy">7%</td><td class="num">3.3x</td><td class="num">2.9x</td><td class="num">15.9x</td><td class="num">12.8x</td><td class="num">29%</td></tr>
+          <tr><td>Temple &amp; Webster</td><td>TPW.AX</td><td class="num">5</td><td class="num">8</td><td class="num buy">52%</td><td class="num">0.8x</td><td class="num">0.7x</td><td class="num">25.7x</td><td class="num">13.4x</td><td class="num">38%</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="tbl-note">전 종목 Overweight. 주가 기준일 2026/7/14.</div>
+      <div class="chart-src">Source: FactSet, Company data</div>
+
+      <!-- =============== 7 =============== -->
+      <h3 class="sec" id="s7"><span class="n">8</span>한국 — 침투율 선진 시장, 에이전틱은 '채널 이동'보다 '점유율 재분배'</h3>
+      <ul class="pts">
+        <li>2025년 말부터 민간소비가 저점을 통과하고 소매판매 성장률이 플러스 전환. YTD 온라인 판매는 <b>+10.5% y/y</b>로 수요 개선과 프로모션 확대가 견인</li>
+        <li>주식시장 랠리에 따른 <b>wealth effect</b>가 리테일 섹터 핵심 테마. 백화점 명품 고성장과 가성비 수요가 병존하는 <b>K-shaped 소비</b> 심화 → 중저가·식료품 카테고리에서 온라인의 가격 우위가 유효, 2H26 에너지發 인플레 압력에도 <b>~10% y/y</b> 온라인 성장 유지 전망</li>
+        <li>eCommerce 침투율 2025년 <b>43%</b> → 2030E <b>48%</b>. eCommerce CAGR <b>+5%</b>(전체 소매판매 +3%). 비식품은 이미 54%로 성숙, <b>식품(F&amp;B)에 침투율 업사이드</b> 잔존(2025년 식품 온라인 +10% y/y, 총 식품판매 기여도 전년비 +2.1%p)</li>
+        <li>채널 이동은 둔화되나 온라인 내 <b>consolidation</b>은 지속. 넓은 상품군, 멤버십 lock-in, 풍부한 마케팅 재원을 갖춘 <b>상위 2개사</b>가 채널 성장률을 상회할 전망. 오프라인 및 중소 플레이어는 수익성·현금흐름 개선에 집중</li>
+        <li>점유율 — 4Q25 데이터 유출 이후 쿠팡의 WoW 멤버십·활성 이용자가 가시적으로 감소하며 네이버가 반사이익. 현재는 정상화 국면으로 <b>쿠팡은 이탈 유료회원의 80%를 회복</b>했다고 밝힘. 네이버는 커머스 투자를 지속하며 셀러들의 익일배송 온보딩을 적극 추진(최근 해당 셀러 무료배송 제공)</li>
+        <li>에이전틱 동향 — <b>네이버</b>는 3월 Naver Plus Store 앱에서 Shopping AI Agent 베타를 시작, <b>6월 25일 정식 출시</b>하며 과거 장바구니·클릭 이력 기반으로 쇼핑 대화를 먼저 개시하는 수준으로 고도화. 방대한 셀러 네트워크·N페이·배송 역량을 결합해 탐색형 쇼핑 점유와 수익화 확대를 목표하나 채택은 아직 초기 단계</li>
+        <li><b>카카오</b>는 2Q26 실적 발표 전 OTA·커머스·예약 버티컬의 에이전틱 파트너를 공개할 계획. 카카오톡에서 구동되는 자체 SLM 기반 AI 챗봇 <b>Kanana</b>에 탑재 예정</li>
+      </ul>
+
+      <div class="chart-card">
+        <div class="ct">한국 eCommerce 시장규모(KRW조) 및 온라인 침투율 전망</div>
+        <div class="legend">
+          <span><i style="background:#0077c8"></i>시장규모 (KRW조, 좌)</span>
+          <span><i style="background:#00264d"></i>침투율 (%, 우)</span>
+        </div>
+        <svg viewBox="0 0 880 330" width="100%">
+          <line x1="60" y1="270" x2="860" y2="270" stroke="#cfd6e0"/>
+          <g stroke="#eef1f6">
+            <line x1="60" y1="220" x2="860" y2="220"/><line x1="60" y1="170" x2="860" y2="170"/>
+            <line x1="60" y1="120" x2="860" y2="120"/><line x1="60" y1="70" x2="860" y2="70"/>
+          </g>
+          <g font-size="10.5" fill="#8b93a3" text-anchor="end">
+            <text x="52" y="274">0</text><text x="52" y="224">70</text><text x="52" y="174">140</text><text x="52" y="124">205</text><text x="52" y="74">275</text>
+          </g>
+          <g font-size="10.5" fill="#00264d" text-anchor="start">
+            <text x="866" y="274">0%</text><text x="866" y="174">25%</text><text x="866" y="74">50%</text>
+          </g>
+
+          <g fill="#0077c8" opacity="0.85">
+            <rect x="63" y="225" width="34" height="45"/>
+            <rect x="116" y="216" width="34" height="54"/>
+            <rect x="170" y="206" width="34" height="64"/>
+            <rect x="223" y="193" width="34" height="77"/>
+            <rect x="277" y="174" width="34" height="96"/>
+            <rect x="330" y="159" width="34" height="111"/>
+            <rect x="384" y="151" width="34" height="119"/>
+            <rect x="437" y="142" width="34" height="128"/>
+            <rect x="491" y="134" width="34" height="136"/>
+            <rect x="544" y="129" width="34" height="141" fill="#005a99"/>
+            <rect x="598" y="117" width="34" height="153"/>
+            <rect x="651" y="109" width="34" height="161"/>
+            <rect x="705" y="101" width="34" height="169"/>
+            <rect x="758" y="96" width="34" height="174"/>
+            <rect x="812" y="90" width="34" height="180" fill="#005a99"/>
+          </g>
+
+          <polyline fill="none" stroke="#00264d" stroke-width="2.5"
+            points="80,206 133,194 187,186 240,170 294,146 347,130 401,122 454,114 508,102 561,98 615,90 668,82 722,82 775,78 829,78"/>
+          <g fill="#00264d">
+            <circle cx="80" cy="206" r="3"/><circle cx="133" cy="194" r="3"/><circle cx="187" cy="186" r="3"/>
+            <circle cx="240" cy="170" r="3"/><circle cx="294" cy="146" r="3"/><circle cx="347" cy="130" r="3"/>
+            <circle cx="401" cy="122" r="3"/><circle cx="454" cy="114" r="3"/><circle cx="508" cy="102" r="3"/>
+            <circle cx="561" cy="98" r="4.5"/><circle cx="615" cy="90" r="3"/><circle cx="668" cy="82" r="3"/>
+            <circle cx="722" cy="82" r="3"/><circle cx="775" cy="78" r="3"/><circle cx="829" cy="78" r="4.5"/>
+          </g>
+          <g font-size="11" fill="#00264d" text-anchor="middle" font-weight="700">
+            <text x="561" y="88">43%</text>
+            <text x="829" y="68">48%</text>
+            <text x="80" y="198">16%</text>
+          </g>
+          <g font-size="10" fill="#8b93a3" text-anchor="middle">
+            <text x="80" y="288">2016</text><text x="187" y="288">2018</text><text x="294" y="288">2020</text>
+            <text x="401" y="288">2022</text><text x="508" y="288">2024</text>
+            <text x="561" y="288" fill="#00264d" font-weight="700">2025</text>
+            <text x="668" y="288">2027</text><text x="775" y="288">2029</text>
+            <text x="829" y="288" fill="#00264d" font-weight="700">2030E</text>
+          </g>
+          <text x="460" y="312" font-size="11" fill="#525866" text-anchor="middle">2025-30E eCommerce CAGR +5% vs. 전체 소매판매 +3%</text>
+        </svg>
+        <div class="chart-src">Source: Korea National Statistics Office</div>
+      </div>
+
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>종목</th><th>등급</th><th>에이전틱 관점 코멘트</th></tr></thead>
+        <tbody>
+          <tr><td><b>Coupang</b><br>(CPNG)</td><td><b>OW</b></td><td>에이전틱 관련 구체적 계획을 공개하지 않았으나, <b>재고·고객 접점·완전 통합된 풀필먼트/물류 인프라를 모두 보유한 국내 유일 플레이어</b>로 에이전틱이 주류화될 경우 최대 수혜. AI 투자 확대 중으로 중기적으로 에이전틱 성격의 기능 출시 예상. 1Q26 실적에서 2Q 마진 가이던스가 기대에 미치지 못하며 주가가 큰 폭 조정되었으나, 매출 회복과 함께 하반기 유출 이전 마진 수준 회복 전망</td></tr>
+          <tr><td><b>Naver</b><br>(035420.KS)</td><td><b>EW</b></td><td>검색·커머스 전반에서 <b>국내에서 가장 적극적으로 AI를 도입</b> 중이며, AI Shopping Agent 기능 고도화 지속 전망. 셀러 네트워크·결제망·멤버십·AI 기반 광고 네트워크 등 에이전틱 커머스가 파괴적 요인이 되더라도 장기적으로 수혜를 볼 자산 보유. 다만 <b>AI로 인한 검색 사업 잠식 리스크</b>와 GPU·커머스 이니셔티브 관련 <b>공격적 지출에 따른 단기 마진 부담</b>이 EW 근거</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="callout"><span class="t">지역별 시사점</span><b>북미</b> — 파트너십·채택의 테스트베드, 리테일러 자체 에이전트의 전환율 개선 근거 확인. 식료품·의류 등 고마찰 카테고리에서 채택 선행. <b>중남미</b> — WhatsApp 기반 대화형 커머스가 관문, AI 쇼핑은 아직 초기. <b>중국</b> — 대중 채택과 closed-loop 실행에서 선도, 구독보다 커미션이 현실적 수익모델. <b>EMEA</b> — 물류가 해자이나 분절된 시장에서 외부 에이전트가 고객확보비용을 높이고 광고예산을 마켓플레이스 밖으로 이동시킬 위험. <b>동남아</b> — 콘텐츠 주도 커머스 모델과 연동된 발전. <b>한국</b> — 침투율이 이미 글로벌 최상위권이라 <b>온라인 내 점유율 재분배</b> 성격이 강함. <b>일본</b> — 자율 체크아웃보다 AI 보조 검색·비교·추천 중심, 패션·C2C에서 잠재력. <b>인도</b> — 뷰티·패션·웰니스에서 모호한 니즈의 바스켓 전환이 가능하나 분절된 공급·위조품 리스크·COD/UPI 관행이 소비자 승인 절차를 필수화. <b>호주</b> — 결제 인증·쇼핑 어시스턴트 파일럿 단계, 단기 가치는 top-of-funnel 확대. <b>대만</b> — 촘촘한 오프라인 소매망과 픽업 편의성이 채널 이동 여지를 제한, 자체 데이터 기반 검색 정밀도 개선이 주된 편익.</div>
+
+      <!-- =============== 8 =============== -->
+      <h3 class="sec" id="s8"><span class="n">!</span>리스크 &amp; 모니터링 포인트</h3>
+      <div class="risk-box">
+        <h4>Key Risks</h4>
+        <ul>
+          <li><b>직접 트래픽 이탈 및 유료 트래픽 비중 상승:</b> 소비자가 구매 여정 초입에서 외부 AI 에이전트를 더 사용할수록 direct 대비 paid 트래픽 비중이 상승, 플랫폼 수익성 압박. 다만 현재 GenAI 플랫폼發 트래픽은 eCommerce 웹 트래픽의 평균 <b>0.3%(&lt;0.5%)</b> 수준으로 단기 실적 리스크는 제한적</li>
+          <li><b>Retail media 광고 수익 잠식:</b> 브랜드가 리테일러 사이트 대신 범용 LLM 내 노출에 광고비를 집행할 경우 고마진 광고 수익 이전 위험</li>
+          <li><b>멀티플 압박의 지속성:</b> horizontal 에이전트의 점유율 확대 우려는 반증이 어려워, 실적 훼손이 없더라도 밸류에이션 재평가를 막을 수 있음. 스코어카드 하위권 기업일수록 bull-bear skew가 넓고 하방이 큼</li>
+          <li><b>소비자 저항:</b> 미국 비이용자 조사 기준 미사용 사유는 <b>매장 선호 38%, AI 추천 불신 35%, 리테일러 사이트 직접 이용 선호 34%, 프라이버시·데이터 우려 32%</b>. 신뢰·프라이버시가 채택 속도의 상단을 제약</li>
+          <li><b>Incrementality 미달:</b> LLM 검색이 기존 키워드 검색을 단순 대체할 경우 비용만 증가하고 매출은 늘지 않음 → stress test에서 커버리지 0.5배로 역전</li>
+          <li><b>범용 LLM의 전략 전환:</b> 온플랫폼에서 eCommerce 스택 전체를 소유하려는 움직임은 마켓플레이스로 유효 트래픽을 보내는 방식보다 훨씬 파괴적. 다만 이 경우에도 리스크는 '대체'보다 <b>'이코노믹스 희석'</b>에 가깝다는 판단</li>
+        </ul>
+        <h4 style="margin-top:14px;">모니터링 포인트</h4>
+        <ul>
+          <li>기업들의 <b>에이전틱 uplift 정량 공시</b> 확대 여부 — 재평가의 핵심 촉매</li>
+          <li>범용 LLM의 커머스 전략 방향성 (트래픽 송출형 vs. 스택 내재화형)</li>
+          <li>Google UCP 등 개방형 커머스 표준의 리테일러 채택률</li>
+          <li>GenAI 채널 트래픽 비중의 inflection 시점 (현재 &lt;0.5%, 웹 기준으로 앱 트래픽 미포함)</li>
+          <li>스코어카드 상 에이전트 미배포 11개사의 개발 진척 및 LLM 카탈로그 통합 확산</li>
+          <li>한국 — 네이버 AI Shopping Agent의 실사용 지표, 카카오 Kanana 에이전틱 파트너 공개(2Q26 실적 전), 쿠팡의 하반기 마진 회복 경로</li>
+        </ul>
+      </div>
+
+      <div class="callout"><span class="t">구조적 완충</span>커머스가 horizontal 에이전트로 더 이동하더라도 eCommerce는 본질적으로 소싱·풀필먼트·배송·반품이라는 <b>재화의 물리적 이동</b>을 요구한다. 이 물리적 속성이 섹터의 부가가치를 방어하는 partial hedge로 작용하며, 밸류에이션이 이미 저점권이라는 출발점과 결합해 선호 종목군의 risk-reward를 비대칭적으로 만든다는 것이 리포트의 결론이다.</div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div>본 문서는 투자 권유를 목적으로 하지 않습니다.</div>
+  </footer>
+
+</div>
+</body>
+</html>
