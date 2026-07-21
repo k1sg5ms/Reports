@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Americas Clean Technology — Solar & Energy Storage</title>
+<style>
+  :root{
+    --brand:#1a2b4a;
+    --brand-deep:#0e1729;
+    --accent:#6b8cae;
+    --accent2:#3d5a80;
+    --paper:#f4f6f9;
+    --card:#ffffff;
+    --ink:#1b1e24;
+    --ink-soft:#525866;
+    --line:#dde3ec;
+    --buy:#1f7a4d;
+    --bear:#c0392b;
+    --bull:#1f6fb2;
+    --warn:#8a4b15;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Helvetica Neue','Pretendard','Noto Sans KR',Arial,sans-serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  .topbar{
+    background:var(--brand-deep);
+    color:#fff;padding:14px 6vw;
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;
+    border-bottom:3px solid var(--accent);
+    position:sticky;top:0;z-index:50;
+  }
+  .topbar .logo{font-weight:700;font-size:18px;letter-spacing:0.5px;}
+  .topbar .logo span{color:var(--accent);}
+  .topbar nav{display:flex;gap:8px;flex-wrap:wrap;}
+  .topbar nav a{
+    color:#cfd8e6;text-decoration:none;font-size:12.5px;
+    padding:6px 12px;border:1px solid rgba(255,255,255,0.2);border-radius:20px;
+    transition:all .15s;
+  }
+  .topbar nav a:hover{background:var(--accent);color:#fff;border-color:var(--accent);}
+
+  .wrap{max-width:960px;margin:0 auto;padding:40px 6vw 90px;}
+
+  .intro{border-left:4px solid var(--accent);padding:8px 0 8px 20px;margin-bottom:48px;}
+  .intro .eyebrow{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent2);font-weight:700;}
+  .intro h1{font-size:26px;margin:8px 0 6px;color:var(--brand);}
+
+  .report{margin-bottom:64px;scroll-margin-top:70px;}
+  .report-head{
+    background:linear-gradient(135deg,var(--brand) 0%, var(--brand-deep) 100%);
+    color:#fff;border-radius:10px 10px 0 0;padding:28px 30px;
+  }
+  .report-head .tag{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#9fb4d4;font-weight:700;}
+  .report-head h2{margin:8px 0 14px;font-size:23px;line-height:1.35;}
+  .report-head .lede{
+    font-family:'Georgia',serif;font-size:15.5px;color:#e3ebf6;
+    border-top:1px solid rgba(255,255,255,0.16);padding-top:14px;margin:0;
+  }
+  .report-body{
+    background:var(--card);border:1px solid var(--line);border-top:none;
+    border-radius:0 0 10px 10px;padding:30px;
+  }
+
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px;}
+  .chip{border:1px solid var(--line);border-radius:8px;padding:10px 16px;background:#fafbfd;flex:1;min-width:130px;}
+  .chip .k{font-size:10.5px;letter-spacing:0.5px;text-transform:uppercase;color:var(--ink-soft);}
+  .chip .v{font-size:19px;font-weight:700;color:var(--brand);margin-top:2px;}
+  .chip .v.buy{color:var(--buy);}
+  .chip .v.sell{color:var(--bear);}
+  .chip .s{font-size:11px;color:var(--ink-soft);}
+
+  h3.sec{
+    font-size:17px;color:var(--brand);margin:30px 0 12px;
+    padding-bottom:8px;border-bottom:1.5px solid var(--line);
+    display:flex;align-items:center;gap:10px;
+  }
+  h3.sec .n{
+    background:var(--brand);color:#fff;font-size:12px;font-weight:700;
+    width:24px;height:24px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  h4.sub{font-size:14px;color:var(--brand);margin:22px 0 6px;padding-left:2px;border-left:3px solid var(--accent);padding-left:10px;}
+  ul.pts{margin:0;padding:0;list-style:none;}
+  ul.pts li{position:relative;padding:7px 0 7px 20px;font-size:14.5px;border-bottom:1px dashed var(--line);}
+  ul.pts li:last-child{border-bottom:none;}
+  ul.pts li::before{content:"—";position:absolute;left:0;color:var(--accent2);font-weight:700;}
+  ul.pts b{color:var(--brand);}
+
+  table.tbl{width:100%;border-collapse:collapse;font-size:13px;margin:6px 0 4px;}
+  table.tbl th{background:var(--brand);color:#fff;text-align:left;padding:8px 10px;font-weight:600;}
+  table.tbl td{padding:7px 10px;border-bottom:1px solid var(--line);}
+  table.tbl tr:nth-child(even) td{background:#f7f9fc;}
+  table.tbl td.num{text-align:right;font-variant-numeric:tabular-nums;}
+  table.tbl td.buy{color:var(--buy);font-weight:700;}
+  table.tbl td.sell{color:var(--bear);font-weight:700;}
+  .tbl-wrap{overflow-x:auto;}
+
+  .chart-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:22px 22px 14px;margin:14px 0;}
+  .chart-card .ct{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:12px;}
+  .chart-src{font-size:10.5px;color:#9aa3b2;margin-top:8px;}
+  .legend{display:flex;gap:18px;font-size:11.5px;color:var(--ink-soft);margin-bottom:4px;}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .legend i{width:11px;height:11px;border-radius:2px;display:inline-block;}
+
+  .callout{background:#fbf6ec;border:1px solid #e8dcc3;border-radius:8px;padding:14px 18px;font-size:13px;color:var(--ink-soft);margin-top:14px;}
+  .callout .t{font-size:10.5px;font-weight:700;letter-spacing:0.6px;color:var(--warn);text-transform:uppercase;display:block;margin-bottom:5px;}
+
+  .risk-box{background:var(--brand);color:#dde6f3;border-radius:8px;padding:22px 24px;margin-top:14px;}
+  .risk-box h4{margin:0 0 10px;color:#fff;font-size:14.5px;}
+  .risk-box ul{margin:0;padding-left:18px;}
+  .risk-box li{margin-bottom:8px;font-size:13px;}
+  .risk-box li b{color:#fff;}
+
+  footer{border-top:1px solid var(--line);margin-top:50px;padding-top:20px;font-size:11px;color:#9aa3b2;line-height:1.6;}
+
+  @media(max-width:560px){
+    .intro h1{font-size:21px;}
+    .report-head h2{font-size:19px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">Research<span>·</span>Digest</div>
+  <nav>
+    <a href="#solar">Solar 2Q26 Preview</a>
+    <a href="#bess">BTM Energy Storage</a>
+  </nav>
+</div>
+
+<div class="wrap">
+
+  <div class="intro">
+    <div class="eyebrow">16–20 July 2026</div>
+    <h1>Americas Clean Technology — 유틸리티급 태양광 2Q26 프리뷰 & 데이터센터 BTM 배터리 스토리지</h1>
+  </div>
+
+  <!-- ================= REPORT 1 : SOLAR ================= -->
+  <section class="report" id="solar">
+
+    <div class="report-head">
+      <div class="tag">Americas Clean Technology / Solar · 20 July 2026</div>
+      <h2>2Q26 프리뷰: 유틸리티급 태양광과 배터리 레버리지 종목의 수주·백로그 upside에 주목 — NXT·FLNC·SHLS Buy</h2>
+      <p class="lede">펀더멘털은 견조하나 clean print만으로는 부족하다. 컨센서스를 상회할 수 있는 종목만이 단기 re-rating 여력을 갖는다.</p>
+    </div>
+
+    <div class="report-body">
+
+      <div class="chips">
+        <div class="chip"><div class="k">Top Picks</div><div class="v buy">NXT · FLNC · SHLS</div><div class="s">Large cap / SMID cap</div></div>
+        <div class="chip"><div class="k">3M 커버리지 수익률</div><div class="v">+5%</div><div class="s">R2K +7% 대비 underperform</div></div>
+        <div class="chip"><div class="k">Days to Cover</div><div class="v">+15%</div><div class="s">최근 1개월, positioning 경량화</div></div>
+        <div class="chip"><div class="k">Utility-scale 수요</div><div class="v">~40GW+</div><div class="s">미국 연간 run-rate 전망 유지</div></div>
+      </div>
+
+      <h3 class="sec"><span class="n">1</span>투자 논지 — clean print로는 부족하다</h3>
+      <ul class="pts">
+        <li>유틸리티급 태양광 및 배터리 스토리지 전방 시장 펀더멘털은 여전히 매우 긍정적이며, 수주 강세를 바탕으로 <b>2H26 매출 컨센서스 상회 가능성</b> 존재</li>
+        <li>최근 그룹 전반의 조정으로 investor positioning이 크게 가벼워진 상태 → 단순히 무난한 실적(clean print)만으로는 주가 반응을 이끌기 어려움</li>
+        <li>따라서 <b>기대치 상회(beat) 여력이 있는 종목</b>이 부진한 센티먼트 속에서도 단기 re-rating 잠재력이 가장 큼</li>
+        <li>Large cap: <b>NXT</b> — 최근 M&A 효과가 공표 추정치에 충분히 반영되지 않아 또 한 번의 beat-and-raise 가능성</li>
+        <li>SMID cap: <b>SHLS</b>(beat-and-raise 예상)와 <b>FLNC</b>(첫 hyperscaler 수주 확보 및 파이프라인 타깃 상향 가능성)의 셋업이 가장 우수</li>
+        <li>지난 3개월 커버리지 수익률 +5%로 R2K(+7%) 하회 — 모멘텀 되돌림과 AI/데이터센터 건설 전망 관련 센티먼트 약화가 원인</li>
+      </ul>
+
+      <div class="chart-card">
+        <div class="ct">3개월 주가 수익률 — 커버리지 내 편차 확대 (as of 7/17/2026)</div>
+        <svg viewBox="0 0 880 430" width="100%">
+          <line x1="330" y1="20" x2="330" y2="400" stroke="#c2ccd9"/>
+          <g font-size="11" fill="#525866" font-family="Helvetica Neue,Arial,sans-serif">
+            <!-- rows -->
+            <text x="10" y="35">JKS</text><rect x="215" y="24" width="115" height="14" fill="#c0392b"/><text x="180" y="35" text-anchor="end" fill="#c0392b">-23%</text>
+            <text x="10" y="60">ARRY</text><rect x="220" y="49" width="110" height="14" fill="#c0392b"/><text x="180" y="60" text-anchor="end" fill="#c0392b">-22%</text>
+            <text x="10" y="85">NRGV</text><rect x="260" y="74" width="70" height="14" fill="#c0392b"/><text x="180" y="85" text-anchor="end" fill="#c0392b">-14%</text>
+            <text x="10" y="110">NXT</text><rect x="295" y="99" width="35" height="14" fill="#c0392b"/><text x="180" y="110" text-anchor="end" fill="#c0392b">-7%</text>
+            <text x="10" y="135">HASI</text><rect x="305" y="124" width="25" height="14" fill="#c0392b"/><text x="180" y="135" text-anchor="end" fill="#c0392b">-5%</text>
+            <text x="10" y="160">RUN</text><rect x="310" y="149" width="20" height="14" fill="#c0392b"/><text x="180" y="160" text-anchor="end" fill="#c0392b">-4%</text>
+            <text x="10" y="185">Coverage Avg.</text><rect x="330" y="174" width="5" height="14" fill="#6b8cae"/><text x="360" y="185" fill="#3d5a80">+1%</text>
+            <text x="10" y="210">FLNC</text><rect x="330" y="199" width="20" height="14" fill="#1a2b4a"/><text x="375" y="210" fill="#3d5a80">+4%</text>
+            <text x="10" y="235">Solar Index</text><rect x="330" y="224" width="25" height="14" fill="#6b8cae"/><text x="380" y="235" fill="#3d5a80">+5%</text>
+            <text x="10" y="260">R2K</text><rect x="330" y="249" width="35" height="14" fill="#6b8cae"/><text x="390" y="260" fill="#3d5a80">+7%</text>
+            <text x="10" y="285">FSLR</text><rect x="330" y="274" width="55" height="14" fill="#1a2b4a"/><text x="410" y="285" fill="#3d5a80">+11%</text>
+            <text x="10" y="310">CSIQ</text><rect x="330" y="299" width="65" height="14" fill="#1a2b4a"/><text x="420" y="310" fill="#3d5a80">+13%</text>
+            <text x="10" y="335">ENPH</text><rect x="330" y="324" width="140" height="14" fill="#1a2b4a"/><text x="495" y="335" fill="#3d5a80">+28%</text>
+            <text x="10" y="360">SEDG</text><rect x="330" y="349" width="200" height="14" fill="#1a2b4a"/><text x="555" y="360" fill="#3d5a80">+40%</text>
+            <text x="10" y="385">SHLS</text><rect x="330" y="374" width="220" height="14" fill="#1a2b4a"/><text x="575" y="385" fill="#3d5a80">+44%</text>
+          </g>
+        </svg>
+        <div class="chart-src">Source: FactSet</div>
+      </div>
+
+      <h3 class="sec"><span class="n">2</span>2Q26 실적 추정치 vs 컨센서스</h3>
+      <p style="font-size:13.5px;color:var(--ink-soft);margin:4px 0 10px;">2Q26 기준 <b>SHLS·NXT</b>에서 컨센서스 대비 상방 여지가 가장 크고, <b>CSIQ·SEDG</b>에서 하방 리스크가 가장 큼. (EPS 기준, NRGV·CSIQ·FLNC는 EBITDA $mn 기준)</p>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>종목</th><th>등급</th><th>2Q26E 추정</th><th>2Q26E 컨센</th><th>차이</th><th>CY26E 추정</th><th>CY26E 컨센</th><th>차이</th></tr></thead>
+        <tbody>
+          <tr><td><b>ENPH</b></td><td class="buy">Buy</td><td class="num">$0.46</td><td class="num">$0.47</td><td class="num">-2%</td><td class="num">$2.00</td><td class="num">$2.03</td><td class="num">-1%</td></tr>
+          <tr><td><b>FSLR</b></td><td class="buy">Buy</td><td class="num">$3.23</td><td class="num">$2.99</td><td class="num">+8%</td><td class="num">$18.42</td><td class="num">$17.69</td><td class="num">+4%</td></tr>
+          <tr><td><b>JKS</b></td><td class="sell">Sell</td><td class="num">($1.13)</td><td class="num">($0.90)</td><td class="num">-26%</td><td class="num">($4.04)</td><td class="num">($3.05)</td><td class="num">-32%</td></tr>
+          <tr><td><b>SEDG</b></td><td class="sell">Sell</td><td class="num">($0.04)</td><td class="num">($0.01)</td><td class="num">-300%</td><td class="num">($0.19)</td><td class="num">$0.03</td><td class="num">nm</td></tr>
+          <tr><td><b>ARRY</b></td><td class="buy">Buy</td><td class="num">$0.10</td><td class="num">$0.12</td><td class="num">-17%</td><td class="num">$0.70</td><td class="num">$0.73</td><td class="num">-4%</td></tr>
+          <tr><td><b>SHLS</b></td><td class="buy">Buy</td><td class="num">$0.12</td><td class="num">$0.10</td><td class="num">+20%</td><td class="num">$0.49</td><td class="num">$0.41</td><td class="num">+20%</td></tr>
+          <tr><td><b>RUN</b></td><td class="buy">Buy</td><td class="num">$0.00</td><td class="num">$0.26</td><td class="num">-100%</td><td class="num">$0.50</td><td class="num">$1.35</td><td class="num">-63%</td></tr>
+          <tr><td><b>NXT</b></td><td class="buy">Buy</td><td class="num">$1.05</td><td class="num">$1.05</td><td class="num">0%</td><td class="num">$4.49</td><td class="num">$4.51</td><td class="num">0%</td></tr>
+          <tr><td><b>HASI</b></td><td>Neutral</td><td class="num">$0.74</td><td class="num">$0.74</td><td class="num">0%</td><td class="num">$2.98</td><td class="num">$2.99</td><td class="num">0%</td></tr>
+          <tr><td><b>NRGV</b> (EBITDA)</td><td class="sell">Sell</td><td class="num">($12)</td><td class="num">($14)</td><td class="num">+15%</td><td class="num">($26)</td><td class="num">($25)</td><td class="num">-5%</td></tr>
+          <tr><td><b>CSIQ</b> (EBITDA)</td><td class="sell">Sell</td><td class="num">$40</td><td class="num">$88</td><td class="num">-54%</td><td class="num">$591</td><td class="num">$636</td><td class="num">-7%</td></tr>
+          <tr><td><b>FLNC</b> (EBITDA)</td><td class="buy">Buy</td><td class="num">$7</td><td class="num">$14</td><td class="num">-49%</td><td class="num">$82</td><td class="num">$82</td><td class="num">0%</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-src">Source: FactSet, Company data</div>
+
+      <h3 class="sec"><span class="n">3</span>2Q26 태양광 핵심 테마</h3>
+
+      <h4 class="sub">(+/-) 정책 불확실성 — Section 232 · FEOC · 인버터 수입 규제</h4>
+      <ul class="pts">
+        <li>폴리실리콘 대상 <b>Section 232 조사</b>가 최대 관심사. 시장 일부는 모듈 최저수입가격이 <b>$0.40/W대 초중반</b>에서 설정될 것으로 기대</li>
+        <li>태양광 가격 상승은 단기 시장 교란 요인이나, 강력한 전력 수요가 수요를 지지하며 국내 공급망 구축에는 우호적</li>
+        <li><b>FEOC</b>(우려 외국 주체) 최종 가이던스는 4Q26 발표 예상, 현행 프레임워크를 보완하는 수준일 가능성</li>
+        <li>외국산 인버터 수입 금지 초안은 논쟁 중 — 유틸리티급·C&amp;I 시장에 가장 큰 영향</li>
+      </ul>
+
+      <h4 class="sub">(+/-) 밸류체인 비용 — 재차 하락 전환</h4>
+      <ul class="pts">
+        <li>2Q26 폴리실리콘·웨이퍼·셀 가격 모두 qoq 하락 — 지속적 공급과잉, 재고 증가, 생산 재개가 원인</li>
+        <li>반면 <b>모듈 가격은 상대적으로 견조</b> (2Q26 qoq +3%), 은(silver) 가격은 점진 하락했으나 여전히 높은 수준</li>
+        <li>yoy 기준 2Q26: 폴리실리콘 +3%, 웨이퍼 -7%, 셀 +33%, 모듈 +22%</li>
+        <li>최근 가격 흐름의 지속 가능성은 재고 정상화·감산·전방 수요 회복에 좌우</li>
+      </ul>
+
+      <h4 class="sub">(+) 유틸리티급 수요 견조 / (+/-) Resi는 혼조</h4>
+      <ul class="pts">
+        <li>미국 유틸리티급 수요는 <b>연 ~40GW+ run-rate</b> 전망 유지, hyperscaler 수요와 safe harbor 활동이 장기 배치를 지지</li>
+        <li>AI 데이터센터 개발이 <b>BTM(behind-the-meter) 스토리지</b> 수요를 단기적으로 크게 자극</li>
+        <li>Resi는 TPO 금융 조건 강화·FEOC 불확실성·설치업체 혼란으로 예상보다 부진 → <b>2Q26 저점</b> 후 3Q26 개선 전망</li>
+        <li>다만 cash/loan 상품 수요는 예상보다 견조하고 prepaid lease 채택도 점진 확대 중</li>
+        <li>2026년 safe harbor 활동이 2027년 장비 업체 수요를 선반영해 약세를 유발할 수 있다는 우려 부상</li>
+        <li>Resi 스토리지는 standalone 채택 확대·VPP 참여 증가로 resi 태양광 대비 지속 아웃퍼폼</li>
+      </ul>
+
+      <h4 class="sub">(+) SST — 인버터 업체의 신규 기회</h4>
+      <ul class="pts">
+        <li>Hyperscaler가 <b>800V DC 아키텍처</b>를 검토하며 SST(solid state transformer)가 핵심 주제로 부상</li>
+        <li>ENPH·SEDG 모두 SST에 투자 중 — <b>2027년 파일럿 배치, 2028년 초도 출하</b> 계획</li>
+        <li>SST 시장은 2030년 <b>~10GW</b> 규모, 연간 <b>$1bn–$5bn</b> 시장 잠재력으로 추정 (채택 속도는 불확실)</li>
+        <li>ABB, GEV, Siemens 등 경쟁 심화 → 초기 고객 확보와 design win이 관건</li>
+      </ul>
+
+      <h4 class="sub">(+) 유틸리티급 파이프라인 신규 추가 증가</h4>
+      <ul class="pts">
+        <li>2Q26 프로젝트 신규 추가 <b>qoq +10%</b> — 유틸리티급 개발 활동의 견조함 재확인</li>
+        <li>전력 수요 증가, 데이터센터 부하 성장, 정책 촉매 대기 중에도 개발사들의 프로젝트 진행이 지지 요인</li>
+      </ul>
+
+      <div class="chart-card">
+        <div class="ct">미국 유틸리티급 파이프라인 분기 신규 추가 (GW)</div>
+        <svg viewBox="0 0 880 300" width="100%">
+          <line x1="60" y1="250" x2="860" y2="250" stroke="#cfd6e0"/>
+          <g stroke="#eef1f6"><line x1="60" y1="200" x2="860" y2="200"/><line x1="60" y1="150" x2="860" y2="150"/><line x1="60" y1="100" x2="860" y2="100"/><line x1="60" y1="50" x2="860" y2="50"/></g>
+          <g font-size="10" fill="#9aa3b2"><text x="25" y="253">0</text><text x="20" y="203">10</text><text x="20" y="153">20</text><text x="20" y="103">30</text><text x="20" y="53">40</text></g>
+          <g fill="#1a2b4a">
+            <rect x="80" y="163" width="42" height="87"/>
+            <rect x="140" y="89" width="42" height="161"/>
+            <rect x="200" y="145" width="42" height="105"/>
+            <rect x="260" y="117" width="42" height="133"/>
+            <rect x="320" y="152" width="42" height="98"/>
+            <rect x="380" y="72" width="42" height="178"/>
+            <rect x="440" y="145" width="42" height="105"/>
+            <rect x="500" y="137" width="42" height="113"/>
+            <rect x="560" y="72" width="42" height="178"/>
+            <rect x="620" y="77" width="42" height="173"/>
+            <rect x="680" y="77" width="42" height="173"/>
+            <rect x="740" y="61" width="42" height="189" fill="#3d5a80"/>
+          </g>
+          <g font-size="10" fill="#525866" text-anchor="middle">
+            <text x="101" y="266">3Q23</text><text x="161" y="266">4Q23</text><text x="221" y="266">1Q24</text><text x="281" y="266">2Q24</text>
+            <text x="341" y="266">3Q24</text><text x="401" y="266">4Q24</text><text x="461" y="266">1Q25</text><text x="521" y="266">2Q25</text>
+            <text x="581" y="266">3Q25</text><text x="641" y="266">4Q25</text><text x="701" y="266">1Q26</text><text x="761" y="266">2Q26</text>
+          </g>
+          <g font-size="10.5" fill="#3d5a80" text-anchor="middle" font-weight="700">
+            <text x="101" y="157">17.7</text><text x="161" y="83">34.7</text><text x="221" y="139">18.4</text><text x="281" y="111">32.2</text>
+            <text x="341" y="146">21.1</text><text x="401" y="66">17.0</text><text x="461" y="139">22.6</text><text x="521" y="131">26.7</text>
+            <text x="581" y="66">35.7</text><text x="641" y="71">34.6</text><text x="701" y="71">34.6</text><text x="761" y="55">37.9</text>
+          </g>
+        </svg>
+        <div class="chart-src">Source: SNL Financial</div>
+      </div>
+
+      <h3 class="sec"><span class="n">4</span>기업별 2Q26 프리뷰</h3>
+
+      <h4 class="sub">First Solar (FSLR, Buy · PT $310 · 현재가 $211.99)</h4>
+      <ul class="pts">
+        <li>2Q26 매출/EBITDA/EPS <b>$1,099mn / $480mn / $3.23</b> (컨센 $1,063mn / $465mn / $2.99)</li>
+        <li>3자 모듈 판매 <b>3.8GW</b> (+7% yoy), 가이던스 3.4–4.0GW의 중간값 부근. ASP/원가 $0.29/$0.27 per watt로 yoy 보합</li>
+        <li>컴포넌트 GM 6.7% (yoy -450bp, qoq +20bp). 2026 매출 $5.0bn 전망 vs 가이던스 $4.9–5.2bn</li>
+        <li>Section 232 최종 결정이 <b>8월 중순</b>으로 미뤄질 가능성 → 이번 분기 수주는 부진할 전망, ASP는 1Q26($0.35/W, 미국 1.4GW) 수준 유지 예상</li>
+        <li>2H26 finishing line 가동 시점, perovskite 1GW 라인(2027) 및 CuRe 진척, 자본 배분 프레임워크 업데이트가 관전 포인트</li>
+      </ul>
+
+      <h4 class="sub">Nextpower (NXT, Buy · PT $148 ← $168 · 현재가 $103.10)</h4>
+      <ul class="pts">
+        <li>F1Q27 매출/adj. EBITDA/EPS <b>$927mn / $205mn / $1.05</b> (컨센 $933mn / $206mn / $1.05) — 대체로 in-line</li>
+        <li>미국 매출 ~$695mn(+16% yoy), ROW $232mn(-12% yoy). Blended ASP $0.070/W(-6% yoy), 원가 $0.056/W(-6% yoy)</li>
+        <li>수주 <b>$1bn 초과 시 book-to-bill 1.0x 상회</b> — 최근 5개 분기 중 4개 분기에서 $1.0bn 내외 달성. F4Q26 백로그 <b>$5.25bn 초과</b></li>
+        <li>Prevalon Energy 인수 이번 주 클로징 → 연 <b>$300mn+</b> run-rate 매출 기여. Zimmermann PV-Steel은 F2H27 클로징 예정, 추가 <b>~$340mn</b></li>
+        <li>컨센서스 F2028 매출은 Prevalon 발표 이후 ~$300mn 상향된 ~$4.9bn, F2029는 ~$500mn 상향된 $6.0bn → 중기 추정치에 추가 상방 여지</li>
+        <li>2026–2028 adj. EPS를 <b>3%/5%/11% 상향</b>해 $4.55/$5.37/$6.27. PT는 수정 Q5-Q8 EPS에 <b>27.5x</b>(← 33.0x) P/E 적용</li>
+        <li>비(非)트래커 매출 F2027 ~$600mn(전체의 14–15%), 2030년 1/3 목표 — 연내 Capital Markets Day가 핵심 촉매</li>
+      </ul>
+
+      <h4 class="sub">Array Technologies (ARRY, Buy · PT $10 ← $12 · 현재가 $6.11)</h4>
+      <ul class="pts">
+        <li>2Q26 매출/adj. EBITDA/EPS <b>$312mn / $42mn / $0.10</b> (컨센 $313mn / $44mn / $0.12)</li>
+        <li>미국 ~$286mn(-2% yoy), ROW $26mn(-62% yoy). Adj. GM 27.0% (미국 28.4% / ROW 11.8%)</li>
+        <li>3Q26 매출 $452mn(qoq +45%) 전망, 가이던스는 $450–470mn 제시 가능. 연간 매출의 <b>~63%가 2H26</b>에 집중</li>
+        <li>FY26 가이던스($1.4–1.5bn 매출, adj. EBITDA $200–230mn, adj. EPS $0.65–0.75) 재확인 예상</li>
+        <li>3개 분기 연속 <b>$400mn 초과 수주</b> 흐름 유지 여부가 관건. APA 통합·원가 시너지 업데이트 주목</li>
+        <li>PT는 Q5-Q8 EPS에 <b>12x</b>(← 14x) P/E 적용</li>
+      </ul>
+
+      <h4 class="sub">Shoals Technologies (SHLS, Buy · PT $13 ← $11 · 현재가 $10.30)</h4>
+      <ul class="pts">
+        <li>2Q26 매출/adj. EBITDA <b>$157mn / $31mn</b> (컨센 $159mn / $30mn), adj. EPS $0.12로 컨센 $0.10 상회</li>
+        <li>BLA 매출 $120mn(+42% yoy), 기타 태양광 ~$34mn(+36% yoy), 비태양광 $3mn(+152% yoy). GM 31.9%</li>
+        <li>향후 4개 분기 <b>$628mn</b> 인도 예정(2025년 말 $603mn 대비 상향) → FY26 가이던스 하단을 <b>$620–640mn</b>으로 상향 가능</li>
+        <li>수주 $150mn 상회 시 <b>7개 분기 연속 book-to-bill 1.0x 이상</b>. 배터리 스토리지 BLAO ~$75mn(1Q26, 2025년 말 $67mn)</li>
+        <li>Voltage와의 ITC 침해 소송 최종 판정 및 지방법원 소송이 오버행으로 잔존</li>
+        <li>2026–2028 adj. EPS <b>1%/2%/2% 상향</b>해 $0.49/$0.60/$0.72. PT는 <b>20.0x</b>(← 17.5x) P/E 적용</li>
+      </ul>
+
+      <h4 class="sub">Fluence Energy (FLNC, Buy · PT $22 · 현재가 $14.07)</h4>
+      <ul class="pts">
+        <li>F3Q26(6월) 매출/adj. EBITDA <b>$737mn / $7mn</b> vs 컨센 $815mn / $14mn — <b>컨센서스가 과도하게 높음</b></li>
+        <li>경영진은 F2H26 매출을 F3Q26/F4Q26 <b>30%/70%</b>로 가이드 → 가이던스 중간값 기준 F3Q26 ~$740mn 함의. 즉 외견상 top-line miss여도 가이던스 부합</li>
+        <li>F2026 가이던스($3.2–3.6bn 매출, EBITDA $40–60mn, adj. GM 11–13%) 재확인 예상</li>
+        <li>ESS 매출 $708mn(+21% yoy), 하드웨어 ASP/원가 $255/$227 per kWh(qoq -6%/-9%), blended adj. GM 13.2%</li>
+        <li>수주 모멘텀 지속: F2Q26 <b>$574mn</b>, F3Q26 실적발표 직전까지 <b>$600mn 초과</b></li>
+        <li>Hyperscaler MSA 하 수주 건수, <b>12GWh 기회</b> 확대 여부, Siemens·NVDA 파트너십 관련 신규 수주가 핵심 관전 포인트</li>
+        <li>다만 연간 매출의 ~50%가 F4Q26에 집중되는 구조는 프로젝트 지연 리스크</li>
+      </ul>
+
+      <h4 class="sub">Enphase Energy (ENPH, Buy · PT $57 · 현재가 $41.57)</h4>
+      <ul class="pts">
+        <li>2Q26 매출/non-GAAP EPS <b>$296mn / $0.46</b> (컨센 $290mn / $0.47), 가이던스 $280–310mn의 중간 수준</li>
+        <li>마이크로인버터 $224mn, 배터리 $66mn, EV 충전 $6mn. 출하 1,483천대 → 660MWdc (qoq +5%, yoy -2%)</li>
+        <li>Non-GAAP GM(IRA 포함) 45.4% — qoq +150bp, yoy -320bp, 가이던스 44–47% 부합</li>
+        <li>Safe harbor 매출은 2Q26 $85mn, 3Q26 $40–50mn 가이드였으나 컨센서스 3Q26/4Q26이 $305mn/$303mn으로 잔존 → <b>4Q26 추정치에 하방 리스크</b></li>
+        <li>3Q26 가이던스 $280–310mn 제시 예상(추정 $294mn), GM은 45X 크레딧과 스토리지 마진 개선으로 ~48%까지 확대 전망</li>
+        <li>SST 파일럿 시점, IQ9 상업용 마이크로, 5세대 배터리, prepaid lease 확대가 관전 포인트</li>
+      </ul>
+
+      <h4 class="sub">SolarEdge (SEDG, Sell · PT $34 · 현재가 $53.47)</h4>
+      <ul class="pts">
+        <li>2Q26 매출/non-GAAP EPS <b>$341mn / ($0.04)</b> (컨센 $341mn / ($0.01)), 가이던스 $325–355mn 중간 수준</li>
+        <li>DC 옵티마이저 2,900천대 출하 → 1,450MWac (qoq +19%, yoy +21%). 인버터 ASP/원가 $0.153/$0.144 per watt (-9%/-20% yoy)</li>
+        <li>Non-GAAP GM(IRA 포함) 25.8% vs 가이던스 23–27%. 3Q26 가이던스 $350–380mn, adj. GM 25–29% 제시 가능</li>
+        <li>미국 TPO 시장 내 높은 점유율과 safe harbor 수혜로 단기 기대치는 달성 가능</li>
+        <li><b>2027년 성장 경로에 하방 리스크</b> — 유럽 전력가격이 정상 수준을 소폭 상회하는 데 그쳐 수요 반등 기대가 과도, 경쟁도 심화</li>
+        <li>외국산 인버터 금지 초안은 C&amp;I 점유율이 높은 SEDG에 단기 점유율 확대 기회이나 시점·영향은 불확실</li>
+      </ul>
+
+      <h4 class="sub">Sunrun (RUN, Buy · PT $18 · 현재가 $11.85)</h4>
+      <ul class="pts">
+        <li>2Q26 매출/EPS <b>$821mn / $0.00</b> (컨센 $747mn / $0.26) — non-retained/partially retained 수익화 전략이 매출 상회 요인</li>
+        <li>설치량 204MW(-10% yoy), 스토리지 361MWh(-8% yoy). 2026년 804MW(-8% yoy) / 1,444MWh(-4% yoy) 전망</li>
+        <li>총 opex $243mn(+5% yoy), all-in 원가 <b>$3.42/W</b>(-18% yoy)</li>
+        <li>2026 현금창출 가이던스 <b>$250–450mn</b> 재확인 예상. Safe harbor 관련 현금 소요는 연간 $50–100mn 중 1Q26에 ~$30mn 집행</li>
+        <li>TSLA·Renew Home과의 협업으로 <b>16GW+ 유연 전력 용량</b> 공급, 분산 AI 컴퓨팅 파일럿 추진. 분산 에너지 기반 4.3GWh → 2028년 말 10GWh+ 목표</li>
+        <li>1Q26 subscriber 수익화 비중 23% (4Q25 50%, 3Q25 10%) — 자금조달 구조 다변화가 경쟁우위</li>
+      </ul>
+
+      <h4 class="sub">Canadian Solar (CSIQ, Sell · PT $11 · 현재가 $14.95)</h4>
+      <ul class="pts">
+        <li>2Q26 매출/EBITDA <b>$1.1bn / $40mn</b> (컨센 $1.2bn / $88mn) — 부진한 분기 전망</li>
+        <li>출하 3.2GW(-60% yoy), 가이던스 3.1–3.3GW 중간값. ASP $0.20/W(+39% yoy), 원가 $0.19/W(+59% yoy)</li>
+        <li>모듈 GM 5.1%(1Q26 40.1%에서 급락), 배터리 GM 13%, Recurrent Energy -30.0%. Blended GM 13.5%로 가이던스 하단</li>
+        <li>3Q26 모듈 6.6GW(+107% qoq)·스토리지 4.0GWh(+31% qoq) 전망, 매출 가이던스 $2.0–2.2bn 예상</li>
+        <li>FY2026 모듈 19.1GW(-21% yoy), 스토리지 13.7GWh(+75%) — OBBBA 준수 셀 확보가 관건</li>
+        <li>Jeffersonville 셀 공장 2H26 램프업, FEOC 준수 검증 여부가 핵심 확인 사항</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">5</span>목표주가 및 추정치 변경</h3>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>종목</th><th>등급</th><th>현재가</th><th>12M PT</th><th>Upside</th><th>기존 PT</th><th>변동</th><th>2027E EPS (신)</th><th>2027E EPS (구)</th></tr></thead>
+        <tbody>
+          <tr><td><b>ARRY</b></td><td class="buy">Buy</td><td class="num">$6.11</td><td class="num">$10.00</td><td class="num">+64%</td><td class="num">$12.00</td><td class="num">-17%</td><td class="num">$0.83</td><td class="num">$0.83</td></tr>
+          <tr><td><b>FLNC</b></td><td class="buy">Buy</td><td class="num">$14.07</td><td class="num">$22.00</td><td class="num">+56%</td><td class="num">$22.00</td><td class="num">0%</td><td class="num">$0.30</td><td class="num">$0.30</td></tr>
+          <tr><td><b>FSLR</b></td><td class="buy">Buy</td><td class="num">$211.99</td><td class="num">$310.00</td><td class="num">+46%</td><td class="num">$310.00</td><td class="num">0%</td><td class="num">$23.82</td><td class="num">$23.82</td></tr>
+          <tr><td><b>NXT</b></td><td class="buy">Buy</td><td class="num">$103.10</td><td class="num">$148.00</td><td class="num">+44%</td><td class="num">$168.00</td><td class="num">-12%</td><td class="num">$4.55</td><td class="num">$4.40</td></tr>
+          <tr><td><b>RUN</b></td><td class="buy">Buy</td><td class="num">$11.85</td><td class="num">$18.00</td><td class="num">+52%</td><td class="num">$18.00</td><td class="num">0%</td><td class="num">$0.49</td><td class="num">$0.49</td></tr>
+          <tr><td><b>SHLS</b></td><td class="buy">Buy</td><td class="num">$10.30</td><td class="num">$13.00</td><td class="num">+26%</td><td class="num">$11.00</td><td class="num">+18%</td><td class="num">$0.60</td><td class="num">$0.59</td></tr>
+          <tr><td><b>ENPH</b></td><td class="buy">Buy</td><td class="num">$41.57</td><td class="num">$57.00</td><td class="num">+37%</td><td class="num">$57.00</td><td class="num">0%</td><td class="num">$2.44</td><td class="num">$2.44</td></tr>
+          <tr><td><b>HASI</b></td><td>Neutral</td><td class="num">$38.42</td><td class="num">$43.00</td><td class="num">+12%</td><td class="num">$43.00</td><td class="num">0%</td><td class="num">$3.30</td><td class="num">$3.30</td></tr>
+          <tr><td><b>SEDG</b></td><td class="sell">Sell</td><td class="num">$53.47</td><td class="num">$34.00</td><td class="num">-36%</td><td class="num">$34.00</td><td class="num">0%</td><td class="num">$1.10</td><td class="num">$1.10</td></tr>
+          <tr><td><b>CSIQ</b></td><td class="sell">Sell</td><td class="num">$14.95</td><td class="num">$11.00</td><td class="num">-26%</td><td class="num">$11.00</td><td class="num">0%</td><td class="num">$0.34</td><td class="num">$0.34</td></tr>
+          <tr><td><b>JKS</b></td><td class="sell">Sell</td><td class="num">$16.49</td><td class="num">$15.00</td><td class="num">-9%</td><td class="num">$19.00</td><td class="num">-21%</td><td class="num">($0.05)</td><td class="num">($0.05)</td></tr>
+          <tr><td><b>NRGV</b></td><td class="sell">Sell</td><td class="num">$3.08</td><td class="num">$2.50</td><td class="num">-19%</td><td class="num">$2.50</td><td class="num">0%</td><td class="num">($0.24)</td><td class="num">($0.24)</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-src">Source: FactSet · 가격 기준일 7/17/26</div>
+
+      <div class="callout"><span class="t">주목</span>NXT는 커버리지 내 최선호 종목(conviction list 편입). NXT·JKS의 PT 하향은 컴프 밸류에이션 하락(멀티플 축소)에 기인한 것이며, 실적 추정치는 오히려 상향(NXT)되었다는 점에서 펀더멘털 훼손과는 성격이 다름.</div>
+
+      <h3 class="sec"><span class="n">!</span>리스크 &amp; 모니터링 포인트</h3>
+      <div class="risk-box">
+        <h4>등급·목표주가에 대한 주요 리스크</h4>
+        <ul>
+          <li><b>ARRY / NXT:</b> 경쟁 심화, 고객 이탈, 특허 보호, 전방 수요, 정책, 공급업체 제품 가용성·가격</li>
+          <li><b>FLNC:</b> ESS 채택 지연, 매출 인식 지연, 공급망·물류 차질, 소송 결과, 하드웨어→소프트웨어 믹스 전환 시점</li>
+          <li><b>FSLR:</b> 모듈 공급과잉, 모듈 원가 상승, 통상 정책, 미국 제조 크레딧 변경</li>
+          <li><b>RUN:</b> MW 성장 둔화, net metering 등 정책 변화, 금리 상승</li>
+          <li><b>SHLS:</b> 워런티 이슈, 수요 성장 둔화, 마진 하회, 정책 악화</li>
+          <li><b>ENPH:</b> 시장 성장 둔화, 점유율 하락, ASP 하회, 전력비 상승, 미국 외 성장 부진</li>
+          <li><b>SEDG (Sell):</b> 인버터 ASP 개선, 우호적 매크로 정책, 금리 하락, 에너지 소비·가격 상승</li>
+          <li><b>CSIQ (Sell):</b> 모듈 ASP 조기 회복, 우호적 정책, 예상 상회 증설, ESS 채택 가속, 믹스 개선</li>
+          <li><b>JKS (Sell):</b> 원가 하락 가속, 폴리 가격 하락, 통상 규제 완화, 캐파 합리화, capex 축소</li>
+          <li><b>NRGV (Sell):</b> 예상 상회 시장 수요, 고객 집중도 완화, 원가 하락 가속</li>
+        </ul>
+        <h4 style="margin-top:14px;">모니터링 포인트</h4>
+        <ul>
+          <li>Section 232 폴리실리콘 최종 결정 시점(시장 기대: 8월 중순)과 모듈 최저수입가격 수준</li>
+          <li>FEOC 최종 가이던스(4Q26 예상) 및 외국산 인버터 수입 규제 초안의 진행</li>
+          <li>2026년 safe harbor 선수요가 2027년 장비 수요 공백으로 이어질 가능성</li>
+          <li>NXT Capital Markets Day — 비트래커 사업 매출·마진 목표 구체화</li>
+          <li>FLNC의 hyperscaler MSA 실제 발주 전환 속도 및 12GWh 파이프라인 확대 여부</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= REPORT 2 : ENERGY STORAGE ================= -->
+  <section class="report" id="bess">
+
+    <div class="report-head">
+      <div class="tag">Americas Clean Technology / Energy Storage · 16 July 2026</div>
+      <h2>데이터센터向 BTM 배터리 스토리지 기회 점검 및 ESS 수급 모델 상향</h2>
+      <p class="lede">AI 데이터센터의 전력 병목이 BTM 배터리를 구조적 해법으로 밀어올린다 — 미국 2030년 BESS 배치 전망을 112GWh에서 172GWh로 상향.</p>
+    </div>
+
+    <div class="report-body">
+
+      <div class="chips">
+        <div class="chip"><div class="k">US BESS 2030E</div><div class="v">172 GWh</div><div class="s">← 112 GWh (상향)</div></div>
+        <div class="chip"><div class="k">BTM 기여</div><div class="v">~60 GWh</div><div class="s">2030년 신규 반영분</div></div>
+        <div class="chip"><div class="k">US 전력수요 CAGR</div><div class="v">3.2%</div><div class="s">← 2.6% (BTM이 브릿지)</div></div>
+        <div class="chip"><div class="k">주요 수혜주</div><div class="v buy">FLNC</div><div class="s">NRGV는 Sell 유지</div></div>
+      </div>
+
+      <h3 class="sec"><span class="n">1</span>왜 BTM 배터리인가 — AI 데이터센터의 전력 병목</h3>
+      <ul class="pts">
+        <li>데이터센터 규모가 <b>5–10MW → 100–200MW</b>, 일부는 GW급 캠퍼스로 확대. 랙당 전력밀도도 <b>5–10kW → 50–100kW+</b>로 급증</li>
+        <li>계통 연계(interconnection) 대기가 <b>4–8년</b>에 달해 BTM 발전·저장이 "first power" 확보의 실질적 우회로</li>
+        <li>BESS는 계약 후 <b>12–18개월</b> 내 배치 가능, 밀리초 단위 응답으로 AI 워크로드의 급격한 부하 변동에 대응</li>
+        <li>가스터빈은 baseload에는 우수하나 하루 2회 이상의 부하 전환 시 설비 마모 리스크 — 실제로 신규 CCGT가 <b>7개월 만에 샤프트 파손</b>된 사례도 보고</li>
+        <li>GPU 부하는 밀리초 단위로 0%→100% 변동 → BESS가 스파이크를 평활화해 계통 부담을 완화하고, 잉여 시간에는 grid-balancing·주파수조정 시장 참여로 수익화</li>
+        <li>현재 미국 interconnection queue 내 태양광의 <b>~50%가 스토리지와 페어링</b>되어 있어 기존 수요 기반도 견고</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">2</span>BTM 기회의 규모 — 전력수요 CAGR 상향의 실체</h3>
+      <ul class="pts">
+        <li>아시아 배터리 팀 추정 기준 2030년 BTM에서 <b>~50GWh</b> 증분, 800V DC 데이터센터 시장에서 추가 <b>11GWh</b></li>
+        <li>이에 따라 미국 유틸리티급 BESS 배치 기회는 2030년 <b>161GWh</b>, 총 미국 BESS 배치는 <b>172GWh</b></li>
+        <li>미국 전력수요 CAGR을 2.6% → <b>3.2%</b>로 상향. 이 중 on-grid 기여가 2.8%이고, <b>BTM이 3.2%로 가는 브릿지(0.5%p)</b></li>
+        <li>BTM 0.5%p는 2030년까지 <b>20GW의 신규 전력 용량</b>(용량계수 ~70% 가정 시 14GW)에 해당하며 상당 부분 onsite gas 기반</li>
+        <li>2027–2030년 연평균 <b>~3GW</b>의 BTM 데이터센터 전력 수요 발생 전망</li>
+      </ul>
+
+      <div class="chart-card">
+        <div class="ct">전체 전력수요 CAGR 드라이버 분해 — BTM 데이터센터가 3.2% 중 0.5%p</div>
+        <svg viewBox="0 0 880 320" width="100%">
+          <line x1="70" y1="270" x2="860" y2="270" stroke="#cfd6e0"/>
+          <g stroke="#eef1f6"><line x1="70" y1="220" x2="860" y2="220"/><line x1="70" y1="170" x2="860" y2="170"/><line x1="70" y1="120" x2="860" y2="120"/><line x1="70" y1="70" x2="860" y2="70"/></g>
+          <g font-size="10" fill="#9aa3b2"><text x="30" y="273">0.0%</text><text x="30" y="223">1.0%</text><text x="30" y="173">2.0%</text><text x="30" y="123">3.0%</text><text x="30" y="73">4.0%</text></g>
+          <!-- waterfall -->
+          <g>
+            <rect x="95" y="240" width="70" height="30" fill="#1a2b4a"/>
+            <rect x="190" y="220" width="70" height="20" fill="#1a2b4a"/>
+            <rect x="285" y="195" width="70" height="25" fill="#1a2b4a"/>
+            <rect x="380" y="185" width="70" height="10" fill="#1a2b4a"/>
+            <rect x="475" y="110" width="70" height="75" fill="#a8c4e0"/>
+            <rect x="570" y="85" width="70" height="25" fill="#1a2b4a"/>
+            <rect x="665" y="85" width="70" height="20" fill="#a8c4e0"/>
+            <rect x="760" y="110" width="70" height="160" fill="#1a2b4a"/>
+          </g>
+          <g font-size="11" fill="#3d5a80" font-weight="700" text-anchor="middle">
+            <text x="130" y="233">0.6%</text><text x="225" y="213">0.4%</text><text x="320" y="188">0.5%</text><text x="415" y="178">0.2%</text>
+            <text x="510" y="103">1.5%</text><text x="605" y="78">0.5%</text><text x="700" y="78">-0.4%</text><text x="795" y="103">3.2%</text>
+          </g>
+          <g font-size="10" fill="#525866" text-anchor="middle">
+            <text x="130" y="288">Residential</text>
+            <text x="225" y="288">Commercial</text>
+            <text x="320" y="288">Industrial</text>
+            <text x="415" y="288">Transport</text>
+            <text x="510" y="288">FTM DC</text>
+            <text x="605" y="288">BTM DC</text>
+            <text x="700" y="288">Other</text>
+            <text x="795" y="288">Total</text>
+          </g>
+        </svg>
+      </div>
+
+      <h3 class="sec"><span class="n">3</span>수급 모델 업데이트 — 미국·EMEA·호주 상향</h3>
+      <ul class="pts">
+        <li><b>미국</b>: BTM 스토리지 배치를 신규 반영해 2030년 ~60GWh 추가 → 총 <b>172GWh</b> (기존 112GWh)</li>
+        <li><b>유럽/EMEA</b>: 2030년 <b>142GWh</b>로 상향 (기존 83GWh). 독일, 스페인·포르투갈, 기타 EMEA의 성장세가 가장 큼</li>
+        <li><b>호주</b>: 주거용 정책 지원으로 2026–2028년 전망치를 두 배 이상 상향, 2030년까지 지원 축소를 반영해 점진 둔화 가정</li>
+        <li>글로벌 연간 배치는 2027년 <b>488GWh</b>(+30% yoy), 2030년 <b>961GWh</b>, 2040년 <b>~2,100GWh</b>까지 확대 전망</li>
+      </ul>
+
+      <div class="chart-card">
+        <div class="ct">글로벌 연간 배터리 에너지 스토리지 설치량 전망 (GWh)</div>
+        <svg viewBox="0 0 880 300" width="100%">
+          <line x1="70" y1="250" x2="860" y2="250" stroke="#cfd6e0"/>
+          <g stroke="#eef1f6"><line x1="70" y1="200" x2="860" y2="200"/><line x1="70" y1="150" x2="860" y2="150"/><line x1="70" y1="100" x2="860" y2="100"/><line x1="70" y1="50" x2="860" y2="50"/></g>
+          <g font-size="10" fill="#9aa3b2"><text x="25" y="253">0</text><text x="15" y="203">500</text><text x="10" y="153">1,000</text><text x="10" y="103">1,500</text><text x="10" y="53">2,000</text></g>
+          <g fill="#1a2b4a">
+            <rect x="95" y="232" width="52" height="18"/>
+            <rect x="170" y="222" width="52" height="28"/>
+            <rect x="245" y="213" width="52" height="37"/>
+            <rect x="320" y="201" width="52" height="49"/>
+            <rect x="395" y="188" width="52" height="62"/>
+            <rect x="470" y="171" width="52" height="79"/>
+            <rect x="545" y="154" width="52" height="96" fill="#3d5a80"/>
+            <rect x="620" y="98" width="52" height="152" fill="#6b8cae"/>
+            <rect x="695" y="77" width="52" height="173" fill="#6b8cae"/>
+            <rect x="770" y="40" width="52" height="210" fill="#6b8cae"/>
+          </g>
+          <g font-size="10" fill="#3d5a80" text-anchor="middle" font-weight="700">
+            <text x="121" y="226">181</text><text x="196" y="216">285</text><text x="271" y="207">375</text><text x="346" y="195">488</text>
+            <text x="421" y="182">623</text><text x="496" y="165">788</text><text x="571" y="148">961</text><text x="646" y="92">1,517</text>
+            <text x="721" y="71">1,728</text><text x="796" y="34">2,104</text>
+          </g>
+          <g font-size="10" fill="#525866" text-anchor="middle">
+            <text x="121" y="266">2024</text><text x="196" y="266">2025E</text><text x="271" y="266">2026E</text><text x="346" y="266">2027E</text>
+            <text x="421" y="266">2028E</text><text x="496" y="266">2029E</text><text x="571" y="266">2030E</text><text x="646" y="266">2035E</text>
+            <text x="721" y="266">2037E</text><text x="796" y="266">2040E</text>
+          </g>
+        </svg>
+      </div>
+
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>지역 (GWh)</th><th>2026E</th><th>2027E</th><th>2028E</th><th>2029E</th><th>2030E</th></tr></thead>
+        <tbody>
+          <tr><td><b>North America</b></td><td class="num">67</td><td class="num">79</td><td class="num">96</td><td class="num">127</td><td class="num">172</td></tr>
+          <tr><td><b>APAC</b></td><td class="num">233</td><td class="num">317</td><td class="num">420</td><td class="num">536</td><td class="num">646</td></tr>
+          <tr><td><b>EMEA</b></td><td class="num">75</td><td class="num">92</td><td class="num">107</td><td class="num">125</td><td class="num">142</td></tr>
+          <tr><td><b>Global 합계</b></td><td class="num">375</td><td class="num">488</td><td class="num">623</td><td class="num">788</td><td class="num">961</td></tr>
+          <tr><td>Global 성장률</td><td class="num">+31%</td><td class="num">+30%</td><td class="num">+28%</td><td class="num">+27%</td><td class="num">+22%</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3 class="sec"><span class="n">4</span>테마 익스포저 — 배터리 스토리지 공급망 종목</h3>
+      <ul class="pts">
+        <li><b>FLNC (Buy)</b>: NVDA의 DSX Vera Rubin 레퍼런스 아키텍처에 독점 배터리 파트너로 편입. Hyperscaler 2곳과 MSA 체결, <b>12GWh</b> 용량 입찰 진행 중. Smartstack은 데이터센터 특화 고밀도·고급 제어. F2Q26 기준 데이터센터 파이프라인 12GW로 <b>qoq +30%</b></li>
+        <li><b>NXT (Buy, 최선호 종목)</b>: Prevalon Energy 인수로 <b>6GWh+</b> 배치·계약 BESS 확보, 솔라 트래커 공급사에서 종합 에너지 플랫폼으로 전환. Hybrid Power Stabilizer로 GPU 부하 변동 평활화, "everything but the panel" 솔루션 지향. 연 <b>$300mn+</b> 매출, F2028 연결 매출의 ~7% 수준</li>
+        <li><b>SHLS (Buy)</b>: EBOS 선도 업체로 배터리 블록과 계통을 잇는 "중추신경". 데이터센터 전용 <b>BESS Recombiner</b> 플랫폼 개발, prefab plug-and-play로 숙련 인력 병목 완화. BESS BLAO $67mn(4Q25, 총 BLAO ~$750mn의 9%), 2026년 매출 <b>$30–35mn</b> 전망</li>
+        <li><b>CSIQ (Sell)</b>: 자회사 e-STORAGE가 SolBank 3.0(5–8.36MWh) 공급, 글로벌 <b>81GWh</b> 개발 파이프라인 보유. 미국 유틸리티向 2,493MWh DC 시스템 계약. 배터리 스토리지가 2026년 매출의 <b>~34%</b> 전망(2023년 3%, 2024년 14%)</li>
+        <li><b>CATL (Buy)</b>: 2025년 배터리 레벨 기준 글로벌 ESS 점유율 <b>~30%</b>. TENER 6.25MWh 등 데이터센터 특화 제품, 나트륨이온은 2026년 말 인도 개시 예정</li>
+        <li><b>LGES (Buy)</b>: 자회사 Vertech를 통한 하드웨어+SI 통합 "one-stop shop". 차세대 LFP UPS 배터리는 기존 대비 출력 2배 이상. 북미 5개 라인을 ESS 전용으로 전환해 2026년 말 <b>50GWh</b> 캐파 목표. ESS 매출 비중 2026E/27E <b>c.31%/c.35%</b> (2025E c.14%)</li>
+        <li><b>Samsung SDI (Neutral)</b>: 서버랙 표준으로 자리잡는 UPS·BBU向 고출력 배터리 공략. U8A1은 각형·LMO 기반으로 공간 효율 <b>33.0%</b> 개선. ESS 배터리 매출 비중 2026E/27E <b>c.26%/c.28%</b> (2025 c.21%)</li>
+        <li><b>TSLA (Neutral)</b>: 2025년 <b>46.7GWh</b> 스토리지 배치(2026년은 이를 상회 전망), 휴스턴 인근 신규 Megafactory 램프업. RUN·Renew Home과 홈배터리 결집으로 <b>16.8GW</b> 유연 용량 확보 — 계통 증설의 3–6년 리드타임 회피</li>
+        <li><b>F (Neutral)</b>: Ford Energy LLC 신설, 켄터키에 연 <b>20GWh</b> 사이트에 $2bn 투자. 2027년 말 출하 목표, CATL 기술 라이선스로 LFP 셀 생산. 2028년 ~$3bn 매출 기여 전망</li>
+        <li><b>Sungrow (Neutral)</b>: PowerTitan 3.0·PowerStack 기반 "grid-to-chip" 솔루션, SST 전용 제품도 출시 추진. 2025년 ESS가 매출/매출총이익의 <b>42%/49%</b> 차지</li>
+      </ul>
+
+      <div class="callout"><span class="t">참고</span>리튬이온 외 LDES 대안도 병행 부상 — 바나듐 등 redox flow(8–12시간+ 백업, 열폭주 리스크 없음), 압축공기(Hydrostor)·iron-air(Form Energy), 나트륨이온(Peak Energy, Inlyte, ABB), 수소연료전지(BE, PLUG, BLDP, CAT, VRT) 등. 다만 대부분 BTM 세팅에 최적화된 것은 아님.</div>
+
+      <h3 class="sec"><span class="n">5</span>종목 함의 — FLNC 수혜, NRGV는 신중 유지</h3>
+      <ul class="pts">
+        <li><b>FLNC (Buy, PT $22)</b>: 데이터센터 직결 <b>12GWh 파이프라인</b> 보유, hyperscaler 2곳과의 MSA가 이 파이프라인의 대부분을 차지하며 F2027 말부터 출하 반영 전망</li>
+        <li>12GWh의 <b>15–25%</b> 확보 시 1.8–3.0GWh 규모 → ~$200/kWh 가정 시 <b>$360–600mn 매출 기회</b>, F2028 매출 전망 대비 <b>+8~14% upside</b></li>
+        <li>PT $22는 DCF(터미널 성장률 4.5%) 50% + FY2027E 매출에 1x EV/Sales 적용한 $23을 50% 가중</li>
+        <li><b>NRGV (Sell, PT $2.50 ← $2.00)</b>: Asset Vault의 powered land·powered shell 사업이 hyperscaler·데이터센터를 직접 겨냥, 2030년까지 <b>~350MW / ~1.8GW</b> 건설·개발 목표</li>
+        <li>다만 Asset Vault의 운영 포트폴리오 확대와 실적 트랙레코드 확인 전까지는 긍정적 전환 유보</li>
+        <li>NRGV 2026–2028 매출 <b>(3%)/(1%)/+5%</b> 조정해 $243mn/$303mn/$364mn, adj. EBITDA는 ($26mn)/($10mn)/$32mn으로 변경(기존 ($14mn)/$9mn/$33mn)</li>
+        <li>2026–2027 마진 전망 ~400bp 하향, 2028년은 ~400bp 상향. 2026년 GM 15.9%로 가이던스(15–25%) 하단</li>
+        <li>NRGV 밸류에이션: 코어 배터리 통합 사업 2027E 매출에 <b>0.8x</b> EV/S(← 1.4x) 적용 $1.25 + Asset Vault 2028 EBITDA에 <b>6.0x</b> EV/EBITDA 적용 $1.75 − 순차입금 $0.50/sh = PT $2.50</li>
+        <li>Asset Vault의 2028년 EBITDA 마진은 ~64%로 컴프 평균을 크게 상회하나, 사업 초기 단계를 반영해 컴프 평균 대비 ~3.5x 낮은 멀티플 적용</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">!</span>리스크 &amp; 모니터링 포인트</h3>
+      <div class="risk-box">
+        <h4>주요 리스크</h4>
+        <ul>
+          <li><b>FLNC:</b> ESS 채택 지연, 매출 인식 지연, 배터리 부족·물류 등 공급망 차질, 소송 결과, 하드웨어→소프트웨어 믹스 전환 시점</li>
+          <li><b>NRGV:</b> 예상 상회 시장 수요, 고객 집중도 완화, 원가 하락 가속 (Sell 논지의 역방향 리스크)</li>
+          <li><b>공통:</b> BTM 배치 전망은 데이터센터 자본투자 사이클과 hyperscaler 발주 속도에 직접 연동 — AI capex 둔화 시 전망치 하방 압력</li>
+        </ul>
+        <h4 style="margin-top:14px;">모니터링 포인트</h4>
+        <ul>
+          <li>Hyperscaler MSA의 실제 발주(PO) 전환 속도 및 12GWh 파이프라인 확대 여부</li>
+          <li>BTM 프로젝트의 onsite gas 대비 배터리 비중 — 가스터빈 리드타임 및 부하 전환 내구성 이슈</li>
+          <li>나트륨이온·redox flow 등 대체 기술의 데이터센터 상용화 진척</li>
+          <li>EMEA(독일·스페인/포르투갈)와 호주의 정책 지원 지속 여부</li>
+          <li>글로벌 셀 캐파 가동률(2027E ~50%) — 공급 타이트닝 시 ASP 반등 가능성</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div>본 문서는 투자 권유를 목적으로 하지 않습니다.</div>
+  </footer>
+
+</div>
+</body>
+</html>
