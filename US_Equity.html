@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>US Equity Strategy — S&P 500 Outlook</title>
+<style>
+  :root{
+    --brand:#26282a;
+    --brand-deep:#131415;
+    --accent:#e60028;
+    --accent2:#8a1c30;
+    --paper:#f4f5f7;
+    --card:#ffffff;
+    --ink:#1b1e24;
+    --ink-soft:#525866;
+    --line:#dfe2e8;
+    --buy:#1f7a4d;
+    --bear:#c0392b;
+    --bull:#1f6fb2;
+    --warn:#8a4b15;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Helvetica Neue','Pretendard','Noto Sans KR',Arial,sans-serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  .topbar{
+    background:var(--brand-deep);
+    color:#fff;padding:14px 6vw;
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;
+    border-bottom:3px solid var(--accent);
+    position:sticky;top:0;z-index:50;
+  }
+  .topbar .logo{font-weight:700;font-size:18px;letter-spacing:0.5px;}
+  .topbar .logo span{color:var(--accent);}
+  .topbar nav{display:flex;gap:8px;flex-wrap:wrap;}
+  .topbar nav a{
+    color:#d6d9de;text-decoration:none;font-size:12.5px;
+    padding:6px 12px;border:1px solid rgba(255,255,255,0.2);border-radius:20px;
+    transition:all .15s;
+  }
+  .topbar nav a:hover{background:var(--accent);color:#fff;border-color:var(--accent);}
+
+  .wrap{max-width:960px;margin:0 auto;padding:40px 6vw 90px;}
+
+  .intro{border-left:4px solid var(--accent);padding:8px 0 8px 20px;margin-bottom:48px;}
+  .intro .eyebrow{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent2);font-weight:700;}
+  .intro h1{font-size:26px;margin:8px 0 6px;color:var(--brand);}
+
+  .report{margin-bottom:64px;scroll-margin-top:70px;}
+  .report-head{
+    background:linear-gradient(135deg,var(--brand) 0%, var(--brand-deep) 100%);
+    color:#fff;border-radius:10px 10px 0 0;padding:28px 30px;
+  }
+  .report-head .tag{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#b9bec6;font-weight:700;}
+  .report-head h2{margin:8px 0 14px;font-size:23px;line-height:1.35;}
+  .report-head .lede{
+    font-family:'Georgia',serif;font-size:15.5px;color:#e9ebef;
+    border-top:1px solid rgba(255,255,255,0.16);padding-top:14px;margin:0;
+  }
+  .report-body{
+    background:var(--card);border:1px solid var(--line);border-top:none;
+    border-radius:0 0 10px 10px;padding:30px;
+  }
+
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px;}
+  .chip{border:1px solid var(--line);border-radius:8px;padding:10px 16px;background:#fafbfc;flex:1;min-width:130px;}
+  .chip .k{font-size:10.5px;letter-spacing:0.5px;text-transform:uppercase;color:var(--ink-soft);}
+  .chip .v{font-size:19px;font-weight:700;color:var(--brand);margin-top:2px;}
+  .chip .v.buy{color:var(--buy);}
+  .chip .v.sell{color:var(--bear);}
+  .chip .s{font-size:11px;color:var(--ink-soft);}
+
+  h3.sec{
+    font-size:17px;color:var(--brand);margin:30px 0 12px;
+    padding-bottom:8px;border-bottom:1.5px solid var(--line);
+    display:flex;align-items:center;gap:10px;
+  }
+  h3.sec .n{
+    background:var(--brand);color:#fff;font-size:12px;font-weight:700;
+    width:24px;height:24px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  h4.sub{font-size:14px;color:var(--accent2);margin:22px 0 6px;}
+  ul.pts{margin:0;padding:0;list-style:none;}
+  ul.pts li{position:relative;padding:7px 0 7px 20px;font-size:14.5px;border-bottom:1px dashed var(--line);}
+  ul.pts li:last-child{border-bottom:none;}
+  ul.pts li::before{content:"—";position:absolute;left:0;color:var(--accent2);font-weight:700;}
+  ul.pts b{color:var(--brand);}
+
+  table.tbl{width:100%;border-collapse:collapse;font-size:13px;margin:6px 0 4px;}
+  table.tbl th{background:var(--brand);color:#fff;text-align:left;padding:8px 10px;font-weight:600;}
+  table.tbl td{padding:7px 10px;border-bottom:1px solid var(--line);}
+  table.tbl tr:nth-child(even) td{background:#f7f8fa;}
+  table.tbl td.num{text-align:right;font-variant-numeric:tabular-nums;}
+  table.tbl td.pos{color:var(--buy);font-weight:700;text-align:right;font-variant-numeric:tabular-nums;}
+  table.tbl td.neg{color:var(--bear);font-weight:700;text-align:right;font-variant-numeric:tabular-nums;}
+  .tbl-wrap{overflow-x:auto;}
+
+  .chart-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:22px 22px 14px;margin:14px 0;}
+  .chart-card .ct{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:12px;}
+  .chart-src{font-size:10.5px;color:#9aa3b2;margin-top:8px;}
+  .legend{display:flex;gap:18px;font-size:11.5px;color:var(--ink-soft);margin-bottom:4px;flex-wrap:wrap;}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .legend i{width:11px;height:11px;border-radius:2px;display:inline-block;}
+
+  .bbgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0;}
+  @media(max-width:680px){.bbgrid{grid-template-columns:1fr;}}
+  .bb{border-radius:8px;padding:16px;border:1px solid var(--line);background:#fafbfc;}
+  .bb.bull{border-top:3px solid var(--bull);}
+  .bb.base{border-top:3px solid var(--ink-soft);}
+  .bb.bear{border-top:3px solid var(--bear);}
+  .bb .lbl{font-size:11px;letter-spacing:0.6px;text-transform:uppercase;font-weight:700;color:var(--ink-soft);}
+  .bb .px{font-size:22px;font-weight:700;color:var(--brand);margin:4px 0;}
+  .bb .ret{font-size:13px;font-weight:600;}
+  .bb.bull .ret{color:var(--bull);}
+  .bb.bear .ret{color:var(--bear);}
+  .bb ul{margin:8px 0 0;padding-left:16px;font-size:12px;color:var(--ink-soft);}
+  .bb li{margin-bottom:4px;}
+
+  .callout{background:#fbf6ec;border:1px solid #e8dcc3;border-radius:8px;padding:14px 18px;font-size:13px;color:var(--ink-soft);margin-top:14px;}
+  .callout .t{font-size:10.5px;font-weight:700;letter-spacing:0.6px;color:var(--warn);text-transform:uppercase;display:block;margin-bottom:5px;}
+
+  .risk-box{background:var(--brand);color:#dde0e5;border-radius:8px;padding:22px 24px;margin-top:14px;}
+  .risk-box h4{margin:0 0 10px;color:#fff;font-size:14.5px;}
+  .risk-box ul{margin:0;padding-left:18px;}
+  .risk-box li{margin-bottom:8px;font-size:13px;}
+  .risk-box li b{color:#fff;}
+
+  footer{border-top:1px solid var(--line);margin-top:50px;padding-top:20px;font-size:11px;color:#9aa3b2;line-height:1.6;}
+
+  @media(max-width:560px){
+    .intro h1{font-size:21px;}
+    .report-head h2{font-size:19px;}
+    .report-body{padding:20px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">Research<span>·</span>Digest</div>
+  <nav>
+    <a href="#view">시장 전망</a>
+    <a href="#eps">실적</a>
+    <a href="#val">밸류에이션</a>
+    <a href="#theme">AI·Capex</a>
+    <a href="#macro">정책·Regime</a>
+    <a href="#pos">Positioning</a>
+    <a href="#trade">옵션 트레이드</a>
+    <a href="#risk">리스크</a>
+  </nav>
+</div>
+
+<div class="wrap">
+
+  <div class="intro">
+    <div class="eyebrow">20 July 2026</div>
+    <h1>S&amp;P 500: 아직 반영되지 않은 성장 — 2026년 8,100 / 2027년 8,900</h1>
+  </div>
+
+  <section class="report" id="view">
+
+    <div class="report-head">
+      <div class="tag">US Equity Strategy / Market Outlook</div>
+      <h2>실적 주도 랠리는 아직 더 남았다 — 시장은 더 높아진 성장을 가격에 반영하지 못하고 있다</h2>
+      <p class="lede">향후 18개월간 SPX NTM EPS가 약 25% 상승할 것으로 보이는 가운데, forward sales CAGR과 CFROI가 시사하는 적정 P/E는 24배를 상회한다. 현 지수는 모델 내재 P/E 대비 약 18% 할인 상태로, 하방 대비 상방이 우위인 asymmetry가 유지된다.</p>
+    </div>
+
+    <div class="report-body">
+
+      <div class="chips">
+        <div class="chip"><div class="k">View</div><div class="v buy">Bullish</div><div class="s">US Equities</div></div>
+        <div class="chip"><div class="k">SPX Target ('26)</div><div class="v">8,100</div><div class="s">현재 대비 +7.5%</div></div>
+        <div class="chip"><div class="k">SPX Target ('27)</div><div class="v">8,900</div><div class="s">현재 대비 +18.1%</div></div>
+        <div class="chip"><div class="k">2027E EPS</div><div class="v">$410</div><div class="s">컨센서스 +4%</div></div>
+        <div class="chip"><div class="k">Fair Value P/E</div><div class="v">24.6x</div><div class="s">실제 20.1x, -18.3%</div></div>
+        <div class="chip"><div class="k">Current (7/17)</div><div class="v">7,534</div><div class="s">NTM EPS $373.1</div></div>
+      </div>
+
+      <h3 class="sec"><span class="n">1</span>핵심 전망 — 8% 상방, 그리고 그 이상</h3>
+      <ul class="pts">
+        <li>연말 SPX 목표 <b>8,100</b>은 2027년 EPS 추정치 $410에 <b>19.8x</b>를 적용한 값. 이는 작년 말 대비 멀티플이 10% 이상 하락하는 것을 전제로 한, 적정가치 대비 보수적인 수준</li>
+        <li>2027년 말 목표 <b>8,900</b>은 2026년 목표 대비 +10%, 현 수준 대비 <b>+18%</b>. SPX 이익이 20%+ CAGR로 성장하고 sales CAGR 9%·CFROI 22%인 자산으로서 현 밸류에이션은 과도하지 않다는 판단</li>
+        <li>SPX NTM EPS는 YTD <b>+20%</b> 상승한 반면 지수는 <b>+10%</b> 상승에 그쳐, 랠리가 이익 상향을 온전히 따라가지 못한 상태</li>
+        <li>향후 18개월간 NTM EPS <b>+25%</b> 전망. 내년 SPX 이익의 <b>약 50%</b>를 Tech+가 차지</li>
+        <li>Forward sales CAGR이 '23년 이후 약 <b>3pp</b> 상승하며 2003년 이전 이후 최고 수준. 최근 3개월간 cap-weighted 기준 <b>100bp</b> 급등은 2020년(COVID 저점 이후), 2009년(GFC 이후), 2003~04년(경기침체 이후)에 준하는 희소한 국면</li>
+        <li>P/E to sales CAGR 비율(PEG 성격)은 <b>2008~12년 저점권</b>까지 하락 — 시장이 높아진 성장을 discount하지 않고 있음을 시사</li>
+      </ul>
+
+      <div class="chart-card">
+        <div class="ct">SPX 시나리오 경로 — Baseline / Upside / Downside</div>
+        <div class="legend">
+          <span><i style="background:#26282a"></i>Baseline</span>
+          <span><i style="background:#1f6fb2"></i>Upside</span>
+          <span><i style="background:#c0392b"></i>Downside</span>
+        </div>
+        <svg viewBox="0 0 880 340" width="100%">
+          <line x1="70" y1="300" x2="850" y2="300" stroke="#cfd6e0"/>
+          <line x1="70" y1="20" x2="70" y2="300" stroke="#cfd6e0"/>
+          <!-- y grid: 5000 -> 300, 11000 -> 30 -->
+          <line x1="70" y1="255" x2="850" y2="255" stroke="#eef1f5"/>
+          <line x1="70" y1="210" x2="850" y2="210" stroke="#eef1f5"/>
+          <line x1="70" y1="165" x2="850" y2="165" stroke="#eef1f5"/>
+          <line x1="70" y1="120" x2="850" y2="120" stroke="#eef1f5"/>
+          <line x1="70" y1="75" x2="850" y2="75" stroke="#eef1f5"/>
+          <line x1="70" y1="30" x2="850" y2="30" stroke="#eef1f5"/>
+          <text x="62" y="304" text-anchor="end" font-size="11" fill="#8a919c">5,000</text>
+          <text x="62" y="259" text-anchor="end" font-size="11" fill="#8a919c">6,000</text>
+          <text x="62" y="214" text-anchor="end" font-size="11" fill="#8a919c">7,000</text>
+          <text x="62" y="169" text-anchor="end" font-size="11" fill="#8a919c">8,000</text>
+          <text x="62" y="124" text-anchor="end" font-size="11" fill="#8a919c">9,000</text>
+          <text x="62" y="79" text-anchor="end" font-size="11" fill="#8a919c">10,000</text>
+          <text x="62" y="34" text-anchor="end" font-size="11" fill="#8a919c">11,000</text>
+
+          <!-- historical path Jun-24(x=100,5450) to Jun-26(x=470,7534) -->
+          <polyline fill="none" stroke="#8a919c" stroke-width="2"
+            points="100,280 140,268 180,252 210,272 250,240 290,222 330,208 370,232 410,196 440,180 470,186"/>
+          <line x1="470" y1="20" x2="470" y2="300" stroke="#b9bec6" stroke-dasharray="3,3"/>
+          <text x="470" y="16" text-anchor="middle" font-size="11" fill="#8a919c">현재 (7,534)</text>
+
+          <!-- baseline to 8100 (x=620) then 8900 (x=810) -->
+          <polyline fill="none" stroke="#26282a" stroke-width="2.5" stroke-dasharray="6,4"
+            points="470,186 620,160 810,124"/>
+          <circle cx="620" cy="160" r="4.5" fill="#26282a"/>
+          <circle cx="810" cy="124" r="4.5" fill="#26282a"/>
+          <text x="620" y="150" text-anchor="middle" font-size="12" font-weight="700" fill="#26282a">8,100</text>
+          <text x="810" y="114" text-anchor="middle" font-size="12" font-weight="700" fill="#26282a">8,900</text>
+
+          <!-- upside to 10000 -->
+          <polyline fill="none" stroke="#1f6fb2" stroke-width="2.5" stroke-dasharray="6,4"
+            points="470,186 620,132 810,75"/>
+          <circle cx="810" cy="75" r="4.5" fill="#1f6fb2"/>
+          <text x="810" y="65" text-anchor="middle" font-size="12" font-weight="700" fill="#1f6fb2">10,000</text>
+
+          <!-- downside to 6000 then recovery ~7000 -->
+          <polyline fill="none" stroke="#c0392b" stroke-width="2.5" stroke-dasharray="6,4"
+            points="470,186 560,232 650,255 740,232 810,210"/>
+          <circle cx="650" cy="255" r="4.5" fill="#c0392b"/>
+          <text x="650" y="274" text-anchor="middle" font-size="12" font-weight="700" fill="#c0392b">6,000</text>
+
+          <text x="100" y="318" font-size="11" fill="#8a919c">Jun-24</text>
+          <text x="290" y="318" font-size="11" fill="#8a919c">Jun-25</text>
+          <text x="450" y="318" font-size="11" fill="#8a919c">Jun-26</text>
+          <text x="600" y="318" font-size="11" fill="#8a919c">Dec-26</text>
+          <text x="790" y="318" font-size="11" fill="#8a919c">Dec-27</text>
+        </svg>
+        <div class="chart-src">Source: FactSet</div>
+      </div>
+
+      <h3 class="sec"><span class="n">2</span><span id="eps">실적 프레임워크 — '25~'27년 이익 약 50% 성장</span></h3>
+      <ul class="pts">
+        <li><b>2026E EPS $350</b> (컨센서스 +3%, YoY +26%). ex-Tech 이익 +10%(미국 실질 GDP 2%+ 및 ULC를 크게 앞서는 가격 성장), Tech 이익 <b>+56%</b>(반도체·테크 하드웨어 매출 급증)</li>
+        <li><b>2027E EPS $410</b> (컨센서스 +4%, YoY +17%). ex-Tech +7.5%, Tech <b>+29%</b> — 컴퓨트 효율 개선, 타이트한 capacity, 대규모 backlog가 반도체 매출 고성장을 장기화</li>
+        <li>2028년 EPS <b>$450~460</b> 전망 — 작년 대비 64% 증가. "high for longer" AI 지출이 추세 이상의 이익 성장을 지지</li>
+        <li>2026년 SPX 이익 증가분 약 <b>$600bn</b> 중 반도체·하드웨어가 <b>46%+</b> 기여. NVDA(+$100bn 이상), MU(+$100bn 이상), AVGO(+$30bn)가 주도</li>
+        <li>Tech+가 SPX 이익에서 차지하는 비중은 '25년 36.6% → '26년 <b>45.1%</b> → '27년 <b>49.7%</b> → '28년 51.7%로 확대</li>
+        <li>Tech+와 ex-Tech를 <b>별도 모델링</b>. ex-Tech는 실질 GDP(beta 4.03), Price-ULC(3.85), 재화-서비스 PCE(1.26), 글로벌-미국 GDP(2.60) 등으로 설명. Tech는 반도체 매출(beta 0.73, t-stat 7.7)·USD(-1.17)·실질 GDP(0.93)로 변동성의 약 70% 설명</li>
+      </ul>
+
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>항목</th><th>2024</th><th>2025</th><th>2026E</th><th>2027E</th><th>2028E</th></tr></thead>
+        <tbody>
+          <tr><td><b>지수 (연말)</b></td><td class="num">5,882</td><td class="num">6,846</td><td class="num">8,100</td><td class="num">8,900</td><td class="num">—</td></tr>
+          <tr><td>% YoY</td><td class="num">23.3%</td><td class="num">16.4%</td><td class="num">18.3%</td><td class="num">9.9%</td><td class="num">—</td></tr>
+          <tr><td><b>EPS</b></td><td class="num">$243.0</td><td class="num">$274.5</td><td class="num">$350.0</td><td class="num">$410.0</td><td class="num">$460.0</td></tr>
+          <tr><td>% 성장</td><td class="num">10.4%</td><td class="num">13.0%</td><td class="num">27.5%</td><td class="num">17.1%</td><td class="num">12.2%</td></tr>
+          <tr><td>P/E (fwd NTM)</td><td class="num">21.5x</td><td class="num">22.0x</td><td class="num">19.8x</td><td class="num">19.3x</td><td class="num">—</td></tr>
+          <tr><td>P/E (trailing)</td><td class="num">24.2x</td><td class="num">24.9x</td><td class="num">23.1x</td><td class="num">21.7x</td><td class="num">—</td></tr>
+          <tr><td><b>Tech+ 이익 YoY</b></td><td class="num">29.0%</td><td class="num">28.6%</td><td class="num">56.6%</td><td class="num">29.2%</td><td class="num">16.0%</td></tr>
+          <tr><td><b>ex-Tech 이익 YoY</b></td><td class="num">5.4%</td><td class="num">7.0%</td><td class="num">10.1%</td><td class="num">7.5%</td><td class="num">7.0%</td></tr>
+          <tr><td>Tech+ 이익 비중</td><td class="num">32.5%</td><td class="num">36.6%</td><td class="num">45.1%</td><td class="num">49.7%</td><td class="num">51.7%</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-src">Source: FactSet</div>
+
+      <div class="chart-card">
+        <div class="ct">Tech+ vs ex-Tech 이익 성장률 (YoY, %)</div>
+        <div class="legend">
+          <span><i style="background:#26282a"></i>Tech+</span>
+          <span><i style="background:#e60028"></i>ex-Tech</span>
+        </div>
+        <svg viewBox="0 0 880 300" width="100%">
+          <line x1="70" y1="260" x2="850" y2="260" stroke="#cfd6e0"/>
+          <line x1="70" y1="200" x2="850" y2="200" stroke="#eef1f5"/>
+          <line x1="70" y1="140" x2="850" y2="140" stroke="#eef1f5"/>
+          <line x1="70" y1="80" x2="850" y2="80" stroke="#eef1f5"/>
+          <line x1="70" y1="20" x2="850" y2="20" stroke="#eef1f5"/>
+          <text x="62" y="264" text-anchor="end" font-size="11" fill="#8a919c">0</text>
+          <text x="62" y="204" text-anchor="end" font-size="11" fill="#8a919c">15</text>
+          <text x="62" y="144" text-anchor="end" font-size="11" fill="#8a919c">30</text>
+          <text x="62" y="84" text-anchor="end" font-size="11" fill="#8a919c">45</text>
+          <text x="62" y="24" text-anchor="end" font-size="11" fill="#8a919c">60</text>
+
+          <!-- 2024 -->
+          <rect x="130" y="144" width="52" height="116" fill="#26282a"/>
+          <text x="156" y="138" text-anchor="middle" font-size="11" fill="#26282a">29.0</text>
+          <rect x="186" y="238" width="52" height="22" fill="#e60028"/>
+          <text x="212" y="232" text-anchor="middle" font-size="11" fill="#e60028">5.4</text>
+          <text x="184" y="280" text-anchor="middle" font-size="12" fill="#525866">2024</text>
+          <!-- 2025 -->
+          <rect x="300" y="146" width="52" height="114" fill="#26282a"/>
+          <text x="326" y="140" text-anchor="middle" font-size="11" fill="#26282a">28.6</text>
+          <rect x="356" y="232" width="52" height="28" fill="#e60028"/>
+          <text x="382" y="226" text-anchor="middle" font-size="11" fill="#e60028">7.0</text>
+          <text x="354" y="280" text-anchor="middle" font-size="12" fill="#525866">2025</text>
+          <!-- 2026E -->
+          <rect x="470" y="34" width="52" height="226" fill="#26282a"/>
+          <text x="496" y="28" text-anchor="middle" font-size="11" font-weight="700" fill="#26282a">56.6</text>
+          <rect x="526" y="220" width="52" height="40" fill="#e60028"/>
+          <text x="552" y="214" text-anchor="middle" font-size="11" fill="#e60028">10.1</text>
+          <text x="524" y="280" text-anchor="middle" font-size="12" fill="#525866">2026E</text>
+          <!-- 2027E -->
+          <rect x="640" y="143" width="52" height="117" fill="#26282a"/>
+          <text x="666" y="137" text-anchor="middle" font-size="11" fill="#26282a">29.2</text>
+          <rect x="696" y="230" width="52" height="30" fill="#e60028"/>
+          <text x="722" y="224" text-anchor="middle" font-size="11" fill="#e60028">7.5</text>
+          <text x="694" y="280" text-anchor="middle" font-size="12" fill="#525866">2027E</text>
+        </svg>
+        <div class="chart-src">Source: FactSet</div>
+      </div>
+
+      <h3 class="sec"><span class="n">3</span><span id="val">밸류에이션 — 드라이버 대비 18% 저평가</span></h3>
+      <ul class="pts">
+        <li>기존 macro 변수(금리·스프레드·경기)에 <b>forward sales CAGR</b>과 <b>CFROI</b>(cash flow ROI)를 추가한 P/E 모델이 2004년 이후 SPX forward P/E 변동의 <b>88% 이상</b>을 설명</li>
+        <li>Fitted P/E는 연초 22.6x → 7/10 <b>24.6x</b>로 상승(+1.95)한 반면 실제 P/E는 21.7x → <b>20.1x</b>로 하락. 괴리는 -4.2% → <b>-18.3%</b>로 확대</li>
+        <li>이 정도의 residual은 <b>2020년 봄</b>과 <b>2011~12년</b> 롤링 크라이시스 국면에서만 관측됐던 수준</li>
+        <li>P/E의 forward sales CAGR에 대한 beta는 <b>채권금리의 약 2배</b>. sales CAGR·CFROI·sales growth inflection 세 변수 beta 합계는 약 2.4x로, 펀더멘털 1pp 변화가 금리 1pp 변화보다 멀티플에 더 크게 작용</li>
+        <li><b>Tech+ P/E는 fitted 대비 약 40% 낮은 수준</b>. 높아진 sales growth와 CFROI를 감안하면 30x를 크게 상회해야 하나 작년 가을 이후 오히려 하락. 반대로 <b>ex-Tech는 fitted 대비 14% 이상 고평가</b>(실제 ~18x vs fitted ~16x)</li>
+        <li>2000년 3월 버블 피크와 비교: 당시 SPX는 fitted 대비 <b>+23% 고평가</b>, Tech는 <b>+86% 고평가</b>. 현재는 각각 <b>-18%</b>, <b>-39%</b>로 정반대 위치</li>
+      </ul>
+
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>P/E 모델 변수</th><th>Beta</th><th>1/2/26</th><th>7/10/26</th><th>P/E 영향</th></tr></thead>
+        <tbody>
+          <tr><td>US 10yr + IG OAS</td><td class="num">-1.19</td><td class="num">5.0</td><td class="num">5.3</td><td class="neg">-0.42</td></tr>
+          <tr><td>Economic surprises</td><td class="num">0.89</td><td class="num">0.1</td><td class="num">0.3</td><td class="pos">+0.12</td></tr>
+          <tr><td>US 1yr minus Fed rate</td><td class="num">-0.04</td><td class="num">-0.3</td><td class="num">0.3</td><td class="neg">-0.03</td></tr>
+          <tr><td><b>Sales growth 3-5yr CAGR</b></td><td class="num">1.48</td><td class="num">2.2</td><td class="num">3.2</td><td class="pos">+1.45</td></tr>
+          <tr><td><b>Cash flow ROI (CFROI)</b></td><td class="num">0.76</td><td class="num">6.7</td><td class="num">8.6</td><td class="pos">+1.40</td></tr>
+          <tr><td>Equity vol / rates vol</td><td class="num">-4.80</td><td class="num">0.2</td><td class="num">0.2</td><td class="neg">-0.01</td></tr>
+          <tr><td>Sales growth inflection</td><td class="num">0.19</td><td class="num">-0.9</td><td class="num">-2.0</td><td class="neg">-0.22</td></tr>
+          <tr><td>Dividend payout</td><td class="num">0.11</td><td class="num">25.9</td><td class="num">22.8</td><td class="neg">-0.35</td></tr>
+          <tr><td><b>Fitted P/E</b></td><td class="num">—</td><td class="num">22.6</td><td class="num">24.6</td><td class="pos">+1.95</td></tr>
+          <tr><td><b>실제 SPX P/E</b></td><td class="num">—</td><td class="num">21.7</td><td class="num">20.1</td><td class="num">—</td></tr>
+          <tr><td><b>Fitted 대비 괴리</b></td><td class="num">—</td><td class="num">-4.2%</td><td class="num">-18.3%</td><td class="num">—</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-src">Source: FactSet, Bloomberg</div>
+
+      <div class="chart-card">
+        <div class="ct">Fitted 대비 실제 P/E 괴리 — SPX · Tech+ · ex-Tech (2000년 피크 vs 현재)</div>
+        <svg viewBox="0 0 880 260" width="100%">
+          <line x1="70" y1="130" x2="850" y2="130" stroke="#9aa3b2" stroke-width="1.5"/>
+          <text x="62" y="134" text-anchor="end" font-size="11" fill="#8a919c">0%</text>
+          <text x="62" y="54" text-anchor="end" font-size="11" fill="#8a919c">+80%</text>
+          <text x="62" y="214" text-anchor="end" font-size="11" fill="#8a919c">-80%</text>
+          <line x1="70" y1="50" x2="850" y2="50" stroke="#eef1f5"/>
+          <line x1="70" y1="210" x2="850" y2="210" stroke="#eef1f5"/>
+
+          <!-- scale: 80% = 80px -->
+          <rect x="150" y="107" width="70" height="23" fill="#8a919c"/>
+          <text x="185" y="101" text-anchor="middle" font-size="12" fill="#525866">+23%</text>
+          <rect x="230" y="130" width="70" height="18" fill="#26282a"/>
+          <text x="265" y="163" text-anchor="middle" font-size="12" font-weight="700" fill="#26282a">-18%</text>
+          <text x="225" y="238" text-anchor="middle" font-size="12.5" fill="#525866">S&amp;P 500</text>
+
+          <rect x="450" y="44" width="70" height="86" fill="#8a919c"/>
+          <text x="485" y="38" text-anchor="middle" font-size="12" fill="#525866">+86%</text>
+          <rect x="530" y="130" width="70" height="39" fill="#e60028"/>
+          <text x="565" y="184" text-anchor="middle" font-size="12" font-weight="700" fill="#e60028">-39%</text>
+          <text x="525" y="238" text-anchor="middle" font-size="12.5" fill="#525866">Tech+</text>
+
+          <rect x="720" y="116" width="70" height="14" fill="#26282a"/>
+          <text x="755" y="110" text-anchor="middle" font-size="12" font-weight="700" fill="#26282a">+14%</text>
+          <text x="755" y="238" text-anchor="middle" font-size="12.5" fill="#525866">ex-Tech (현재)</text>
+
+          <text x="150" y="20" font-size="11.5" fill="#8a919c">회색 = 2000년 3월 피크 / 컬러 = 현재</text>
+        </svg>
+        <div class="chart-src">Source: FactSet, Bloomberg</div>
+      </div>
+
+      <h3 class="sec"><span class="n">4</span><span id="theme">AI 사이클 — 아직 2년차, 수요는 가속 중</span></h3>
+      <h4 class="sub">사이클 길이와 컴퓨트 공급 충격</h4>
+      <ul class="pts">
+        <li>70~80년대 메인프레임-PC 사이클과 90년대 서버/인터넷 사이클은 각각 <b>약 10년·9년간 연평균 20% 내외 실질 성장</b>. AI 사이클은 2년차로, 과거 패턴 대입 시 <b>7~8년</b>이 더 남아 있다는 계산</li>
+        <li>미국 실질 IT 지출은 최근 2개 분기 <b>YoY 25~30%</b> 성장. 테크 하드웨어 지출 급증 폭은 1998년에 필적</li>
+        <li>IT 장비 가격이 최근 1년 <b>5~6% 상승</b> — 1980년대 초 이후 지속된 가격 하락 regime의 반전. IT 장비+소프트웨어의 명목 GDP 비중은 연 <b>50bp</b> 속도로 상승</li>
+        <li>H100 등가 기준 분기 AI 칩 capacity 출하는 2023년 말 대비 <b>8배</b>(연 3배 페이스). 반면 유닛 판매는 2024년 말 이후 횡보 — capacity 제약과 세대 교체(Blackwell → Rubin)에 따른 성능 도약을 반영</li>
+        <li>$ 및 MW당 컴퓨트 성능은 2022년 대비 <b>2배 이상</b>. 컴퓨트 비용이 붕괴 중이며, 이는 GPU만 반영한 수치로 알고리즘·모델 개선은 미포함. 통상적인 반도체 사이클과 성격이 다르다는 판단</li>
+      </ul>
+
+      <h4 class="sub">수요 가속의 증거</h4>
+      <ul class="pts">
+        <li>AMZN·MSFT·GOOG·ORCL의 클라우드 매출 backlog는 NTM 기준 <b>약 $2.5tr</b>. 최근 9개월간 <b>$1tr 증가</b>로 forward 클라우드 capex $620bn의 약 2배 (일부는 GOOG의 매출 재분류 효과)</li>
+        <li>미국 클라우드 1년·2년 forward 매출 추정치는 최근 3개월간 <b>17~22% 상향</b>. 매출 상향 폭이 capex 상향 폭을 상회</li>
+        <li>Anthropic ARR은 4~5개월 만에 <b>$35bn 이상 증가</b>, net dollar retention은 <b>500% 초과</b> — 기존 고객이 ARR 증가의 큰 몫을 차지했음을 시사하며 S-curve 초기 국면임을 뒷받침</li>
+        <li>기업 AI 서베이 기준 2026년은 본격 투자·롤아웃의 해로, 평균 AI 지출이 전분기 대비 <b>25%</b> 증가</li>
+        <li>클라우드 매출은 <b>YoY 40%+</b> 성장, 하이퍼스케일러 OCF는 <b>YoY 약 30%</b> 증가 — 초기 급증 이후에도 capex 성장을 자체 조달 가능한 구조</li>
+      </ul>
+
+      <h4 class="sub">Capex 확산과 민간 releveraging</h4>
+      <ul class="pts">
+        <li>미국 기업 net cash flow의 GDP 비중이 최근 12개월간 <b>약 3pp</b> 급등 — GFC 직후를 제외하면 최대 폭. 하이퍼스케일러·금융 제외 LTM FCF는 <b>$200bn 이상</b> 증가</li>
+        <li>하이퍼스케일러 제외 시 capex의 OCF 대비 비중은 <b>역사적 저점권</b>. IT 장비를 제외한 설비+구조물 투자는 GDP의 <b>6%</b>로 경기침체 수준</li>
+        <li>SPX 기업의 <b>45%</b>가 NTM capex 10%+ 성장을 전망 — post-COVID·post-GFC 외에는 없던 수준. 자본재 신규 수주(ex 방산/항공)는 <b>YoY +10%</b>, 최근 9개월간 6pp 가속</li>
+        <li>미국 실질 재고는 <b>4개 분기 연속</b> 감소. 디스토킹 종료 + capacity 제약 → 광범위한 pricing power로 연결</li>
+        <li>하이퍼스케일러는 3년간 OCF·차입으로 <b>$500bn 이상</b>의 capex 증가를 조달. AI 빌드아웃은 외부 자본을 요구하며, 오랜 디레버리징 이후 민간 <b>releveraging 사이클</b>의 출발점</li>
+        <li>2026년 미국 IPO 발행은 <b>약 $160bn</b>으로 사상 최대 가능성. 다만 시가총액 대비로는 두 번째 quintile 수준에 불과. 자사주 매입·M&amp;A로 순 주식 공급은 여전히 시총 대비 <b>-2.5%</b></li>
+      </ul>
+
+      <h3 class="sec"><span class="n">5</span><span id="macro">정책 불확실성과 Regime pricing</span></h3>
+      <ul class="pts">
+        <li>미국 경제정책 불확실성(EPU)은 관세·이민·규제·세제·의료·중동 등 전방위 충격 이후 <b>"max pressure" 국면을 통과</b>. 상승보다 하락 영역이 많아지는 국면은 통상 주식에 우호적</li>
+        <li>Goldilocks regime 가격은 실질금리 고점 대비 과도하게 낮고, Stagflation 가격은 인플레 breakeven 하락 대비 과도하게 높음. <b>Goldilocks 확률 +25pp, Stagflation -10pp</b> 정상화 시 약 <b>+4%</b>의 추가 상승 여지</li>
+        <li>인플레이션은 향후 9개월간 둔화, 연준은 연말까지 <b>동결</b> 전망. 금리 50bp 상승은 SPX P/E 기준 <b>0.55x(약 2.5%)</b> 영향으로, 내년 20%+ 이익 성장 대비 작은 크기</li>
+        <li>단, 50bp 단기금리 상승은 기업+가계 이자비용 <b>약 $25bn</b> 증가에 해당 — SPX 1분기 어닝 서프라이즈의 절반 수준</li>
+        <li>AI 투자는 지난 1년 실질 GDP 성장에 <b>1pp</b> 기여, 고소득층 소비가 추가 <b>90bp</b> 기여. 2026년 하반기 GDP 성장률 <b>약 2%</b>, 2027년 <b>2.1%</b> 전망</li>
+        <li>중간선거 아노말리: 미 증시는 통상 7~10월 부진하나, 중간선거 이후 10월 중순~연말 평균 <b>+6%</b>, 익년 3월 말까지는 <b>+17%</b> 랠리</li>
+      </ul>
+
+      <div class="callout"><span class="t">주목</span>지수 집중도가 구조적으로 달라졌다. Tech+는 SPX float 비중의 <b>약 50%</b>(2023년 초 35% 미만)이며, AI 인프라 빌드아웃 노출도가 높은 종목이 float의 <b>약 45%</b>를 차지한다. HHI 기준 SPX의 <b>유효 구성종목 수는 약 40개</b>로 사상 최저권. 상위 10종목이 지수의 약 40%다. 사실상 SPX는 AI/Tech 사이클에 레버리지된 절반과, 분산되어 있으나 성장이 느린 절반의 두 지수로 구성된 셈이다.</div>
+
+      <h3 class="sec"><span class="n">6</span><span id="pos">유동성 · 플로우 · Positioning</span></h3>
+      <ul class="pts">
+        <li><b>Cash power</b>: 시가총액 대비 현금 비중 약 <b>18%</b>로 mid-range. 투자 수요 악화를 우려할 만한 임계치까지는 최소 3%p 여유</li>
+        <li><b>Risk control 펀드</b>(추정 AUM $750bn): 변동성이 high-teens로 오르며 <b>60% 비중</b>까지 축소 — 변동성 안정 시 매수 여력이 크며 현 수준에서는 매수 편향</li>
+        <li><b>CTA</b>(추정 최대 익스포저 $500bn): 현재 시그널 0.9로 moderately long. 다만 가속 매도가 시작되는 임계(SPX 약 7,300)에서 크게 떨어져 있지 않음. 변동성 하락 시 매수, 3% 이상 조정 시 매도 편향</li>
+        <li><b>Retail</b>: ETF 유입은 매우 강하고 margin debt는 시총 대비 여전히 낮은 수준. 다만 레버리지 ETF·콜옵션을 통한 레버리지 사용은 상대적으로 높아 간헐적 변동성 스파이크 요인</li>
+        <li><b>CFTC</b>: 지수 레벨 숏 선물 포지션이 증가, 특히 SPX 대비 NDX·RTY. 두 지수의 SPX 대비 net positioning은 <b>사상 최저</b>로 옵션 skew나 put/call에 반영되지 않은 헤지 활동을 시사</li>
+        <li>Long-only 익스포저는 전고점 대비 하락. 종합하면 positioning은 <b>stretched가 아니라 mixed</b>이나, crowding은 잔존 부담</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">7</span><span id="trade">옵션 시장 — 트렌드 강도를 과소반영</span></h3>
+      <ul class="pts">
+        <li>개별종목·섹터 변동성의 지수 변동성 대비 프리미엄이 <b>사상 최고</b>, 상관관계는 <b>사상 최저</b>. 딜러 감마는 롱 포지션으로 딥 매수·랠리 매도를 유도하며 하방 감마 리스크는 제한적</li>
+        <li>기존 트렌드가 implied 분포에 제대로 반영되지 않아, 리치한 섹터·개별종목 vol을 매도해 지수 upside를 매수하는 구조가 유리</li>
+      </ul>
+
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>구조</th><th>내용</th><th>논리 / 리스크</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><b>Gear into upside rotation</b></td>
+            <td>SOXX put 2계약 매도 → SPX call 7계약 매수 (~premium neutral)</td>
+            <td>실적 tailwind가 반도체의 높은 implied vol을 정당화. 숏 SOXX put은 행사가 이하 1:1 손실, 롱 SPX call은 프리미엄 한도</td>
+          </tr>
+          <tr>
+            <td><b>Capital beats Consumer</b></td>
+            <td>XRT(또는 XLY) call 매도 → KRE(또는 KBE/XLF) call 매수</td>
+            <td>Releveraging·규제완화·자본수요가 은행 이익을 지지, 가계 소비는 압박. 숏 XRT call은 상방 무한, 롱 KRE call은 프리미엄 한도</td>
+          </tr>
+          <tr>
+            <td><b>Healthcare over Staples</b></td>
+            <td>XLP call 매도 → XLV call 매수 (~premium neutral)</td>
+            <td>제약 혁신·GLP-1 확산·바이오텍 모멘텀 vs 소비 변화에 따른 Staples 구조적 훼손</td>
+          </tr>
+          <tr>
+            <td><b>Lock-in gains</b></td>
+            <td>Long market + SPX 95% lookback put 매수 + 95% vanilla put 매도 (프리미엄 약 1.8%)</td>
+            <td>지수 상승에 따라 보호 수준이 함께 올라가는 path-dependent 헤지. 강한 랠리 후 반전 시나리오에 특히 유효</td>
+          </tr>
+          <tr>
+            <td><b>Own the market defensively</b></td>
+            <td>XLV put 매도 → SPX call 매수 (~premium neutral)</td>
+            <td>광범위한 시장 하방 리스크를 방어적 헬스케어 익스포저로 교환</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3 class="sec"><span class="n">8</span>밸류에이션 &amp; 시나리오</h3>
+      <div class="bbgrid">
+        <div class="bb bull"><div class="lbl">🐂 Bull</div><div class="px">10,000</div><div class="ret">+33% Upside</div>
+          <ul>
+            <li>P/E 25x — sales growth·CFROI 기대 20~25bp 추가 상승, 채권금리 하락, 연준 인상 pricing 소멸</li>
+            <li>2년간 이익 성장 15%+ 지속, ex-Tech 10%+</li>
+            <li>2028E EPS $450 상회, 시장은 $475+ discount 가능</li>
+          </ul></div>
+        <div class="bb base"><div class="lbl">⊕ Base</div><div class="px">8,100 → 8,900</div><div class="ret">+7.5% → +18.1%</div>
+          <ul>
+            <li>연말 NTM EPS $400 상회, P/E 19.8x</li>
+            <li>Forward CAGR이 YTD 상승분의 2/3를 되돌리고 CFROI도 일부 하락하는 보수적 가정</li>
+            <li>여전히 fitted P/E 대비 10% 낮은 수준 — 밸류에이션 쿠션 존재</li>
+          </ul></div>
+        <div class="bb bear"><div class="lbl">🐻 Bear</div><div class="px">~6,000</div><div class="ret">-20% Downside</div>
+          <ul>
+            <li>AI 수요 실망 + 하이퍼스케일러 capex 축소, 금리·크레딧 스프레드 상승</li>
+            <li>Trough NTM P/E 16.3x × 현 NTM EPS $370 ≈ 6,000</li>
+            <li>과거 성장 쇼크 시 P/E de-rating 20~25% → 5,650~6,000. 이익이 추세로 회귀 시 EPS 20%+ 하락(Tech+ 40%)</li>
+          </ul></div>
+      </div>
+      <div class="callout"><span class="t">참고</span>과거 시장 조정은 forward 추정치가 하향되는 과정에서 <b>멀티플 de-rating</b>이 주도했으며, 통상 멀티플이 추정치보다 먼저 바닥을 형성한다(GFC급 사례 제외). 성장률이 추세 수준으로 회귀하고 금리도 함께 하락하는 "lower growth P/E" 시나리오(약 18x × 2027 추세 EPS $305)는 SPX 5,500을 시사한다.</div>
+
+      <h3 class="sec"><span class="n">!</span><span id="risk">리스크 &amp; 모니터링 포인트</span></h3>
+      <div class="risk-box">
+        <h4>Key Risks</h4>
+        <ul>
+          <li><b>AI 관련 리스크 다변화:</b> ① 전력·공급 제약에 따른 capex 성장 실망 및 타 영역 출하 감소(메모리 탑재 PC 등), ② 필요 컴퓨트·메모리를 줄이는 efficiency shock, ③ 오픈소스·중국발 모델 레이어 경쟁, ④ 병목 해소 후 가격 리스크, ⑤ 규제 이슈, ⑥ 크레딧·자금조달. 다만 AI 채택·수요가 강화되는 한 시장 영향은 제한적이라는 판단</li>
+          <li><b>지정학:</b> 이란-미국 휴전은 취약하며 재격화 시 에너지 가격 급등과 주식 조정 가능. 우크라이나/러시아도 부담 요인이며, 미-중 관계는 9월 정상회담이 촉매</li>
+          <li><b>소비 주도 둔화:</b> 실질 소득 성장 부진, 이민 감소에 따른 고용 둔화, AI의 채용 계획 영향. 소비 약세가 심화되면 e-commerce·광고를 통해 하이퍼스케일러 현금흐름 → AI capex로 전이</li>
+          <li><b>금리의 무질서한 상승:</b> mid-cycle 조정은 대체로 반영됐으나 새로운 "hiking cycle"은 미반영. 금리 상승과 금리 변동성 상승이 동반되는 조합이 주식에 가장 부정적</li>
+          <li><b>Crowding:</b> AI/모멘텀 쏠림은 하방 시나리오를 증폭. 메가캡에서의 rotation은 유동성이 낮은 catch-up 트레이드에서 급격한 repricing을 유발</li>
+          <li><b>공급 부담:</b> IG 크레딧 순발행은 최근 12개월 시장규모 대비 +4%(SPX는 -2.7%). 레거시 소프트웨어 등 disruption 산업에서 디폴트 증가 가능. IPO lock-up 만기도 수급 부담</li>
+        </ul>
+        <h4 style="margin-top:14px;">모니터링 포인트</h4>
+        <ul>
+          <li>2분기 실적 시즌의 클라우드 <b>매출</b> 트렌드 — backlog·capex 상향이 매출로 확인되는지</li>
+          <li>Forward sales CAGR의 3개월 변화 — 상승 모멘텀 둔화 여부가 멀티플 방향을 결정</li>
+          <li>연준 스탠스 전환 및 실질금리 — forward guidance 축소로 데이터 민감도 상승</li>
+          <li>중간선거 전후 progressive 정책(자산 과세, AI 규제) 리프라이싱 가능성</li>
+          <li>Section 232 등 잔여 관세 조사, 은행 자본규제 완화(초과자본 $40bn+ 추정) 진행 상황</li>
+          <li>CTA 임계선(SPX 약 7,300) 및 risk-control 펀드 재레버리징 여부</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div>본 문서는 투자 권유를 목적으로 하지 않습니다.</div>
+  </footer>
+
+</div>
+</body>
+</html>
