@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 인프라 조정 국면 투자 전략</title>
+<style>
+  :root{
+    --brand:#00264d;
+    --brand-deep:#001a35;
+    --accent:#0077c8;
+    --accent2:#3d7fb0;
+    --paper:#f4f6f9;
+    --card:#ffffff;
+    --ink:#1b1e24;
+    --ink-soft:#525866;
+    --line:#dde3ec;
+    --buy:#1f7a4d;
+    --bear:#c0392b;
+    --bull:#1f6fb2;
+    --warn:#8a4b15;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Helvetica Neue','Pretendard','Noto Sans KR',Arial,sans-serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  .topbar{
+    background:var(--brand-deep);
+    color:#fff;padding:14px 6vw;
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;
+    border-bottom:3px solid var(--accent);
+    position:sticky;top:0;z-index:50;
+  }
+  .topbar .logo{font-weight:700;font-size:18px;letter-spacing:0.5px;}
+  .topbar .logo span{color:var(--accent);}
+  .topbar nav{display:flex;gap:8px;flex-wrap:wrap;}
+  .topbar nav a{
+    color:#cfd8e6;text-decoration:none;font-size:12.5px;
+    padding:6px 12px;border:1px solid rgba(255,255,255,0.2);border-radius:20px;
+    transition:all .15s;
+  }
+  .topbar nav a:hover{background:var(--accent);color:#fff;border-color:var(--accent);}
+
+  .wrap{max-width:960px;margin:0 auto;padding:40px 6vw 90px;}
+
+  .intro{border-left:4px solid var(--accent);padding:8px 0 8px 20px;margin-bottom:44px;}
+  .intro .eyebrow{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent2);font-weight:700;}
+  .intro h1{font-size:26px;margin:8px 0 6px;color:var(--brand);}
+
+  .report{margin-bottom:56px;scroll-margin-top:70px;}
+  .report-head{
+    background:linear-gradient(135deg,var(--brand) 0%, var(--brand-deep) 100%);
+    color:#fff;border-radius:10px 10px 0 0;padding:28px 30px;
+  }
+  .report-head .tag{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#9fb4d4;font-weight:700;}
+  .report-head h2{margin:8px 0 14px;font-size:23px;line-height:1.35;}
+  .report-head .lede{
+    font-family:'Georgia',serif;font-size:15.5px;color:#e3ebf6;
+    border-top:1px solid rgba(255,255,255,0.16);padding-top:14px;margin:0;
+  }
+  .report-body{
+    background:var(--card);border:1px solid var(--line);border-top:none;
+    border-radius:0 0 10px 10px;padding:30px;
+  }
+
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px;}
+  .chip{border:1px solid var(--line);border-radius:8px;padding:10px 16px;background:#fafbfd;flex:1;min-width:130px;}
+  .chip .k{font-size:10.5px;letter-spacing:0.5px;text-transform:uppercase;color:var(--ink-soft);}
+  .chip .v{font-size:19px;font-weight:700;color:var(--brand);margin-top:2px;}
+  .chip .v.buy{color:var(--buy);}
+  .chip .v.sell{color:var(--bear);}
+  .chip .s{font-size:11px;color:var(--ink-soft);}
+
+  h3.sec{
+    font-size:17px;color:var(--brand);margin:34px 0 12px;
+    padding-bottom:8px;border-bottom:1.5px solid var(--line);
+    display:flex;align-items:center;gap:10px;scroll-margin-top:70px;
+  }
+  h3.sec .n{
+    background:var(--brand);color:#fff;font-size:12px;font-weight:700;
+    width:24px;height:24px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  h4.sub{font-size:14px;color:var(--accent);margin:22px 0 6px;letter-spacing:0.2px;}
+  ul.pts{margin:0;padding:0;list-style:none;}
+  ul.pts li{position:relative;padding:7px 0 7px 20px;font-size:14.5px;border-bottom:1px dashed var(--line);}
+  ul.pts li:last-child{border-bottom:none;}
+  ul.pts li::before{content:"—";position:absolute;left:0;color:var(--accent2);font-weight:700;}
+  ul.pts b{color:var(--brand);}
+
+  table.tbl{width:100%;border-collapse:collapse;font-size:13px;margin:6px 0 4px;}
+  table.tbl th{background:var(--brand);color:#fff;text-align:left;padding:8px 10px;font-weight:600;}
+  table.tbl td{padding:7px 10px;border-bottom:1px solid var(--line);}
+  table.tbl tr:nth-child(even) td{background:#f7f9fc;}
+  table.tbl td.num{text-align:right;font-variant-numeric:tabular-nums;}
+  table.tbl td.buy{color:var(--buy);font-weight:700;}
+  table.tbl td.bear{color:var(--bear);font-weight:700;}
+  .tbl-wrap{overflow-x:auto;}
+
+  .chart-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:22px 22px 14px;margin:14px 0;}
+  .chart-card .ct{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:12px;}
+  .chart-src{font-size:10.5px;color:#9aa3b2;margin-top:8px;}
+  .legend{display:flex;gap:18px;font-size:11.5px;color:var(--ink-soft);margin-bottom:4px;flex-wrap:wrap;}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .legend i{width:11px;height:11px;border-radius:2px;display:inline-block;}
+
+  .bbgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0;}
+  @media(max-width:680px){.bbgrid{grid-template-columns:1fr;}}
+  .bb{border-radius:8px;padding:16px;border:1px solid var(--line);background:#fafbfd;}
+  .bb.bull{border-top:3px solid var(--bull);}
+  .bb.base{border-top:3px solid var(--ink-soft);}
+  .bb.bear{border-top:3px solid var(--bear);}
+  .bb .lbl{font-size:11px;letter-spacing:0.6px;text-transform:uppercase;font-weight:700;color:var(--ink-soft);}
+  .bb .px{font-size:22px;font-weight:700;color:var(--brand);margin:4px 0;}
+  .bb .ret{font-size:13px;font-weight:600;}
+  .bb.bull .ret{color:var(--bull);}
+  .bb.bear .ret{color:var(--bear);}
+  .bb ul{margin:8px 0 0;padding-left:16px;font-size:12px;color:var(--ink-soft);}
+  .bb li{margin-bottom:4px;}
+
+  .callout{background:#fbf6ec;border:1px solid #e8dcc3;border-radius:8px;padding:14px 18px;font-size:13px;color:var(--ink-soft);margin-top:14px;}
+  .callout .t{font-size:10.5px;font-weight:700;letter-spacing:0.6px;color:var(--warn);text-transform:uppercase;display:block;margin-bottom:5px;}
+
+  .risk-box{background:var(--brand);color:#dde6f3;border-radius:8px;padding:22px 24px;margin-top:14px;}
+  .risk-box h4{margin:0 0 10px;color:#fff;font-size:14.5px;}
+  .risk-box ul{margin:0;padding-left:18px;}
+  .risk-box li{margin-bottom:8px;font-size:13px;}
+  .risk-box li b{color:#fff;}
+
+  footer{border-top:1px solid var(--line);margin-top:50px;padding-top:20px;font-size:11px;color:#9aa3b2;line-height:1.6;}
+
+  @media(max-width:560px){
+    .intro h1{font-size:21px;}
+    .report-head h2{font-size:19px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">Research<span>·</span>Digest</div>
+  <nav>
+    <a href="#thesis">핵심 논지</a>
+    <a href="#token">Tokenmaxxing</a>
+    <a href="#china">중국 모델</a>
+    <a href="#ppp">People·Power·Politics</a>
+    <a href="#power">Time to Power</a>
+    <a href="#ways">Ways to Play</a>
+    <a href="#policy">Two Worlds</a>
+    <a href="#upstream">업스트림</a>
+    <a href="#region">지역별</a>
+    <a href="#risk">리스크</a>
+  </nav>
+</div>
+
+<div class="wrap">
+
+  <div class="intro">
+    <div class="eyebrow">27 July 2026</div>
+    <h1>AI 인프라 조정 국면 활용 전략 — 어디에 투자하고, 어디서 리스크를 볼 것인가</h1>
+  </div>
+
+  <section class="report" id="rpt1">
+
+    <div class="report-head">
+      <div class="tag">Global Thematics / AI Infrastructure</div>
+      <h2>최근 AI 인프라 급락은 펀더멘털이 아닌 기술적 요인 — "Intelligence Superhighway"에 대한 강세 유지, 단 speed bump는 인정</h2>
+      <p class="lede">가장 높은 확신을 두는 뷰는 컴퓨팅 수요가 향후 수년간 공급을 크게 상회한다는 것. 최근 조정은 매력적인 매수 기회로 판단하며, AI 인프라 병목·compute 제조 생태계·중국 AI 솔루션·에너지 안보·하이퍼스케일러 5개 축으로 대응 권고.</p>
+    </div>
+
+    <div class="report-body">
+
+      <div class="chips">
+        <div class="chip"><div class="k">View</div><div class="v buy">Bullish</div><div class="s">AI 인프라 전반</div></div>
+        <div class="chip"><div class="k">Ways to Play 1M 상대성과</div><div class="v sell">−7pt</div><div class="s">평균 −6.7%, 지수 대비</div></div>
+        <div class="chip"><div class="k">US 전력 부족 (2026-28)</div><div class="v">38 GW</div><div class="s">2030년까지 ~122GW</div></div>
+        <div class="chip"><div class="k">하이퍼스케일러 Capex</div><div class="v">$1.2~1.4tr</div><div class="s">주요 5개사 '27+'28</div></div>
+        <div class="chip"><div class="k">가용 컴퓨팅</div><div class="v">~120 GW</div><div class="s">'28E, '25 ~30GW 대비</div></div>
+      </div>
+
+      <h3 class="sec" id="thesis"><span class="n">1</span>핵심 논지 — 비선형적 역량 개선과 Jevons Paradox</h3>
+      <ul class="pts">
+        <li>강세 뷰의 가장 중요한 근거는 <b>AI 역량의 비선형적 개선 속도</b>. AI 인프라는 시간이 지나며 글로벌 경제에 순편익을 제공하는 "Intelligence Superhighway"로 진화</li>
+        <li>"역량 2배를 위해 컴퓨팅 10배" 부담론에 대한 완충 요인은 칩당 연산능력의 급속한 개선 — NVIDIA는 세대 교체마다 <b>exaFLOPs +250%, 전력사용 +60%</b> 수준으로 전망</li>
+        <li>현 frontier LLM은 광범위한 지식 노동의 <b>50% 이상</b>을 인간 수준 또는 그 이상으로 수행. 역량이 2배가 될 경우 대다수 지식 업무가 대체 가능 영역으로 진입</li>
+        <li>recursive self-improvement(RSI) 도입 시 개선 속도가 "machine speed"로 전환되며, 동일한 규모의 추가 컴퓨팅 없이도 역량 향상 가능 — 시점은 <b>2027년 봄~2030년</b> 사이로 추정되나 불확실성 큼</li>
+        <li>Jevons Paradox: 효율 개선이 단위당 비용을 낮추며 (1) 기존 사용자의 사용량 증가, (2) 신규 사용자·애플리케이션 확산을 통해 <b>총 컴퓨팅·전력 수요를 오히려 확대</b></li>
+        <li>토큰 이코노믹스 모델 기준 대형 LLM과 효율화 모델 모두 기반 AI 인프라에서 강한 ROI 창출 — AI capex의 ROI는 여전히 매력적</li>
+        <li>Google 경영진은 컴퓨팅을 <b>6개월마다 2배</b>(4~5년 내 1,000배) 확대 필요성을 언급. 반면 2025-28년 NVIDIA 판매 컴퓨팅의 CAGR ~140%를 5년으로 연장해도 해당 수요 증가분의 10% 미만 수준</li>
+        <li>최근 조정의 상당 부분은 펀더멘털이 아닌 <b>기술적 요인</b>(차익실현, 쏠림 해소, 리테일 레버리지 청산)에 기인</li>
+      </ul>
+
+      <h4 class="sub">우려 요인 3가지 — 정리</h4>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>우려</th><th>내용</th><th>판단</th></tr></thead>
+        <tbody>
+          <tr><td><b>#1 Tokenmaxxing</b></td><td>기업의 임직원 토큰 지출 한도 설정이 LLM 개발사 매출을 제약</td><td class="buy">데이터상 유효하지 않음</td></tr>
+          <tr><td><b>#2 중국 open-weight 모델</b></td><td>미국 frontier LLM 대비 경쟁 위협 확대 → 학습 컴퓨팅 지출 감소</td><td>실질 위협이나, compute 수요 강세 논지는 오히려 강화</td></tr>
+          <tr><td><b>#3 People·Power·Politics</b></td><td>인력·전력·정치 3중 제약으로 데이터센터 증설 자체가 어려움</td><td class="bear">유효 — 단 barrier가 아닌 speed bump</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3 class="sec" id="token"><span class="n">2</span>Concern #1 — Tokenmaxxing: 토큰 경제성은 압도적으로 in the money</h3>
+      <ul class="pts">
+        <li>기업 사용자의 <b>중위 토큰 지출은 월 $11 미만</b>으로 극히 낮은 수준. 향후 수개월~수년간 큰 폭 증가 여력</li>
+        <li>다양한 기업 AI use case 분석 기준, 업무 1건 수행 시 평균 <b>$55의 비용 절감</b> 효과</li>
+        <li>토큰 사용량 추정: 일반 query 기반 사용 ~5,000 토큰, AI Agent 1개는 query 대비 ~15배 소비 → Agent 5~7개로 경제적 업무 1건 수행 시 <b>375,000~525,000 토큰</b></li>
+        <li>평균 토큰 가격 $3~10/백만 토큰 가정 시 업무 수행 비용은 <b>$2~5</b> — $55 편익의 일부에 불과</li>
+        <li>기업이 최적 AI 역량 채택에 실패할 경우 대규모 경쟁 열위로 직결되며, 이 dynamic은 시간이 갈수록 명확해질 전망</li>
+        <li>LLM 개발사 관점에서도 공개 토큰 가격 기준 Blackwell 데이터센터 net margin <b>약 50~60%</b>(모든 DC 비용 반영, LLM 개발비 제외), Rubin <b>약 75~80%</b>, Feynman <b>약 90%</b></li>
+        <li>Blackwell → Feynman 전환 시 <b>토큰 가격을 ~75% 인하해도 동일 마진</b> 유지 가능 → 향후 컴퓨팅 구성이 고성능 칩으로 이동하며 토큰 가격 하락 여지</li>
+      </ul>
+
+      <div class="chart-card">
+        <div class="ct">데이터센터 Net Margin — 토큰 판매 기준 (GPU 세대별)</div>
+        <svg viewBox="0 0 880 260" width="100%" role="img" aria-label="GPU 세대별 데이터센터 net margin">
+          <line x1="180" y1="220" x2="850" y2="220" stroke="#cfd6e0"/>
+          <line x1="180" y1="30" x2="180" y2="220" stroke="#cfd6e0"/>
+          <g font-size="12" fill="#525866">
+            <text x="180" y="240">0%</text>
+            <text x="314" y="240">20%</text>
+            <text x="448" y="240">40%</text>
+            <text x="582" y="240">60%</text>
+            <text x="716" y="240">80%</text>
+            <text x="838" y="240">100%</text>
+          </g>
+          <g stroke="#eef1f6">
+            <line x1="314" y1="30" x2="314" y2="220"/>
+            <line x1="448" y1="30" x2="448" y2="220"/>
+            <line x1="582" y1="30" x2="582" y2="220"/>
+            <line x1="716" y1="30" x2="716" y2="220"/>
+            <line x1="850" y1="30" x2="850" y2="220"/>
+          </g>
+          <g font-size="13" fill="#1b1e24" text-anchor="end">
+            <text x="168" y="62">Feynman DC</text>
+            <text x="168" y="122">Rubin DC</text>
+            <text x="168" y="182">Blackwell DC</text>
+          </g>
+          <rect x="180" y="42" width="603" height="30" fill="#00264d"/>
+          <rect x="180" y="102" width="503" height="30" fill="#0077c8"/>
+          <rect x="180" y="162" width="335" height="30" fill="#7fb2d9"/>
+          <g font-size="13" font-weight="700" fill="#1b1e24">
+            <text x="795" y="62">~90%</text>
+            <text x="695" y="122">~75%</text>
+            <text x="527" y="182">~50%</text>
+          </g>
+        </svg>
+      </div>
+
+      <div class="callout"><span class="t">주목</span>Kimi K3를 모델에 반영한 결과: input $3/백만 토큰, output $15/백만 토큰 가격 기준 동일 Blackwell 데이터센터의 마진은 <b>45%</b>. 직전 frontier 모델(Grok 4) 대비 마진은 <b>+1~3%p</b> 개선되며, 200MW 데이터센터의 ROIC는 약 <b>+3%p</b> 수준 개선. 벤치마크는 우수하나 가격도 그에 맞춰 책정된 "또 하나의 강한 frontier 모델"로 해석.</div>
+
+      <h3 class="sec" id="china"><span class="n">3</span>Concern #2 — 중국 open-weight 모델: 위협이자 compute 강세 논거</h3>
+      <ul class="pts">
+        <li>최근 공개된 중국 LLM은 <b>고성능</b>이나, 목표 결과 달성에 상당한 컴퓨팅을 소모할 가능성 — 즉 <b>토큰 가격 ≠ 토큰 사용으로 얻는 가치</b></li>
+        <li>K3는 현재까지 최대 규모의 중국 open-weight LLM으로, scaling law가 여전히 유효함을 시사. 높은 가격 책정 역시 LLM 시장 dynamics에 긍정적</li>
+        <li>K3는 하루아침의 성과가 아니라 중국 AI 모델 산업의 누적 진전의 결과 — 6월 공개된 GLM-5.2도 이미 우수. 향후 <b>더 크고, 더 높은 가격, 더 나은 성능</b>의 중국 LLM 추가 등장 전망</li>
+        <li>중국·미국 개발사 공통의 집요한 효율 추구는 오히려 <b>compute 수요가 공급을 크게 상회</b>한다는 근본 뷰를 강화. orchestration layer 확산 등 효율화 진전이 "더 낮은 비용의 더 좋은 결과" 흐름을 지속</li>
+        <li>투자 시사점: inference 중심 인프라(칩 제조, neocloud, DC 개발), 증설 핵심 장비(memory, optical, backup power, 에너지 저장, 변압기, 냉각), 전력 de-bottlenecking 솔루션(fuel cell, 터빈, ESS, 비트코인 사이트 전환)에 우호적</li>
+        <li>중국 AI 솔루션 제공업체에도 우호적 — 다수 시장에서 중국 LLM 채택이 빠르게 확대될 가능성</li>
+      </ul>
+
+      <h4 class="sub">중국 AI 칩 생태계 — 시스템 레벨 경쟁력</h4>
+      <ul class="pts">
+        <li>중국 국산 실리콘은 칩 레벨에서 미국 대비 <b>약 2세대</b> 열위이나, multi-die 설계·advanced packaging·rack-scale 아키텍처·optical networking·SW-HW 공동 최적화로 실질 격차 축소</li>
+        <li>중국 국산 가속기의 <b>TCO는 중국 판매용 NVIDIA 제품 대비 30~60% 저렴</b>하며, 상위 중국 가속기는 inference 워크로드에서 per-token cost 동등 수준 이상 확보</li>
+        <li>주요 LLM 개발사들은 "토큰 비용이 경쟁력 있다면 국산 GPU 배치 의향" — 채택 동인은 이념이 아닌 <b>economics</b></li>
+        <li>중국 AI 칩 TAM은 <b>2030년 US$91bn</b>(기존 $67bn 대비 +36%) 전망, 2025-30 CAGR 23%. 자급률은 <b>2025년 42% → 2030년 70%</b></li>
+        <li>상향 배경: 중국 CSP의 해외 데이터센터 국산 GPU 채택 신규 반영(2028년 3%, 2029년 10%, 2030년 20% 가정), ByteDance 2027년 capex 보수적 가정 <b>US$80bn</b>(~Rmb542bn), sovereign·SOE TAM <b>$7bn → $9bn</b> 상향</li>
+      </ul>
+
+      <div class="chart-card">
+        <div class="ct">중국 AI 칩 TAM 전망 (US$bn)</div>
+        <svg viewBox="0 0 880 300" width="100%" role="img" aria-label="중국 AI 칩 TAM 전망">
+          <line x1="70" y1="250" x2="850" y2="250" stroke="#cfd6e0"/>
+          <g stroke="#eef1f6">
+            <line x1="70" y1="40" x2="850" y2="40"/>
+            <line x1="70" y1="82" x2="850" y2="82"/>
+            <line x1="70" y1="124" x2="850" y2="124"/>
+            <line x1="70" y1="166" x2="850" y2="166"/>
+            <line x1="70" y1="208" x2="850" y2="208"/>
+          </g>
+          <g font-size="11" fill="#9aa3b2" text-anchor="end">
+            <text x="62" y="254">0</text>
+            <text x="62" y="212">20</text>
+            <text x="62" y="170">40</text>
+            <text x="62" y="128">60</text>
+            <text x="62" y="86">80</text>
+            <text x="62" y="44">100</text>
+          </g>
+          <g>
+            <rect x="100" y="229" width="62" height="21" fill="#7fb2d9"/>
+            <rect x="196" y="210" width="62" height="40" fill="#7fb2d9"/>
+            <rect x="292" y="183" width="62" height="67" fill="#7fb2d9"/>
+            <rect x="388" y="143" width="62" height="107" fill="#0077c8"/>
+            <rect x="484" y="103" width="62" height="147" fill="#0077c8"/>
+            <rect x="580" y="90" width="62" height="160" fill="#00264d"/>
+            <rect x="676" y="78" width="62" height="172" fill="#00264d"/>
+            <rect x="772" y="59" width="62" height="191" fill="#00264d"/>
+          </g>
+          <g font-size="12" font-weight="700" fill="#1b1e24" text-anchor="middle">
+            <text x="131" y="222">10</text>
+            <text x="227" y="203">19</text>
+            <text x="323" y="176">32</text>
+            <text x="419" y="136">51</text>
+            <text x="515" y="96">70</text>
+            <text x="611" y="83">76</text>
+            <text x="707" y="71">82</text>
+            <text x="803" y="52">91</text>
+          </g>
+          <g font-size="11.5" fill="#525866" text-anchor="middle">
+            <text x="131" y="268">2023</text>
+            <text x="227" y="268">2024</text>
+            <text x="323" y="268">2025</text>
+            <text x="419" y="268">2026E</text>
+            <text x="515" y="268">2027E</text>
+            <text x="611" y="268">2028E</text>
+            <text x="707" y="268">2029E</text>
+            <text x="803" y="268">2030E</text>
+          </g>
+        </svg>
+        <div class="chart-src">Source: Company data</div>
+      </div>
+
+      <h3 class="sec" id="ppp"><span class="n">4</span>Concern #3 — People·Power·Politics: barrier가 아닌 speed bump</h3>
+      <ul class="pts">
+        <li><b>People</b>: 숙련 데이터센터 건설 인력(특히 전기공, 용접공, 배관공) 공급 부족</li>
+        <li><b>Power</b>: 계통 접속 확보 난이도 상승, 일부 지역 접속 대기 <b>5~7년</b></li>
+        <li><b>Politics</b>: 미국 다수 주·지자체에서 데이터센터 성장에 대한 반발 확산</li>
+        <li>이 제약들로 인해 2028년까지 미국 데이터센터 용량 부족분이 AI 칩 판매 전망 기준 필요량 대비 <b>10% 이상</b>에 이를 수 있음</li>
+        <li>지난 10년간 주정부들은 판매·사용세 면제, 재산세 감면, 장기 적용기간, 직접 보조금 등으로 데이터센터 유치를 경쟁했으나, 최근 <b>세제 혜택 중단·조건부화·폐지</b>로 흐름 반전</li>
+        <li>연방 차원에서는 <b>Ratepayer Protection Act</b>가 하원 심의 중 — 주 유틸리티가 데이터센터의 계통 업그레이드 비용 부담을 요구하는 "large load standard" 검토를 의무화하는 내용. 사실상 전국 단위 데이터센터 tariff 창설 효과</li>
+        <li>3월에는 Amazon, Google, Meta, Microsoft, Oracle, xAI 및 frontier lab이 기존 소비자를 인프라 구축 비용에서 보호하는 자발적 협약(Ratepayer Protection Pledge)에 서명</li>
+        <li>반대 여론은 blue state·민주당 성향 유권자에 다소 집중되나, <b>주 단위 moratorium 제안은 민주당·공화당 trifecta·분점 정부에 고르게 분포</b>. 대부분은 build-out을 되돌리기보다 <b>속도를 늦추는</b> 성격이며 한시적</li>
+      </ul>
+
+      <h4 class="sub">주 단위 데이터센터 moratorium 법안 — 주요 사례</h4>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>State</th><th>법안</th><th>Status</th><th>내용</th></tr></thead>
+        <tbody>
+          <tr><td><b>New York</b></td><td>A11560 / S10642</td><td class="buy">Enacted</td><td>대형 데이터센터 인허가 1년 moratorium, 서비스 분류·에너지 효율·지역사회 조항 추가</td></tr>
+          <tr><td>Delaware</td><td>SB 353</td><td>Introduced</td><td>100MW 이상 사용 가능 데이터센터 신청·인허가를 2027.1.31까지 중단</td></tr>
+          <tr><td>Georgia</td><td>HB 1059</td><td>Introduced</td><td>2028.12.31까지 지방정부의 데이터센터 인허가 금지</td></tr>
+          <tr><td>Michigan</td><td>HB 5594/5595</td><td>Introduced</td><td>2027.4.1까지 일부 신규 데이터센터 승인 금지</td></tr>
+          <tr><td>Pennsylvania</td><td>SB 1359 / HB 2533</td><td>Introduced</td><td>hyperscale DC 대상 주 전역 3년 moratorium 및 영향평가</td></tr>
+          <tr><td>South Carolina</td><td>H 5526</td><td>Introduced</td><td>포괄 감독 체계 입법 전까지 신청 접수·처리 차단</td></tr>
+          <tr><td>Vermont</td><td>S.205</td><td>Introduced</td><td>2030년까지 AI 데이터센터 moratorium 및 영향 보고 요구</td></tr>
+          <tr><td>Virginia</td><td>HB 1515</td><td>Continued</td><td>접속 요청 이행 또는 2028.7.1까지 신규 DC 최종 승인 금지</td></tr>
+          <tr><td>Maine</td><td>LD 307 / HP 207</td><td class="bear">Vetoed</td><td>조정위 설치 및 20MW 초과 DC 한시 제한(2027.11까지)</td></tr>
+          <tr><td>Maryland · Minnesota · New Hampshire · Oklahoma · South Dakota · Wisconsin</td><td>—</td><td class="bear">Failed</td><td>공동입지·발전 조건 금지, 위원회 보고 전 인허가 금지, 1년 moratorium 등</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-src">Source: NCSL, MultiState</div>
+
+      <h3 class="sec" id="power"><span class="n">5</span>Time to Power — 전력 부족 수학과 가치창출</h3>
+      <ul class="pts">
+        <li>2026-28년 미국 데이터센터 수요 대비 계통 접속 가능 전력의 부족분은 <b>38GW</b>로 추정. 2030년까지는 <b>~122GW</b>까지 확대</li>
+        <li>가장 빠른 두 가지 "time to power" 전략: (1) 前 비트코인 기업이 보유한 기존 계통 접속권 재활용, (2) 빠르게 배치 가능한 확장형 발전설비 — 계통 대비 <b>1~3년의 시간 우위</b></li>
+        <li>de-bottlenecking 솔루션에는 소형 가스터빈, reciprocating engine, fuel cell, 배터리 저장이 포함되며, 계통 접속 이전에 전력 확보를 가능하게 함</li>
+      </ul>
+
+      <div class="chart-card">
+        <div class="ct">미국 데이터센터 전력 부족 구조 (GW, 2026-28)</div>
+        <svg viewBox="0 0 880 300" width="100%" role="img" aria-label="미국 데이터센터 전력 수요 및 부족분">
+          <line x1="70" y1="250" x2="850" y2="250" stroke="#cfd6e0"/>
+          <g stroke="#eef1f6">
+            <line x1="70" y1="52" x2="850" y2="52"/>
+            <line x1="70" y1="102" x2="850" y2="102"/>
+            <line x1="70" y1="151" x2="850" y2="151"/>
+            <line x1="70" y1="201" x2="850" y2="201"/>
+          </g>
+          <g font-size="11" fill="#9aa3b2" text-anchor="end">
+            <text x="62" y="254">0</text>
+            <text x="62" y="205">20</text>
+            <text x="62" y="155">40</text>
+            <text x="62" y="106">60</text>
+            <text x="62" y="56">80</text>
+          </g>
+          <rect x="110" y="83" width="120" height="167" fill="#00264d"/>
+          <text x="170" y="76" font-size="14" font-weight="700" fill="#00264d" text-anchor="middle">68</text>
+          <rect x="300" y="83" width="120" height="37" fill="#c0392b"/>
+          <text x="360" y="76" font-size="14" font-weight="700" fill="#c0392b" text-anchor="middle">(15)</text>
+          <rect x="490" y="120" width="120" height="37" fill="#c0392b"/>
+          <text x="550" y="113" font-size="14" font-weight="700" fill="#c0392b" text-anchor="middle">(15)</text>
+          <rect x="680" y="157" width="120" height="93" fill="#8a4b15"/>
+          <text x="740" y="150" font-size="14" font-weight="700" fill="#8a4b15" text-anchor="middle">(38)</text>
+          <g font-size="11.5" fill="#525866" text-anchor="middle">
+            <text x="170" y="270">필요 전력</text>
+            <text x="360" y="270">건설 중 DC</text>
+            <text x="550" y="270">확보·계약 계통</text>
+            <text x="740" y="270">잠재 부족분</text>
+          </g>
+        </svg>
+      </div>
+
+      <h4 class="sub">Time to Power 솔루션 반영 시 부족분 (GW)</h4>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>항목</th><th>Low End</th><th>Midpoint</th><th>High End</th><th>성공 확률</th></tr></thead>
+        <tbody>
+          <tr><td><b>솔루션 반영 전 부족분</b></td><td class="num">38</td><td class="num">38</td><td class="num">38</td><td class="num">—</td></tr>
+          <tr><td>#1 천연가스 터빈</td><td class="num">15</td><td class="num">18</td><td class="num">20</td><td class="num">90%</td></tr>
+          <tr><td>#2 Fuel cell</td><td class="num">5</td><td class="num">7</td><td class="num">8</td><td class="num">90%</td></tr>
+          <tr><td>#3 가동 원전 인접 DC 입지</td><td class="num">—</td><td class="num">3</td><td class="num">5</td><td class="num">75%</td></tr>
+          <tr><td>#4 비트코인 사이트 전환</td><td class="num">10</td><td class="num">14</td><td class="num">19</td><td class="num">90%</td></tr>
+          <tr><td><b>확률가중 솔루션 합계</b></td><td class="num">27</td><td class="num">37</td><td class="num">46</td><td class="num">—</td></tr>
+          <tr><td><b>순 부족분 (2028년까지)</b></td><td class="num bear">(11)</td><td class="num bear">(1)</td><td class="num buy">None</td><td class="num">—</td></tr>
+          <tr><td>미국 DC 배치량 대비 비중</td><td class="num">16%</td><td class="num">2%</td><td class="num">0%</td><td class="num">Midpoint 시나리오를 가장 유력하게 판단</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4 class="sub">"Powered Shell" 계약의 가치창출 수학 — 시장이 과소평가</h4>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>항목</th><th>재생에너지 PPA</th><th>데이터센터 Powered Shell 리스</th></tr></thead>
+        <tbody>
+          <tr><td><b>건설 단가</b></td><td>$1.50~2/watt</td><td>$10~12/watt (일부 brownfield는 더 낮음)</td></tr>
+          <tr><td><b>Capex 대비 unlevered FCF yield</b></td><td>통상 10% 수준</td><td class="buy">15~19%</td></tr>
+          <tr><td><b>레버리지 여력 (프로젝트 레벨)</b></td><td>80%+</td><td>80%+</td></tr>
+          <tr><td><b>EV/EBITDA 15x 기준 순 가치창출</b></td><td>$1.00/watt<br><span style="color:#525866;font-size:12px">총 투자 대비 50%, 지분 대비 200%+</span></td><td class="buy">$15.50/watt<br><span style="color:#525866;font-size:12px">총 투자 대비 155%, 지분 대비 700%+</span></td></tr>
+          <tr><td><b>GW당 순 가치창출</b></td><td class="num">$1,000mn</td><td class="num buy">$15,500mn</td></tr>
+          <tr><td><b>투입 지분 대비 순 가치창출</b></td><td class="num">250%</td><td class="num buy">775%</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <ul class="pts">
+        <li>Powered Shell 계약은 <b>15~25년 고정가(escalator 포함)</b> 구조로, GW당 가치창출이 재생에너지 프로젝트 대비 <b>약 15배</b></li>
+        <li>17건의 AI 고객 데이터센터 리스 계약 기준 가치창출은 <b>watt당 $7~19</b>이며 시간이 갈수록 상승 추세</li>
+        <li>Powered Shell Provider(PSP) 주가는 EV/Watt <b>$2.04~4.52</b>에 거래 — 성숙 DC 사업자(20~25x) 대비 할인된 <b>15x EV/Watt</b>로 수렴할 것으로 판단하며 현 밸류에이션은 저평가</li>
+      </ul>
+
+      <div class="chart-card">
+        <div class="ct">Powered Shell Provider Enterprise Value / Watt (100MW+ 사이트 기준, US$)</div>
+        <svg viewBox="0 0 880 300" width="100%" role="img" aria-label="PSP EV per watt">
+          <line x1="70" y1="250" x2="850" y2="250" stroke="#cfd6e0"/>
+          <g stroke="#eef1f6">
+            <line x1="70" y1="70" x2="850" y2="70"/>
+            <line x1="70" y1="106" x2="850" y2="106"/>
+            <line x1="70" y1="142" x2="850" y2="142"/>
+            <line x1="70" y1="178" x2="850" y2="178"/>
+            <line x1="70" y1="214" x2="850" y2="214"/>
+          </g>
+          <g font-size="11" fill="#9aa3b2" text-anchor="end">
+            <text x="62" y="254">$0</text>
+            <text x="62" y="218">$1</text>
+            <text x="62" y="182">$2</text>
+            <text x="62" y="146">$3</text>
+            <text x="62" y="110">$4</text>
+            <text x="62" y="74">$5</text>
+          </g>
+          <g fill="#0077c8">
+            <rect x="92" y="152" width="48" height="98"/>
+            <rect x="164" y="135" width="48" height="115"/>
+            <rect x="236" y="87" width="48" height="163"/>
+            <rect x="308" y="115" width="48" height="135"/>
+            <rect x="380" y="177" width="48" height="73"/>
+            <rect x="452" y="112" width="48" height="138"/>
+            <rect x="524" y="145" width="48" height="105"/>
+            <rect x="596" y="121" width="48" height="129"/>
+            <rect x="668" y="131" width="48" height="119"/>
+            <rect x="740" y="108" width="48" height="142"/>
+          </g>
+          <g font-size="11" font-weight="700" fill="#00264d" text-anchor="middle">
+            <text x="116" y="145">2.72</text>
+            <text x="188" y="128">3.20</text>
+            <text x="260" y="80">4.52</text>
+            <text x="332" y="108">3.74</text>
+            <text x="404" y="170">2.04</text>
+            <text x="476" y="105">3.84</text>
+            <text x="548" y="138">2.93</text>
+            <text x="620" y="114">3.58</text>
+            <text x="692" y="124">3.31</text>
+            <text x="764" y="101">3.96</text>
+          </g>
+          <g font-size="11.5" fill="#525866" text-anchor="middle">
+            <text x="116" y="268">MARA</text>
+            <text x="188" y="268">IREN</text>
+            <text x="260" y="268">RIOT</text>
+            <text x="332" y="268">CIFR</text>
+            <text x="404" y="268">BTDR</text>
+            <text x="476" y="268">GLXY</text>
+            <text x="548" y="268">WULF</text>
+            <text x="620" y="268">CORZ</text>
+            <text x="692" y="268">APLD</text>
+            <text x="764" y="268">HUT</text>
+          </g>
+        </svg>
+      </div>
+
+      <div class="callout"><span class="t">전략</span>테마 확신을 알파로 전환하는 실무적 방법은 테마 고유 변동성 구간에서의 규율 있는 매수. AI 인프라·Powering AI 서브테마에 대해 2023년 이후 back-test 시 초기 100% 배분에서 <b>−5% 하락 시 150%, −15% 하락 시 200%</b>로 확대하고 각 확대분을 3개월(63거래일) 보유 후 100%로 복귀시키는 오버레이가 기초 포트폴리오를 상회.</div>
+
+      <h3 class="sec" id="ways"><span class="n">6</span>Ways to Play — 5개 축과 지역별 선호주</h3>
+      <ul class="pts">
+        <li><b>(i) AI 인프라 병목 보유</b>: 인력, "time to power"(fuel cell, Powered Shell로 전환한 비트코인 기업, 터빈, ESS, 전력 개발사, 성장성 높은 데이터센터 REIT)</li>
+        <li><b>(ii) compute 제조 생태계 보유</b>: Intelligence 가치의 급속한 상승과 수요 대비 컴퓨팅 부족</li>
+        <li><b>(iii) 중국 주요 AI 솔루션 제공업체 보유</b>: 제품 경쟁력·가격 경쟁력 대비 주가에 반영된 upside가 미미</li>
+        <li><b>(iv) 에너지 안보 자산 보유</b>: 특히 <b>에너지 저장(ESS)</b>을 두드러진 asset class로 지목</li>
+        <li><b>(v) 하이퍼스케일러 보유</b>: 규모의 이익과 AI capex ROI 확보 역량 — META, GOOGL, MSFT, AMZN 비중확대</li>
+        <li>이 리스트는 최근 1개월간 지수를 <b>약 7pt 하회</b>(평균 −6.7%)했으나 secular positioning은 견고 — 매수 기회로 판단</li>
+      </ul>
+
+      <h4 class="sub">North America — 선호 종목 (Data as of 7/24/2026)</h4>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Ticker</th><th>Company</th><th>시가총액 ($mn)</th><th>목표가 대비 upside</th><th>Price (USD)</th></tr></thead>
+        <tbody>
+          <tr><td><b>NVDA</b></td><td>NVIDIA</td><td class="num">5,005,528</td><td class="num buy">38%</td><td class="num">208.76</td></tr>
+          <tr><td><b>MSFT</b></td><td>Microsoft</td><td class="num">2,835,434</td><td class="num buy">57%</td><td class="num">381.58</td></tr>
+          <tr><td><b>AMZN</b></td><td>Amazon</td><td class="num">2,496,833</td><td class="num buy">42%</td><td class="num">249.99</td></tr>
+          <tr><td><b>AVGO</b></td><td>Broadcom</td><td class="num">1,817,015</td><td class="num buy">28%</td><td class="num">392.47</td></tr>
+          <tr><td><b>META</b></td><td>Meta</td><td class="num">1,307,064</td><td class="num buy">30%</td><td class="num">645.85</td></tr>
+          <tr><td><b>MU</b></td><td>Micron Technology</td><td class="num">1,040,115</td><td class="num buy">21%</td><td class="num">990.21</td></tr>
+          <tr><td><b>SPCX</b></td><td>SpaceX</td><td class="num">871,241</td><td class="num buy">154%</td><td class="num">118.24</td></tr>
+          <tr><td><b>BX</b></td><td>Blackstone</td><td class="num">97,838</td><td class="num buy">48%</td><td class="num">124.50</td></tr>
+          <tr><td><b>VST</b></td><td>Vistra</td><td class="num">55,089</td><td class="num buy">23%</td><td class="num">168.98</td></tr>
+          <tr><td><b>BE</b></td><td>Bloom Energy</td><td class="num">52,591</td><td class="num buy">43%</td><td class="num">217.30</td></tr>
+          <tr><td><b>TLN</b></td><td>Talen Energy</td><td class="num">16,338</td><td class="num buy">34%</td><td class="num">379.27</td></tr>
+          <tr><td><b>HUT</b></td><td>Hut 8 Mining</td><td class="num">12,384</td><td class="num buy">124%</td><td class="num">117.67</td></tr>
+          <tr><td><b>CIFR</b></td><td>Cipher Mining</td><td class="num">9,469</td><td class="num buy">82%</td><td class="num">25.82</td></tr>
+          <tr><td><b>WULF</b></td><td>TeraWulf</td><td class="num">9,148</td><td class="num buy">259%</td><td class="num">20.05</td></tr>
+          <tr><td><b>RIOT</b></td><td>Riot Platforms</td><td class="num">8,520</td><td class="num buy">51%</td><td class="num">23.86</td></tr>
+          <tr><td><b>APLD</b></td><td>Applied Digital</td><td class="num">7,770</td><td class="num buy">22%</td><td class="num">29.89</td></tr>
+          <tr><td><b>GLXY</b></td><td>Galaxy Digital</td><td class="num">4,343</td><td class="num buy">52%</td><td class="num">24.32</td></tr>
+          <tr><td><b>XE</b></td><td>X-Energy</td><td class="num">4,185</td><td class="num buy">158%</td><td class="num">15.92</td></tr>
+          <tr><td><b>CWEN</b></td><td>Clearway Energy</td><td class="num">3,888</td><td class="num buy">79%</td><td class="num">33.57</td></tr>
+          <tr><td><b>SEI</b></td><td>Solaris Energy Infrastructure</td><td class="num">3,155</td><td class="num buy">49%</td><td class="num">60.38</td></tr>
+          <tr><td><b>LBRT</b></td><td>Liberty Energy</td><td class="num">2,833</td><td class="num buy">84%</td><td class="num">19.62</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-src">Source: FactSet; Data as of 7/24/2026</div>
+
+      <h4 class="sub">종목별 핵심 논거 (US)</h4>
+      <ul class="pts">
+        <li><b>META</b> — '27+'28 capex $380bn+에 대한 ROIC 우려가 있으나, 35억 DAU와 GPU 기반 개선 파이프라인이라는 moat를 간과. 컴퓨팅 제약 환경에서 잉여 용량을 수익화하는 <b>neocloud optionality</b>도 강세 요인. 목표가 $775(+30%), '27/'28 blended 기준 base case P/E 약 23x</li>
+        <li><b>AMZN</b> — Trainium 스케일업, AWS 컴퓨팅 수요 가속, multi-model 전략 확장. Bedrock을 통해 기존 AWS 고객이 frontier·open source LLM 접근. 목표가 $330(+42%), '27/'28 평균 base EPS $13에 약 25x</li>
+        <li><b>NVDA</b> — semis Top Pick. 동종 그룹의 급등 대비 주가가 부진했으나 확신 유지, 현 시점 그룹 내 <b>best value</b>로 판단. 목표가 $288(+39%), CY27 EPS $13.08 추정치에 약 22x</li>
+        <li><b>AVGO</b> — 커버리지 내 절대금액 기준 AI 노출 2위. Google TPU 점유 논쟁이 overhang이나 중장기 <b>~80% TPU 점유</b> 유지 전망. 목표가 $502(+31%), 2027E EPS $17.92에 28x</li>
+        <li><b>MU</b> — 2027년·2028년 메모리 부족 심화 논지 유효. 구매 담당 채널 체크상 공급 부족 완화 신호 부재, <b>2Q→3Q like-for-like 가격 25% 이상 상승</b> 전망(자체·3rd party 추정치 상회). 목표가 $1,200(+30%), through-cycle EPS $40에 30x</li>
+        <li><b>MSFT</b> — 소프트웨어 내 최상위 moat와 매력적 AI 기회의 결합, M365·Azure·Security 전반 AI 내재화. 목표가 $600(+57%), FY28E base case EPS $23.86에 약 25x</li>
+        <li><b>SpaceX</b> — 글로벌 궤도 투입 질량의 3/4 이상. $120 미만 주가는 Space+Connectivity 코어 사업에 대한 합리적 배수만 반영하고 AI 기회는 사실상 미반영. 2028년 AI 매출 ~$100bn(평균 6GW 컴퓨팅) 추정. 목표가 $300, 15년 DCF상 Space+Connectivity 단독 가치 약 $136/주</li>
+        <li><b>BX</b> — 데이터센터 플랫폼 총 가치가 2Q26 <b>$185bn</b>(건설 중 포함)으로 연초 $130bn 대비 40% 이상 증가. 올해 리스 용량은 과거 최대치의 3배 이상 전망. 신규 DC REIT(BXDC, $2bn)로 TAM $1tr 이상 접근. '27 P/E 15x(시장 19.5x) — 목표가 $184(+48%), 2027E EPS $8.17에 22.5x</li>
+        <li><b>Data Center REIT</b> — EQIX 비중확대, DLR·BXDC 중립. inference 수요 변곡의 수혜, DLR 2Q26에서 0-1MW 사상 최대 bookings와 <b>$1.4bn backlog</b> 확인. EQIX 목표가(mid'27) $1,250(+15%), forward AFFO 약 25x</li>
+        <li><b>SEI</b> — 2029년까지 확보한 3,200MW 선단의 standalone 가치 <b>~$66/주</b>, 미계약 800~900MW 단기 계약 가능성 높음. 2028년 이후 성장에 $24/주 부여(2035년까지 연 500MW 추가 가정) — 2030년 140GW DC TAM과 38GW 부족분 대비 보수적 가정</li>
+        <li><b>LBRT</b> — Power-as-a-Service 플랫폼 구축, 2029년까지 <b>~3GW</b> 온사이트 용량 목표. Vantage Data Centers에 1GW 공급 합의(2027년까지 400MW firm reservation 포함)</li>
+      </ul>
+
+      <h4 class="sub">Asia Pacific — 선호 종목 (Data as of 23 July 2026)</h4>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Ticker</th><th>Company</th><th>Market</th><th>주가 (LCY)</th><th>목표가 (LCY)</th><th>Upside</th><th>P/E FY1</th><th>P/E FY2</th></tr></thead>
+        <tbody>
+          <tr><td>2330.TW</td><td><b>TSMC</b></td><td>Taiwan</td><td class="num">2,405</td><td class="num">2,988</td><td class="num buy">24%</td><td class="num">21.7</td><td class="num">16.6</td></tr>
+          <tr><td>005930.KS</td><td><b>삼성전자</b> (Top Pick)</td><td>Korea</td><td class="num">270,000</td><td class="num">381,000</td><td class="num buy">41%</td><td class="num">NA</td><td class="num">NA</td></tr>
+          <tr><td>0700.HK</td><td>Tencent</td><td>China</td><td class="num">445</td><td class="num">650</td><td class="num buy">46%</td><td class="num">14.9</td><td class="num">13.0</td></tr>
+          <tr><td>BABA.N</td><td>Alibaba (Top Pick)</td><td>China</td><td class="num">114</td><td class="num">180</td><td class="num buy">58%</td><td class="num">25.5</td><td class="num">17.0</td></tr>
+          <tr><td>285A.T</td><td>KIOXIA (Top Pick)</td><td>Japan</td><td class="num">61,880</td><td class="num">110,000</td><td class="num buy">78%</td><td class="num">7.0</td><td class="num">6.3</td></tr>
+          <tr><td>2454.TW</td><td>MediaTek (Top Pick)</td><td>Taiwan</td><td class="num">3,875</td><td class="num">5,588</td><td class="num buy">44%</td><td class="num">55.3</td><td class="num">26.5</td></tr>
+          <tr><td>2308.TW</td><td>Delta Electronics (Top Pick)</td><td>Taiwan</td><td class="num">1,880</td><td class="num">2,700</td><td class="num buy">44%</td><td class="num">45.3</td><td class="num">28.9</td></tr>
+          <tr><td>6857.T</td><td>Advantest (Top Pick)</td><td>Japan</td><td class="num">30,800</td><td class="num">36,000</td><td class="num buy">17%</td><td class="num">41.0</td><td class="num">27.5</td></tr>
+          <tr><td>0981.HK</td><td>SMIC</td><td>China</td><td class="num">70.75</td><td class="num">85.00</td><td class="num buy">20%</td><td class="num">43.5</td><td class="num">30.0</td></tr>
+          <tr><td>2317.TW</td><td>Hon Hai Precision</td><td>Taiwan</td><td class="num">258</td><td class="num">310</td><td class="num buy">20%</td><td class="num">15.7</td><td class="num">12.9</td></tr>
+          <tr><td>6981.T</td><td>Murata (Top Pick)</td><td>Japan</td><td class="num">8,538</td><td class="num">12,500</td><td class="num buy">46%</td><td class="num">46.0</td><td class="num">31.4</td></tr>
+          <tr><td>3037.TW</td><td>Unimicron</td><td>Taiwan</td><td class="num">896</td><td class="num">1,465</td><td class="num buy">64%</td><td class="num">60.3</td><td class="num">26.8</td></tr>
+          <tr><td>2345.TW</td><td>Accton (Top Pick)</td><td>Taiwan</td><td class="num">2,325</td><td class="num">3,800</td><td class="num buy">63%</td><td class="num">27.1</td><td class="num">20.1</td></tr>
+          <tr><td>6669.TW</td><td>Wiwynn (Top Pick)</td><td>Taiwan</td><td class="num">5,470</td><td class="num">7,500</td><td class="num buy">37%</td><td class="num">15.3</td><td class="num">11.7</td></tr>
+          <tr><td>5274.TWO</td><td>Aspeed Technology</td><td>Taiwan</td><td class="num">15,540</td><td class="num">20,888</td><td class="num buy">34%</td><td class="num">82.8</td><td class="num">57.0</td></tr>
+          <tr><td>5801.T</td><td>Furukawa Electric</td><td>Japan</td><td class="num">3,513</td><td class="num">6,600</td><td class="num buy">88%</td><td class="num">29.5</td><td class="num">18.4</td></tr>
+          <tr><td>VNET.O</td><td>VNET Group (Top Pick)</td><td>China</td><td class="num">7.77</td><td class="num">16.00</td><td class="num buy">106%</td><td class="num">53.9</td><td class="num">23.4</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-src">Source: FactSet; Data as of 23 July 2026 · 상기 표는 30개 선호 리스트 중 일부</div>
+
+      <h4 class="sub">Europe — AI 선호 리스트 (Data as of 7/23/2026)</h4>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Ticker</th><th>Company</th><th>분류</th><th>AI Enabler Materiality</th><th>Upside</th><th>Price (USD)</th></tr></thead>
+        <tbody>
+          <tr><td>ENR GR</td><td>Siemens Energy</td><td>Real Assets / AI Capex</td><td>Significant</td><td class="num buy">33%</td><td class="num">171.09</td></tr>
+          <tr><td>ASML NA</td><td>ASML Holding</td><td>Compute</td><td>Core to Thesis</td><td class="num buy">22%</td><td class="num">1,795.70</td></tr>
+          <tr><td>ASM NA</td><td>ASM International</td><td>Compute</td><td>Core to Thesis</td><td class="num buy">26%</td><td class="num">993.37</td></tr>
+          <tr><td>IFX GR</td><td>Infineon Technologies</td><td>Compute</td><td>Core to Thesis</td><td class="num buy">39%</td><td class="num">74.47</td></tr>
+          <tr><td>BESI NA</td><td>BE Semiconductor</td><td>Compute</td><td>Core to Thesis</td><td class="num buy">13%</td><td class="num">261.42</td></tr>
+          <tr><td>STMPA FP</td><td>STMicroelectronics</td><td>Compute</td><td>Core to Thesis</td><td class="num buy">36%</td><td class="num">54.52</td></tr>
+          <tr><td>NOKIA FH</td><td>Nokia</td><td>Compute/Goods</td><td>Moderate</td><td class="num buy">61%</td><td class="num">9.89</td></tr>
+          <tr><td>ACS SM</td><td>ACS</td><td>Real Assets / AI Capex</td><td>Core to Thesis</td><td class="num buy">36%</td><td class="num">130.42</td></tr>
+          <tr><td>SU FP</td><td>Schneider Electric</td><td>Real Assets / AI Capex</td><td>Significant</td><td class="num buy">19%</td><td class="num">301.79</td></tr>
+          <tr><td>BEAN SW</td><td>BELIMO Holding</td><td>Real Assets / AI Capex</td><td>Core to Thesis</td><td class="num buy">37%</td><td class="num">1,010.92</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-src">Source: LSEG Data Analytics; Data as of 7/23/2026</div>
+
+      <h3 class="sec" id="policy"><span class="n">7</span>"Two Worlds" — AI 정책·채택의 분기 가능성</h3>
+      <ul class="pts">
+        <li>미·중 모두 AI 정책 개입 확률이 상승하고 있으며, 이는 <b>글로벌 시장의 분기(bifurcation) 확대</b>로 이어질 수 있음. 다만 흐름은 de-coupling이 아닌 <b>de-risking</b></li>
+        <li>미·중 경쟁 구도를 감안할 때 중국 AI 솔루션 제공업체의 글로벌 TAM은 시장 평가보다 크다는 판단 — 중국 AI는 "따라잡기"에서 <b>"가치 확보"</b> 단계로 이동, 서사도 training → inference, 기술 → 응용, 잠재력 → 실질 이익으로 전환</li>
+        <li>미국 규제 수단: BIS의 Entity List 확대(미국 기업의 지정 중국 AI 개발사 거래 시 라이선스 필요 → 클라우드의 모델 호스팅 중단, 엔터프라이즈 SW의 라이선스 종료, 마켓플레이스 delisting 유발 가능), ICTS "connected software applications" 심사, OFAC 제재, 연방 조달 배제, FTC 집행 등</li>
+        <li>행정부 주도 조치는 본질적으로 한시적 — 항구성 확보 경로는 <b>FY27 NDAA</b>에 AI·반도체 조항 편입(AI OVERWATCH Act, MATCH Act). 연내 통과 가능성을 보나 상·하원 협상이 관건</li>
+        <li>중국 측 수단: 2023년 생성형 AI 서비스 잠정관리조치 기반 행정규제·사이버보안 심사·시장 접근 요건. 해외 모델·API 차단, 앱스토어·클라우드 유통 차단, 현지 통제형 배치 요구 등이 가능</li>
+        <li>대표 사례는 Apple Intelligence — 중국 본토에서 글로벌과 동일 조건 출시가 불가해 Alibaba·Baidu 모델·기술 통합 파트너십으로 규제 승인 추진, 최종적으로 <b>Alibaba Qwen 기반 버전</b>이 승인</li>
+        <li>중간선거 이후에도 AI가 전략 우선순위라는 <b>초당적 정렬</b>이 유지될 전망 — 선거 결과는 배치 속도와 지역적 분포(에너지 가용성, 인허가, 인력 제약)에 더 영향</li>
+        <li>이 배경과 물리계층으로의 AI 확산을 감안하면 미국이 근시일 내 <b>전국 단위 데이터센터 금지·moratorium을 도입할 가능성은 낮음</b></li>
+      </ul>
+
+      <h4 class="sub">중국 AI 정책 — compute를 공공 유틸리티로</h4>
+      <ul class="pts">
+        <li>2026.4.28 정치국이 컴퓨팅·수자원·전력·통신·도시 지하·물류의 <b>"6대 네트워크"</b>를 국가 전략 인프라로 격상 — AI 컴퓨팅을 물·전기와 동급 공공 유틸리티로 분류</li>
+        <li>15차 5개년 계획(2026-30) 기간 6대 네트워크 지출 <b>Rmb35tn 이상</b>, 이 중 2026년 컴퓨팅 네트워크만 <b>Rmb1tn 이상</b></li>
+        <li>전국 상호연결 AI 데이터센터 청사진 <b>~Rmb2tn(~US$295bn, 5년)</b> 초안 보도 — China Mobile·China Telecom 주 운영, <b>국산 하드웨어 80% 이상 의무</b></li>
+        <li>"AI Plus" 이니셔티브 침투율 목표: 지능형 단말·AI agent <b>2027년 70% 이상, 2030년 90% 이상</b>, 2035년 "지능 경제·사회" 전면 전환</li>
+        <li>2025년 말 기준 중국 설치 데이터센터 용량 <b>~37GW(글로벌의 ~27%)</b></li>
+        <li>2026.5.8 AI agent 규범화 시행의견은 agent를 별도 규제 범주로 다루는 세계 최초 국가 프레임워크(3단계 의사결정 권한, 19개 우선 시나리오)</li>
+      </ul>
+
+      <h3 class="sec" id="upstream"><span class="n">8</span>업스트림 — 메모리·ABF 기판·MLCC</h3>
+      <h4 class="sub">Memory — 다년간의 병목</h4>
+      <ul class="pts">
+        <li>AI 인프라 수요로 DRAM·HBM·NAND·HDD 전 영역 공급 제약. AI가 데이터센터를 넘어 edge·physical AI로 확산되면 추가 수요 급증 가능</li>
+        <li>서버가 DRAM 수요에서 차지하는 비중은 <b>2023년 37% → 2028년 59%</b>, enterprise SSD는 NAND 수요의 <b>18% → 65%</b>로 상승 전망 → 비AI 수요는 장기간 공급 접근성 악화</li>
+        <li>메모리 가격은 지난 1년간 <b>6배 이상</b> 상승 — 1957~2020년 5년마다 약 1/10로 하락했던 다년간 추세와의 급격한 단절</li>
+        <li>fab 건설에 수년이 소요되어 단기 공급 대응 불가. 공급 완화는 설치→qualification→수율 ramp→제품 배분의 <b>약 2년 프로세스</b></li>
+        <li>Long-Term Agreement(LTA)가 용량 확보의 필수 수단으로 부상 — 생산업체는 장기 물량·가격을 lock-in하며 안정적 고마진 모델 구축</li>
+        <li>공급 우선순위는 HBM·서버 DRAM·enterprise SSD로 집중되고, 전통 소비자·산업용 수요는 높은 가격·긴 리드타임·약화된 교섭력을 감수. 하이퍼스케일러는 메모리 집약 서버를 자본화·감가상각할 수 있으나 소비자 하드웨어·산업 OEM은 재고·COGS로 직접 전이되는 <b>회계적 비대칭</b> 존재</li>
+        <li>PC(비서버 DRAM의 17% 흡수 가정)·스마트폰(58%)에 memory sufficiency 프레임워크 적용 시 2027년 총 확보 가능 메모리는 수요 대비 각각 <b>−15%, −12%</b> 부족 → PC <b>−58백만대</b>, 스마트폰 <b>~134백만대</b> 하방 리스크</li>
+      </ul>
+
+      <div class="chart-card">
+        <div class="ct">AI·데이터센터가 메모리 수요의 주력으로 (수요 비중, %)</div>
+        <div class="legend">
+          <span><i style="background:#00264d"></i>DRAM 중 서버 비중</span>
+          <span><i style="background:#0077c8"></i>NAND 중 enterprise SSD 비중</span>
+        </div>
+        <svg viewBox="0 0 880 280" width="100%" role="img" aria-label="DRAM 서버 비중 및 NAND enterprise SSD 비중">
+          <line x1="70" y1="230" x2="850" y2="230" stroke="#cfd6e0"/>
+          <g stroke="#eef1f6">
+            <line x1="70" y1="60" x2="850" y2="60"/>
+            <line x1="70" y1="102" x2="850" y2="102"/>
+            <line x1="70" y1="145" x2="850" y2="145"/>
+            <line x1="70" y1="187" x2="850" y2="187"/>
+          </g>
+          <g font-size="11" fill="#9aa3b2" text-anchor="end">
+            <text x="62" y="234">0%</text>
+            <text x="62" y="191">20%</text>
+            <text x="62" y="149">40%</text>
+            <text x="62" y="106">60%</text>
+            <text x="62" y="64">80%</text>
+          </g>
+          <g fill="#00264d">
+            <rect x="120" y="151" width="46" height="79"/>
+            <rect x="320" y="149" width="46" height="81"/>
+            <rect x="520" y="118" width="46" height="112"/>
+            <rect x="720" y="105" width="46" height="125"/>
+          </g>
+          <g fill="#0077c8">
+            <rect x="172" y="192" width="46" height="38"/>
+            <rect x="372" y="179" width="46" height="51"/>
+            <rect x="572" y="139" width="46" height="91"/>
+            <rect x="772" y="92" width="46" height="138"/>
+          </g>
+          <g font-size="11.5" font-weight="700" fill="#00264d" text-anchor="middle">
+            <text x="143" y="144">37%</text>
+            <text x="343" y="142">38%</text>
+            <text x="543" y="111">53%</text>
+            <text x="743" y="98">59%</text>
+          </g>
+          <g font-size="11.5" font-weight="700" fill="#0077c8" text-anchor="middle">
+            <text x="195" y="185">18%</text>
+            <text x="395" y="172">24%</text>
+            <text x="595" y="132">43%</text>
+            <text x="795" y="85">65%</text>
+          </g>
+          <g font-size="12" fill="#525866" text-anchor="middle">
+            <text x="169" y="252">2023</text>
+            <text x="369" y="252">2025</text>
+            <text x="569" y="252">2027E</text>
+            <text x="769" y="252">2028E</text>
+          </g>
+        </svg>
+        <div class="chart-src">Source: TrendForce estimates</div>
+      </div>
+
+      <h4 class="sub">ABF 기판</h4>
+      <ul class="pts">
+        <li>2030년까지 ABF 기판 <b>공급 부족(undersupply) 갭이 기존 전망보다 확대</b>될 것으로 예상</li>
+        <li>2026-30년은 "AI diffusion" 국면 — training에서 inference로 AI 수요가 확산되며 팬데믹 이후 2년간의 down-cycle을 지나 시장 성장이 재가속</li>
+        <li>Server·AI·Networking·HPC 응용 비중은 <b>2015년 ~10% → 2030년 75% 이상</b>으로 상승. PC 수요는 부진 지속</li>
+      </ul>
+
+      <h4 class="sub">MLCC — "AI squeeze" 스토리</h4>
+      <ul class="pts">
+        <li>VR200 NVL72 랙의 MLCC 금액 콘텐츠는 GB300 NVL72 대비 <b>약 +182%</b> — 랙당 <b>~US$4.3K vs. ~US$1.5K</b>. 2H26 Rubin 랙 ramp를 앞둔 ODM의 적극적 재고 축적이 현 고사양 MLCC 수요 강세를 설명</li>
+        <li>MLCC 총 수량은 VR200 NVL72가 GB300 대비 <b>~+80%</b> — 랙당 <b>~570K unit vs. ~320K unit</b>. computing/switch board 콘텐츠 증가와 CX9 Orchid Module 등 PCB 콘텐츠 추가가 견인</li>
+        <li>나머지 증가분은 mix 고급화 — <b>high-cap(47uF+) 비중이 Rubin에서 30%+</b>(GB300 &lt;20%). 47uF+ 수량 수요는 <b>+210%</b>, 47uF 이하는 +50% 증가</li>
+        <li>AI 서버 MLCC 수요는 <b>2027년 약 US$1bn</b>에 도달할 전망으로, 기존 "2030년 ~US$550mn" 전망을 크게 상회</li>
+        <li>중저가 MLCC는 일본·한국 주요 공급사가 AI용 고용량 제품으로 capa를 전환하며 공급 부족 우려. 종목으로는 Yageo, 삼성전기, Murata 선호(중저가 노출은 Yageo가 최대)</li>
+      </ul>
+
+      <h4 class="sub">Cloud Semis</h4>
+      <ul class="pts">
+        <li>2027년까지 CPU·GPU 서버 모두 TAM 확대 전망. Aspeed·Montage 비중확대 유지</li>
+        <li>중국 내 고사양 X86 CPU 가격은 <b>전년 대비 약 2배</b> 상승 지속 — AMD 멀티코어, Vera 번들 판매 전략, Hygon의 정부 지원·성능 추격이 수요 견인</li>
+        <li>거의 모든 중국 GPU 벤더가 64·128카드 scale-up 시스템 전시. 칩 레벨 공정 제약은 남아있으나 GPU 간 연결로 대응하며, optics로 다중 랙을 연결하는 <b>SuperPods</b>가 유력 변형</li>
+      </ul>
+
+      <h3 class="sec" id="region"><span class="n">9</span>지역별 관점 — Asia·Korea·LatAm</h3>
+      <h4 class="sub">Asia 전략 — capex 레이스 중단 없음</h4>
+      <ul class="pts">
+        <li>MSCI APAC 반도체·장비 지수는 <b>6월 22일~7월 17일 −21%</b> 하락 — 차익실현과 쏠림·리테일 레버리지 청산 주도의 기술적 이벤트로 판단하며, AI 컴퓨팅 인프라 복합체의 setup은 오히려 개선</li>
+        <li>미·중 및 북아시아 공급망은 상호 연결 정도가 깊어 급격한 decoupling이 불가 — 시장 접근의 추가 단절에 대한 hurdle로 작용</li>
+        <li>'narrow yard, high fence' 및 chokepoint 활용(희토류 라이선싱 등) 정책은 오히려 <b>거대한 투자 프로그램을 촉발</b> — 중국 반도체 국산화 가속, 핵심 광물·공급망 이니셔티브 등이 수년~수십년 지속</li>
+        <li>Powering AI·에너지 안보·방산 등 연관 테마도 동반 조정되었으나, 중동 갈등 재격화로 Future of Energy·Multipolar World 테마의 펀더멘털 필요성은 오히려 강화 — risk-reward 개선</li>
+        <li>AI 관련 테마의 <b>earnings estimate revision breadth</b>는 지속 강세, 에너지 안보·방산은 3월 이후 강한 회복</li>
+      </ul>
+
+      <h4 class="sub">Korea — 전력기기·원전이 AI 전력 수요의 backbone</h4>
+      <ul class="pts">
+        <li>한국 전력·계통 기기 산업은 내수 기반에서 <b>글로벌 수출 엔진</b>으로 구조 전환. AI 데이터센터 전력 수요, 노후 계통 교체, 재생에너지 통합, 온사이트 발전이 심각한 공급 제약을 배경으로 동시 도래</li>
+        <li>미국 변압기 수입 시장 내 한국 점유율은 <b>2022년 8% → 14% → 2024년 19%</b>로 상승. 2024년 기준 미국이 한국 변압기 수출의 <b>45%</b>(유럽 12%, 중동 10%, 중동 증가율이 더 빠름)</li>
+        <li>구조적 우위: (1) 솔루션보다 제품 지향(초고압 변압기) → 마진 mix 유리, (2) 미국 규제 체계의 신뢰성 프리미엄 — 수주잔고의 <b>40% 이상</b>이 미국 노출, (3) <b>765kV UHV</b> 생산 가능 업체가 전 세계 3~4개사에 불과</li>
+        <li>원전: 완전 국산화된 밸류체인, "Team Korea" 수출 전략, 미국 SMR 개발사와의 조기 파트너십, 원전-AI 주권의 명시적 정책 연계가 차별적 포지션. Doosan Enerbility가 국내 유일 NSSS/STG 공급사·다역 EPC로 핵심 exposure</li>
+        <li>근시일 촉매: 중동·동유럽 대형 원전 수주, SMR 상업화, 한미 전략투자법인(2026.6.18 출범) 프로젝트 선정에 원전·SMR·전력 인프라 포함 여부, 폴란드·불가리아 AP1000 EPC 계약(2H26~1H27)</li>
+      </ul>
+
+      <h4 class="sub">Latin America — 2000년대 커머디티 슈퍼사이클과의 유사성</h4>
+      <ul class="pts">
+        <li>AI capex 사이클이 향후 10년 <b>지역 성장의 핵심 외부 엔진</b>이 될 잠재력 — 2000년대 초 중국 투자 붐이 LatAm 교역조건을 바꾸고 장기 강세장을 지탱한 메커니즘과 유사. 다만 수혜는 커머디티를 넘어 전력·인프라·고부가 제조로 확장</li>
+        <li>지하 자원(브라질 수력 — 전력의 <b>약 45%, ~110GW</b>, 아르헨티나 가스, 역내 핵심 광물)은 우위이나, 리스크는 대부분 <b>지상(제도)</b> — 인허가, 전력 확충, 파이낸싱, 사법 리스크, AI·프라이버시·데이터 규제</li>
+        <li>전력 제약은 아르헨티나·멕시코에서 특히 심각. 해결 가능하나 지속적 투자·정책 일관성·장비·시간이 필요</li>
+        <li>LatAm 선호주: AXIA Energia(+43%), Petrobras(+39%), Vista Energy(+40%), Auren Energia(+48%), Corporación Inmobiliaria Vesta(+34%), Copel(+27%), Prologis Property Mexico(+19%) 등 — 반면 Southern Copper·Antofagasta는 비중축소</li>
+      </ul>
+
+      <h4 class="sub">기업·소비자 채택 서베이 — 수요의 실증</h4>
+      <ul class="pts">
+        <li>2Q26 CIO 서베이: AI/ML이 지출 우선순위 1위 유지, net prioritization은 서베이 최고치 경신. 최우선 항목 응답 <b>18.0%</b>(1Q26 17.7%). 단 net defensibility는 <b>+10% → +4%</b>로 하락 — 침체 시 어떤 AI 과제를 지킬지에 대한 심사 강화 시사</li>
+        <li>목표는 생산성 중심 — GenAI·LLM을 통한 내부 임직원 생산성 향상 <b>30%</b>(2Q25 29%), 증분 매출 목적의 고객 대면 앱 21%, 인건비 절감 17%, 고객만족 개선 12%</li>
+        <li>배치 타임라인 가속: 2Q26 기준 CIO의 <b>약 76%</b>가 첫 AI/LLM 프로젝트를 이미 프로덕션에 투입했거나 향후 9개월 내 투입 예정</li>
+        <li>Future of Work 서베이(Wave 2): 지난 1년간 AI 도입으로 <b>12% 일자리 감축, 15% 미충원</b>, 신규 채용 22%로 일부 상쇄 → <b>순 5% 감소</b>(Wave 1은 −4%). 감축·미충원 합계는 27% vs Wave 1 22%로 노동 disruption 강도는 더 높음</li>
+        <li>6월 소비자 서베이: 응답자의 약 절반이 개인·업무 목적으로 주 1회 이상 AI 사용. 향후 12개월 개인 사용 확대 예상 42%, 취업자의 절반 가까이가 업무 사용 확대 예상</li>
+        <li>agentic AI의 S&P 500 대상 경제적 가치 창출은 연간 <b>~$490bn</b>(구현 비용은 고객 편익의 5%로 가정, 자동화 편익만 반영)</li>
+      </ul>
+
+      <h3 class="sec" id="risk"><span class="n">!</span>리스크 &amp; 모니터링 포인트</h3>
+      <div class="risk-box">
+        <h4>Key Risks</h4>
+        <ul>
+          <li><b>정책·규제 불확실성:</b> 미·중 경쟁 차원과 규제 승인 양측 모두 향후 수개월간 불확실성 요인. Entity List 확대, ICTS 심사, NDAA 편입 여부에 따라 밸류체인별 영향 상이</li>
+          <li><b>데이터센터 구축 병목의 공급망 전이:</b> 병목이 공급망 pull-through를 지연시키며 <b>가격결정력과 마진을 훼손</b>할 수 있음</li>
+          <li><b>중동 정세:</b> 에너지·제품 시장에 대한 파급</li>
+          <li><b>금리·크레딧:</b> 장기 실질금리 상승과 크레딧 여건 악화(특히 tech 발행 관련)</li>
+          <li><b>기술적 수급 잔여 영향:</b> 신용융자 및 레버리지 상품 청산의 잔존 영향 가능성</li>
+          <li><b>RSI 실현 리스크:</b> recursive self-improvement가 실현될 경우 막대한 편익과 동시에 AI 파괴·오용·무기화 우려 심화. 소수 개발사만 먼저 도달할 경우 나머지는 급격한 낙후 리스크</li>
+          <li><b>메모리 인플레이션의 역풍:</b> PC·스마트폰을 넘어 게임 콘솔, 서버, 네트워킹, 자동차, 의료기기, 브로드밴드 장비, 산업 시스템으로 확산되는 광범위한 하드웨어 마진 리스크</li>
+          <li><b>LatAm 제도 리스크:</b> 정치·사법 불확실성, 규제 복잡성, 인프라 병목, 숙련 인력·자본 부족</li>
+        </ul>
+        <h4 style="margin-top:14px;">모니터링 포인트</h4>
+        <ul>
+          <li>다가오는 실적 시즌의 AI capex 가이던스와 AI capex ROI 관련 코멘트 — 지출 긴급성은 여전히 높은 수준으로 판단</li>
+          <li>하이퍼스케일러 컴퓨팅 용량 추가 궤적: GOOGL '27/'28 9GW/11GW 추가, '28년 가용 컴퓨팅은 AWS 35GW &gt; GOOGL 31GW, META는 YE25 ~3.5GW에서 '27/'28 14GW/21GW</li>
+          <li>AMZN·META·GOOGL의 AI 수익화 데이터 포인트</li>
+          <li>주별 moratorium 법안 진행 상황(특히 Enacted·Introduced 단계)과 Ratepayer Protection Act 심의</li>
+          <li>계통 접속 대기시간(현 5~7년) 및 time-to-power 솔루션(가스터빈·fuel cell·원전 인접 입지·비트코인 사이트 전환)의 실제 배치 속도</li>
+          <li>메모리 가격(2Q→3Q like-for-like +25% 이상 전망)과 LTA 체결 동향, 2027년 소비자 메모리 배분 부족 현실화 여부</li>
+          <li>중국 AI 칩 자급률 진행(2025년 42% → 2030년 70% 경로)과 국산 하드웨어 80% 의무 조항의 실제 집행</li>
+          <li>FY27 NDAA 상·하원 협상 및 중간선거 이후 AI 정책 방향</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div>본 문서는 투자 권유를 목적으로 하지 않습니다.</div>
+  </footer>
+
+</div>
+</body>
+</html>
