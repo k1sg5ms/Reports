@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Investor Positioning and Flows</title>
+<style>
+  :root{
+    --brand:#002d72;
+    --brand-deep:#001640;
+    --accent:#4ba3dc;
+    --accent2:#1f6fb2;
+    --paper:#f4f6f9;
+    --card:#ffffff;
+    --ink:#1b1e24;
+    --ink-soft:#525866;
+    --line:#dde3ec;
+    --buy:#1f7a4d;
+    --bear:#c0392b;
+    --bull:#1f6fb2;
+    --warn:#8a4b15;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Helvetica Neue','Pretendard','Noto Sans KR',Arial,sans-serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  .topbar{
+    background:var(--brand-deep);
+    color:#fff;padding:14px 6vw;
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;
+    border-bottom:3px solid var(--accent);
+    position:sticky;top:0;z-index:50;
+  }
+  .topbar .logo{font-weight:700;font-size:18px;letter-spacing:0.5px;}
+  .topbar .logo span{color:var(--accent);}
+  .topbar nav{display:flex;gap:8px;flex-wrap:wrap;}
+  .topbar nav a{
+    color:#cfd8e6;text-decoration:none;font-size:12.5px;
+    padding:6px 12px;border:1px solid rgba(255,255,255,0.2);border-radius:20px;
+    transition:all .15s;
+  }
+  .topbar nav a:hover{background:var(--accent);color:#fff;border-color:var(--accent);}
+
+  .wrap{max-width:960px;margin:0 auto;padding:40px 6vw 90px;}
+
+  .intro{border-left:4px solid var(--accent);padding:8px 0 8px 20px;margin-bottom:48px;}
+  .intro .eyebrow{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent2);font-weight:700;}
+  .intro h1{font-size:26px;margin:8px 0 6px;color:var(--brand);}
+
+  .report{margin-bottom:64px;scroll-margin-top:70px;}
+  .report-head{
+    background:linear-gradient(135deg,var(--brand) 0%, var(--brand-deep) 100%);
+    color:#fff;border-radius:10px 10px 0 0;padding:28px 30px;
+  }
+  .report-head .tag{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#9fb4d4;font-weight:700;}
+  .report-head h2{margin:8px 0 14px;font-size:23px;line-height:1.35;}
+  .report-head .lede{
+    font-family:'Georgia',serif;font-size:15.5px;color:#e3ebf6;
+    border-top:1px solid rgba(255,255,255,0.16);padding-top:14px;margin:0;
+  }
+  .report-body{
+    background:var(--card);border:1px solid var(--line);border-top:none;
+    border-radius:0 0 10px 10px;padding:30px;
+  }
+
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px;}
+  .chip{border:1px solid var(--line);border-radius:8px;padding:10px 16px;background:#fafbfd;flex:1;min-width:130px;}
+  .chip .k{font-size:10.5px;letter-spacing:0.5px;text-transform:uppercase;color:var(--ink-soft);}
+  .chip .v{font-size:19px;font-weight:700;color:var(--brand);margin-top:2px;}
+  .chip .v.buy{color:var(--buy);}
+  .chip .v.sell{color:var(--bear);}
+  .chip .s{font-size:11px;color:var(--ink-soft);}
+
+  h3.sec{
+    font-size:17px;color:var(--brand);margin:34px 0 12px;
+    padding-bottom:8px;border-bottom:1.5px solid var(--line);
+    display:flex;align-items:center;gap:10px;scroll-margin-top:76px;
+  }
+  h3.sec .n{
+    background:var(--brand);color:#fff;font-size:12px;font-weight:700;
+    width:24px;height:24px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  ul.pts{margin:0;padding:0;list-style:none;}
+  ul.pts li{position:relative;padding:7px 0 7px 20px;font-size:14.5px;border-bottom:1px dashed var(--line);}
+  ul.pts li:last-child{border-bottom:none;}
+  ul.pts li::before{content:"—";position:absolute;left:0;color:var(--accent2);font-weight:700;}
+  ul.pts b{color:var(--brand);}
+
+  table.tbl{width:100%;border-collapse:collapse;font-size:13px;margin:6px 0 4px;}
+  table.tbl th{background:var(--brand);color:#fff;text-align:left;padding:8px 10px;font-weight:600;}
+  table.tbl td{padding:7px 10px;border-bottom:1px solid var(--line);}
+  table.tbl tr:nth-child(even) td{background:#f7f9fc;}
+  table.tbl td.num{text-align:right;font-variant-numeric:tabular-nums;}
+  table.tbl td.pos{color:var(--buy);font-weight:700;text-align:right;font-variant-numeric:tabular-nums;}
+  table.tbl td.neg{color:var(--bear);font-weight:700;text-align:right;font-variant-numeric:tabular-nums;}
+  .tbl-wrap{overflow-x:auto;}
+
+  .chart-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:22px 22px 14px;margin:14px 0;}
+  .chart-card .ct{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:12px;}
+  .chart-src{font-size:10.5px;color:#9aa3b2;margin-top:8px;}
+  .chart-note{font-size:10.5px;color:#9aa3b2;margin-top:4px;}
+
+  .callout{background:#fbf6ec;border:1px solid #e8dcc3;border-radius:8px;padding:14px 18px;font-size:13px;color:var(--ink-soft);margin-top:14px;}
+  .callout .t{font-size:10.5px;font-weight:700;letter-spacing:0.6px;color:var(--warn);text-transform:uppercase;display:block;margin-bottom:5px;}
+
+  .risk-box{background:var(--brand);color:#dde6f3;border-radius:8px;padding:22px 24px;margin-top:14px;}
+  .risk-box h4{margin:0 0 10px;color:#fff;font-size:14.5px;}
+  .risk-box ul{margin:0;padding-left:18px;}
+  .risk-box li{margin-bottom:8px;font-size:13px;}
+  .risk-box li b{color:#fff;}
+
+  footer{border-top:1px solid var(--line);margin-top:50px;padding-top:20px;font-size:11px;color:#9aa3b2;line-height:1.6;}
+
+  @media(max-width:560px){
+    .intro h1{font-size:21px;}
+    .report-head h2{font-size:19px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">Research<span>·</span>Digest</div>
+  <nav>
+    <a href="#market">시장</a>
+    <a href="#positioning">포지셔닝</a>
+    <a href="#investor">투자주체</a>
+    <a href="#sector">섹터</a>
+    <a href="#tech">Tech</a>
+    <a href="#flows">자금흐름</a>
+    <a href="#futures">선물·FX</a>
+    <a href="#outlook">전망</a>
+    <a href="#risk">리스크</a>
+  </nav>
+</div>
+
+<div class="wrap">
+
+  <div class="intro">
+    <div class="eyebrow">7 August 2026</div>
+    <h1>Investor Positioning and Flows — 또 한 번의 급격한 캐치업 랠리</h1>
+  </div>
+
+  <section class="report" id="rpt1">
+
+    <div class="report-head">
+      <div class="tag">Global · Asset Allocation · Strategy Update</div>
+      <h2>2개월 박스권 이탈 후 4일 만의 급등 — Large-cap positioning 87percentile로 점프, MCG &amp; Tech는 95percentile</h2>
+      <p class="lede">실적 서프라이즈를 선반영하지 못한 채 박스권에 머물던 시장이 어닝시즌 중 재차 급등, positioning은 중립에서 overweight으로 빠르게 복원됐으나 여전히 실적 성장률이 함의하는 수준을 크게 밑돈다.</p>
+    </div>
+
+    <div class="report-body">
+
+      <div class="chips">
+        <div class="chip"><div class="k">종합 Equity Positioning</div><div class="v">55<span style="font-size:12px">th pct</span></div><div class="s">0.22sd · 2개월 최고</div></div>
+        <div class="chip"><div class="k">Large-cap</div><div class="v">87<span style="font-size:12px">th pct</span></div><div class="s">0.64sd · 중립→overweight</div></div>
+        <div class="chip"><div class="k">MCG &amp; Tech</div><div class="v sell">95<span style="font-size:12px">th pct</span></div><div class="s">1.25sd · 매우 높은 수준</div></div>
+        <div class="chip"><div class="k">주식형 펀드 (금주)</div><div class="v buy">+$32.9bn</div><div class="s">5주 연속 유입 · 누적 $239bn</div></div>
+        <div class="chip"><div class="k">S&amp;P 500 2026 Target</div><div class="v">8,000</div><div class="s">2026E EPS $358</div></div>
+      </div>
+
+      <h3 class="sec" id="market"><span class="n">1</span>시장 동향 — 박스권 이탈과 캐치업 랠리의 반복</h3>
+      <ul class="pts">
+        <li>지난주 중반까지 약 <b>2개월간 좁은 박스권</b>에 머물던 S&amp;P 500이 <b>단 4거래일</b> 만에 박스 상단을 크게 상회하며 급등.</li>
+        <li>이런 급등은 통상 큰 규모의 selloff 이후 나타나지만, 이번 랠리는 지수가 <b>사상 최고치 대비 4% 하회</b> 수준에서 발생한 점이 이례적.</li>
+        <li>급등에도 지수는 4년 가까이 유지된 강한 상승 채널의 <b>하단에 겨우 복귀</b>한 수준. 해당 채널의 추세 성장률은 <b>연율 22.7%</b>(2022년 10월~2025년 3월 기준), 밴드는 ±4.6%.</li>
+        <li>지난해 Liberation Day 이후 반복된 패턴 — 채널 하단 이탈 → 빠른 캐치업 랠리 → 하단을 따라 변동성 큰 상승 — 이 이번에도 재현.</li>
+        <li><b>2개 분기 연속</b>으로 시장이 장기간 박스권에 갇혀 있다가 어닝시즌에 상단을 돌파. 전달되고 있는 이례적 실적 성장률에 맞춰 포지션을 구축하는 데 대한 저항과, 뒤늦게 이를 따라가는 캐치업이 반복되는 구조.</li>
+        <li>박스권 폭은 1분기 <b>2.8%</b>, 2분기 <b>3.1%</b>로 매우 좁았고, 중간에 Iran war 관련 조정(<b>-8.7%</b>)이 있었음.</li>
+      </ul>
+
+      <h3 class="sec" id="positioning"><span class="n">2</span>Aggregate Positioning — 중립 하회에서 modest overweight으로</h3>
+      <ul class="pts">
+        <li>종합 equity positioning은 중립 소폭 하회에서 <b>modest overweight(0.22sd, 55percentile)</b>으로 상승, 2개월 최고치.</li>
+        <li>Large-cap(0.64sd, <b>87percentile</b>)이 notably overweight으로 점프했으나 extreme은 아님. 반면 small cap(-0.14sd, 43percentile)은 여전히 소폭 underweight으로 격차 확대.</li>
+        <li>현재 positioning은 S&amp;P 500 실적 성장률 <b>mid-teens</b> 수준에 부합. 그러나 2분기 실제 확인된 성장률 <b>33%</b>가 함의하는 수준을 크게 밑돌아, 실적 기준으로는 여전히 여력이 남아 있는 상태.</li>
+        <li>Positioning과 실적 성장률의 상관계수는 2012년 이후 <b>39%</b>(large-cap 기준), MCG &amp; Tech는 2011년 이후 <b>54%</b>.</li>
+      </ul>
+
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>구분</th><th style="text-align:right">Z-score (sd)</th><th style="text-align:right">Percentile</th><th>주간 변화</th></tr></thead>
+        <tbody>
+          <tr><td><b>종합 Equity Positioning</b></td><td class="num">+0.22</td><td class="num">55%</td><td>중립 하회 → modest OW (2개월 최고)</td></tr>
+          <tr><td>Discretionary</td><td class="num">-0.06</td><td class="num">43%</td><td>notably UW → 중립 근접(점프)</td></tr>
+          <tr><td>Systematic</td><td class="num">+0.55</td><td class="num">73%</td><td>보합, overweight 유지</td></tr>
+          <tr><td>Large-cap</td><td class="num">+0.64</td><td class="num">87%</td><td>notably OW로 점프</td></tr>
+          <tr><td>Small-cap</td><td class="num">-0.14</td><td class="num">43%</td><td>소폭 UW 유지</td></tr>
+          <tr><td><b>MCG &amp; large-cap Tech</b></td><td class="num">+1.25</td><td class="num">95%</td><td>very overweight으로 급등</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="chart-card">
+        <div class="ct">Positioning percentile 비교 (현재 수준)</div>
+        <svg viewBox="0 0 880 300" width="100%" role="img">
+          <line x1="160" y1="14" x2="160" y2="258" stroke="#e4e9f1"/>
+          <line x1="325" y1="14" x2="325" y2="258" stroke="#eef1f6"/>
+          <line x1="490" y1="14" x2="490" y2="258" stroke="#eef1f6"/>
+          <line x1="655" y1="14" x2="655" y2="258" stroke="#eef1f6"/>
+          <line x1="820" y1="14" x2="820" y2="258" stroke="#eef1f6"/>
+          <line x1="160" y1="258" x2="820" y2="258" stroke="#cfd6e0"/>
+
+          <text x="150" y="36" text-anchor="end" font-size="13" fill="#1b1e24">종합 Equity</text>
+          <rect x="160" y="20" width="363" height="22" fill="#002d72"/>
+          <text x="533" y="36" font-size="12.5" fill="#525866">55</text>
+
+          <text x="150" y="76" text-anchor="end" font-size="13" fill="#1b1e24">Discretionary</text>
+          <rect x="160" y="60" width="284" height="22" fill="#1f6fb2"/>
+          <text x="454" y="76" font-size="12.5" fill="#525866">43</text>
+
+          <text x="150" y="116" text-anchor="end" font-size="13" fill="#1b1e24">Systematic</text>
+          <rect x="160" y="100" width="482" height="22" fill="#1f6fb2"/>
+          <text x="652" y="116" font-size="12.5" fill="#525866">73</text>
+
+          <text x="150" y="156" text-anchor="end" font-size="13" fill="#1b1e24">Large-cap</text>
+          <rect x="160" y="140" width="574" height="22" fill="#4ba3dc"/>
+          <text x="744" y="156" font-size="12.5" fill="#525866">87</text>
+
+          <text x="150" y="196" text-anchor="end" font-size="13" fill="#1b1e24">Small-cap</text>
+          <rect x="160" y="180" width="284" height="22" fill="#1f6fb2"/>
+          <text x="454" y="196" font-size="12.5" fill="#525866">43</text>
+
+          <text x="150" y="236" text-anchor="end" font-size="13" fill="#1b1e24">MCG &amp; Tech</text>
+          <rect x="160" y="220" width="627" height="22" fill="#4ba3dc"/>
+          <text x="797" y="236" font-size="12.5" fill="#525866">95</text>
+
+          <text x="160" y="276" text-anchor="middle" font-size="11" fill="#9aa3b2">0</text>
+          <text x="325" y="276" text-anchor="middle" font-size="11" fill="#9aa3b2">25</text>
+          <text x="490" y="276" text-anchor="middle" font-size="11" fill="#9aa3b2">50</text>
+          <text x="655" y="276" text-anchor="middle" font-size="11" fill="#9aa3b2">75</text>
+          <text x="820" y="276" text-anchor="middle" font-size="11" fill="#9aa3b2">100</text>
+          <text x="490" y="294" text-anchor="middle" font-size="11" fill="#9aa3b2">Percentile</text>
+        </svg>
+      </div>
+
+      <h3 class="sec" id="investor"><span class="n">3</span>투자주체별 — Discretionary는 중립 복귀, Systematic은 상단 유지</h3>
+      <ul class="pts">
+        <li><b>Discretionary</b>(-0.06sd, 43percentile): notably underweight에서 중립 근접까지 큰 폭 점프. 옵션·심리 지표가 개선을 주도.</li>
+        <li><b>Call/Put volume ratio</b>(5d ma)는 급등해 2개월 최고(<b>85percentile</b>). Net call volume은 single-stock, index, ETF 전반에서 증가하며 2010년 이후 <b>99percentile</b>. Single-stock 중에서는 MCG &amp; Tech에서 가장 크게 늘고 이어 defensives, Consumer Cyclicals, Industrial Cyclicals 순.</li>
+        <li><b>S&amp;P 500 options skew</b>(3m, 90%-110%)는 <b>2년 최저</b>까지 급락한 뒤 소폭 반등 — 하방 헤지 수요 위축을 시사.</li>
+        <li>전주 net call volume 상위 바스켓, most-shorted 바스켓 모두 금주 시장 대비 <b>in line</b> 성과. 즉 옵션 쏠림이 개별 종목 squeeze로는 이어지지 않음.</li>
+        <li><b>Investor sentiment</b>(AAII bull minus bear)는 상승해 slightly bearish 수준(<b>34percentile</b>)으로 마감. Bullish 응답 상승(50percentile), bearish(75percentile)·neutral(24percentile) 응답 하락.</li>
+        <li><b>Systematic</b>(0.55sd, 73percentile)은 보합권에서 overweight 유지. 세부적으로 Vol control은 상단, CTA는 상반부, Risk-parity는 중립 상회.</li>
+        <li><b>Vol control funds</b>: equity allocation이 역사적 레인지 상단(<b>84percentile</b>)까지 상승. 시장 selloff에 대한 민감도가 크게 낮아져 소폭 drawdown에서 기계적 de-risking이 발생할 가능성 축소. 다만 추가 매수 여력은 일부 남아 있음.</li>
+        <li><b>CTAs</b>: equity allocation은 레인지 상반부(<b>78percentile</b>). 추가 노출 확대는 trend signal 강화보다 <b>변동성 하락</b>에 더 의존할 것으로 판단.</li>
+        <li><b>Risk parity funds</b>: 포지션 변화 미미. Equity는 중립 상회(59percentile), bond는 중립 하회(41percentile), commodity(95percentile)·inflation hedge(98percentile)는 높은 수준 유지 — 인플레 헤지 및 원자재 선호에 주식 modest overweight을 병행하는 구조.</li>
+        <li>Beta 지표에서는 <b>Equity L/S HF의 S&amp;P 500 beta가 1m rolling 94percentile, 3m rolling 97percentile</b>로 사실상 최상단(3m 평균 0.29). 반면 large cap mutual fund beta는 1m 16percentile, 3m 48percentile로 낮아 주체 간 괴리가 큼.</li>
+      </ul>
+
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Systematic 전략별 자산 배분 (percentile)</th><th style="text-align:right">Equity</th><th style="text-align:right">Bonds</th><th style="text-align:right">기타</th></tr></thead>
+        <tbody>
+          <tr><td><b>Vol control</b></td><td class="num">84%</td><td class="num">–</td><td class="num">2% selloff 시 기계적 매도 압력 축소</td></tr>
+          <tr><td><b>CTAs</b></td><td class="num">78%</td><td class="num">US 15% / Europe 12%</td><td class="num">Dollar long 88%, Copper long 90%, Oil 70%, Gold short 26%</td></tr>
+          <tr><td><b>Risk parity</b></td><td class="num">59%</td><td class="num">41%</td><td class="num">Commodity 95%, Inflation hedge 98%</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>CTA 지역별 Equity Allocation</th><th style="text-align:right">Percentile</th><th>비고</th></tr></thead>
+        <tbody>
+          <tr><td>Europe</td><td class="num">83%</td><td>최대 long 포지션</td></tr>
+          <tr><td>Russell 2000</td><td class="num">78%</td><td>—</td></tr>
+          <tr><td>S&amp;P 500</td><td class="num">64%</td><td>US 전체 기준 61percentile</td></tr>
+          <tr><td>EM</td><td class="num">57%</td><td>상대적 부진</td></tr>
+          <tr><td>Nasdaq 100</td><td class="num">37%</td><td>—</td></tr>
+          <tr><td>Japan</td><td class="num">37%</td><td>상대적 부진</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="callout"><span class="t">주목</span>Discretionary와 Systematic 모두 방향은 위쪽이지만 성격이 다르다. Systematic은 이미 레인지 상단에 근접해 추가 매수 여력이 제한적이고 변동성 하락에 의존하는 반면, Discretionary는 43percentile에 불과해 실적 성장률이 함의하는 수준까지의 갭이 크다. 즉 이번 랠리의 잠재 연료는 Discretionary 쪽에 남아 있다는 해석이 가능하다.</div>
+
+      <h3 class="sec" id="sector"><span class="n">4</span>섹터 Positioning — MCG &amp; Tech 재차 극단, Consumer Staples는 7percentile</h3>
+      <ul class="pts">
+        <li>Large cap 섹터 전반에서 <b>MCG &amp; Tech(1.25sd, 95percentile)</b>가 very overweight으로 급등하며 전체 positioning 상승을 주도.</li>
+        <li>Cyclicals: Financials(0.32sd, 63percentile)는 일부 축소에도 overweight 유지, Energy(0.29sd, 81percentile)는 소폭 추가 상승. Materials(0.03sd, 36percentile)는 중립에 근접.</li>
+        <li>Industrial Cyclicals(-0.18sd, 44percentile) modestly UW, <b>Consumer Cyclicals(-0.60sd, 33percentile) notably UW</b>.</li>
+        <li>Defensives: Healthcare(0.06sd, 54percentile)는 중립 소폭 상회로 상승, Utilities(-0.11sd, 43percentile)·Real Estate(-0.17sd, 52percentile)는 modestly UW, <b>Consumer Staples(-0.44sd, 7percentile)는 notably UW</b>로 사실상 최하단.</li>
+        <li>그룹 단위로는 MCG &amp; Tech 95percentile, Cyclicals 52percentile, Defensives 23percentile. Cyclical minus Defensive positioning은 <b>75percentile</b>로 경기민감 선호가 뚜렷.</li>
+      </ul>
+
+      <div class="chart-card">
+        <div class="ct">Large cap 섹터별 Positioning (weighted avg z-score, sd)</div>
+        <svg viewBox="0 0 880 320" width="100%" role="img">
+          <line x1="60" y1="37.5" x2="860" y2="37.5" stroke="#eef1f6"/>
+          <line x1="60" y1="75" x2="860" y2="75" stroke="#eef1f6"/>
+          <line x1="60" y1="112.5" x2="860" y2="112.5" stroke="#eef1f6"/>
+          <line x1="60" y1="187.5" x2="860" y2="187.5" stroke="#eef1f6"/>
+          <line x1="60" y1="225" x2="860" y2="225" stroke="#eef1f6"/>
+          <line x1="60" y1="150" x2="860" y2="150" stroke="#cfd6e0"/>
+          <text x="52" y="41" text-anchor="end" font-size="11" fill="#9aa3b2">1.5</text>
+          <text x="52" y="79" text-anchor="end" font-size="11" fill="#9aa3b2">1.0</text>
+          <text x="52" y="116" text-anchor="end" font-size="11" fill="#9aa3b2">0.5</text>
+          <text x="52" y="154" text-anchor="end" font-size="11" fill="#9aa3b2">0.0</text>
+          <text x="52" y="191" text-anchor="end" font-size="11" fill="#9aa3b2">-0.5</text>
+          <text x="52" y="229" text-anchor="end" font-size="11" fill="#9aa3b2">-1.0</text>
+
+          <rect x="78" y="56" width="44" height="94" fill="#4ba3dc"/>
+          <text x="100" y="50" text-anchor="middle" font-size="11.5" fill="#1f6fb2">1.25</text>
+          <text x="100" y="240" text-anchor="middle" font-size="11" fill="#525866" transform="rotate(-30 100 240)">MCG &amp; Tech</text>
+
+          <rect x="157" y="126" width="44" height="24" fill="#002d72"/>
+          <text x="179" y="120" text-anchor="middle" font-size="11.5" fill="#525866">0.32</text>
+          <text x="179" y="240" text-anchor="middle" font-size="11" fill="#525866" transform="rotate(-30 179 240)">Financials</text>
+
+          <rect x="236" y="128" width="44" height="22" fill="#002d72"/>
+          <text x="258" y="122" text-anchor="middle" font-size="11.5" fill="#525866">0.29</text>
+          <text x="258" y="240" text-anchor="middle" font-size="11" fill="#525866" transform="rotate(-30 258 240)">Energy</text>
+
+          <rect x="315" y="145.5" width="44" height="4.5" fill="#002d72"/>
+          <text x="337" y="139" text-anchor="middle" font-size="11.5" fill="#525866">0.06</text>
+          <text x="337" y="240" text-anchor="middle" font-size="11" fill="#525866" transform="rotate(-30 337 240)">Healthcare</text>
+
+          <rect x="394" y="147.8" width="44" height="2.2" fill="#002d72"/>
+          <text x="416" y="141" text-anchor="middle" font-size="11.5" fill="#525866">0.03</text>
+          <text x="416" y="240" text-anchor="middle" font-size="11" fill="#525866" transform="rotate(-30 416 240)">Materials</text>
+
+          <rect x="473" y="150" width="44" height="8.3" fill="#8fa2bd"/>
+          <text x="495" y="172" text-anchor="middle" font-size="11.5" fill="#525866">-0.11</text>
+          <text x="495" y="240" text-anchor="middle" font-size="11" fill="#525866" transform="rotate(-30 495 240)">Utilities</text>
+
+          <rect x="552" y="150" width="44" height="12.8" fill="#8fa2bd"/>
+          <text x="574" y="176" text-anchor="middle" font-size="11.5" fill="#525866">-0.17</text>
+          <text x="574" y="240" text-anchor="middle" font-size="11" fill="#525866" transform="rotate(-30 574 240)">Real Estate</text>
+
+          <rect x="631" y="150" width="44" height="13.5" fill="#8fa2bd"/>
+          <text x="653" y="177" text-anchor="middle" font-size="11.5" fill="#525866">-0.18</text>
+          <text x="653" y="240" text-anchor="middle" font-size="11" fill="#525866" transform="rotate(-30 653 240)">Ind. Cyclicals</text>
+
+          <rect x="710" y="150" width="44" height="33" fill="#c0392b"/>
+          <text x="732" y="196" text-anchor="middle" font-size="11.5" fill="#c0392b">-0.44</text>
+          <text x="732" y="240" text-anchor="middle" font-size="11" fill="#525866" transform="rotate(-30 732 240)">Cons. Staples</text>
+
+          <rect x="789" y="150" width="44" height="45" fill="#c0392b"/>
+          <text x="811" y="208" text-anchor="middle" font-size="11.5" fill="#c0392b">-0.60</text>
+          <text x="811" y="240" text-anchor="middle" font-size="11" fill="#525866" transform="rotate(-30 811 240)">Cons. Cyclicals</text>
+        </svg>
+        <div class="chart-note">MCG는 Mega-cap Growth. Financials는 MCG로 분류된 MA·V 제외. 데이터 기준일 2026년 8월 6일.</div>
+      </div>
+
+      <h3 class="sec" id="tech"><span class="n">5</span>Tech &amp; Hyperscalers — 채널 중단으로 복귀, 돌파 여부가 관건</h3>
+      <ul class="pts">
+        <li>MCG &amp; Tech positioning은 <b>95percentile</b>로 매우 높지만, 지난해 10월과 올해 6월 초 고점은 여전히 하회.</li>
+        <li>Tech의 상대성과는 지난주 장기 추세 채널 <b>하단</b>에 있었으나 현재 <b>중단</b>까지 회복. 최근 3년간 <b>다섯 번째</b> 로테이션에 해당.</li>
+        <li>MCG &amp; Tech의 S&amp;P 500 잔여 종목 대비 비율은 2016년 이후 <b>연율 14.2%</b> 추세, 밴드 ±10%로 관리되는 구조.</li>
+        <li>Hyperscalers(MSFT, AMZN, GOOGL, META, ORCL)의 상대성과 역시 최근 2년 레인지의 <b>중간</b> 수준. 레인지(약 105~120) 상단 돌파 여부와 시가총액이 이익 증가를 따라잡을지가 핵심 질문.</li>
+        <li>MCG &amp; Tech positioning은 매우 강한 실적 성장률이 함의하는 수준에 <b>근접</b>했으나 아직 도달하지 않은 상태(상관계수 54%).</li>
+      </ul>
+
+      <h3 class="sec" id="flows"><span class="n">6</span>주간 자금 흐름 — 주식형 둔화, 채권·MM으로 재유입</h3>
+      <ul class="pts">
+        <li>주식형 펀드 <b>+$32.9bn</b>으로 전주 대비 절반 수준으로 둔화. 다만 <b>5주 연속 유입</b>으로 누적 <b>$239bn</b>, 직전 4주 평균은 주당 $52bn의 기록적 페이스였음.</li>
+        <li>지역별로는 US(<b>+$9.6bn</b>)와 EM(<b>+$8.6bn</b>) 유입이 크게 둔화, broad-global(+$11.0bn)과 Japan(+$2.6bn)은 소폭 개선. Europe(+$0.1bn)은 연속 유출 후 소규모 유입 전환.</li>
+        <li>EM 내부에서는 Asia ex-Japan(+$4.5bn)이 크게 약화. <b>China는 4주 연속 견조한 유입 후 -$2.6bn 유출 전환</b>. <b>Korea(+$4.9bn)</b>는 유입 확대, Taiwan(+$2.4bn)은 둔화. Broad-EM(+$4.0bn) 견조, EMEA(+$0.1bn) 소폭, Latam 미미.</li>
+        <li>섹터 펀드에서는 <b>Tech(-$0.7bn)</b>가 5주 연속 강한 유입을 끊고 소폭 유출 전환(직전 4주 평균 대비 급락). Telecom(-$0.9bn)도 뚜렷한 유출, Energy·Financials는 각 -$0.1bn. 반대로 Industrials(+$1.3bn), Consumer Goods(+$0.6bn), Healthcare(+$0.4bn) 유입.</li>
+        <li>채권형 <b>+$23.1bn</b>으로 4주 최고. Broad-mandate(+$7.4bn), Govt(+$4.1bn), IG(+$2.7bn) 모두 가속. <b>HY(+$4.1bn)는 2년 이상 최대 유입</b>. Munis(+$1.5bn), Bank Loans(+$1.4bn), TIPS(+$0.8bn), MBS(+$0.7bn).</li>
+        <li>MM 펀드 <b>+$53.7bn</b>으로 5주 최대. US(+$52.6bn)가 대부분 흡수, Europe(+$1.4bn) 소폭 유입, Japan(-$1.2bn) 소폭 유출.</li>
+      </ul>
+
+      <div class="chart-card">
+        <div class="ct">주식형 펀드 지역별 자금 흐름 (금주, $bn)</div>
+        <svg viewBox="0 0 880 300" width="100%" role="img">
+          <line x1="70" y1="56" x2="860" y2="56" stroke="#eef1f6"/>
+          <line x1="70" y1="104" x2="860" y2="104" stroke="#eef1f6"/>
+          <line x1="70" y1="152" x2="860" y2="152" stroke="#eef1f6"/>
+          <line x1="70" y1="248" x2="860" y2="248" stroke="#eef1f6"/>
+          <line x1="70" y1="200" x2="860" y2="200" stroke="#cfd6e0"/>
+          <text x="62" y="60" text-anchor="end" font-size="11" fill="#9aa3b2">12</text>
+          <text x="62" y="108" text-anchor="end" font-size="11" fill="#9aa3b2">8</text>
+          <text x="62" y="156" text-anchor="end" font-size="11" fill="#9aa3b2">4</text>
+          <text x="62" y="204" text-anchor="end" font-size="11" fill="#9aa3b2">0</text>
+          <text x="62" y="252" text-anchor="end" font-size="11" fill="#9aa3b2">-4</text>
+
+          <rect x="88" y="68" width="42" height="132" fill="#002d72"/>
+          <text x="109" y="62" text-anchor="middle" font-size="11.5" fill="#525866">11.0</text>
+          <text x="109" y="262" text-anchor="middle" font-size="11" fill="#525866" transform="rotate(-30 109 262)">Broad-global</text>
+
+          <rect x="167" y="84.8" width="42" height="115.2" fill="#002d72"/>
+          <text x="188" y="79" text-anchor="middle" font-size="11.5" fill="#525866">9.6</text>
+          <text x="188" y="262" text-anchor="middle" font-size="11" fill="#525866" transform="rotate(-30 188 262)">US</text>
+
+          <rect x="246" y="96.8" width="42" height="103.2" fill="#002d72"/>
+          <text x="267" y="91" text-anchor="middle" font-size="11.5" fill="#525866">8.6</text>
+          <text x="267" y="262" text-anchor="middle" font-size="11" fill="#525866" transform="rotate(-30 267 262)">EM</text>
+
+          <rect x="325" y="141.2" width="42" height="58.8" fill="#4ba3dc"/>
+          <text x="346" y="135" text-anchor="middle" font-size="11.5" fill="#1f6fb2">4.9</text>
+          <text x="346" y="262" text-anchor="middle" font-size="11" fill="#525866" transform="rotate(-30 346 262)">Korea*</text>
+
+          <rect x="404" y="146" width="42" height="54" fill="#4ba3dc"/>
+          <text x="425" y="140" text-anchor="middle" font-size="11.5" fill="#525866">4.5</text>
+          <text x="425" y="262" text-anchor="middle" font-size="11" fill="#525866" transform="rotate(-30 425 262)">Asia ex-Jp*</text>
+
+          <rect x="483" y="152" width="42" height="48" fill="#4ba3dc"/>
+          <text x="504" y="146" text-anchor="middle" font-size="11.5" fill="#525866">4.0</text>
+          <text x="504" y="262" text-anchor="middle" font-size="11" fill="#525866" transform="rotate(-30 504 262)">Broad-EM*</text>
+
+          <rect x="562" y="168.8" width="42" height="31.2" fill="#002d72"/>
+          <text x="583" y="163" text-anchor="middle" font-size="11.5" fill="#525866">2.6</text>
+          <text x="583" y="262" text-anchor="middle" font-size="11" fill="#525866" transform="rotate(-30 583 262)">Japan</text>
+
+          <rect x="641" y="171.2" width="42" height="28.8" fill="#4ba3dc"/>
+          <text x="662" y="165" text-anchor="middle" font-size="11.5" fill="#525866">2.4</text>
+          <text x="662" y="262" text-anchor="middle" font-size="11" fill="#525866" transform="rotate(-30 662 262)">Taiwan*</text>
+
+          <rect x="720" y="198.8" width="42" height="1.2" fill="#002d72"/>
+          <text x="741" y="192" text-anchor="middle" font-size="11.5" fill="#525866">0.1</text>
+          <text x="741" y="262" text-anchor="middle" font-size="11" fill="#525866" transform="rotate(-30 741 262)">Europe</text>
+
+          <rect x="799" y="200" width="42" height="31.2" fill="#c0392b"/>
+          <text x="820" y="244" text-anchor="middle" font-size="11.5" fill="#c0392b">-2.6</text>
+          <text x="820" y="262" text-anchor="middle" font-size="11" fill="#525866" transform="rotate(-30 820 262)">China*</text>
+        </svg>
+        <div class="chart-src">Source: EPFR, Haver Analytics</div>
+        <div class="chart-note">* 표시 항목은 EM 내 세부 지역. 데이터 기준일 2026년 8월 5일.</div>
+      </div>
+
+      <div class="chart-card">
+        <div class="ct">채권형 펀드 카테고리별 자금 흐름 (금주, $bn)</div>
+        <svg viewBox="0 0 880 280" width="100%" role="img">
+          <line x1="70" y1="20" x2="860" y2="20" stroke="#eef1f6"/>
+          <line x1="70" y1="70" x2="860" y2="70" stroke="#eef1f6"/>
+          <line x1="70" y1="120" x2="860" y2="120" stroke="#eef1f6"/>
+          <line x1="70" y1="170" x2="860" y2="170" stroke="#eef1f6"/>
+          <line x1="70" y1="220" x2="860" y2="220" stroke="#cfd6e0"/>
+          <text x="62" y="24" text-anchor="end" font-size="11" fill="#9aa3b2">8</text>
+          <text x="62" y="74" text-anchor="end" font-size="11" fill="#9aa3b2">6</text>
+          <text x="62" y="124" text-anchor="end" font-size="11" fill="#9aa3b2">4</text>
+          <text x="62" y="174" text-anchor="end" font-size="11" fill="#9aa3b2">2</text>
+          <text x="62" y="224" text-anchor="end" font-size="11" fill="#9aa3b2">0</text>
+
+          <rect x="91" y="35" width="46" height="185" fill="#002d72"/>
+          <text x="114" y="29" text-anchor="middle" font-size="11.5" fill="#525866">7.4</text>
+          <text x="114" y="242" text-anchor="middle" font-size="11" fill="#525866" transform="rotate(-25 114 242)">Broad</text>
+
+          <rect x="179" y="117.5" width="46" height="102.5" fill="#4ba3dc"/>
+          <text x="202" y="111" text-anchor="middle" font-size="11.5" fill="#1f6fb2">4.1</text>
+          <text x="202" y="242" text-anchor="middle" font-size="11" fill="#525866" transform="rotate(-25 202 242)">HY</text>
+
+          <rect x="267" y="117.5" width="46" height="102.5" fill="#002d72"/>
+          <text x="290" y="111" text-anchor="middle" font-size="11.5" fill="#525866">4.1</text>
+          <text x="290" y="242" text-anchor="middle" font-size="11" fill="#525866" transform="rotate(-25 290 242)">Govt</text>
+
+          <rect x="355" y="152.5" width="46" height="67.5" fill="#002d72"/>
+          <text x="378" y="146" text-anchor="middle" font-size="11.5" fill="#525866">2.7</text>
+          <text x="378" y="242" text-anchor="middle" font-size="11" fill="#525866" transform="rotate(-25 378 242)">IG</text>
+
+          <rect x="443" y="182.5" width="46" height="37.5" fill="#002d72"/>
+          <text x="466" y="176" text-anchor="middle" font-size="11.5" fill="#525866">1.5</text>
+          <text x="466" y="242" text-anchor="middle" font-size="11" fill="#525866" transform="rotate(-25 466 242)">Munis</text>
+
+          <rect x="531" y="185" width="46" height="35" fill="#002d72"/>
+          <text x="554" y="179" text-anchor="middle" font-size="11.5" fill="#525866">1.4</text>
+          <text x="554" y="242" text-anchor="middle" font-size="11" fill="#525866" transform="rotate(-25 554 242)">Bank Loans</text>
+
+          <rect x="619" y="200" width="46" height="20" fill="#002d72"/>
+          <text x="642" y="194" text-anchor="middle" font-size="11.5" fill="#525866">0.8</text>
+          <text x="642" y="242" text-anchor="middle" font-size="11" fill="#525866" transform="rotate(-25 642 242)">TIPS</text>
+
+          <rect x="707" y="202.5" width="46" height="17.5" fill="#002d72"/>
+          <text x="730" y="196" text-anchor="middle" font-size="11.5" fill="#525866">0.7</text>
+          <text x="730" y="242" text-anchor="middle" font-size="11" fill="#525866" transform="rotate(-25 730 242)">MBS</text>
+
+          <rect x="795" y="217.5" width="46" height="2.5" fill="#002d72"/>
+          <text x="818" y="211" text-anchor="middle" font-size="11.5" fill="#525866">0.1</text>
+          <text x="818" y="242" text-anchor="middle" font-size="11" fill="#525866" transform="rotate(-25 818 242)">EM</text>
+        </svg>
+        <div class="chart-src">Source: EPFR, Haver Analytics</div>
+      </div>
+
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>자산군</th><th style="text-align:right">금주 ($bn)</th><th>특징</th></tr></thead>
+        <tbody>
+          <tr><td><b>주식형</b></td><td class="pos">+32.9</td><td>전주 대비 반감, 5주 연속 유입(누적 $239bn)</td></tr>
+          <tr><td><b>채권형</b></td><td class="pos">+23.1</td><td>4주 최고, 카테고리 전반 광범위한 개선</td></tr>
+          <tr><td><b>MM</b></td><td class="pos">+53.7</td><td>5주 최대, US가 $52.6bn 흡수</td></tr>
+          <tr><td>섹터 – Tech</td><td class="neg">-0.7</td><td>5주 연속 강한 유입 종료</td></tr>
+          <tr><td>섹터 – Telecom</td><td class="neg">-0.9</td><td>뚜렷한 유출</td></tr>
+          <tr><td>섹터 – Industrials</td><td class="pos">+1.3</td><td>섹터 중 최대 유입</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3 class="sec" id="futures"><span class="n">7</span>선물 Positioning · FX · Commodities</h3>
+      <ul class="pts">
+        <li>Cross-asset futures net long(z-score) 기준 상단은 <b>Copper, BRL, S&amp;P 500, Gold, USD, EM equities</b>, 하단은 <b>CAD, NZD, 10y, Nasdaq 100, Oil</b>.</li>
+        <li>주간 변화폭이 가장 컸던 항목은 <b>BRL(+28%)·JPY(+27%)</b> 순매수 증가와 <b>Nasdaq 100(-12%)</b>·S&amp;P 500·USD·5y 순매수 감소 — 지수 선물에서는 대형 Tech 익스포저를 오히려 줄인 셈.</li>
+        <li>US 주식 선물(Asset mgr + Lev funds, % of OI): S&amp;P 500 약 +28%로 long, DJIA·S&amp;P 400은 소폭 long, <b>Nasdaq 100(약 -8%)·Russell 2000(약 -17%)</b>은 net short.</li>
+        <li>채권 선물은 전 구간 net short 유지 — SOFR -19.2%, 2y -22.8%, 5y -20.8%, 10y -14.3%, 30y -9.4%, Ultra T-bond -12.9%(% of OI).</li>
+        <li>FX(% of OI, non-commercial net long): BRL +57%, MXN +35%, USD(trade wtd) +16%가 long. 반면 CAD -49%, NZD -40%, CHF -30%, GBP -23%, AUD -14%, JPY -11%, EUR -7%로 달러 대비 대부분 short.</li>
+        <li>CTA FX percentile은 AUD 93%로 유일하게 높고 CAD 0%, EUR 7%, CHF 13%, JPY·GBP 17%, NZD 27%로 극단적 저수준.</li>
+        <li>Commodity: Copper long 90percentile, Oil 70percentile로 높고 Gold는 short(26percentile) 유지. Risk-parity의 commodity(95percentile)·inflation hedge(98percentile) 비중은 매우 높은 수준.</li>
+      </ul>
+
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Sentiment · Option · Short Interest 지표</th><th style="text-align:right">현재</th><th>해석</th></tr></thead>
+        <tbody>
+          <tr><td>Call/Put volume ratio (5d ma)</td><td class="num">85 pct</td><td>2개월 최고로 급등</td></tr>
+          <tr><td>Total net call volume</td><td class="num">99 pct</td><td>2010년 이후 사실상 최상단</td></tr>
+          <tr><td>S&amp;P 500 3m 90-110 skew</td><td class="num">2년 최저</td><td>급락 후 소폭 반등, 하방 헤지 위축</td></tr>
+          <tr><td>AAII Bull-Bear spread</td><td class="num">34 pct</td><td>slightly bearish 수준으로 개선</td></tr>
+          <tr><td>Equity L/S HF beta (1m / 3m)</td><td class="num">94 / 97 pct</td><td>최상단, 3m 평균 0.29 대비 크게 높음</td></tr>
+          <tr><td>Large cap MF beta (1m / 3m)</td><td class="num">16 / 48 pct</td><td>주체 간 괴리 확대</td></tr>
+          <tr><td>Russell 3000 median short interest</td><td class="num">약 5.3%</td><td>추세적 상승, 사이클 최고 수준 근접</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3 class="sec" id="outlook"><span class="n">8</span>지수 전망 &amp; Buyback</h3>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>항목</th><th style="text-align:right">전망치</th></tr></thead>
+        <tbody>
+          <tr><td>S&amp;P 500 2026 target</td><td class="num">8,000</td></tr>
+          <tr><td>S&amp;P 500 2026 EPS</td><td class="num">$358</td></tr>
+          <tr><td>S&amp;P 500 2027 EPS</td><td class="num">$420</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <ul class="pts">
+        <li>2분기 실적 성장률은 <b>33%</b>로 확인됐으나, 현 positioning은 mid-teens 수준의 성장률에 부합 — 실적과 포지션 간 갭이 유지되는 국면.</li>
+        <li>Buyback: S&amp;P 500 주간 발표 규모 기준 3개월 합계가 <b>$192bn</b>까지 확대(직전 유사 국면 $160bn). 발표액과 실제 자사주 매입의 상관계수는 2000년 이후 <b>79%</b>로, 수급 측 지지 요인.</li>
+        <li>최근 3개월 발표 buyback은 <b>Info Tech</b>와 <b>Financials</b>가 절대금액 기준 압도적이며, 시가총액 대비 비율에서도 상위.</li>
+      </ul>
+
+      <h3 class="sec" id="risk"><span class="n">!</span>리스크 &amp; 모니터링 포인트</h3>
+      <div class="risk-box">
+        <h4>Key Risks</h4>
+        <ul>
+          <li><b>MCG &amp; Tech 쏠림:</b> 95percentile positioning + net call volume 99percentile + skew 2년 최저 조합은 상방 쏠림의 전형. 실적 모멘텀 훼손 시 되돌림 폭이 클 수 있음.</li>
+          <li><b>Systematic 여력 소진:</b> Vol control 84percentile, CTA 78percentile로 이미 상단. 추가 매수는 변동성 하락에 의존하며, 변동성 재확대 시 방향이 반대로 전환.</li>
+          <li><b>채널 하단 구조의 취약성:</b> 지수는 4년 추세 채널 하단에 겨우 복귀한 상태로, 상단까지 여유가 있는 동시에 하단 이탈 재발 리스크도 잔존.</li>
+          <li><b>Hedge fund beta 극단:</b> Equity L/S HF beta가 1m 94 / 3m 97percentile로 최상단 — 조정 국면에서 de-grossing 압력의 잠재적 원천.</li>
+          <li><b>Short interest 상승:</b> Russell 3000 median short interest가 추세적으로 상승 중이며, most-shorted 바스켓은 이번 랠리에서 시장 대비 초과성과를 내지 못함.</li>
+          <li><b>중국 자금 유출 전환:</b> 4주 연속 견조한 유입 후 유출로 전환, Asia ex-Japan 전반의 흐름 약화로 연결될 가능성.</li>
+        </ul>
+        <h4 style="margin-top:14px;">모니터링 포인트</h4>
+        <ul>
+          <li>Hyperscalers(MSFT, AMZN, GOOGL, META, ORCL) 상대성과의 2년 레인지(약 105~120) 상단 <b>돌파 여부</b> — Tech 리더십 지속의 1차 관문.</li>
+          <li>Discretionary positioning(43percentile)이 실적 성장률이 함의하는 수준으로 수렴하는지 — 잔여 캐치업 수요의 크기.</li>
+          <li>MM 펀드 5주 최대 유입($53.7bn)의 성격 — 대기자금 축적 vs 리스크 회피.</li>
+          <li>HY 2년 최대 유입의 지속성, IG·Govt 가속의 동반 여부(리스크 선호 vs 금리 뷰 변화 구분).</li>
+          <li>Consumer Staples(7percentile)·Consumer Cyclicals(33percentile) 극단적 underweight의 되돌림 신호.</li>
+          <li>지수 선물에서 Nasdaq 100 net short 확대와 현물·옵션의 Tech 선호 간 괴리 해소 방향.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div>본 문서는 투자 권유를 목적으로 하지 않습니다.</div>
+  </footer>
+
+</div>
+</body>
+</html>
