@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Klarna Group (KLAR)</title>
+<style>
+  :root{
+    --brand:#00452c;
+    --brand-deep:#002d1c;
+    --accent:#00b140;
+    --accent2:#007a3d;
+    --paper:#f4f6f9;
+    --card:#ffffff;
+    --ink:#1b1e24;
+    --ink-soft:#525866;
+    --line:#dde3ec;
+    --buy:#1f7a4d;
+    --bear:#c0392b;
+    --bull:#1f6fb2;
+    --warn:#8a4b15;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Helvetica Neue','Pretendard','Noto Sans KR',Arial,sans-serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  .serif{font-family:'Georgia','Noto Serif KR',serif;}
+
+  .wrap{max-width:960px;margin:0 auto;padding:40px 6vw 90px;}
+
+  .intro{
+    border-left:4px solid var(--accent);
+    padding:8px 0 8px 20px;margin-bottom:48px;
+  }
+  .intro .eyebrow{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent2);font-weight:700;}
+  .intro h1{font-size:26px;margin:8px 0 6px;color:var(--brand);}
+
+  .report{margin-bottom:64px;scroll-margin-top:70px;}
+  .report-head{
+    background:linear-gradient(135deg,var(--brand) 0%, var(--brand-deep) 100%);
+    color:#fff;border-radius:10px 10px 0 0;padding:28px 30px;
+  }
+  .report-head .tag{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#9fd4b4;font-weight:700;}
+  .report-head h2{margin:8px 0 14px;font-size:23px;line-height:1.35;}
+  .report-head .lede{
+    font-family:'Georgia',serif;font-size:15.5px;color:#e3f6ea;
+    border-top:1px solid rgba(255,255,255,0.16);padding-top:14px;margin:0;
+  }
+  .report-body{
+    background:var(--card);border:1px solid var(--line);border-top:none;
+    border-radius:0 0 10px 10px;padding:30px;
+  }
+
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px;}
+  .chip{border:1px solid var(--line);border-radius:8px;padding:10px 16px;background:#fafbfd;flex:1;min-width:130px;}
+  .chip .k{font-size:10.5px;letter-spacing:0.5px;text-transform:uppercase;color:var(--ink-soft);}
+  .chip .v{font-size:19px;font-weight:700;color:var(--brand);margin-top:2px;}
+  .chip .v.buy{color:var(--buy);}
+  .chip .v.sell{color:var(--bear);}
+  .chip .s{font-size:11px;color:var(--ink-soft);}
+
+  h3.sec{
+    font-size:17px;color:var(--brand);margin:30px 0 12px;
+    padding-bottom:8px;border-bottom:1.5px solid var(--line);
+    display:flex;align-items:center;gap:10px;
+  }
+  h3.sec .n{
+    background:var(--brand);color:#fff;font-size:12px;font-weight:700;
+    width:24px;height:24px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  ul.pts{margin:0;padding:0;list-style:none;}
+  ul.pts li{position:relative;padding:7px 0 7px 20px;font-size:14.5px;border-bottom:1px dashed var(--line);}
+  ul.pts li:last-child{border-bottom:none;}
+  ul.pts li::before{content:"—";position:absolute;left:0;color:var(--accent2);font-weight:700;}
+  ul.pts b{color:var(--brand);}
+
+  table.tbl{width:100%;border-collapse:collapse;font-size:13px;margin:6px 0 4px;}
+  table.tbl th{background:var(--brand);color:#fff;text-align:left;padding:8px 10px;font-weight:600;}
+  table.tbl td{padding:7px 10px;border-bottom:1px solid var(--line);}
+  table.tbl tr:nth-child(even) td{background:#f7f9fc;}
+  table.tbl td.num{text-align:right;font-variant-numeric:tabular-nums;}
+  table.tbl td.buy{color:var(--buy);font-weight:700;}
+  table.tbl td.dn{color:var(--bear);font-weight:600;}
+  table.tbl td.up{color:var(--buy);font-weight:600;}
+  .tbl-wrap{overflow-x:auto;}
+  .tbl-note{font-size:11px;color:#9aa3b2;margin:4px 0 0;}
+
+  .chart-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:22px 22px 14px;margin:14px 0;}
+  .chart-card .ct{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:12px;}
+  .chart-src{font-size:10.5px;color:#9aa3b2;margin-top:8px;}
+  .legend{display:flex;gap:18px;font-size:11.5px;color:var(--ink-soft);margin-bottom:4px;flex-wrap:wrap;}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .legend i{width:11px;height:11px;border-radius:2px;display:inline-block;}
+
+  .bbgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0;}
+  @media(max-width:680px){.bbgrid{grid-template-columns:1fr;}}
+  .bb{border-radius:8px;padding:16px;border:1px solid var(--line);background:#fafbfd;}
+  .bb.bull{border-top:3px solid var(--bull);}
+  .bb.base{border-top:3px solid var(--ink-soft);}
+  .bb.bear{border-top:3px solid var(--bear);}
+  .bb .lbl{font-size:11px;letter-spacing:0.6px;text-transform:uppercase;font-weight:700;color:var(--ink-soft);}
+  .bb .px{font-size:16px;font-weight:700;color:var(--brand);margin:4px 0;}
+  .bb ul{margin:8px 0 0;padding-left:16px;font-size:12px;color:var(--ink-soft);}
+  .bb li{margin-bottom:4px;}
+
+  .callout{background:#fbf6ec;border:1px solid #e8dcc3;border-radius:8px;padding:14px 18px;font-size:13px;color:var(--ink-soft);margin-top:14px;}
+  .callout .t{font-size:10.5px;font-weight:700;letter-spacing:0.6px;color:var(--warn);text-transform:uppercase;display:block;margin-bottom:5px;}
+
+  .risk-box{background:var(--brand);color:#dcf0e4;border-radius:8px;padding:22px 24px;margin-top:14px;}
+  .risk-box h4{margin:0 0 10px;color:#fff;font-size:14.5px;}
+  .risk-box ul{margin:0;padding-left:18px;}
+  .risk-box li{margin-bottom:8px;font-size:13px;}
+  .risk-box li b{color:#fff;}
+
+  footer{border-top:1px solid var(--line);margin-top:50px;padding-top:20px;font-size:11px;color:#9aa3b2;line-height:1.6;}
+
+  @media(max-width:560px){
+    .intro h1{font-size:21px;}
+    .report-head h2{font-size:19px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="intro">
+    <div class="eyebrow">18 August 2026</div>
+    <h1>Klarna Group PLC (NYSE: KLAR) — 2Q26 Earnings Update</h1>
+  </div>
+
+  <section class="report" id="rpt1">
+
+    <div class="report-head">
+      <div class="tag">Diversified Financials · Consumer Finance</div>
+      <h2>2Q26: TMD(거래마진 달러)는 예상 상회 — 독일 GMV 부진으로 2026 연간 가이던스 하향</h2>
+      <p class="lede">2Q EPS는 흑자 전환하며 컨센서스를 상회했지만, 독일발 GMV 가이던스 하향과 Fair Value 회계 변경이 겹치며 주가는 약세 — 3Q GMV와 수익성 지표 확인이 투자심리 회복의 관건.</p>
+    </div>
+
+    <div class="report-body">
+
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v">HOLD (2)</div><div class="s">유지</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$18.00</div><div class="s">↓ from $19.00</div></div>
+        <div class="chip"><div class="k">Price (08/18)</div><div class="v">$15.06</div><div class="s">Upside +19.5%</div></div>
+        <div class="chip"><div class="k">Valuation</div><div class="v">15x</div><div class="s">2027E adj EPS 기준</div></div>
+        <div class="chip"><div class="k">Market Cap</div><div class="v">$5.7B</div><div class="s">52주 $45.82–12.27</div></div>
+      </div>
+
+      <h3 class="sec"><span class="n">1</span>2Q26 실적 리뷰 — TMD 중심의 Beat</h3>
+      <ul class="pts">
+        <li>2Q26 EPS <b>$0.01</b> — 추정치 <b>-$0.03</b>, 컨센서스 <b>-$0.05</b> 대비 상회 (흑자 전환)</li>
+        <li>Beat의 핵심 동인은 예상보다 좋았던 <b>transaction margin dollar (TMD)</b> — 매출 상회 + transaction 관련 비용 하회의 조합</li>
+        <li><b>충당금(Provision)도 추정치 하회</b> — Pay Later·Fair Financing 양쪽에서 on-balance sheet 대출 성장이 낮았던 영향 (예상보다 많은 loan sale에 기인한 것으로 추정). 다만 <b>charge-off rate는 상승</b></li>
+        <li>Non-transaction opex는 추정치 상회, <b>GMV는 추정 대비 -1ppt 하회</b></li>
+        <li>경영진은 기저 연체(delinquency) 트렌드와 소비자 신용 건전성은 <b>안정적</b>이라고 언급</li>
+        <li>실적 자체보다 GMV 하향과 Fair Value 회계 처리에 대한 우려로 <b>주가는 실적 발표 후 약세</b></li>
+      </ul>
+
+      <h3 class="sec"><span class="n">2</span>2026 연간 가이던스 — GMV 하향, TMD는 상향</h3>
+      <ul class="pts">
+        <li>GMV 하향의 주 요인은 <b>독일(KLAR 최대 시장, by GMV) 소비 부진</b> — 독일이 2H 내내 부진할 것으로 보수적으로 가정 (회복 전제하지 않음). 독일 외 유럽 일부 지역에서도 부분적 softness 언급</li>
+        <li>Revenue take rate 하향은 <b>전적으로 FV 회계 변경 때문</b>이며, 달러 기준 매출·adjusted operating income (AOI)도 하향</li>
+        <li>반면 <b>2026 TMD 가이던스는 GMV 하향에도 불구하고 상향</b> — 강화된 unit economics가 연간 TMD에 <b>$40–50M</b> 기여 전망</li>
+        <li>미국 가정은 변경 없음 — 미국은 KLAR의 <b>가장 빠르게 성장하는 대형 시장</b>으로, 이번 하향이 미국 중심 사업자(예: AFRM)에는 영향이 없어야 한다는 코멘트</li>
+        <li><b>3Q 가이던스는 GMV·매출·TMD·AOI 전반에서 기존 추정치 하회</b></li>
+      </ul>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>2026 가이던스</th><th>기존</th><th>신규 (하단)</th><th>신규 (상단)</th><th>3Q26 가이던스</th></tr></thead>
+        <tbody>
+          <tr><td><b>GMV</b></td><td class="num">&gt;$155.0b</td><td class="num dn">$149.0b</td><td class="num dn">$151.0b</td><td class="num">$35b–38b</td></tr>
+          <tr><td><b>Revenue, % of GMV</b></td><td class="num">&gt;2.80%</td><td class="num">2.74%</td><td class="num">2.75%</td><td class="num">—</td></tr>
+          <tr><td><b>Revenue, % of GMV (FV 이동 제외)</b></td><td class="num">&gt;2.80%</td><td class="num">2.84%</td><td class="num">2.85%</td><td class="num">—</td></tr>
+          <tr><td><b>Revenue ($)</b></td><td class="num">&gt;$4.34b</td><td class="num dn">$4.08b</td><td class="num dn">$4.16b</td><td class="num">$940m–980m</td></tr>
+          <tr><td><b>TMD, % of GMV</b></td><td class="num">&gt;1.04%</td><td class="num up">1.09%</td><td class="num up">1.09%</td><td class="num">—</td></tr>
+          <tr><td><b>TMD ($)</b></td><td class="num">&gt;$1.61bn</td><td class="num up">$1.62bn</td><td class="num up">$1.65bn</td><td class="num">$340m–360m</td></tr>
+          <tr><td><b>AOI, % of revenue</b></td><td class="num">&gt;6.90%</td><td class="num">6.9%</td><td class="num">7.2%</td><td class="num">—</td></tr>
+          <tr><td><b>AOI ($)</b></td><td class="num">&gt;$299m</td><td class="num dn">$280m</td><td class="num dn">$300m</td><td class="num">$5m–15m</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-src">Source: Company</div>
+
+      <h3 class="sec"><span class="n">3</span>Fair Value 회계 변경 — 핵심 내용</h3>
+      <ul class="pts">
+        <li><b>2H26부터 신규 미국·독일 Fair Financing origination을 FV로 분류·측정</b> — 해당 대출의 매각(sell) 확대를 염두에 둔 조치</li>
+        <li>회계 효과: 대출 만기 전체에 걸쳐 인식하던 이자수익을 <b>upfront gain으로 앞당겨 인식</b>하고, 관련 충당금은 transaction cost에서 <b>netting</b> 처리</li>
+        <li>이에 따라 매출은 <b>GMV의 약 -10bps</b> 감소하나 유사한 규모의 비용 감소로 상쇄, transaction margin에는 <b>약 +2bps의 긍정적 타이밍 효과</b></li>
+        <li>FV 변경 효과를 제외한 implied revenue take rate는 <b>2.84–2.85%</b></li>
+        <li><b>과거 기간은 재작성(restate)하지 않음</b> — 기존 on-balance sheet 대출은 종전대로 이자수익·충당금 인식 지속</li>
+        <li>FV 변경의 결과로 3Q·4Q financing book의 <b>충당금(% of GMV)은 낮아질 전망</b></li>
+      </ul>
+      <div class="callout"><span class="t">주목</span>수익성은 개선됐음에도, Fair Value 회계 도입이 revenue take rate를 표면적으로 낮춰 보이게 만들면서 이슈를 복잡하게 했다는 평가 — 투자자들이 회계 변경의 영향을 소화하고 2H 실적에서 개선을 확인하는 과정이 필요하다는 판단.</div>
+
+      <h3 class="sec"><span class="n">4</span>2H26 운영 방향 — 가이던스 세부 코멘트</h3>
+      <ul class="pts">
+        <li><b>3Q는 투자 분기(investment quarter)</b> — 강해진 transaction margin의 일부를 2H 신규 런칭에 재투자, 마케팅이 volume에 선행 집행. 3Q는 2026년 중 <b>주식보상비용(share-based payments)도 최고 수준</b></li>
+        <li><b>4Q가 2026년 가장 강한 TMD 분기</b>가 될 전망 — AOI로의 강한 flow-through 기대</li>
+        <li>미국 volume은 <b>PSP integration 효과 + 대형 머천트 중심의 성수기(peak season) 진입</b>으로 2H 강세 예상</li>
+        <li>Gain on sale 매출은 2H에 소폭(marginally) 증가 예상 — GMV 대비 비율(%)은 2Q와 유사</li>
+        <li>크레딧은 vintage 기준으로 개선 — <b>Q2'25 vintage에서 상승했던 NCO가 Q3'25 vintage에서는 개선</b>. 다만 Fair Financing의 연체·손실률은 계속 모니터링 필요</li>
+        <li>2026년 adjusted operating expense는 <b>약 +15% 성장</b> vs TMD 달러 성장 <b>&gt;30%</b> — 영업 레버리지 지속</li>
+        <li>이자비용(interest income)은 3Q·4Q에 <b>GMV의 약 -0.7%</b> (2Q보다 소폭 낮은 수준)</li>
+        <li>Processing &amp; servicing 비용은 카드 성장·financing 믹스 변화로 GMV보다 <b>소폭 빠르게 증가</b> 예상</li>
+        <li>장기 목표: <b>TMD margin 50%, AOI margin 25%</b></li>
+      </ul>
+
+      <h3 class="sec"><span class="n">5</span>실적 추정 조정 — 2026/2027 EPS -$0.06 / +$0.82</h3>
+      <ul class="pts">
+        <li>실적 발표 이후 2026/2027 EPS 추정치를 <b>-$0.06 / +$0.82</b>로 조정 (기존 <b>+$0.20 / +$0.80</b>) — 2026년은 적자 전환, 2027년은 소폭 상향</li>
+        <li>목표가 <b>$18 (기존 $19)</b> — <b>2027년 adjusted EPS의 15배</b> 적용</li>
+        <li>연간 매출 추정: 2026E <b>$4,148.9M</b> (기존 $4,489.7M), 2027E <b>$4,763.7M</b> (기존 $5,251.6M)</li>
+        <li>EV/S: 2026E <b>1.1x</b>, 2027E <b>0.9x</b> · P/E: 2027E <b>18.3x</b> (2025·2026년은 NM)</li>
+      </ul>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>분기별 매출 (MM)</th><th>FY2025A</th><th>FY2026E</th><th>FY2026E (기존)</th><th>FY2027E</th><th>FY2027E (기존)</th></tr></thead>
+        <tbody>
+          <tr><td><b>Q1</b></td><td class="num">$701.0</td><td class="num">$1,012.0A</td><td class="num">—</td><td class="num">$1,103.2</td><td class="num">$1,144.0</td></tr>
+          <tr><td><b>Q2</b></td><td class="num">$823.0</td><td class="num">$1,042.0A</td><td class="num">$1,017.5</td><td class="num">$1,147.2</td><td class="num">$1,227.3</td></tr>
+          <tr><td><b>Q3</b></td><td class="num">$903.0</td><td class="num">$964.3</td><td class="num">$1,160.0</td><td class="num">$1,156.8</td><td class="num">$1,356.2</td></tr>
+          <tr><td><b>Q4</b></td><td class="num">$1,083.0</td><td class="num">$1,130.6</td><td class="num">$1,300.2</td><td class="num">$1,356.5</td><td class="num">$1,524.0</td></tr>
+          <tr><td><b>연간 합계</b></td><td class="num"><b>$3,510.0</b></td><td class="num"><b>$4,148.9</b></td><td class="num">$4,489.7</td><td class="num"><b>$4,763.7</b></td><td class="num">$5,251.6</td></tr>
+          <tr><td><b>EPS (연간)</b></td><td class="num">$(0.73)</td><td class="num dn">$(0.06)</td><td class="num">$0.20</td><td class="num up">$0.82</td><td class="num">$0.80</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="tbl-note">컨센서스 매출: 2025A $3,509.0 / 2026E $4,403.8 / 2027E $5,254.0 (Source: FactSet)</p>
+
+      <div class="chart-card">
+        <div class="ct">분기별 매출 추이 및 추정 (MM)</div>
+        <div class="legend">
+          <span><i style="background:#9db8a8"></i>FY2025A</span>
+          <span><i style="background:#007a3d"></i>FY2026E</span>
+          <span><i style="background:#00b140"></i>FY2027E</span>
+        </div>
+        <svg viewBox="0 0 880 320" width="100%">
+          <line x1="70" y1="280" x2="850" y2="280" stroke="#cfd6e0"/>
+          <line x1="70" y1="220" x2="850" y2="220" stroke="#eef1f6"/>
+          <line x1="70" y1="160" x2="850" y2="160" stroke="#eef1f6"/>
+          <line x1="70" y1="100" x2="850" y2="100" stroke="#eef1f6"/>
+          <line x1="70" y1="40" x2="850" y2="40" stroke="#eef1f6"/>
+          <text x="62" y="284" font-size="11" fill="#9aa3b2" text-anchor="end">0</text>
+          <text x="62" y="224" font-size="11" fill="#9aa3b2" text-anchor="end">350</text>
+          <text x="62" y="164" font-size="11" fill="#9aa3b2" text-anchor="end">700</text>
+          <text x="62" y="104" font-size="11" fill="#9aa3b2" text-anchor="end">1,050</text>
+          <text x="62" y="44" font-size="11" fill="#9aa3b2" text-anchor="end">1,400</text>
+
+          <!-- Q1 -->
+          <rect x="108" y="159.8" width="44" height="120.2" fill="#9db8a8"/>
+          <rect x="158" y="106.5" width="44" height="173.5" fill="#007a3d"/>
+          <rect x="208" y="90.9" width="44" height="189.1" fill="#00b140"/>
+          <text x="180" y="300" font-size="12" fill="#525866" text-anchor="middle">Q1</text>
+          <!-- Q2 -->
+          <rect x="288" y="138.9" width="44" height="141.1" fill="#9db8a8"/>
+          <rect x="338" y="101.4" width="44" height="178.6" fill="#007a3d"/>
+          <rect x="388" y="83.4" width="44" height="196.6" fill="#00b140"/>
+          <text x="360" y="300" font-size="12" fill="#525866" text-anchor="middle">Q2</text>
+          <!-- Q3 -->
+          <rect x="468" y="125.2" width="44" height="154.8" fill="#9db8a8"/>
+          <rect x="518" y="114.7" width="44" height="165.3" fill="#007a3d"/>
+          <rect x="568" y="81.7" width="44" height="198.3" fill="#00b140"/>
+          <text x="540" y="300" font-size="12" fill="#525866" text-anchor="middle">Q3</text>
+          <!-- Q4 -->
+          <rect x="648" y="94.3" width="44" height="185.7" fill="#9db8a8"/>
+          <rect x="698" y="86.2" width="44" height="193.8" fill="#007a3d"/>
+          <rect x="748" y="47.4" width="44" height="232.6" fill="#00b140"/>
+          <text x="720" y="300" font-size="12" fill="#525866" text-anchor="middle">Q4</text>
+
+          <text x="130" y="152" font-size="10.5" fill="#525866" text-anchor="middle">701</text>
+          <text x="180" y="99" font-size="10.5" fill="#525866" text-anchor="middle">1,012</text>
+          <text x="230" y="83" font-size="10.5" fill="#525866" text-anchor="middle">1,103</text>
+          <text x="310" y="131" font-size="10.5" fill="#525866" text-anchor="middle">823</text>
+          <text x="360" y="94" font-size="10.5" fill="#525866" text-anchor="middle">1,042</text>
+          <text x="410" y="76" font-size="10.5" fill="#525866" text-anchor="middle">1,147</text>
+          <text x="490" y="117" font-size="10.5" fill="#525866" text-anchor="middle">903</text>
+          <text x="540" y="107" font-size="10.5" fill="#525866" text-anchor="middle">964</text>
+          <text x="590" y="74" font-size="10.5" fill="#525866" text-anchor="middle">1,157</text>
+          <text x="670" y="87" font-size="10.5" fill="#525866" text-anchor="middle">1,083</text>
+          <text x="720" y="79" font-size="10.5" fill="#525866" text-anchor="middle">1,131</text>
+          <text x="770" y="40" font-size="10.5" fill="#525866" text-anchor="middle">1,357</text>
+        </svg>
+      </div>
+
+      <h3 class="sec"><span class="n">6</span>사업 지표 — 구독·카드 고성장, 소액·단기 중심 크레딧 구조</h3>
+      <ul class="pts">
+        <li>Klarna 멤버십 유료 구독자 <b>200만 명</b> 도달 — 1년 전 대비 <b>8배</b>, 구독 매출은 <b>+600% 이상</b> 성장</li>
+        <li>Klarna 카드 active user <b>650만 명</b> — 1년 전 130만 명 대비 대폭 확대. Nordics에서는 Fair Financing과 카드 모두 출시돼 <b>mid-teens 성장</b> 시현</li>
+        <li>독일은 volume 기준 최대 시장 — 특정 <b>discretionary retail 카테고리에 편중</b>돼 있고, 독일 사업의 큰 비중이 Pay Later·Pay Now</li>
+        <li>미국은 가장 빠르게 성장하는 대형 지역(fastest-growing large region)</li>
+        <li>평균 소비자 잔액 <b>$124</b>, 평균 대출 duration <b>약 40일</b> — Fair Financing 평균 잔액은 <b>약 $400</b></li>
+      </ul>
+
+      <h3 class="sec"><span class="n">7</span>투자 논지 &amp; 주가 — Fair Financing 확대가 최대 overhang</h3>
+      <ul class="pts">
+        <li>KLAR는 pay-in-4 중심의 <b>top-tier BNPL</b> 사업자로, 주요 BNPL 중 <b>가장 넓은 머천트 커버리지</b> 보유 — retail sales 내 BNPL의 낮은 침투율(under-penetration) 수혜 여력</li>
+        <li>최근 수년간 opex 효율화로 <b>의미 있는 영업 레버리지</b> 실현, 지속 가능 판단</li>
+        <li>현재 주가 sentiment의 <b>최대 overhang은 Fair Financing(장기 할부) 확대</b>, 특히 미국 — 대출에 대한 upfront provisioning이 매출 인식에 선행하며 단기 수익성 drag 요인</li>
+        <li>밸류에이션은 유사 peer 수준이 적정하다는 판단 — Hold 유지</li>
+        <li>향후 catalyst: <b>GMV·마진 트렌드</b>, <b>Fair Financing 성장 속도</b></li>
+      </ul>
+      <div class="chart-card">
+        <div class="ct">KLAR 주가 추이 (최근 1년, $)</div>
+        <svg viewBox="0 0 880 320" width="100%">
+          <line x1="70" y1="280" x2="850" y2="280" stroke="#cfd6e0"/>
+          <line x1="70" y1="217.5" x2="850" y2="217.5" stroke="#eef1f6"/>
+          <line x1="70" y1="155" x2="850" y2="155" stroke="#eef1f6"/>
+          <line x1="70" y1="92.5" x2="850" y2="92.5" stroke="#eef1f6"/>
+          <line x1="70" y1="30" x2="850" y2="30" stroke="#eef1f6"/>
+          <text x="62" y="284" font-size="11" fill="#9aa3b2" text-anchor="end">10</text>
+          <text x="62" y="221" font-size="11" fill="#9aa3b2" text-anchor="end">20</text>
+          <text x="62" y="159" font-size="11" fill="#9aa3b2" text-anchor="end">30</text>
+          <text x="62" y="96" font-size="11" fill="#9aa3b2" text-anchor="end">40</text>
+          <text x="62" y="34" font-size="11" fill="#9aa3b2" text-anchor="end">50</text>
+          <polyline fill="none" stroke="#007a3d" stroke-width="2.5"
+            points="70,61.3 111,86.3 152,105 193,136.3 234,161.3 275,192.5 316,242.5 357,255 398,248.8 439,258.1 480,264.4 521,255 562,245.6 603,236.3 644,242.5 685,233.1 726,223.8 767,217.5 808,220.6 850,248.4"/>
+          <circle cx="850" cy="248.4" r="4" fill="#00452c"/>
+          <text x="842" y="240" font-size="11.5" font-weight="700" fill="#00452c" text-anchor="end">$15.06</text>
+          <text x="70" y="300" font-size="12" fill="#525866" text-anchor="middle">Nov-25</text>
+          <text x="316" y="300" font-size="12" fill="#525866" text-anchor="middle">Feb-26</text>
+          <text x="562" y="300" font-size="12" fill="#525866" text-anchor="middle">May-26</text>
+          <text x="830" y="300" font-size="12" fill="#525866" text-anchor="middle">Aug-26</text>
+        </svg>
+        <div class="chart-src">Source: Bloomberg</div>
+      </div>
+
+      <h3 class="sec"><span class="n">8</span>시나리오 — GMV 성장률이 분기점</h3>
+      <div class="bbgrid">
+        <div class="bb bull"><div class="lbl">🐂 Upside</div><div class="px">GMV +20–25% 상회</div>
+          <ul><li>GMV 성장률이 20–25% 범위를 상회</li><li>영업 레버리지의 유의미한(significant) 개선</li></ul></div>
+        <div class="bb base"><div class="lbl">⊕ Base</div><div class="px">GMV +20–25%</div>
+          <ul><li>GMV 성장 약 20–25% 지속</li><li>영업 레버리지의 점진적 개선</li></ul></div>
+        <div class="bb bear"><div class="lbl">🐻 Downside</div><div class="px">GMV +20–25% 하회</div>
+          <ul><li>GMV 성장률이 20–25% 범위를 하회</li><li>영업 레버리지 개선 미미</li></ul></div>
+      </div>
+
+      <h3 class="sec"><span class="n">!</span>리스크 &amp; 모니터링 포인트</h3>
+      <div class="risk-box">
+        <h4>Key Risks to Rating &amp; Price Target</h4>
+        <ul>
+          <li><b>크레딧 리스크:</b> 소비자금융 섹터의 핵심 리스크 — 언더라이팅 또는 매크로發 신용비용 증가. 2Q에도 charge-off rate는 상승</li>
+          <li><b>GMV·매출 변동:</b> GMV 하회/상회에 따른 매출 변동이 목표가의 양방향 리스크</li>
+          <li><b>경쟁·규제:</b> BNPL 산업은 경쟁이 매우 치열하며, 규제 리스크 상존</li>
+          <li><b>Fair Financing 마진 압박:</b> 미국 내 Fair Financing 고속 성장에 따른 단기 마진 headwind 가능성</li>
+        </ul>
+        <h4 style="margin-top:14px;">모니터링 포인트</h4>
+        <ul>
+          <li><b>3Q GMV·수익성 지표</b> — 회계 변경 영향 소화와 투자심리 회복의 핵심 확인 포인트</li>
+          <li><b>Fair Financing 연체·손실률</b> — vintage별 NCO 추이 (Q2'25 상승 → Q3'25 개선 흐름의 지속 여부)</li>
+          <li><b>독일 volume 회복 여부</b> — 가이던스는 2H 내내 부진을 가정, 회복 시 upside 여지</li>
+          <li><b>미국 2H 성수기 트래킹</b> — PSP integration 및 대형 머천트 효과의 실제 volume 반영</li>
+          <li><b>loan sale 실행</b> — FV 분류 확대의 전제인 Fair Financing 대출 매각의 지속성</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div>본 문서는 투자 권유를 목적으로 하지 않습니다.</div>
+  </footer>
+
+</div>
+</body>
+</html>
