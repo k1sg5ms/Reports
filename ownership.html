@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Large-Cap Tech Institutional Ownership 2Q26</title>
+<style>
+  :root{
+    --brand:#00264d;
+    --brand-deep:#001a36;
+    --accent:#0077c8;
+    --accent2:#005a99;
+    --paper:#f4f6f9;
+    --card:#ffffff;
+    --ink:#1b1e24;
+    --ink-soft:#525866;
+    --line:#dde3ec;
+    --buy:#1f7a4d;
+    --bear:#c0392b;
+    --bull:#1f6fb2;
+    --warn:#8a4b15;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Helvetica Neue','Pretendard','Noto Sans KR',Arial,sans-serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:960px;margin:0 auto;padding:40px 6vw 90px;}
+  .intro{border-left:4px solid var(--accent);padding:8px 0 8px 20px;margin-bottom:48px;}
+  .intro .eyebrow{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent2);font-weight:700;}
+  .intro h1{font-size:26px;margin:8px 0 6px;color:var(--brand);}
+  .report{margin-bottom:64px;scroll-margin-top:70px;}
+  .report-head{
+    background:linear-gradient(135deg,var(--brand) 0%, var(--brand-deep) 100%);
+    color:#fff;border-radius:10px 10px 0 0;padding:28px 30px;
+  }
+  .report-head .tag{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#9fb4d4;font-weight:700;}
+  .report-head h2{margin:8px 0 14px;font-size:23px;line-height:1.35;}
+  .report-head .lede{
+    font-family:'Georgia',serif;font-size:15.5px;color:#e3ebf6;
+    border-top:1px solid rgba(255,255,255,0.16);padding-top:14px;margin:0;
+  }
+  .report-body{
+    background:var(--card);border:1px solid var(--line);border-top:none;
+    border-radius:0 0 10px 10px;padding:30px;
+  }
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px;}
+  .chip{border:1px solid var(--line);border-radius:8px;padding:10px 16px;background:#fafbfd;flex:1;min-width:130px;}
+  .chip .k{font-size:10.5px;letter-spacing:0.5px;text-transform:uppercase;color:var(--ink-soft);}
+  .chip .v{font-size:19px;font-weight:700;color:var(--brand);margin-top:2px;}
+  .chip .v.buy{color:var(--buy);}
+  .chip .v.sell{color:var(--bear);}
+  .chip .s{font-size:11px;color:var(--ink-soft);}
+  h3.sec{
+    font-size:17px;color:var(--brand);margin:30px 0 12px;
+    padding-bottom:8px;border-bottom:1.5px solid var(--line);
+    display:flex;align-items:center;gap:10px;
+  }
+  h3.sec .n{
+    background:var(--brand);color:#fff;font-size:12px;font-weight:700;
+    width:24px;height:24px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  ul.pts{margin:0;padding:0;list-style:none;}
+  ul.pts li{position:relative;padding:7px 0 7px 20px;font-size:14.5px;border-bottom:1px dashed var(--line);}
+  ul.pts li:last-child{border-bottom:none;}
+  ul.pts li::before{content:"\2014";position:absolute;left:0;color:var(--accent2);font-weight:700;}
+  ul.pts b{color:var(--brand);}
+  table.tbl{width:100%;border-collapse:collapse;font-size:13px;margin:6px 0 4px;}
+  table.tbl th{background:var(--brand);color:#fff;text-align:left;padding:8px 10px;font-weight:600;}
+  table.tbl td{padding:7px 10px;border-bottom:1px solid var(--line);}
+  table.tbl tr:nth-child(even) td{background:#f7f9fc;}
+  table.tbl td.num{text-align:right;font-variant-numeric:tabular-nums;}
+  table.tbl td.pos{color:var(--accent2);font-weight:700;text-align:right;}
+  table.tbl td.neg{color:var(--bear);font-weight:700;text-align:right;}
+  .tbl-wrap{overflow-x:auto;}
+  .chart-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:22px 22px 14px;margin:14px 0;}
+  .chart-card .ct{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:12px;}
+  .chart-src{font-size:10.5px;color:#9aa3b2;margin-top:8px;}
+  .legend{display:flex;gap:18px;font-size:11.5px;color:var(--ink-soft);margin-bottom:4px;}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .legend i{width:11px;height:11px;border-radius:2px;display:inline-block;}
+  .callout{background:#fbf6ec;border:1px solid #e8dcc3;border-radius:8px;padding:14px 18px;font-size:13px;color:var(--ink-soft);margin-top:14px;}
+  .callout .t{font-size:10.5px;font-weight:700;letter-spacing:0.6px;color:var(--warn);text-transform:uppercase;display:block;margin-bottom:5px;}
+  .risk-box{background:var(--brand);color:#dde6f3;border-radius:8px;padding:22px 24px;margin-top:14px;}
+  .risk-box h4{margin:0 0 10px;color:#fff;font-size:14.5px;}
+  .risk-box ul{margin:0;padding-left:18px;}
+  .risk-box li{margin-bottom:8px;font-size:13px;}
+  .risk-box li b{color:#fff;}
+  footer{border-top:1px solid var(--line);margin-top:50px;padding-top:20px;font-size:11px;color:#9aa3b2;line-height:1.6;}
+  @media(max-width:560px){
+    .intro h1{font-size:21px;}
+    .report-head h2{font-size:19px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="intro">
+    <div class="eyebrow">17 August 2026</div>
+    <h1>대형 테크 기관 보유 현황 2Q26</h1>
+  </div>
+
+  <section class="report" id="rpt1">
+
+    <div class="report-head">
+      <div class="tag">US Technology &middot; North America &middot; IT Hardware</div>
+      <h2>대형 테크 기관 보유 현황 2Q26: 메가캡 테크 Under-Ownership 확대 &mdash; NVDA가 가장 소외, SNDK가 가장 과보유</h2>
+      <p class="lede">메가캡 테크의 S&amp;P 500 대비 기관 under-ownership이 2Q26 -129bps로 확대(1Q26 -125bps)된 반면, 나머지 대형 테크는 +39bps로 소폭 over-owned &mdash; 기관 positioning은 여전히 메모리/스토리지 등 AI 인프라 'Picks &amp; Shovels'에 집중, 소프트웨어 보유는 낮은 수준.</p>
+    </div>
+
+    <div class="report-body">
+
+      <div class="chips">
+        <div class="chip"><div class="k">Industry View</div><div class="v">In-Line</div><div class="s">IT Hardware &middot; North America</div></div>
+        <div class="chip"><div class="k">Mega-cap Tech Gap</div><div class="v sell">-129bps</div><div class="s">1Q26 -125bps 대비 4bps 확대</div></div>
+        <div class="chip"><div class="k">Rest of Tech Gap</div><div class="v" style="color:var(--accent2)">+39bps</div><div class="s">1Q26 +32bps 대비 확대</div></div>
+        <div class="chip"><div class="k">최다 Under-Owned</div><div class="v sell">NVDA -2.53%</div><div class="s">사상 최대 수준 근접</div></div>
+        <div class="chip"><div class="k">최다 Over-Owned</div><div class="v" style="color:var(--accent2)">SNDK +2.30%</div><div class="s">2위 KLAC의 약 1.5배</div></div>
+      </div>
+
+      <h3 class="sec"><span class="n">1</span>핵심 요약 &mdash; 2Q26 13F 데이터가 말하는 것</h3>
+      <ul class="pts">
+        <li>2Q26 말 기준 13F를 집계한 결과, 메가캡 테크의 S&amp;P 500 대비 기관 under-ownership은 <b>-129bps</b>로 1Q26 말(-125bps) 대비 소폭 확대 &mdash; 최근 90일간 메가캡 회피가 오히려 심화</li>
+        <li>메가캡 제외 대형 테크 21개 종목의 기관 보유-S&amp;P 500 스프레드는 <b>+39bps</b>로 1Q26(+32bps) 대비 상승 &mdash; 대형 테크 내 barbell 구도 강화</li>
+        <li>NVDA가 여전히 가장 under-owned: S&amp;P 500 대비 <b>-2.53%</b>로 분기 중 14bps 추가 확대, 사상 최대 수준 부근 &mdash; 이어 AAPL(-2.33%), MSFT(-1.54%), AMZN(-1.29%), GOOGL(-0.82%) 순</li>
+        <li>SNDK는 S&amp;P 500 대비 <b>+2.30%</b>로 가장 over-owned &mdash; 1Q25 재상장 이후 기관 보유가 꾸준히 증가했고 4Q25 S&amp;P 500 편입 이후에도 갭이 계속 확대, 2위인 KLAC(+1.53%)의 약 1.5배</li>
+        <li>기관 positioning은 여전히 AI 인프라 bottleneck 선호: 메모리/스토리지(SNDK, STX, LRCX, KLAC, WDC) 보유는 뚜렷하게 높고, 소프트웨어(IBM, ORCL, PANW, NOW, ADBE) 보유는 낮은 상태로 2Q를 마감</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">2</span>종목별 Active Ownership vs S&amp;P 500 스프레드 (2Q26 말)</h3>
+      <ul class="pts">
+        <li>추적 대상은 미국 최대 시가총액 테크 <b>28개 종목</b> &mdash; 상위 100개 액티브 운용 기관 포트폴리오 내 평균 비중을 각 종목의 S&amp;P 500 내 비중과 비교</li>
+        <li>over-owned 상위: <b>SNDK +2.30%</b>, KLAC +1.53%, STX +1.36%, WDC +0.89%, LRCX +0.61%, CRM +0.56%, DELL +0.44% &mdash; 메모리/HDD/장비가 상단 독식</li>
+        <li>under-owned 하위: <b>NVDA -2.53%</b>, AAPL -2.33%, MSFT -1.54%, AMZN -1.29%, GOOGL -0.82%, AVGO -0.74% &mdash; 시가총액 최상위 7개(NVDA, AAPL, MSFT, AMZN, GOOGL, META, TSLA)가 평균 -129bps</li>
+      </ul>
+
+      <div class="chart-card">
+        <div class="ct">액티브 기관 포트폴리오 평균 비중 vs S&amp;P 500 비중 스프레드 (2Q26 말)</div>
+        <div class="legend">
+          <span><i style="background:#0077c8"></i>Over-owned (S&amp;P 500 대비 초과보유)</span>
+          <span><i style="background:#c0392b"></i>Under-owned (S&amp;P 500 대비 과소보유)</span>
+        </div>
+        <svg viewBox="0 0 880 688" width="100%"><line x1="120.0" y1="24" x2="120.0" y2="672" stroke="#e3e8f0" stroke-width="1"/><text x="120.0" y="16" text-anchor="middle" font-size="10.5" fill="#525866">-3%</text><line x1="241.7" y1="24" x2="241.7" y2="672" stroke="#e3e8f0" stroke-width="1"/><text x="241.7" y="16" text-anchor="middle" font-size="10.5" fill="#525866">-2%</text><line x1="363.3" y1="24" x2="363.3" y2="672" stroke="#e3e8f0" stroke-width="1"/><text x="363.3" y="16" text-anchor="middle" font-size="10.5" fill="#525866">-1%</text><line x1="485.0" y1="24" x2="485.0" y2="672" stroke="#8a94a6" stroke-width="1.5"/><text x="485.0" y="16" text-anchor="middle" font-size="10.5" fill="#525866">0%</text><line x1="606.7" y1="24" x2="606.7" y2="672" stroke="#e3e8f0" stroke-width="1"/><text x="606.7" y="16" text-anchor="middle" font-size="10.5" fill="#525866">1%</text><line x1="728.3" y1="24" x2="728.3" y2="672" stroke="#e3e8f0" stroke-width="1"/><text x="728.3" y="16" text-anchor="middle" font-size="10.5" fill="#525866">2%</text><line x1="850.0" y1="24" x2="850.0" y2="672" stroke="#e3e8f0" stroke-width="1"/><text x="850.0" y="16" text-anchor="middle" font-size="10.5" fill="#525866">3%</text><text x="112" y="45" text-anchor="end" font-size="11" fill="#525866" font-weight="600">SNDK</text><rect x="485.0" y="34" width="279.8" height="14" fill="#0077c8" rx="2"/><text x="770.8" y="45" text-anchor="start" font-size="10.5" fill="#1b1e24">+2.30%</text><text x="112" y="68" text-anchor="end" font-size="11" fill="#525866" font-weight="600">KLAC</text><rect x="485.0" y="57" width="186.2" height="14" fill="#0077c8" rx="2"/><text x="677.1" y="68" text-anchor="start" font-size="10.5" fill="#1b1e24">+1.53%</text><text x="112" y="91" text-anchor="end" font-size="11" fill="#525866" font-weight="600">STX</text><rect x="485.0" y="80" width="165.5" height="14" fill="#0077c8" rx="2"/><text x="656.5" y="91" text-anchor="start" font-size="10.5" fill="#1b1e24">+1.36%</text><text x="112" y="114" text-anchor="end" font-size="11" fill="#525866" font-weight="600">WDC</text><rect x="485.0" y="103" width="108.3" height="14" fill="#0077c8" rx="2"/><text x="599.3" y="114" text-anchor="start" font-size="10.5" fill="#1b1e24">+0.89%</text><text x="112" y="137" text-anchor="end" font-size="11" fill="#525866" font-weight="600">LRCX</text><rect x="485.0" y="126" width="74.2" height="14" fill="#0077c8" rx="2"/><text x="565.2" y="137" text-anchor="start" font-size="10.5" fill="#1b1e24">+0.61%</text><text x="112" y="160" text-anchor="end" font-size="11" fill="#525866" font-weight="600">CRM</text><rect x="485.0" y="149" width="68.1" height="14" fill="#0077c8" rx="2"/><text x="559.1" y="160" text-anchor="start" font-size="10.5" fill="#1b1e24">+0.56%</text><text x="112" y="183" text-anchor="end" font-size="11" fill="#525866" font-weight="600">DELL</text><rect x="485.0" y="172" width="53.5" height="14" fill="#0077c8" rx="2"/><text x="544.5" y="183" text-anchor="start" font-size="10.5" fill="#1b1e24">+0.44%</text><text x="112" y="206" text-anchor="end" font-size="11" fill="#525866" font-weight="600">MU</text><rect x="485.0" y="195" width="37.7" height="14" fill="#0077c8" rx="2"/><text x="528.7" y="206" text-anchor="start" font-size="10.5" fill="#1b1e24">+0.31%</text><text x="112" y="229" text-anchor="end" font-size="11" fill="#525866" font-weight="600">AMAT</text><rect x="485.0" y="218" width="32.9" height="14" fill="#0077c8" rx="2"/><text x="523.9" y="229" text-anchor="start" font-size="10.5" fill="#1b1e24">+0.27%</text><text x="112" y="252" text-anchor="end" font-size="11" fill="#525866" font-weight="600">TXN</text><rect x="485.0" y="241" width="29.2" height="14" fill="#0077c8" rx="2"/><text x="520.2" y="252" text-anchor="start" font-size="10.5" fill="#1b1e24">+0.24%</text><text x="112" y="275" text-anchor="end" font-size="11" fill="#525866" font-weight="600">INTU</text><rect x="485.0" y="264" width="28.0" height="14" fill="#0077c8" rx="2"/><text x="519.0" y="275" text-anchor="start" font-size="10.5" fill="#1b1e24">+0.23%</text><text x="112" y="298" text-anchor="end" font-size="11" fill="#525866" font-weight="600">NOW</text><rect x="485.0" y="287" width="18.2" height="14" fill="#0077c8" rx="2"/><text x="509.2" y="298" text-anchor="start" font-size="10.5" fill="#1b1e24">+0.15%</text><text x="112" y="321" text-anchor="end" font-size="11" fill="#525866" font-weight="600">ADBE</text><rect x="485.0" y="310" width="10.9" height="14" fill="#0077c8" rx="2"/><text x="501.9" y="321" text-anchor="start" font-size="10.5" fill="#1b1e24">+0.09%</text><text x="112" y="344" text-anchor="end" font-size="11" fill="#525866" font-weight="600">QCOM</text><rect x="485.0" y="333" width="8.5" height="14" fill="#0077c8" rx="2"/><text x="499.5" y="344" text-anchor="start" font-size="10.5" fill="#1b1e24">+0.07%</text><text x="112" y="367" text-anchor="end" font-size="11" fill="#525866" font-weight="600">PANW</text><rect x="485.0" y="356" width="6.1" height="14" fill="#0077c8" rx="2"/><text x="497.1" y="367" text-anchor="start" font-size="10.5" fill="#1b1e24">+0.05%</text><text x="112" y="390" text-anchor="end" font-size="11" fill="#525866" font-weight="600">ORCL</text><rect x="485.0" y="379" width="2.4" height="14" fill="#0077c8" rx="2"/><text x="493.4" y="390" text-anchor="start" font-size="10.5" fill="#1b1e24">+0.02%</text><text x="112" y="413" text-anchor="end" font-size="11" fill="#525866" font-weight="600">INTC</text><rect x="482.6" y="402" width="2.4" height="14" fill="#c0392b" rx="2"/><text x="476.6" y="413" text-anchor="end" font-size="10.5" fill="#1b1e24">-0.02%</text><text x="112" y="436" text-anchor="end" font-size="11" fill="#525866" font-weight="600">CSCO</text><rect x="478.9" y="425" width="6.1" height="14" fill="#c0392b" rx="2"/><text x="472.9" y="436" text-anchor="end" font-size="10.5" fill="#1b1e24">-0.05%</text><text x="112" y="459" text-anchor="end" font-size="11" fill="#525866" font-weight="600">IBM</text><rect x="478.9" y="448" width="6.1" height="14" fill="#c0392b" rx="2"/><text x="472.9" y="459" text-anchor="end" font-size="10.5" fill="#1b1e24">-0.05%</text><text x="112" y="482" text-anchor="end" font-size="11" fill="#525866" font-weight="600">AMD</text><rect x="469.2" y="471" width="15.8" height="14" fill="#c0392b" rx="2"/><text x="463.2" y="482" text-anchor="end" font-size="10.5" fill="#1b1e24">-0.13%</text><text x="112" y="505" text-anchor="end" font-size="11" fill="#525866" font-weight="600">META</text><rect x="457.0" y="494" width="28.0" height="14" fill="#c0392b" rx="2"/><text x="451.0" y="505" text-anchor="end" font-size="10.5" fill="#1b1e24">-0.23%</text><text x="112" y="528" text-anchor="end" font-size="11" fill="#525866" font-weight="600">TSLA</text><rect x="447.3" y="517" width="37.7" height="14" fill="#c0392b" rx="2"/><text x="441.3" y="528" text-anchor="end" font-size="10.5" fill="#1b1e24">-0.31%</text><text x="112" y="551" text-anchor="end" font-size="11" fill="#525866" font-weight="600">AVGO</text><rect x="395.0" y="540" width="90.0" height="14" fill="#c0392b" rx="2"/><text x="389.0" y="551" text-anchor="end" font-size="10.5" fill="#1b1e24">-0.74%</text><text x="112" y="574" text-anchor="end" font-size="11" fill="#525866" font-weight="600">GOOGL</text><rect x="385.2" y="563" width="99.8" height="14" fill="#c0392b" rx="2"/><text x="379.2" y="574" text-anchor="end" font-size="10.5" fill="#1b1e24">-0.82%</text><text x="112" y="597" text-anchor="end" font-size="11" fill="#525866" font-weight="600">AMZN</text><rect x="328.0" y="586" width="157.0" height="14" fill="#c0392b" rx="2"/><text x="322.0" y="597" text-anchor="end" font-size="10.5" fill="#1b1e24">-1.29%</text><text x="112" y="620" text-anchor="end" font-size="11" fill="#525866" font-weight="600">MSFT</text><rect x="297.6" y="609" width="187.4" height="14" fill="#c0392b" rx="2"/><text x="291.6" y="620" text-anchor="end" font-size="10.5" fill="#1b1e24">-1.54%</text><text x="112" y="643" text-anchor="end" font-size="11" fill="#525866" font-weight="600">AAPL</text><rect x="201.5" y="632" width="283.5" height="14" fill="#c0392b" rx="2"/><text x="195.5" y="643" text-anchor="end" font-size="10.5" fill="#1b1e24">-2.33%</text><text x="112" y="666" text-anchor="end" font-size="11" fill="#525866" font-weight="600">NVDA</text><rect x="177.2" y="655" width="307.8" height="14" fill="#c0392b" rx="2"/><text x="171.2" y="666" text-anchor="end" font-size="10.5" fill="#1b1e24">-2.53%</text></svg>
+        <div class="chart-src">Source: Based on 13-F filings for the period from 1Q09 to 2Q26. Factset.</div>
+      </div>
+
+      <h3 class="sec"><span class="n">3</span>분기 대비(Q/Q) 변화 &mdash; 어디서 갭이 벌어지고 좁혀졌나</h3>
+      <ul class="pts">
+        <li><b>KLAC</b>: 기관 보유-S&amp;P 500 갭이 2Q 중 <b>+102bps</b>로 전 종목 중 가장 크게 확대(over-owned 방향) &mdash; STX, WDC 등 스토리지/장비 동반 확대</li>
+        <li><b>AMD</b>: 갭이 <b>26bps 축소</b>되며 전 종목 중 가장 크게 좁혀짐 (2Q26 말 -0.13%)</li>
+        <li>Mag 7 내에서는 <b>MSFT만 Q/Q 갭 축소</b>, AMZN &middot; META &middot; GOOGL &middot; NVDA &middot; AAPL &middot; TSLA는 모두 확대 &mdash; 메가캡 회피가 특정 종목이 아닌 전반적 현상</li>
+        <li>NVDA의 갭은 Q/Q <b>14bps 확대</b>되어 -2.53%로 마감, 사상 최대 수준 부근</li>
+      </ul>
+
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>그룹/종목</th><th style="text-align:right">2Q26 말 스프레드</th><th style="text-align:right">Q/Q 변화</th><th>비고</th></tr></thead>
+        <tbody>
+          <tr><td><b>메가캡 테크 (Big Tech 7)</b></td><td class="neg">-129bps</td><td class="num">-4bps (확대)</td><td>1Q26 -125bps</td></tr>
+          <tr><td><b>메가캡 제외 대형 테크 21개</b></td><td class="pos">+39bps</td><td class="num">+7bps</td><td>1Q26 +32bps</td></tr>
+          <tr><td><b>소프트웨어 (ex-MSFT) 평균</b></td><td class="pos">+0.18%</td><td class="num">-6bp</td><td>ADBE, CRM, ORCL, INTU, NOW, PANW</td></tr>
+          <tr><td><b>메모리 &amp; HDD 평균</b></td><td class="pos">+0.88%</td><td class="num">+15bps</td><td>LRCX, AMAT, SNDK, STX, KLAC, MU, WDC</td></tr>
+          <tr><td><b>NVDA</b></td><td class="neg">-2.53%</td><td class="num">-14bps (확대)</td><td>사상 최대 under-ownership 부근</td></tr>
+          <tr><td><b>KLAC</b></td><td class="pos">+1.53%</td><td class="num">+102bps</td><td>Q/Q 확대폭 1위</td></tr>
+          <tr><td><b>AMD</b></td><td class="neg">-0.13%</td><td class="num">+26bps (축소)</td><td>Q/Q 축소폭 1위</td></tr>
+          <tr><td><b>CSCO</b></td><td class="neg">-0.05%</td><td class="num">-2bps</td><td>최근 5년간 S&amp;P 500과 대체로 in-line</td></tr>
+          <tr><td><b>IBM</b></td><td class="neg">-0.05%</td><td class="num">+2bps</td><td>소폭 상승</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="callout"><span class="t">주목</span>섹터 단면으로 보면 반도체 내에서는 SNDK가 액티브-패시브 보유 스프레드 확대폭 1위였고, 메모리/HDD 그룹 전체가 +15bps 상승한 반면 소프트웨어(ex-MSFT)는 -6bp 하락 &mdash; AI 'Picks &amp; Shovels' 대 소프트웨어의 기관 선호 격차가 한 분기 더 벌어졌다.</div>
+
+      <h3 class="sec"><span class="n">4</span>이 데이터가 왜 중요한가 &mdash; 낮은 보유는 기술적 상승 여력</h3>
+      <ul class="pts">
+        <li>매 분기 미국 테크 대형주 28개 종목에 대해, 상위 100개 액티브 운용 기관 포트폴리오 내 평균 비중과 S&amp;P 500 내 비중의 격차를 추적</li>
+        <li>과거 보유 데이터에 대한 퀀트 분석 결과, <b>시가총액과 어닝 서프라이즈를 조정한 후에도</b> 낮은 active ownership과 향후 주가 성과 사이에 <b>통계적으로 유의한 관계</b>가 존재</li>
+        <li>즉 평균적으로, 액티브 보유가 시장 대비 크게 낮은 종목은 <b>수급상 기술적 상승(technical pull higher)</b>을 경험하는 경향이 있고, 그 반대도 성립 &mdash; 현재 구도에서는 메가캡(특히 NVDA, AAPL)에 수급 여력, 과보유 상태인 SNDK &middot; KLAC &middot; STX에는 포지션 부담이 시사점</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">!</span>리스크 &amp; 모니터링 포인트</h3>
+      <div class="risk-box">
+        <h4>데이터 해석 시 유의점</h4>
+        <ul>
+          <li><b>13F의 후행성:</b> 분기 말 기준 신고 데이터로 최대 45일 시차가 존재 &mdash; 8월 중순 현재의 실제 positioning과는 차이가 있을 수 있음</li>
+          <li><b>표본 범위:</b> 상위 100개 액티브 운용 기관 포트폴리오 기준으로, 헤지펀드 숏 포지션 &middot; 파생 &middot; 해외 기관 수급은 반영되지 않음</li>
+          <li><b>GOOGL 시계열:</b> 역사적 데이터는 1Q14부터 GOOGL 주식클래스만 반영 (GOOG도 방향성은 유사)</li>
+        </ul>
+        <h4 style="margin-top:14px;">모니터링 포인트</h4>
+        <ul>
+          <li>3Q26 13F에서 메가캡 under-ownership 갭(-129bps)의 축소 반전 여부 &mdash; 특히 NVDA 갭의 방향</li>
+          <li>SNDK &middot; KLAC &middot; STX 등 과보유 메모리/스토리지 종목의 포지션 청산 시 수급 하방 압력</li>
+          <li>소프트웨어(ex-MSFT) 보유 축소 추세의 지속 여부 &mdash; AI 인프라 대비 소프트웨어 로테이션 재개 시그널</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div>본 문서는 투자 권유를 목적으로 하지 않습니다.</div>
+  </footer>
+
+</div>
+</body>
+</html>
