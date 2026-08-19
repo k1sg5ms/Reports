@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hardware Quantum Security</title>
+<style>
+  :root{
+    --brand:#00264d;
+    --brand-deep:#001830;
+    --accent:#0077c8;
+    --accent2:#005a9e;
+    --paper:#f4f6f9;
+    --card:#ffffff;
+    --ink:#1b1e24;
+    --ink-soft:#525866;
+    --line:#dde3ec;
+    --buy:#1f7a4d;
+    --bear:#c0392b;
+    --bull:#1f6fb2;
+    --warn:#8a4b15;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Helvetica Neue','Pretendard','Noto Sans KR',Arial,sans-serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  .topbar{
+    background:var(--brand-deep);
+    color:#fff;padding:14px 6vw;
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;
+    border-bottom:3px solid var(--accent);
+    position:sticky;top:0;z-index:50;
+  }
+  .topbar .logo{font-weight:700;font-size:18px;letter-spacing:0.5px;}
+  .topbar .logo span{color:var(--accent);}
+  .topbar nav{display:flex;gap:8px;flex-wrap:wrap;}
+  .topbar nav a{
+    color:#cfd8e6;text-decoration:none;font-size:12.5px;
+    padding:6px 12px;border:1px solid rgba(255,255,255,0.2);border-radius:20px;
+    transition:all .15s;
+  }
+  .topbar nav a:hover{background:var(--accent);color:#fff;border-color:var(--accent);}
+
+  .wrap{max-width:960px;margin:0 auto;padding:40px 6vw 90px;}
+
+  .intro{
+    border-left:4px solid var(--accent);
+    padding:8px 0 8px 20px;margin-bottom:48px;
+  }
+  .intro .eyebrow{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent2);font-weight:700;}
+  .intro h1{font-size:26px;margin:8px 0 6px;color:var(--brand);}
+
+  .report{margin-bottom:64px;}
+  .report-head{
+    background:linear-gradient(135deg,var(--brand) 0%, var(--brand-deep) 100%);
+    color:#fff;border-radius:10px 10px 0 0;padding:28px 30px;
+  }
+  .report-head .tag{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#9fb4d4;font-weight:700;}
+  .report-head h2{margin:8px 0 14px;font-size:23px;line-height:1.35;}
+  .report-head .lede{
+    font-family:'Georgia',serif;font-size:15.5px;color:#e3ebf6;
+    border-top:1px solid rgba(255,255,255,0.16);padding-top:14px;margin:0;
+  }
+  .report-body{
+    background:var(--card);border:1px solid var(--line);border-top:none;
+    border-radius:0 0 10px 10px;padding:30px;
+  }
+
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px;}
+  .chip{border:1px solid var(--line);border-radius:8px;padding:10px 16px;background:#fafbfd;flex:1;min-width:130px;}
+  .chip .k{font-size:10.5px;letter-spacing:0.5px;text-transform:uppercase;color:var(--ink-soft);}
+  .chip .v{font-size:19px;font-weight:700;color:var(--brand);margin-top:2px;}
+  .chip .v.buy{color:var(--buy);}
+  .chip .s{font-size:11px;color:var(--ink-soft);}
+
+  h3.sec{
+    font-size:17px;color:var(--brand);margin:34px 0 12px;
+    padding-bottom:8px;border-bottom:1.5px solid var(--line);
+    display:flex;align-items:center;gap:10px;
+    scroll-margin-top:80px;
+  }
+  h3.sec .n{
+    background:var(--brand);color:#fff;font-size:12px;font-weight:700;
+    width:24px;height:24px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  ul.pts{margin:0;padding:0;list-style:none;}
+  ul.pts li{position:relative;padding:7px 0 7px 20px;font-size:14.5px;border-bottom:1px dashed var(--line);}
+  ul.pts li:last-child{border-bottom:none;}
+  ul.pts li::before{content:"—";position:absolute;left:0;color:var(--accent2);font-weight:700;}
+  ul.pts b{color:var(--brand);}
+
+  table.tbl{width:100%;border-collapse:collapse;font-size:13px;margin:6px 0 4px;}
+  table.tbl th{background:var(--brand);color:#fff;text-align:left;padding:8px 10px;font-weight:600;}
+  table.tbl td{padding:7px 10px;border-bottom:1px solid var(--line);}
+  table.tbl tr:nth-child(even) td{background:#f7f9fc;}
+  table.tbl td.num{text-align:right;font-variant-numeric:tabular-nums;}
+  table.tbl td.buy{color:var(--buy);font-weight:700;}
+  table.tbl td.sell{color:var(--bear);font-weight:700;}
+  table.tbl td.grp{background:#eaf1f8 !important;font-weight:700;color:var(--brand);}
+  .tbl-wrap{overflow-x:auto;}
+  .tbl-src{font-size:10.5px;color:#9aa3b2;margin:4px 0 0;}
+
+  .chart-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:22px 22px 14px;margin:14px 0;}
+  .chart-card .ct{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:12px;}
+  .chart-src{font-size:10.5px;color:#9aa3b2;margin-top:8px;}
+  .legend{display:flex;gap:18px;font-size:11.5px;color:var(--ink-soft);margin-bottom:4px;}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .legend i{width:11px;height:11px;border-radius:2px;display:inline-block;}
+
+  .bbgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0;}
+  @media(max-width:680px){.bbgrid{grid-template-columns:1fr;}}
+  .bb{border-radius:8px;padding:16px;border:1px solid var(--line);background:#fafbfd;}
+  .bb.bull{border-top:3px solid var(--bull);}
+  .bb.base{border-top:3px solid var(--ink-soft);}
+  .bb.bear{border-top:3px solid var(--bear);}
+  .bb .lbl{font-size:11px;letter-spacing:0.6px;text-transform:uppercase;font-weight:700;color:var(--ink-soft);}
+  .bb .px{font-size:22px;font-weight:700;color:var(--brand);margin:4px 0;}
+  .bb .ret{font-size:13px;font-weight:600;}
+  .bb.bull .ret{color:var(--bull);}
+  .bb.bear .ret{color:var(--bear);}
+  .bb ul{margin:8px 0 0;padding-left:16px;font-size:12px;color:var(--ink-soft);}
+  .bb li{margin-bottom:4px;}
+
+  .callout{background:#fbf6ec;border:1px solid #e8dcc3;border-radius:8px;padding:14px 18px;font-size:13px;color:var(--ink-soft);margin-top:14px;}
+  .callout .t{font-size:10.5px;font-weight:700;letter-spacing:0.6px;color:var(--warn);text-transform:uppercase;display:block;margin-bottom:5px;}
+
+  .debate{border:1px solid var(--line);border-radius:8px;background:#fafbfd;padding:16px 20px;margin:12px 0;}
+  .debate .dq{font-size:14px;font-weight:700;color:var(--brand);margin-bottom:8px;}
+  .debate p{font-size:13px;margin:5px 0;}
+  .debate .mkt{color:var(--ink-soft);}
+  .debate .our b, .debate .mkt b{color:var(--brand);}
+  .debate .our{border-left:3px solid var(--accent);padding-left:10px;}
+
+  .risk-box{background:var(--brand);color:#dde6f3;border-radius:8px;padding:22px 24px;margin-top:14px;}
+  .risk-box h4{margin:0 0 10px;color:#fff;font-size:14.5px;}
+  .risk-box ul{margin:0;padding-left:18px;}
+  .risk-box li{margin-bottom:8px;font-size:13px;}
+  .risk-box li b{color:#fff;}
+
+  footer{border-top:1px solid var(--line);margin-top:50px;padding-top:20px;font-size:11px;color:#9aa3b2;line-height:1.6;}
+
+  @media(max-width:560px){
+    .intro h1{font-size:21px;}
+    .report-head h2{font-size:19px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">Research<span>·</span>Digest</div>
+  <nav>
+    <a href="#thesis">핵심 논지</a>
+    <a href="#policy">정부·기업 대응</a>
+    <a href="#puf">Root of Trust & PUF</a>
+    <a href="#tam">TAM 시나리오</a>
+    <a href="#debate">Key Debates</a>
+    <a href="#stocks">종목 시사점</a>
+  </nav>
+</div>
+
+<div class="wrap">
+
+  <div class="intro">
+    <div class="eyebrow">17 August 2026</div>
+    <h1>Hardware Quantum Security — Q-Day와 그 이후를 대비한 방어 구축</h1>
+  </div>
+
+  <section class="report" id="rpt1">
+
+    <div class="report-head">
+      <div class="tag">Global Technology · Greater China Technology Semiconductors</div>
+      <h2>하드웨어 퀀텀 시큐리티 — 양자컴퓨터가 암호를 깨는 날(Q-Day), 방어는 하드웨어에서 시작된다</h2>
+      <p class="lede">2030년경 fault-tolerant 양자컴퓨팅의 상용화가 가시화되면서 기존 암호체계 무력화(Q-Day) 우려가 부각. 보안 인프라는 도입 3~5년 전 선제 구축이 필수인 만큼 지금이 전환기이며, PUF 기반 PQC IP는 반도체 IP 시장에 5~10%의 신규 TAM을 더할 전망 — 최대 수혜주로 eMemory를 Overweight로 신규 커버리지 개시.</p>
+    </div>
+
+    <div class="report-body">
+
+      <div class="chips">
+        <div class="chip"><div class="k">Industry View</div><div class="v buy">Attractive</div><div class="s">Greater China Tech Semis</div></div>
+        <div class="chip"><div class="k">PUF-PQC TAM (2030E)</div><div class="v">US$310mn</div><div class="s">Bull US$600mn / Bear US$190mn</div></div>
+        <div class="chip"><div class="k">2025 TAM 대비</div><div class="v">약 78배</div><div class="s">2025년 US$4mn에서 확대</div></div>
+        <div class="chip"><div class="k">Top Pick</div><div class="v buy">eMemory OW</div><div class="s">신규 커버리지 개시 (3529.TWO)</div></div>
+      </div>
+
+      <h3 class="sec" id="thesis"><span class="n">1</span>핵심 논지 — Q-Day는 다가오고, 보안은 먼저 깔려야 한다</h3>
+      <ul class="pts">
+        <li>업계 컨센서스는 <b>2029~30년</b> 양자컴퓨팅의 상업적 유의미한 도입을 지목. IBM은 2029년 Quantum Starling 도입, Quantinuum은 2027년 업계 최초 <b>100 logical-qubit</b> 시스템 출시를 목표로 하며, 미국·유럽·중국·일본·한국 정부의 국가 퀀텀 이니셔티브가 도래 시점을 앞당기는 중</li>
+        <li>RSA·ECC 등 현행 public-key 암호는 고전 컴퓨터로는 풀 수 없는 수학 문제에 기반하나, fault-tolerant 양자컴퓨터는 Shor's Algorithm으로 이를 무력화 가능 — 이 시점이 <b>Q-Day</b>. 다수 전문가는 <b>2030년 이전 Q-Day 발생 확률이 50%를 상회</b>한다고 판단</li>
+        <li>보안 리스크는 이미 현재진행형: <b>"Harvest Now, Decrypt Later(HNDL)"</b> 전략 하에 공격자는 암호화된 데이터를 지금 탈취해 저장해 두었다가 양자컴퓨터 확보 후 복호화 가능</li>
+        <li>양자컴퓨팅 산업 규모는 2024년 US$0.5bn에 불과하나, QPU 시장은 2024년 약 US$1bn에서 <b>2030년 약 US$18bn</b>으로 확대(6년 CAGR 50% 이상) 전망. 제3자 전망치는 2030년 US$22bn에서 2035년 US$1tn 이상까지 분포</li>
+        <li>퀀텀 인프라 전체 TAM은 <b>2040년 US$110bn</b>에 도달할 것으로 추정</li>
+        <li>서버 레벨 하드웨어 보안('Root of Trust')은 도입 대비 <b>3~5년 선행 배치</b>가 필요 — 포스트 퀀텀 보안 마이그레이션은 2030년의 이벤트가 아니라 이미 시작된 다년간의 전환</li>
+      </ul>
+
+      <h3 class="sec" id="policy"><span class="n">2</span>정부·빅테크의 대응 — 마이그레이션 시계는 이미 돌고 있다</h3>
+      <ul class="pts">
+        <li>NIST는 첫 PQC 표준(ML-KEM 등) 확정을 완료했으며, 미국 정부는 고우선순위 연방 시스템의 <b>2030~31년 PQC 이전</b> 데드라인을 설정. 2026년 6월에는 연방 시스템의 NIST 승인 PQC 표준 이전을 가속화하는 행정명령 서명</li>
+        <li><b>Cloudflare</b>는 2029년 완전한 포스트 퀀텀 보안을 목표로 이미 브라우저 트래픽 과반을 포스트 퀀텀 암호화로 보호 중. <b>Microsoft·Google·NVIDIA·AMD·Intel·Meta</b>는 차세대 컴퓨팅 플랫폼의 개방형 보안 표준을 위한 Open Compute Project의 <b>Caliptra</b> 이니셔티브에 참여</li>
+        <li>네트워킹에서는 Cisco·Nokia·Ciena·Juniper가 quantum-safe 네트워킹 솔루션을 개발 중이며, Samsung 등 반도체 벤더도 PQC 기술 투자를 공개적으로 강조</li>
+        <li>CA/Browser Forum은 공인 TLS 인증서 최대 유효기간을 398일에서 <b>2029년 3월까지 47일로 단계 축소</b> 승인 — 인증서 발급·갱신·교체 자동화 수요를 강화하는 요인</li>
+        <li>반도체 산업 전반의 PQC 채택률은 <b>2030년 약 25%</b>에 이를 전망이며, 보안 민감도가 높은 차량 ADAS·방산 반도체는 <b>50% 초과</b> 침투 예상</li>
+      </ul>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>지역</th><th>1단계</th><th>내용</th><th>2단계</th><th>내용</th></tr></thead>
+        <tbody>
+          <tr><td><b>미국</b></td><td class="num">2027</td><td>취약 암호 알고리즘 지원 중단(deprecate)</td><td class="num">2030</td><td>핵심 시스템 마이그레이션 완료</td></tr>
+          <tr><td><b>EU</b></td><td class="num">2026</td><td>마이그레이션 로드맵 발표</td><td class="num">2030</td><td>민감 정보 시스템 보호 완료</td></tr>
+          <tr><td><b>영국</b></td><td class="num">2028</td><td>인벤토리·초기 이전 계획 완료</td><td class="num">2035</td><td>전체 마이그레이션 완료</td></tr>
+          <tr><td><b>한국</b></td><td class="num">2028</td><td>인벤토리·이전 계획 완료</td><td class="num">2035</td><td>국가 암호체계 전환 완료</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="tbl-src">Source: Topology Research Institute</div>
+      <div class="callout"><span class="t">주목</span>주요국이 대체로 NIST PQC 표준에 정렬하는 가운데 일부 국가는 자체 암호 프레임워크를 병행 개발 중. 2030년이 글로벌 공통의 핵심 변곡점으로 수렴.</div>
+
+      <h3 class="sec" id="puf"><span class="n">3</span>Root of Trust & PUF — 알고리즘은 PQC가, 키는 하드웨어가 지킨다</h3>
+      <ul class="pts">
+        <li>PQC는 알고리즘을 양자 공격으로부터 보호하지만, 암호 키가 <b>생성·저장·보호되는 위치</b>는 다루지 않음. Root of Trust(RoT)는 secure boot, secure storage, 인증, 펌웨어 검증을 제공하는 디바이스의 근본 보안 앵커 — <b>PQC는 알고리즘을, RoT는 키를 보호</b>하는 상호보완 관계</li>
+        <li>기존 키 저장 방식의 한계: <b>eFuse</b>는 저비용·고신뢰성이나 키가 칩 내부에 물리적으로 저장되어 SEM·FIB 등 침습적 분석에 취약. <b>Anti-fuse OTP</b>는 역공학 내성이 개선됐지만 여전히 비밀정보의 영구 저장에 의존하며, 미세공정 전환에 따라 고전압 산화막 파괴 공정의 통합 난도가 상승</li>
+        <li><b>PUF(Physical Unclonable Function)</b>는 근본적으로 다른 접근 — 칩마다 고유한 제조 편차를 활용해 필요할 때마다 동일한 Root Key를 재구성, <b>장기 비밀 저장 자체를 제거</b></li>
+        <li>PQC는 RSA·ECC 대비 훨씬 큰 공개키·개인키를 요구해 보호해야 할 보안 데이터가 급증 — 온디맨드 키 생성이 가능한 PUF가 확장성 측면에서 유리. PUF 기반 TRNG는 기존 TRNG 대비 <b>최대 100배 빠른 entropy 생성</b>으로 PQC의 대규모 난수 수요에 대응</li>
+        <li>상용 PUF 시장은 <b>Synopsys와 eMemory</b> 양강 구도(Rambus·Secure-IC는 특정 애플리케이션 대상). SRAM PUF가 현재 지배적 상용 아키텍처이나, 미세공정 전환과 PQC의 대용량 키 요구로 eMemory의 <b>NeoPUF</b> 같은 oxide 기반 기술이 부상</li>
+        <li>NeoPUF는 gate oxide 내 무작위 분포 산화막 결함의 양자 터널링 특성에서 fingerprint를 생성 — 결함 재구성에 약 <b>700°C 이상</b>이 필요해 디바이스 수명 전체에 걸쳐 사실상 불변, <b>near-zero bit-error rate</b> 구현</li>
+      </ul>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>항목</th><th>Ideal PUF</th><th>NeoPUF</th><th>SRAM PUF</th></tr></thead>
+        <tbody>
+          <tr><td><b>Inter-Hamming Distance</b></td><td class="num">50%</td><td class="num buy">50%</td><td class="num">~50%</td></tr>
+          <tr><td><b>Hamming Weight</b></td><td class="num">0.5</td><td class="num buy">0.5</td><td class="num">0.59</td></tr>
+          <tr><td><b>Bit Error Rate</b></td><td class="num">0%</td><td class="num buy">0%</td><td class="num">5.5% (ECC 미적용 시)</td></tr>
+          <tr><td><b>보정 회로 필요성</b></td><td>불필요</td><td class="buy">불필요</td><td>Stabilization·TMV·Masking·ECC Helper</td></tr>
+          <tr><td><b>동작 온도</b></td><td>제한 없음</td><td class="num buy">-40~125°C</td><td class="num">&lt; 85°C</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="tbl-src">Source: PUFsecurity</div>
+
+      <h3 class="sec" id="tam"><span class="n">4</span>TAM 시나리오 — 반도체 IP 라이선싱의 새로운 시장</h3>
+      <ul class="pts">
+        <li>TAM 분석은 칩 ASP와 실리콘 콘텐츠가 커 royalty pool이 가장 큰 <b>데이터센터 반도체, 특히 AI 서버</b>에 집중 — PQC 채택 칩 수를 먼저 추정하고, 그중 PUF를 hardware root of trust로 탑재할 비중을 산정하는 방식</li>
+        <li><b>Base</b>: 2030년 PQC 채택률 25%, PQC 적용 칩의 약 50%가 PUF 채택(단, CPU·GPU는 긴 qualification 주기와 엄격한 배치 요건으로 약 10%에 그침) → PUF-PQC TAM <b>US$310mn</b></li>
+        <li><b>Bull</b>: 하이퍼스케일러·정부·엔터프라이즈의 마이그레이션 가속으로 PQC 채택률 50%로 상승, CPU·GPU·ASIC까지 확산 → <b>US$600mn</b>. 민감도는 PUF 부착률이 아닌 PQC 채택률에 있음</li>
+        <li><b>Bear</b>: 마이그레이션 지연·규제 지연·양자컴퓨터 타임라인 장기화로 PQC 채택률 20% → <b>US$190mn</b></li>
+        <li>2025년 TAM US$4mn 대비 폭발적 성장으로, 반도체 IP 시장에 <b>5~10%의 신규 TAM</b> 추가 효과</li>
+      </ul>
+
+      <div class="chart-card">
+        <div class="ct">PUF-PQC TAM — Bull / Base / Bear 시나리오 (USD mn)</div>
+        <div class="legend">
+          <span><i style="background:#c9a84c"></i>Bull</span>
+          <span><i style="background:var(--brand)"></i>Base</span>
+          <span><i style="background:#1f7a4d"></i>Bear</span>
+        </div>
+        <svg viewBox="0 0 880 320" width="100%">
+          <line x1="70" y1="280" x2="860" y2="280" stroke="#cfd6e0"/>
+          <line x1="70" y1="206" x2="860" y2="206" stroke="#eef1f6"/>
+          <line x1="70" y1="132" x2="860" y2="132" stroke="#eef1f6"/>
+          <line x1="70" y1="58" x2="860" y2="58" stroke="#eef1f6"/>
+          <text x="62" y="284" font-size="11" fill="#9aa3b2" text-anchor="end">0</text>
+          <text x="62" y="210" font-size="11" fill="#9aa3b2" text-anchor="end">200</text>
+          <text x="62" y="136" font-size="11" fill="#9aa3b2" text-anchor="end">400</text>
+          <text x="62" y="62" font-size="11" fill="#9aa3b2" text-anchor="end">600</text>
+          <!-- Bull -->
+          <polyline points="100,279.6 205,279.2 310,278.5 415,272.6 520,250.4 625,213.4 730,161.6 835,58" fill="none" stroke="#c9a84c" stroke-width="2.5"/>
+          <!-- Base -->
+          <polyline points="100,279.6 205,279.3 310,278.5 415,272.6 520,257.8 625,235.6 730,209.7 835,165.3" fill="none" stroke="#00264d" stroke-width="2.5"/>
+          <!-- Bear -->
+          <polyline points="100,279.6 205,279.3 310,278.5 415,273.4 520,261.5 625,246.7 730,231.9 835,209.7" fill="none" stroke="#1f7a4d" stroke-width="2.5"/>
+          <circle cx="835" cy="58" r="4" fill="#c9a84c"/>
+          <circle cx="835" cy="165.3" r="4" fill="#00264d"/>
+          <circle cx="835" cy="209.7" r="4" fill="#1f7a4d"/>
+          <text x="828" y="48" font-size="12" font-weight="700" fill="#c9a84c" text-anchor="end">600</text>
+          <text x="828" y="158" font-size="12" font-weight="700" fill="#00264d" text-anchor="end">310</text>
+          <text x="828" y="228" font-size="12" font-weight="700" fill="#1f7a4d" text-anchor="end">190</text>
+          <text x="100" y="300" font-size="11" fill="#525866" text-anchor="middle">2023</text>
+          <text x="205" y="300" font-size="11" fill="#525866" text-anchor="middle">2024</text>
+          <text x="310" y="300" font-size="11" fill="#525866" text-anchor="middle">2025</text>
+          <text x="415" y="300" font-size="11" fill="#525866" text-anchor="middle">2026e</text>
+          <text x="520" y="300" font-size="11" fill="#525866" text-anchor="middle">2027e</text>
+          <text x="625" y="300" font-size="11" fill="#525866" text-anchor="middle">2028e</text>
+          <text x="730" y="300" font-size="11" fill="#525866" text-anchor="middle">2029e</text>
+          <text x="835" y="300" font-size="11" fill="#525866" text-anchor="middle">2030e</text>
+        </svg>
+        <div class="chart-src">Source: Company data</div>
+      </div>
+
+      <div class="bbgrid">
+        <div class="bb bull"><div class="lbl">🐂 Bull</div><div class="px">US$600mn</div><div class="ret">2030E TAM</div>
+          <ul><li>PQC 채택률 약 50%로 가속</li><li>하이퍼스케일러·정부·엔터프라이즈 이전 가속</li><li>CPU·GPU·ASIC까지 확산</li></ul></div>
+        <div class="bb base"><div class="lbl">⊕ Base</div><div class="px">US$310mn</div><div class="ret">2030E TAM</div>
+          <ul><li>PQC 채택률 약 25%</li><li>PQC 칩의 약 50%가 PUF 채택</li><li>CPU·GPU는 약 10%로 보수적</li></ul></div>
+        <div class="bb bear"><div class="lbl">🐻 Bear</div><div class="px">US$190mn</div><div class="ret">2030E TAM</div>
+          <ul><li>PQC 채택률 20%에 그침</li><li>마이그레이션·규제 요건 지연</li><li>양자컴퓨터 타임라인 장기화</li></ul></div>
+      </div>
+
+      <h3 class="sec" id="debate"><span class="n">5</span>Key Debates — 시장의 회의론 vs 리포트의 반론</h3>
+      <div class="debate">
+        <div class="dq">① 양자컴퓨팅은 언제 실질적 보안 위협이 되고, 마이그레이션은 언제 시작해야 하나?</div>
+        <p class="mkt"><b>Market view:</b> 2030년경 도래해도 양자컴퓨팅은 니치 시장에 그치고, 보안은 소프트웨어로 해결 가능.</p>
+        <p class="our"><b>리포트의 시각:</b> universal 양자컴퓨팅은 장기 과제이나 2030년 예상되는 fault-tolerant 양자컴퓨팅만으로 현행 암호체계 위협이 시작됨. PQC 채택은 양자컴퓨터 상용화 이전에 개시되며, 마이그레이션은 이미 진행 중인 다년 전환. 리스크 요인은 QPU 개발 지연과 리소스 제약.</p>
+      </div>
+      <div class="debate">
+        <div class="dq">② PQC가 온다면 PUF가 정말 필요한가? TAM은 얼마인가?</div>
+        <p class="mkt"><b>Market view:</b> PUF 부착이 100%도 아니고 구현 방식도 다양하며, 대형 고객의 신기술 채택이 느려 TAM 확장은 더딜 것.</p>
+        <p class="our"><b>리포트의 시각:</b> PUF 기반 PQC가 가장 효과적인 방식이며 eMemory 솔루션의 우위가 뚜렷. PQC 확산에 따라 secure key management·RoT·고품질 entropy 수요가 동반 상승, core chip까지 채택되며 TAM 성장이 가속화될 수 있음. 핵심 변수는 고객 채택 속도.</p>
+      </div>
+      <div class="debate">
+        <div class="dq">③ 핵심 수혜주는 누구이며, eMemory는 좋은 proxy인가?</div>
+        <p class="mkt"><b>Market view:</b> eMemory는 파운드리 단가 인상 플레이일 뿐, PUF가 유의미한 매출원이 되기 어려움.</p>
+        <p class="our"><b>리포트의 시각:</b> NeoPUF는 더 직관적이고 전력 효율적이며 advanced-node 친화적. 수년간 축적된 특허 IP와 고객 채택으로 강력한 moat 구축 — RoT의 mission-critical 특성상 검증된 신뢰성이 우선되어 긴 qualification 주기와 높은 전환비용이 진입장벽으로 작용. OTP·NeoFlash 등 기존 사업 TAM도 확대 중: royalty가 이익의 대부분을 차지하는 구조에서 leading-edge 노드 전환은 design win당 royalty 단가를 높이고, OTP·PUF 동반 평가에 따른 cross-selling 기회도 증가.</p>
+      </div>
+
+      <h3 class="sec" id="stocks"><span class="n">6</span>종목별 시사점 — IP 공급자와 채택 기업</h3>
+      <ul class="pts">
+        <li><b>eMemory (3529.TWO, OW 신규 개시)</b>: PUF-PQC 전환의 최대 수혜주. NeoPUF의 기술 우위 + OTP 사업의 advanced-node 수혜가 결합된 구조. 목표가 NT$3,330 (상승여력 39%)</li>
+        <li><b>Synopsys (SNPS.O, EW)</b>: 2024년 PUF IP 선도업체 Intrinsic ID 인수로 SRAM PUF 기반 보안 플랫폼 보유. 광범위한 semi-IP 포트폴리오와 chip-design workflow 내 위치가 quantum-safe 하드웨어 전환의 enabler — 다만 PUF는 전사 이익에서 작은 비중으로, 퀀텀 보안은 실적보다 플랫폼 포지셔닝 강화 요인</li>
+        <li><b>Cadence (CDNS.O, OW)</b>: 2025년 10월 Secure-IC 인수로 하드웨어 보안 포트폴리오 강화. eMemory로부터 일부 PUF IP를 라이선스하는 것으로 파악 — Secure-IC 확산은 eMemory에 추가 licensing·royalty 기회로 연결되는 보완적 관계</li>
+        <li><b>채택 기업</b>: Aspeed (5274.TWO, OW)·Silicon Motion (SIMO.O, OW)·Phison (8299.TWO, EW)·ARM (ARM.O, EW)이 포스트 퀀텀 보안의 핵심 adopter</li>
+        <li><b>소프트웨어/네트워크 보안</b>: 암호화가 주로 방화벽에서 수행되는 만큼 Palo Alto Networks·Cisco·Fortinet·Zscaler·Check Point가 PQC·hybrid key exchange 채택을 주도. 5년 이상 노후 방화벽 설치기반의 업그레이드 사이클로 <b>2026년의 견조한 방화벽 하드웨어 실적이 2027년까지 연장</b>될 수 있음. identity 벤더(CyberArk·SailPoint·Okta)는 machine identity·인증서 관리 중심으로 소프트웨어 업그레이드 성격이 강해 매출 드라이버로는 제한적</li>
+        <li><b>기타</b>: IBM은 양자컴퓨터 판매보다 quantum-safe 보안 마이그레이션(소프트웨어·컨설팅·하이브리드 클라우드)에서 더 이른 수익화 기회. Quantinuum·IonQ는 가장 직접적인 순수 exposure이나 기술·실행 리스크가 큼. Nokia는 optical·IP·fixed networks 부문에서 quantum-safe 네트워킹 제공(매출 기여는 아직 미미)</li>
+      </ul>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>티커</th><th>기업</th><th>Rating</th><th>Mkt Cap (US$mn)</th><th>주가</th><th>목표가</th><th>Upside</th></tr></thead>
+        <tbody>
+          <tr><td colspan="7" class="grp">Semi/PUF IP</td></tr>
+          <tr><td>3529.TWO</td><td><b>eMemory</b></td><td class="buy">Overweight</td><td class="num">5,636</td><td class="num">2,390.0</td><td class="num">3,330.0</td><td class="num buy">+39%</td></tr>
+          <tr><td>SNPS.O</td><td>Synopsys</td><td>Equal-weight</td><td class="num">78,396</td><td class="num">421.5</td><td class="num">525.0</td><td class="num">+25%</td></tr>
+          <tr><td>CDNS.O</td><td>Cadence</td><td class="buy">Overweight</td><td class="num">88,286</td><td class="num">324.8</td><td class="num">400.0</td><td class="num">+23%</td></tr>
+          <tr><td>ARM.O</td><td>ARM</td><td>Equal-weight</td><td class="num">297,324</td><td class="num">279.4</td><td class="num">212.0</td><td class="num sell">-24%</td></tr>
+          <tr><td>6531.TW</td><td>AP Memory</td><td class="buy">Overweight</td><td class="num">4,461</td><td class="num">873.0</td><td class="num">1,666.0</td><td class="num buy">+91%</td></tr>
+          <tr><td>NOK.N</td><td>Nokia</td><td class="buy">Overweight</td><td class="num">60,068</td><td class="num">10.8</td><td class="num">16.5</td><td class="num buy">+53%</td></tr>
+          <tr><td colspan="7" class="grp">Quantum</td></tr>
+          <tr><td>QNT.O</td><td>Quantinuum</td><td>Equal-weight</td><td class="num">16,594</td><td class="num">63.6</td><td class="num">78.0</td><td class="num">+23%</td></tr>
+          <tr><td>IONQ.N</td><td>IonQ</td><td>Equal-weight</td><td class="num">16,774</td><td class="num">46.3</td><td class="num">49.0</td><td class="num">+6%</td></tr>
+          <tr><td>IBM.N</td><td>IBM</td><td>Equal-weight</td><td class="num">219,547</td><td class="num">234.3</td><td class="num">190.0</td><td class="num sell">-19%</td></tr>
+          <tr><td colspan="7" class="grp">Adopters</td></tr>
+          <tr><td>5274.TWO</td><td>Aspeed</td><td class="buy">Overweight</td><td class="num">22,348</td><td class="num">17,020.0</td><td class="num">20,888.0</td><td class="num">+23%</td></tr>
+          <tr><td>SIMO.O</td><td>Silicon Motion</td><td class="buy">Overweight</td><td class="num">9,220</td><td class="num">268.9</td><td class="num">400.0</td><td class="num buy">+49%</td></tr>
+          <tr><td>MRVL.O</td><td>Marvell</td><td>Equal-weight</td><td class="num">188,118</td><td class="num">222.0</td><td class="num">195.0</td><td class="num sell">-12%</td></tr>
+          <tr><td>8299.TWO</td><td>Phison</td><td>Equal-weight</td><td class="num">14,350</td><td class="num">2,085.0</td><td class="num">2,588.0</td><td class="num">+24%</td></tr>
+          <tr><td>4919.TW</td><td>Nuvoton</td><td class="sell">Underweight</td><td class="num">1,663</td><td class="num">125.5</td><td class="num">95.0</td><td class="num sell">-24%</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="tbl-src">Source: FactSet. Data as of August 17, 2026</div>
+
+      <h3 class="sec"><span class="n">!</span>리스크 & 모니터링 포인트</h3>
+      <div class="risk-box">
+        <h4>Key Risks</h4>
+        <ul>
+          <li><b>양자컴퓨팅 개발 지연:</b> QPU 개발 속도가 기대를 하회하거나 cryptographically relevant 양자컴퓨터 타임라인이 장기화될 경우 PQC·PUF 채택 모멘텀 약화</li>
+          <li><b>경쟁 심화:</b> PUF 기반 PQC 솔루션 경쟁 격화, 특히 Cadence가 향후 PUF 기술을 내재화하거나 대안을 채택할 가능성</li>
+          <li><b>기술 대체:</b> 양자 암호 분야 신기술(QKD 확산 등) 등장으로 PUF 기반 접근의 상대적 매력 저하</li>
+          <li><b>반도체 다운턴:</b> royalty 중심 수익 구조 특성상 고객 생산량 둔화 시 실적 직접 타격</li>
+        </ul>
+        <h4 style="margin-top:14px;">모니터링 포인트</h4>
+        <ul>
+          <li>PQC 채택률 및 하이퍼스케일러·정부의 마이그레이션 속도 — TAM의 핵심 민감도 변수</li>
+          <li>CPU·GPU·ASIC의 PUF 채택 확대 여부 (bull case 트리거)</li>
+          <li>logical-qubit 품질·오류율·시스템 신뢰성 등 fault tolerance 진전 지표</li>
+          <li>Caliptra 등 개방형 보안 표준의 요구사항 진화와 파운드리별 PUF 지원 확대</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div>본 문서는 투자 권유를 목적으로 하지 않습니다.</div>
+  </footer>
+
+</div>
+</body>
+</html>
