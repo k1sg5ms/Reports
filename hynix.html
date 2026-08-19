@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SK hynix (SKHY) — 커버리지 개시</title>
+<title>SK hynix — W40조 자사주 매입</title>
 <style>
   :root{
-    --brand:#12284c;
-    --brand-deep:#0a1830;
-    --accent:#5b8fc9;
-    --accent2:#2c5a8f;
+    --brand:#0a2240;
+    --brand-deep:#06182e;
+    --accent:#5c1a26;
+    --accent2:#3d5a80;
     --paper:#f4f6f9;
     --card:#ffffff;
     --ink:#1b1e24;
@@ -29,26 +29,14 @@
     line-height:1.65;
     -webkit-font-smoothing:antialiased;
   }
-  .topbar{
-    background:var(--brand-deep);
-    color:#fff;padding:14px 6vw;
-    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;
-    border-bottom:3px solid var(--accent);
-    position:sticky;top:0;z-index:50;
-  }
-  .topbar .logo{font-weight:700;font-size:18px;letter-spacing:0.5px;}
-  .topbar .logo span{color:var(--accent);}
-  .topbar nav{display:flex;gap:6px;flex-wrap:wrap;}
-  .topbar nav a{
-    color:#cfd8e6;text-decoration:none;font-size:12px;
-    padding:5px 11px;border:1px solid rgba(255,255,255,0.2);border-radius:20px;
-    transition:all .15s;
-  }
-  .topbar nav a:hover{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .serif{font-family:'Georgia','Noto Serif KR',serif;}
 
-  .wrap{max-width:980px;margin:0 auto;padding:40px 6vw 90px;}
+  .wrap{max-width:960px;margin:0 auto;padding:40px 6vw 90px;}
 
-  .intro{border-left:4px solid var(--accent);padding:8px 0 8px 20px;margin-bottom:44px;}
+  .intro{
+    border-left:4px solid var(--accent);
+    padding:8px 0 8px 20px;margin-bottom:48px;
+  }
   .intro .eyebrow{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent2);font-weight:700;}
   .intro h1{font-size:26px;margin:8px 0 6px;color:var(--brand);}
 
@@ -76,51 +64,33 @@
   .chip .s{font-size:11px;color:var(--ink-soft);}
 
   h3.sec{
-    font-size:17px;color:var(--brand);margin:34px 0 12px;
+    font-size:17px;color:var(--brand);margin:30px 0 12px;
     padding-bottom:8px;border-bottom:1.5px solid var(--line);
-    display:flex;align-items:center;gap:10px;scroll-margin-top:74px;
+    display:flex;align-items:center;gap:10px;
   }
   h3.sec .n{
     background:var(--brand);color:#fff;font-size:12px;font-weight:700;
     width:24px;height:24px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
   }
-  h4.sub{font-size:14px;color:var(--accent2);margin:22px 0 6px;font-weight:700;}
-
   ul.pts{margin:0;padding:0;list-style:none;}
   ul.pts li{position:relative;padding:7px 0 7px 20px;font-size:14.5px;border-bottom:1px dashed var(--line);}
   ul.pts li:last-child{border-bottom:none;}
   ul.pts li::before{content:"—";position:absolute;left:0;color:var(--accent2);font-weight:700;}
   ul.pts b{color:var(--brand);}
 
-  table.tbl{width:100%;border-collapse:collapse;font-size:12.5px;margin:6px 0 4px;}
+  table.tbl{width:100%;border-collapse:collapse;font-size:13px;margin:6px 0 4px;}
   table.tbl th{background:var(--brand);color:#fff;text-align:left;padding:8px 10px;font-weight:600;}
   table.tbl td{padding:7px 10px;border-bottom:1px solid var(--line);}
   table.tbl tr:nth-child(even) td{background:#f7f9fc;}
   table.tbl td.num{text-align:right;font-variant-numeric:tabular-nums;}
-  table.tbl td.pos{color:var(--buy);font-weight:700;}
-  table.tbl td.neg{color:var(--bear);font-weight:700;}
-  table.tbl tr.hl td{background:#eef3fa;font-weight:700;}
+  table.tbl td.buy{color:var(--buy);font-weight:700;}
   .tbl-wrap{overflow-x:auto;}
-  .tbl-note{font-size:10.5px;color:#9aa3b2;margin-top:6px;}
 
   .chart-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:22px 22px 14px;margin:14px 0;}
   .chart-card .ct{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:12px;}
-  .chart-src{font-size:10.5px;color:#9aa3b2;margin-top:8px;}
-  .legend{display:flex;gap:18px;font-size:11.5px;color:var(--ink-soft);margin-bottom:8px;flex-wrap:wrap;}
+  .legend{display:flex;gap:18px;font-size:11.5px;color:var(--ink-soft);margin-bottom:4px;}
   .legend span{display:inline-flex;align-items:center;gap:6px;}
   .legend i{width:11px;height:11px;border-radius:2px;display:inline-block;}
-
-  .bbgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0;}
-  @media(max-width:680px){.bbgrid{grid-template-columns:1fr;}}
-  .bb{border-radius:8px;padding:16px;border:1px solid var(--line);background:#fafbfd;}
-  .bb.bull{border-top:3px solid var(--bull);}
-  .bb.base{border-top:3px solid var(--ink-soft);}
-  .bb.bear{border-top:3px solid var(--bear);}
-  .bb .lbl{font-size:11px;letter-spacing:0.6px;text-transform:uppercase;font-weight:700;color:var(--ink-soft);}
-  .bb .px{font-size:20px;font-weight:700;color:var(--brand);margin:4px 0;}
-  .bb .ret{font-size:12.5px;font-weight:600;color:var(--ink-soft);}
-  .bb ul{margin:8px 0 0;padding-left:16px;font-size:12px;color:var(--ink-soft);}
-  .bb li{margin-bottom:4px;}
 
   .callout{background:#fbf6ec;border:1px solid #e8dcc3;border-radius:8px;padding:14px 18px;font-size:13px;color:var(--ink-soft);margin-top:14px;}
   .callout .t{font-size:10.5px;font-weight:700;letter-spacing:0.6px;color:var(--warn);text-transform:uppercase;display:block;margin-bottom:5px;}
@@ -136,665 +106,158 @@
   @media(max-width:560px){
     .intro h1{font-size:21px;}
     .report-head h2{font-size:19px;}
-    .report-body{padding:22px 18px;}
   }
 </style>
 </head>
 <body>
 
-<div class="topbar">
-  <div class="logo">Research<span>·</span>Digest</div>
-  <nav>
-    <a href="#thesis">투자논지</a>
-    <a href="#supply">수급</a>
-    <a href="#demand">수요</a>
-    <a href="#lta">LTA·공급</a>
-    <a href="#tech">기술</a>
-    <a href="#fab">생산거점</a>
-    <a href="#kioxia">Kioxia</a>
-    <a href="#fin">실적</a>
-    <a href="#val">밸류에이션</a>
-    <a href="#risk">리스크</a>
-  </nav>
-</div>
-
 <div class="wrap">
 
   <div class="intro">
-    <div class="eyebrow">4 August 2026</div>
-    <h1>메모리의 중심, 서울 — SK하이닉스 커버리지 개시</h1>
+    <div class="eyebrow">20 August 2026</div>
+    <h1>SK하이닉스 — W40조 자사주 매입, 예상보다 빨리 왔다</h1>
   </div>
 
   <section class="report" id="rpt1">
 
     <div class="report-head">
-      <div class="tag">Semiconductors &amp; Semiconductor Equipment · Korea / US ADR</div>
-      <h2>SK hynix (SKHY US) — Overweight 개시, 목표주가 $300 제시</h2>
-      <p class="lede">AI 인프라 수요가 DRAM·NAND 공급을 CY29까지 초과하며, HBM 1위 사업자인 하이닉스의 매출·마진·FCF는 구조적으로 레벨업된다. 최근 ~50% 조정으로 P/E는 low-single-digit까지 내려와 매력적인 진입 구간이라는 판단.</p>
+      <div class="tag">Technology - Semiconductors · Korea</div>
+      <h2>SK하이닉스: 기다리던 W40조 자사주 매입이 예상보다 빨리 도착 — 주가의 다음 행보는</h2>
+      <p class="lede">시총 3.7% 규모의 W40조 자사주 매입·소각과 누적 FCF "50% 이상" 환원으로의 정책 상향 발표 — 최악은 지났으며 중기 관점에서 주가 심리의 점진적 개선을 예상, 주식 accumulate(분할 매수) 권고.</p>
     </div>
 
     <div class="report-body">
 
       <div class="chips">
-        <div class="chip"><div class="k">Rating</div><div class="v buy">Overweight</div><div class="s">신규 개시 (Initiating)</div></div>
-        <div class="chip"><div class="k">Target Price</div><div class="v">$300</div><div class="s">12개월, 신규 제시</div></div>
-        <div class="chip"><div class="k">Price (8/3)</div><div class="v">$142.72</div><div class="s">Upside ~110%</div></div>
-        <div class="chip"><div class="k">Valuation</div><div class="v">~8x</div><div class="s">CY27E EPS $35.52</div></div>
-        <div class="chip"><div class="k">Market Cap</div><div class="v">$803B</div><div class="s">Shares Out 7,304.9M</div></div>
-        <div class="chip"><div class="k">52W Range</div><div class="v">124.8–194.8</div><div class="s">ADR 상장 2026/7/10</div></div>
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Overweight</div><div class="s">유지</div></div>
+        <div class="chip"><div class="k">Target Price (Jun-27)</div><div class="v">W2,750,000</div><div class="s">현재가 대비 +84%</div></div>
+        <div class="chip"><div class="k">Price (19 Aug 26)</div><div class="v">W1,491,000</div><div class="s">6/22 고점 대비 -49%</div></div>
+        <div class="chip"><div class="k">Buyback</div><div class="v">W40조</div><div class="s">시총의 3.7% · 3개월간</div></div>
+        <div class="chip"><div class="k">Valuation</div><div class="v">6.4x P/E</div><div class="s">trailing 12M 조정 EPS 기준</div></div>
       </div>
 
-      <!-- ===== 1. 투자 논지 ===== -->
-      <h3 class="sec" id="thesis"><span class="n">1</span>Overweight 개시 근거 — 5가지 축</h3>
+      <h3 class="sec"><span class="n">1</span>W40조 자사주 매입·소각 — 기다리던 corporate action이 예상보다 빨리 도착</h3>
       <ul class="pts">
-        <li><b>AI Trade는 아직 초기 국면</b> — hyperscale capex의 cyclical peak(혹은 2차 미분 둔화) 우려에도, AI 인프라 투자 사이클은 durable·elongated. Compute는 이미 sold out이며 Substrate·Wafer·Memory에 이어 Semi Equipment까지 공급 제약이 확산, 사이클이 <b>CY30까지</b> 이어질 수 있다는 판단</li>
-        <li><b>사이클이 더 강하고 더 길어진다</b> — 과거 upcycle은 4~8분기 downturn 이후 통상 5~10분기 지속. 현재는 downturn 조짐 없이 <b>12번째 분기</b>에 진입 중이며, LTA 도입이 가시성과 사이클 지속기간을 동시에 확장</li>
-        <li><b>구조적으로 더 이익률 높은 산업</b> — through-cycle 기준 지속가능 GM을 <b>~70%</b>로 상향 판단. 절제된 공급 증가, 수요 확대, price floor가 포함된 LTA의 3박자</li>
-        <li><b>HBM/DRAM 리더십 + NAND #2</b> — HBM 명확한 1위로 사실상 AI의 de facto leader. CY25 DRAM 1위(CY26에는 삼성에 밀려 #2 전망), NAND는 Solidigm 기반 데이터센터 SSD에서 선두권, 업계 최고 layer count 보유</li>
-        <li><b>미국 peer 대비 밸류에이션 매력</b> — ADR/국내 상장분이 Micron 대비 각각 <b>14%/36% 할인</b> 거래. "Korea discount"는 유효한 우려이나, one-way conversion cap이 ADR의 국내주 대비 프리미엄을 정당화. 목표주가는 KRX 대비 프리미엄, Micron 목표배수 대비 16% 할인 수준</li>
+        <li>8월 19일 장 마감 후, 향후 <b>3개월간 W40조 규모</b>의 자사주 매입·소각 계획을 공시 — 8월 19일 기준 <b>시가총액의 3.7%</b>, 2Q26 말 발행주식수의 <b>3.3%(24.07M주)</b>에 해당</li>
+        <li>아울러 25A-27E 누적 FCF의 <b>"50% 이상"</b>을 주주에게 배분하겠다고 공시 — 2024년 11월 27일 발표했던 "누적 FCF의 최대 50%(up to 50%)" 대비 의미 있는 step-up</li>
+        <li>향후 3년간 전례 없는 FCF 창출이 예상되는 만큼, 현금흐름·시장 여건·배당가능이익을 감안해 <b>자사주 취득·소각·배당을 조합한 추가 주주환원</b>을 추진할 계획이며, 상세 내용은 3Q26 실적발표에서 공유 예정</li>
+        <li>당초 예상 시점(9월 말)보다 훨씬 빠른 발표로, 이 선제적 corporate action이 단기 주가 심리를 부양할 것으로 기대 — 발표 시점이 임박했다는 기존 시각과도 부합</li>
       </ul>
 
-      <div class="callout"><span class="t">단기 체크포인트</span>강한 bullish 로드쇼 직후 June Q 실적이 miss로 나오면서, Micron 대비 premium multiple 부여에는 시간이 걸릴 전망. 다만 최근 한 달여간 메모리 주식이 ~50% 조정받으며 P/E가 low-single-digit까지 하락 — "이번엔 다른가"를 시장이 논쟁하는 국면인 만큼 변동성은 극도로 높게 유지될 것.</div>
-
-      <!-- ===== 2. 수급 ===== -->
-      <h3 class="sec" id="supply"><span class="n">2</span>DRAM·NAND 모두 CY29까지 공급 부족 지속</h3>
+      <h3 class="sec"><span class="n">2</span>W40조 buyback에 대한 평가 — 규모·강도 모두 역대급</h3>
       <ul class="pts">
-        <li>매출·마진·주가 모두 기록적 수준 도달 후 최근 한 달간 주가만 의미 있게 조정. 최근 실적 코멘터리는 매출/마진 확장과 대규모 FCF 창출을 계속 뒷받침</li>
-        <li>메모리·반도체가 더 이상 cyclical하지 않다는 주장은 아니나, 산업의 구조적 변화가 <b>upcycle 장기화</b>로 이어진다는 판단. post-Lehman 기준 upcycle 지속기간은 5~10분기였으나 현 사이클은 <b>10분기 이상</b> 진행 중이며 아직 여력 존재</li>
-        <li>higher highs / higher lows, 변동성 완화, 수익성·가시성 개선이 특징. 배경은 ① 더 통합되고 절제된 플레이어 구성, ② 부채를 상환·축소하며 수십억 달러 FCF를 창출하는 재무구조</li>
-        <li><b>CY27 sufficiency ratio가 CY26 대비 악화</b>, CY28에 소폭 완화 전망. CY27/CY28 수요 증가율 <b>DRAM 30%+ / NAND 25%+</b>에 대해 공급 증가는 high-teens%~low-20%에 그침</li>
+        <li>이번 매입·소각은 <b>한국 상장사 역사상 최대 규모</b>이며, 최근 동종 메모리 업체 Kioxia가 발표한 자사주 매입 대비로도 상대적으로 큰 수준</li>
+        <li>미화 기준 <b>US$28.9bn</b>의 자사주 매입은 7월 초 미국에서 ADR로 조달한 <b>~US$26.5bn</b>을 상회하는 규모</li>
+        <li>W40조는 trailing 12M 기준 <b>FCF(OCF - Capex)의 63%</b>에 해당 — 기존 "50% 미만" FCF payout 정책을 상회</li>
+        <li>현재 밸류에이션은 <b>trailing 12M 조정 EPS 기준 6.4x P/E</b>, <b>1H26 연환산 조정 EPS 기준 3.8x P/E</b> — 이 수준의 P/E가 경영진이 buyback 집행을 고려하는 밸류에이션 벤치마크가 될 수 있다는 판단</li>
+      </ul>
+
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>규모 비교 항목</th><th>수치</th><th>비고</th></tr></thead>
+        <tbody>
+          <tr><td><b>Buyback 총액</b></td><td class="num">W40조 (US$28.9bn)</td><td>3개월간 매입 후 소각</td></tr>
+          <tr><td><b>시가총액 대비</b></td><td class="num">3.7%</td><td>8/19 종가 기준</td></tr>
+          <tr><td><b>발행주식수 대비</b></td><td class="num">3.3% (24.07M주)</td><td>2Q26 말 기준</td></tr>
+          <tr><td><b>Trailing 12M FCF 대비</b></td><td class="num">63%</td><td>기존 &lt;50% payout 정책 상회</td></tr>
+          <tr><td><b>ADR 조달액 대비</b></td><td class="num">US$28.9bn vs ~US$26.5bn</td><td>7월 초 미국 ADR 조달액 상회</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3 class="sec"><span class="n">3</span>핵심 시사점 — 주주환원 "상한"이 "하한"으로</h3>
+      <ul class="pts">
+        <li>이번 발표의 핵심은 주주환원 한도가 <b>"누적 FCF의 50% 미만" → "50% 이상"으로 상향(ceiling 해제)</b>된 것 — 전통적 주주환원 정책 대비 의미 있는 step-up</li>
+        <li>일부 투자자는 초과현금 100% 환원을 제시한 미국 메모리 peer 대비 여전히 보수적이라고 지적하나(다만 초과현금의 정의는 불명확), 최근 <b>8개월간 총 39.4mn주 소각</b>(2026년 2월 발표 15.3mn주 + 이번 24.07mn주 매입·소각)을 약속한 것은 <b>메모리 peer 중 가장 공격적</b>인 행보로 평가</li>
+        <li>경영진은 <b>비영업 이익(Kioxia 지분 매각, M&A 관련 현금 유출, 임직원 보너스용 자사주 매입)을 FCF 산정에서 제외</b>한다고 부연 — 주주환원 정책을 전면 개편·개선하겠다는 명확한 신호</li>
+        <li>향후 주주환원에서 배당보다 <b>자사주 매입에 더 높은 비중</b>을 둘 것으로 예상</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">4</span>3Q26 실적발표 때 나올 다음 주주환원 정책 업데이트는?</h3>
+      <ul class="pts">
+        <li>향후 3년간(FY26E-28E) <b>W800조 이상</b>의 기록적인 FCF 창출이 예상되는 만큼, 이번 발표는 시장에 긍정적으로 소화될 전망</li>
+        <li>투자자 관심은 <b>3Q26 실적발표(10월 말)의 차기 주주환원 정책 업데이트</b>로 이동할 것 — 자사주 취득·소각·배당의 조합이 예상되며, 정책이 2025~2027년을 대상으로 하는 만큼 <b>특별배당(special dividends)</b>에 무게</li>
+        <li>8월 발표 추정 기준 25A-27E 누적 FCF는 <b>W475조</b>로 전망 — 여기서 이번 W40조 매입·소각, 25A-26E 최소 배당 W4조, 2026년 2월 발표된 W12조 소각을 차감하면 FY27E까지 <b>최소 W180조의 추가 주주환원</b> 여력 (현 시가총액의 16% 이상)</li>
+        <li>자본배분(capital allocation)과 자본집약도(capital intensity) 목표를 포함한 새로운 <b>value-up 전략</b>도 검토 중인 것으로 판단 — 3Q26 실적(10월 말)의 신규 주주환원 정책 발표 이후 다음 핵심 관전 포인트</li>
+      </ul>
+
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>추가 주주환원 여력 산정 (FY27E까지)</th><th>금액</th></tr></thead>
+        <tbody>
+          <tr><td><b>25A-27E 누적 FCF 전망</b></td><td class="num">W475조</td></tr>
+          <tr><td>환원 재원 (50% 이상 기준)</td><td class="num">W237.5조+</td></tr>
+          <tr><td>(-) 이번 buyback·소각</td><td class="num">W40조</td></tr>
+          <tr><td>(-) 25A-26E 최소 배당</td><td class="num">W4조</td></tr>
+          <tr><td>(-) Feb-26 발표 자사주 소각</td><td class="num">W12조</td></tr>
+          <tr><td class="buy"><b>추가 주주환원 여력 (최소)</b></td><td class="num buy">W180조+ (시총의 16%+)</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="callout"><span class="t">주목</span>이번 발표로 주주환원의 "상한(최대 50%)"이 "하한(50% 이상)"으로 바뀌었다는 점이 가장 중요한 변화 — 리포트는 최악 국면은 지났다고 보고, 중기 관점에서 주가 심리의 점진적 개선을 예상하며 accumulate를 권고.</div>
+
+      <h3 class="sec"><span class="n">5</span>주가 진단 & 다음 catalysts</h3>
+      <ul class="pts">
+        <li>6월 22일 고점 이후 2개월간 주가는 <b>-49%</b> 급락 — 같은 기간 메모리 peers <b>-26%</b>, KOSPI <b>-29%</b> 대비 큰 폭의 underperform</li>
+        <li>하락 배경: <b>AI Capex 지속가능성 우려, 오픈소스 모델 확산</b> 등 복합 요인에 <b>2Q26 실적 miss</b>가 겹치며 매도 압력 심화</li>
+        <li>진전된 주주환원 발표와 3Q26 실적발표에서의 상세 공개를 계기로, 투자자 관심은 <b>본업(2027년 DRAM/NAND 수익성 및 HBM 점유율 dynamics)</b>으로 회귀할 전망</li>
       </ul>
 
       <div class="chart-card">
-        <div class="ct">메모리 수급 — bit growth (% YoY), CY25–CY28E</div>
-        <div class="legend">
-          <span><i style="background:#2c5a8f"></i>Supply</span>
-          <span><i style="background:#c0392b"></i>Demand</span>
-          <span style="color:#9aa3b2">점선 = 과거 평균(hist. norm)</span>
-        </div>
-        <svg viewBox="0 0 880 340" width="100%" role="img" aria-label="DRAM NAND 수급 bit growth 비교">
-          <text x="60" y="26" font-size="13" font-weight="700" fill="#12284c">DRAM</text>
-          <text x="500" y="26" font-size="13" font-weight="700" fill="#12284c">NAND flash</text>
-          <text x="60" y="44" font-size="10.5" fill="#8a93a3">HBM 전환으로 conventional 공급 잠식</text>
-          <text x="500" y="44" font-size="10.5" fill="#8a93a3">DRAM 전환 + enterprise SSD 수요 급증</text>
+        <div class="ct">6월 22일 고점 이후 2개월 수익률 비교 (%)</div>
+        <svg viewBox="0 0 880 300" width="100%">
+          <line x1="70" y1="50" x2="850" y2="50" stroke="#eef1f6"/>
+          <text x="60" y="54" font-size="11" fill="#9aa3b2" text-anchor="end">0%</text>
+          <line x1="70" y1="120" x2="850" y2="120" stroke="#eef1f6"/>
+          <text x="60" y="124" font-size="11" fill="#9aa3b2" text-anchor="end">-20%</text>
+          <line x1="70" y1="190" x2="850" y2="190" stroke="#eef1f6"/>
+          <text x="60" y="194" font-size="11" fill="#9aa3b2" text-anchor="end">-40%</text>
+          <line x1="70" y1="260" x2="850" y2="260" stroke="#eef1f6"/>
+          <text x="60" y="264" font-size="11" fill="#9aa3b2" text-anchor="end">-60%</text>
+          <line x1="70" y1="50" x2="850" y2="50" stroke="#cfd6e0"/>
 
-          <!-- grid left -->
-          <g stroke="#e6ebf2">
-            <line x1="60" y1="280" x2="440" y2="280"/>
-            <line x1="60" y1="248" x2="440" y2="248"/>
-            <line x1="60" y1="217" x2="440" y2="217"/>
-            <line x1="60" y1="185" x2="440" y2="185"/>
-            <line x1="60" y1="154" x2="440" y2="154"/>
-            <line x1="60" y1="122" x2="440" y2="122"/>
-            <line x1="60" y1="91" x2="440" y2="91"/>
-            <line x1="60" y1="60" x2="440" y2="60"/>
-          </g>
-          <g fill="#9aa3b2" font-size="10">
-            <text x="34" y="284">0%</text><text x="30" y="252">5%</text><text x="26" y="221">10%</text>
-            <text x="26" y="189">15%</text><text x="26" y="158">20%</text><text x="26" y="126">25%</text>
-            <text x="26" y="95">30%</text><text x="26" y="64">35%</text>
-          </g>
-          <line x1="60" y1="129" x2="440" y2="129" stroke="#9aa3b2" stroke-dasharray="5 4"/>
-          <text x="152" y="124" font-size="10" font-weight="700" fill="#6b7280">hist. norm</text>
+          <rect x="150" y="50" width="130" height="171.5" fill="#5c1a26" rx="3"/>
+          <text x="215" y="240" font-size="13" fill="#1b1e24" text-anchor="middle" font-weight="700">SK하이닉스</text>
+          <text x="215" y="212" font-size="14" fill="#fff" text-anchor="middle" font-weight="700">-49%</text>
 
-          <!-- DRAM bars: supply then demand -->
-          <g>
-            <rect x="82" y="154" width="28" height="126" fill="#2c5a8f"/><rect x="112" y="129" width="28" height="151" fill="#c0392b"/>
-            <text x="86" y="149" font-size="10.5" font-weight="700" fill="#2c5a8f">20%</text><text x="116" y="124" font-size="10.5" font-weight="700" fill="#c0392b">24%</text>
-            <text x="96" y="296" font-size="10.5" fill="#525866" text-anchor="middle">CY25</text>
-            <text x="176" y="296" font-size="10.5" fill="#525866" text-anchor="middle">CY26E</text>
-            <text x="256" y="296" font-size="10.5" fill="#525866" text-anchor="middle">CY27E</text>
-            <text x="336" y="296" font-size="10.5" fill="#525866" text-anchor="middle">CY28E</text>
+          <rect x="390" y="50" width="130" height="91" fill="#3d5a80" rx="3"/>
+          <text x="455" y="240" font-size="13" fill="#1b1e24" text-anchor="middle" font-weight="700">메모리 Peers</text>
+          <text x="455" y="131" font-size="14" fill="#fff" text-anchor="middle" font-weight="700">-26%</text>
 
-            <rect x="162" y="148" width="28" height="132" fill="#2c5a8f"/><rect x="192" y="117" width="28" height="163" fill="#c0392b"/>
-            <text x="166" y="143" font-size="10.5" font-weight="700" fill="#2c5a8f">21%</text><text x="196" y="112" font-size="10.5" font-weight="700" fill="#c0392b">26%</text>
-
-            <rect x="242" y="167" width="28" height="113" fill="#2c5a8f"/><rect x="272" y="91" width="28" height="189" fill="#c0392b"/>
-            <text x="246" y="162" font-size="10.5" font-weight="700" fill="#2c5a8f">18%</text><text x="274" y="86" font-size="10.5" font-weight="700" fill="#c0392b">30%+</text>
-
-            <rect x="322" y="135" width="28" height="145" fill="#2c5a8f"/><rect x="352" y="91" width="28" height="189" fill="#c0392b"/>
-            <text x="326" y="130" font-size="10.5" font-weight="700" fill="#2c5a8f">23%</text><text x="354" y="86" font-size="10.5" font-weight="700" fill="#c0392b">30%+</text>
-          </g>
-          <g font-size="10" font-weight="700" fill="#c0392b">
-            <text x="110" y="172">4pp</text><text x="190" y="166">5pp</text><text x="270" y="184">12pp</text><text x="350" y="152">7pp</text>
-          </g>
-
-          <!-- grid right -->
-          <g stroke="#e6ebf2">
-            <line x1="500" y1="280" x2="860" y2="280"/>
-            <line x1="500" y1="248" x2="860" y2="248"/>
-            <line x1="500" y1="217" x2="860" y2="217"/>
-            <line x1="500" y1="185" x2="860" y2="185"/>
-            <line x1="500" y1="154" x2="860" y2="154"/>
-            <line x1="500" y1="122" x2="860" y2="122"/>
-            <line x1="500" y1="91" x2="860" y2="91"/>
-            <line x1="500" y1="60" x2="860" y2="60"/>
-          </g>
-          <line x1="500" y1="141" x2="860" y2="141" stroke="#9aa3b2" stroke-dasharray="5 4"/>
-          <text x="586" y="136" font-size="10" font-weight="700" fill="#6b7280">hist. norm</text>
-          <g>
-            <rect x="522" y="167" width="28" height="113" fill="#2c5a8f"/><rect x="552" y="141" width="28" height="139" fill="#c0392b"/>
-            <text x="526" y="162" font-size="10.5" font-weight="700" fill="#2c5a8f">18%</text><text x="556" y="136" font-size="10.5" font-weight="700" fill="#c0392b">22%</text>
-
-            <rect x="602" y="167" width="28" height="113" fill="#2c5a8f"/><rect x="632" y="141" width="28" height="139" fill="#c0392b"/>
-            <text x="606" y="162" font-size="10.5" font-weight="700" fill="#2c5a8f">18%</text><text x="636" y="136" font-size="10.5" font-weight="700" fill="#c0392b">22%</text>
-
-            <rect x="682" y="167" width="28" height="113" fill="#2c5a8f"/><rect x="712" y="122" width="28" height="158" fill="#c0392b"/>
-            <text x="686" y="162" font-size="10.5" font-weight="700" fill="#2c5a8f">18%</text><text x="714" y="117" font-size="10.5" font-weight="700" fill="#c0392b">25%+</text>
-
-            <rect x="762" y="167" width="28" height="113" fill="#2c5a8f"/><rect x="792" y="122" width="28" height="158" fill="#c0392b"/>
-            <text x="766" y="162" font-size="10.5" font-weight="700" fill="#2c5a8f">18%</text><text x="794" y="117" font-size="10.5" font-weight="700" fill="#c0392b">25%+</text>
-          </g>
-          <g fill="#525866" font-size="10.5" text-anchor="middle">
-            <text x="536" y="296">CY25</text><text x="616" y="296">CY26E</text><text x="696" y="296">CY27E</text><text x="776" y="296">CY28E</text>
-          </g>
-          <g font-size="10" font-weight="700" fill="#c0392b">
-            <text x="550" y="184">4pp</text><text x="630" y="184">4pp</text><text x="710" y="184">7pp</text><text x="790" y="184">7pp</text>
-          </g>
+          <rect x="630" y="50" width="130" height="101.5" fill="#8496ad" rx="3"/>
+          <text x="695" y="240" font-size="13" fill="#1b1e24" text-anchor="middle" font-weight="700">KOSPI</text>
+          <text x="695" y="141" font-size="14" fill="#fff" text-anchor="middle" font-weight="700">-29%</text>
         </svg>
-        <div class="chart-src">Source: FactSet</div>
-      </div>
-
-      <!-- ===== 3. 수요 ===== -->
-      <h3 class="sec" id="demand"><span class="n">3</span>수요 드라이버 — AI 인프라, 메모리 탑재량, agentic AI</h3>
-
-      <h4 class="sub">TAM 확대</h4>
-      <ul class="pts">
-        <li>7월말 AMD의 Advancing AI 행사에서 제시된 <b>2030년 $2T Compute TAM</b>(Data Center + Client &amp; Embedded), 2025년 $365B 대비 <b>5년 CAGR ~40%</b></li>
-        <li>이 중 AI accelerator(GPU + Custom Silicon) TAM <b>$1.4T</b>, Data Center CPU TAM <b>$220B</b></li>
-        <li>NVIDIA는 2030년 AI 인프라 지출 <b>$3–4T</b> 제시. 다만 이는 칩·네트워킹·건물·전력을 모두 포함하는 개념이어서, 메모리 산업 관점에서는 AMD 전망이 더 직접적 — DRAM/HBM 수요는 accelerator와 server CPU에 직결</li>
-      </ul>
-
-      <h4 class="sub">차세대 AI 아키텍처의 메모리 탑재량 급증</h4>
-      <ul class="pts">
-        <li>DRAM: 전통 enterprise 서버는 랙당 최대 1TB(통상 256–512GB) 수준. AI 랙은 DGX B300(8 GPU)의 DDR5 4TB, GB300 NVL72(72 GPU)의 LPDDR5X 17TB에서 <b>Vera Rubin NVL144의 LPDDR5X 54TB</b>로 확대</li>
-        <li>NAND: KV Cache용 NAND-heavy 서버라는 새로운 카테고리 등장. 범용 랙 SSD 50–150TB → NVL72 300–600TB → Vera Rubin <b>1PB+</b>, BlueField-4 STX 스토리지 아키텍처는 랙당 <b>~1.15PB</b></li>
-        <li>HBM: Rubin(R200)이 Blackwell Ultra와 동일 288GB로 예외적이나(HBM3E→HBM4 전환), 그 외 전 아키텍처가 세대당 두 자릿수~세 자릿수% 증가</li>
-      </ul>
-
-      <div class="tbl-wrap">
-      <table class="tbl">
-        <thead><tr><th>Data Center GPU</th><th>HBM Gen</th><th>HBM 용량</th><th>세대간 증가</th></tr></thead>
-        <tbody>
-          <tr><td>NVIDIA Blackwell</td><td>HBM3E</td><td class="num">196GB</td><td class="num">—</td></tr>
-          <tr><td>NVIDIA Blackwell Ultra (B300)</td><td>HBM3E</td><td class="num">288GB</td><td class="num pos">47%</td></tr>
-          <tr><td>NVIDIA Rubin (R200)</td><td>HBM4</td><td class="num">288GB</td><td class="num">0%</td></tr>
-          <tr><td>NVIDIA Rubin Ultra</td><td>HBM4E</td><td class="num">1,024GB</td><td class="num pos">256%</td></tr>
-          <tr><td>AMD MI325X-series</td><td>HBM3E</td><td class="num">256GB</td><td class="num">—</td></tr>
-          <tr><td>AMD MI350-series</td><td>HBM3E</td><td class="num">288GB</td><td class="num pos">13%</td></tr>
-          <tr><td>AMD MI400-series</td><td>HBM4</td><td class="num">432GB</td><td class="num pos">50%</td></tr>
-          <tr><td>AMD MI500-series</td><td>HBM4E</td><td class="num">1,024GB</td><td class="num pos">137%</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <div class="tbl-wrap" style="margin-top:14px;">
-      <table class="tbl">
-        <thead><tr><th>Custom Silicon</th><th>HBM Gen</th><th>HBM 용량</th><th>세대간 증가</th></tr></thead>
-        <tbody>
-          <tr><td>Google TPU v5e</td><td>HBM2E</td><td class="num">16GB</td><td class="num">—</td></tr>
-          <tr><td>Google TPU v5p</td><td>HBM2E</td><td class="num">96GB</td><td class="num">—</td></tr>
-          <tr><td>Google TPU v6e (Trillium)</td><td>HBM2E</td><td class="num">32GB</td><td class="num pos">100%</td></tr>
-          <tr><td>Google TPU v7 (Ironwood)</td><td>HBM3E</td><td class="num">192GB</td><td class="num pos">100%</td></tr>
-          <tr><td>Google TPU v8</td><td>HBM3E/HBM4</td><td class="num">288GB (est.)</td><td class="num pos">50%</td></tr>
-          <tr><td>AWS Trainium1</td><td>HBM2E</td><td class="num">32GB</td><td class="num">—</td></tr>
-          <tr><td>AWS Trainium2</td><td>HBM3</td><td class="num">96GB</td><td class="num pos">200%</td></tr>
-          <tr><td>AWS Trainium3</td><td>HBM3E</td><td class="num">144GB</td><td class="num pos">50%</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <div class="tbl-note">Source: Company Reports</div>
-
-      <h4 class="sub">Agentic AI가 server CPU 수요를 끌어올린다</h4>
-      <ul class="pts">
-        <li>agentic AI 확산으로 <b>CPU-to-GPU ratio가 1:8에서 1:1, 일부 케이스는 2:1까지</b> 상승 전망 → 메모리 수요 가속. CPU는 orchestration, tool calling, retrieval, memory management 등에서 우위</li>
-        <li>server CPU 3대 영역: ① 전통 enterprise(유닛 flattish, ASP 소폭 상승으로 완만한 성장), ② GPU/XPU attach용 head node(단기 임팩트 최대 — 고주파수·고 single-thread 성능·저 core count·메모리 대역폭이 핵심), ③ agentic AI용 CPU-only 랙(AMD는 이 영역이 server CPU TAM의 <b>50%</b>까지 확대 가능하다고 언급)</li>
-        <li>결과적으로 CY27 이후 server DRAM 수요의 유의미한 증분 동인</li>
-      </ul>
-
-      <h4 class="sub">모델 효율화 우려는 기우 — Jevons' Paradox</h4>
-      <ul class="pts">
-        <li>미국(OpenAI 등)과 중국(Moonshot AI Kimi K3, DeepSeek) 모델의 효율 개선으로 hyperscaler·neocloud·기업의 compute 수요가 줄어들 것이라는 우려 존재</li>
-        <li>Jevons' paradox 관점에서 저렴해진 AI와 높아진 효율은 오히려 <b>채택 확대와 총 compute/스토리지 수요 증가</b>로 귀결된다는 판단</li>
-      </ul>
-
-      <!-- ===== 4. 공급 제약 & LTA ===== -->
-      <h3 class="sec" id="lta"><span class="n">4</span>공급 제약 — 증설은 too little, too late / LTA의 게임체인지</h3>
-      <ul class="pts">
-        <li>직전 downturn은 역사상 최악 수준 — DRAM GM은 마이너스 두 자릿수%, NAND는 <b>-80%</b>까지 하락하며 업계 전반 현금 소진</li>
-        <li>이후 메이커들은 bit output을 "연간 성장 목표"가 아닌 <b>수요 전망 기반</b>으로 결정하는 구조적 변화. 과거 NAND bit 공급은 연 30–50%, DRAM은 20–30% 성장했으나 최근 <b>15–20%</b> 수준으로 축소</li>
-        <li>COVID 이후 수요 전망이 실제 AI 수요를 크게 과소추정하며 반복적 shortage 발생. LTA와 AI accelerator·server CPU 수요가 증설 확신을 높였으나, greenfield는 기획→shell→툴링→wafer out까지 수년 소요. 장비 리드타임을 감안한 pull-in은 통상 <b>3~4개월</b> 수준에 그침</li>
-        <li>결론: 메이커들의 대응은 too little, too late — <b>최소 CY29까지</b> 수급 불균형 지속</li>
-      </ul>
-
-      <h4 class="sub">LTA — 구조적 수익성의 축</h4>
-      <ul class="pts">
-        <li>과거 메모리 가격은 월·분기 단위 협상으로, 고객은 공급 예측 가능성을 이용해 구매를 최대한 지연시키는 gamesmanship이 상시화</li>
-        <li>2023/2024년 HBM을 기점으로 연간 협상 체제 전환, 전 메이커가 2024년 캐파 조기 sold out 발표. NVIDIA·Google 등 대형 고객이 예정 공급으로는 수요를 못 채운다고 인식한 결과</li>
-        <li>현재는 <b>수년치 물량 lock-in</b>, 볼륨·가격·pricing corridor·선수금·미이행 시 재무적 페널티까지 포함. 구조적 수익성 상승, 가시성 확대, 양측 계획 수립 개선으로 이어짐</li>
-        <li>잠재적 downside 2가지 — ① 가격이 계속 급등할 경우 고정가·corridor 계약이 <b>upside를 제한</b>, ② downcycle 진입 시 price floor·take-or-pay가 실제로 작동할지 불확실(과거 NCNR 사례처럼 재협상·무효화 가능성, 이 경우 장기 재고 소진 국면)</li>
-        <li>하이닉스는 LTA 관련 공개 정보가 경쟁사 대비 제한적이나 협상 진행 중이며 <b>3~5년 계약</b>으로 이동 추정. 7월 중 <b>price cap(corridor) 제거</b>로 가격 상승기 upside 확보 가능 — floor 잔존 여부는 불확실</li>
-      </ul>
-
-      <div class="tbl-wrap">
-      <table class="tbl">
-        <thead><tr><th>구분</th><th>SK Hynix</th><th>Micron</th><th>Samsung</th><th>SanDisk</th></tr></thead>
-        <tbody>
-          <tr><td><b>계약 기간</b></td><td>multi-year 이동 추정<br>(협상 진행 중)</td><td>최대 5년 take-or-pay</td><td>2~5년 LTA</td><td>5건 체결, 최장 5년</td></tr>
-          <tr><td><b>가격 cap/에스컬레이션</b></td><td>Jul-26 cap 제거 추정,<br>upside 확보</td><td>고정가 또는 corridor<br>(floor 기준 GM &gt;70% 추정)</td><td>협상 기반 가격 인상</td><td>고정 + 변동 혼합</td></tr>
-          <tr><td><b>선수금</b></td><td>할당 확보 위해 ~10–30%</td><td>~$22B+ 예치</td><td>HBM·DRAM 전반 ~10–30%</td><td>재무보증 $11B,<br>최소 계약매출 ~$42B</td></tr>
-          <tr><td><b>가격 철학</b></td><td>물량 확실성 + spot upside 포착</td><td>고객 측 가격/물량 확실성</td><td>기회주의적, 인상 지향</td><td>고객 측 가격/물량 확실성</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <div class="tbl-note">Source: Company Reports</div>
-
-      <h4 class="sub">OpenAI / Stargate MOU</h4>
-      <ul class="pts">
-        <li>2025년 10월 1일 OpenAI·삼성전자·SK하이닉스가 Stargate향 DRAM 공급 전략적 파트너십 발표. 2029년까지 증분 <b>~900k DRAM wspm</b> 램프 예상 — 현 글로벌 DRAM 캐파 ~2.2M wspm의 <b>~40%</b>에 해당</li>
-        <li>다만 non-binding LOI이며 Stargate의 자금 조달 능력 등 실행력에 대한 검증이 진행 중이어서 계획 대비 실제 편차는 클 것으로 예상. 그럼에도 수요 둔화가 없다는 시그널로 CY29까지의 수급 불균형 논지를 보강</li>
-      </ul>
-
-      <h4 class="sub">HBM trade ratio 확대가 전 제품 타이트니스를 심화</h4>
-      <ul class="pts">
-        <li>HBM trade ratio는 통상 <b>3:1</b>로 인용 — 동일 bit의 DDR5를 얻는 데 필요한 웨이퍼 배수. TSV 추가에 따른 패키지 수율 저하, stack 수 증가(16-high에서 1개 die 결함 시 16개 전량 폐기), base logic die 난이도가 원인</li>
-        <li>HBM die는 TSV로 인해 전통 DDR5 die 대비 <b>약 2배 크기</b>. 세대가 올라갈수록 복잡도가 상승하며 trade ratio는 <b>4:1~5:1 이상</b>으로 확대 전망</li>
-        <li>HBM 투자 집중이 전통 DRAM·NAND의 <b>과소투자</b>를 유발, 전 제품군 가격 급등의 핵심 배경. 실제로 D5 GM이 agentic AI향 서버 수요 급증으로 HBM GM을 상회 중(향후 HBM 연간 협상에서 격차 축소 전망)</li>
-        <li>greenfield 램프 제약: EUV 툴 리드타임 최대 <b>24개월</b>, 웨이퍼 사이클 타임 DRAM/NAND 2–3개월·HBM 5개월+</li>
-      </ul>
-
-      <!-- ===== 5. 기술 리더십 ===== -->
-      <h3 class="sec" id="tech"><span class="n">5</span>기술 로드맵 &amp; 경쟁 포지션</h3>
-      <ul class="pts">
-        <li>3대 DRAM·6대 NAND 메이커 중 <b>AI 빌드아웃에 가장 잘 포지셔닝된 메모리 공급사</b>. HBM 명확한 1위, HBM 포함 전체 DRAM에서 근소 우위(삼성 근접 #2), NAND #2</li>
-        <li>매출 믹스(2025): DRAM <b>77%</b> / NAND 21% / 기타 2%. 전방 시장 기준 Data Center·Server <b>62%</b> / Mobile 17% / PC 13% / Graphics·Consumer·Auto·Industrial 8%</li>
-      </ul>
-
-      <h4 class="sub">HBM — 압도적 점유율, MR-MUF가 차별화 요인</h4>
-      <ul class="pts">
-        <li>2013년 AMD와 공동 개발로 HBM 표준화, 2015년 AMD GPU에 최초 상용화. HBM3·HBM3E·HBM4 전 AI 세대에서 first-to-market 유지</li>
-        <li>2025년 HBM <b>매출 점유율 ~64%</b>(삼성 19%, Micron 17%). bit 기준으로는 12-high HBM3E 믹스가 풍부해 다소 낮은 <b>59%</b>(삼성 21%, Micron 20%). NVIDIA 내 점유율은 2025년 ~70–80% 추정</li>
-        <li>향후 삼성이 NVIDIA 내 침투를 늘리며 하이닉스 점유율을 상당 부분 회수, Micron은 low-20% 대에서 유지·성장 전망</li>
-        <li>CXMT는 2027년 HBM 출하 시작 전망이나 HBM3/HBM3E급으로 수 세대 뒤처져 있어 연말까지 <b>LSD% 점유율</b>에 그칠 것</li>
-        <li><b>MR-MUF</b>(Mass Reflow–Molded UnderFill): 전 die를 mass-reflow로 일괄 접합 후 액상 에폭시 몰딩. 삼성·Micron이 쓰는 TC-NCF 대비 ① 열전도 필러·thermal dummy bump 확대로 <b>방열 우수</b>, ② 고압 공정 부재로 warpage·die 손상 감소해 <b>수율 우위</b>, ③ 고단 적층 용이(JEDEC 높이 규격 16-high 30µm vs 12-high 50µm), ④ 일괄 접합으로 <b>throughput 우수</b></li>
-        <li>다만 16-high 구간에서 die-to-die gap이 5µm로 축소되면 TC-NCF의 정밀도·필름 두께 제어가 molded underfill 대비 유리해질 수 있다는 논쟁 존재. TC-NCF는 미세 피치 제어와 성숙도 측면 강점(하이닉스도 HBM1/HBM2에서 사용)</li>
-        <li><b>Hybrid bonding은 2029년+ (HBM5)</b>: JEDEC이 높이 규격을 775µm로 완화(HBM3E는 ~720µm)하면서 HBM4E까지는 기존 방식 유지 가능해짐. HBM5 기준(현 900µm→1,000µm 완화 논의)에 따라 micro bumping이 더 연장될 여지도 존재. 하이닉스는 hybrid-bonded 12-high 검증을 완료했으나 당분간 advanced MR-MUF를 주력으로 유지 전망</li>
-        <li>로드맵: HBM4 16-high는 12-high 대비 용량이 <b>36GB→48GB</b>로 증가(고단·박막화로 수율 하락 가능), HBM4E(2028년)는 customizable base die 도입 및 stack당 최대 <b>64GB</b>, HBM5(2029년)는 인터페이스 폭이 <b>4,096bit</b>로 2배 확대되며 대역폭 <b>~4TB/s</b>(HBM4E 2.5–3.3TB/s), 용량 80GB/stack. on-stack cache와 CXL/memory pooling 추가 가능성</li>
-      </ul>
-
-      <div class="chart-card">
-        <div class="ct">HBM 매출 점유율 추이 및 전망 (2023–2030E)</div>
-        <div class="legend">
-          <span><i style="background:#c0392b"></i>SK Hynix</span>
-          <span><i style="background:#2c5a8f"></i>Samsung</span>
-          <span><i style="background:#3f9c5a"></i>Micron</span>
-          <span><i style="background:#b6bec9"></i>CXMT</span>
-        </div>
-        <svg viewBox="0 0 880 320" width="100%" role="img" aria-label="HBM 매출 점유율 스택 막대">
-          <g stroke="#e6ebf2">
-            <line x1="60" y1="270" x2="860" y2="270"/><line x1="60" y1="226" x2="860" y2="226"/>
-            <line x1="60" y1="182" x2="860" y2="182"/><line x1="60" y1="138" x2="860" y2="138"/>
-            <line x1="60" y1="94" x2="860" y2="94"/><line x1="60" y1="50" x2="860" y2="50"/>
-          </g>
-          <g fill="#9aa3b2" font-size="10">
-            <text x="28" y="274">0%</text><text x="22" y="230">20%</text><text x="22" y="186">40%</text>
-            <text x="22" y="142">60%</text><text x="22" y="98">80%</text><text x="18" y="54">100%</text>
-          </g>
-
-          <!-- 2023: 53/45/2/0 -->
-          <rect x="76" y="153.4" width="62" height="116.6" fill="#c0392b"/>
-          <rect x="76" y="54.4" width="62" height="99" fill="#2c5a8f"/>
-          <rect x="76" y="50" width="62" height="4.4" fill="#3f9c5a"/>
-          <text x="107" y="216" font-size="11" font-weight="700" fill="#fff" text-anchor="middle">53%</text>
-          <text x="107" y="108" font-size="11" font-weight="700" fill="#fff" text-anchor="middle">45%</text>
-          <text x="107" y="286" font-size="10.5" fill="#525866" text-anchor="middle">2023</text>
-
-          <!-- 2024: 54/39/7/0 -->
-          <rect x="174" y="151.2" width="62" height="118.8" fill="#c0392b"/>
-          <rect x="174" y="65.4" width="62" height="85.8" fill="#2c5a8f"/>
-          <rect x="174" y="50" width="62" height="15.4" fill="#3f9c5a"/>
-          <text x="205" y="216" font-size="11" font-weight="700" fill="#fff" text-anchor="middle">54%</text>
-          <text x="205" y="113" font-size="11" font-weight="700" fill="#fff" text-anchor="middle">39%</text>
-          <text x="205" y="62" font-size="10" font-weight="700" fill="#fff" text-anchor="middle">7%</text>
-          <text x="205" y="286" font-size="10.5" fill="#525866" text-anchor="middle">2024</text>
-
-          <!-- 2025: 64/19/17/0 -->
-          <rect x="272" y="129.2" width="62" height="140.8" fill="#c0392b"/>
-          <rect x="272" y="87.4" width="62" height="41.8" fill="#2c5a8f"/>
-          <rect x="272" y="50" width="62" height="37.4" fill="#3f9c5a"/>
-          <text x="303" y="205" font-size="11" font-weight="700" fill="#fff" text-anchor="middle">64%</text>
-          <text x="303" y="112" font-size="11" font-weight="700" fill="#fff" text-anchor="middle">19%</text>
-          <text x="303" y="73" font-size="10.5" font-weight="700" fill="#fff" text-anchor="middle">17%</text>
-          <text x="303" y="286" font-size="10.5" fill="#525866" text-anchor="middle">2025</text>
-
-          <!-- 2026E: 54/27/19/0 -->
-          <rect x="370" y="151.2" width="62" height="118.8" fill="#c0392b"/>
-          <rect x="370" y="91.8" width="62" height="59.4" fill="#2c5a8f"/>
-          <rect x="370" y="50" width="62" height="41.8" fill="#3f9c5a"/>
-          <text x="401" y="216" font-size="11" font-weight="700" fill="#fff" text-anchor="middle">54%</text>
-          <text x="401" y="126" font-size="11" font-weight="700" fill="#fff" text-anchor="middle">27%</text>
-          <text x="401" y="75" font-size="10.5" font-weight="700" fill="#fff" text-anchor="middle">19%</text>
-          <text x="401" y="286" font-size="10.5" fill="#525866" text-anchor="middle">2026E</text>
-
-          <!-- 2027E: 50/28/21/1 -->
-          <rect x="468" y="160" width="62" height="110" fill="#c0392b"/>
-          <rect x="468" y="98.4" width="62" height="61.6" fill="#2c5a8f"/>
-          <rect x="468" y="52.2" width="62" height="46.2" fill="#3f9c5a"/>
-          <rect x="468" y="50" width="62" height="2.2" fill="#b6bec9"/>
-          <text x="499" y="220" font-size="11" font-weight="700" fill="#fff" text-anchor="middle">50%</text>
-          <text x="499" y="133" font-size="11" font-weight="700" fill="#fff" text-anchor="middle">28%</text>
-          <text x="499" y="80" font-size="10.5" font-weight="700" fill="#fff" text-anchor="middle">21%</text>
-          <text x="499" y="286" font-size="10.5" fill="#525866" text-anchor="middle">2027E</text>
-
-          <!-- 2028E: 47/29/22/2 -->
-          <rect x="566" y="166.6" width="62" height="103.4" fill="#c0392b"/>
-          <rect x="566" y="102.8" width="62" height="63.8" fill="#2c5a8f"/>
-          <rect x="566" y="54.4" width="62" height="48.4" fill="#3f9c5a"/>
-          <rect x="566" y="50" width="62" height="4.4" fill="#b6bec9"/>
-          <text x="597" y="223" font-size="11" font-weight="700" fill="#fff" text-anchor="middle">47%</text>
-          <text x="597" y="139" font-size="11" font-weight="700" fill="#fff" text-anchor="middle">29%</text>
-          <text x="597" y="84" font-size="10.5" font-weight="700" fill="#fff" text-anchor="middle">22%</text>
-          <text x="597" y="286" font-size="10.5" fill="#525866" text-anchor="middle">2028E</text>
-
-          <!-- 2029E: 45/29/23/3 -->
-          <rect x="664" y="171" width="62" height="99" fill="#c0392b"/>
-          <rect x="664" y="107.2" width="62" height="63.8" fill="#2c5a8f"/>
-          <rect x="664" y="56.6" width="62" height="50.6" fill="#3f9c5a"/>
-          <rect x="664" y="50" width="62" height="6.6" fill="#b6bec9"/>
-          <text x="695" y="225" font-size="11" font-weight="700" fill="#fff" text-anchor="middle">45%</text>
-          <text x="695" y="143" font-size="11" font-weight="700" fill="#fff" text-anchor="middle">29%</text>
-          <text x="695" y="87" font-size="10.5" font-weight="700" fill="#fff" text-anchor="middle">23%</text>
-          <text x="695" y="286" font-size="10.5" fill="#525866" text-anchor="middle">2029E</text>
-
-          <!-- 2030E: 43/30/23/4 -->
-          <rect x="762" y="175.4" width="62" height="94.6" fill="#c0392b"/>
-          <rect x="762" y="109.4" width="62" height="66" fill="#2c5a8f"/>
-          <rect x="762" y="58.8" width="62" height="50.6" fill="#3f9c5a"/>
-          <rect x="762" y="50" width="62" height="8.8" fill="#b6bec9"/>
-          <text x="793" y="228" font-size="11" font-weight="700" fill="#fff" text-anchor="middle">43%</text>
-          <text x="793" y="147" font-size="11" font-weight="700" fill="#fff" text-anchor="middle">30%</text>
-          <text x="793" y="89" font-size="10.5" font-weight="700" fill="#fff" text-anchor="middle">23%</text>
-          <text x="793" y="286" font-size="10.5" fill="#525866" text-anchor="middle">2030E</text>
-        </svg>
-        <div class="chart-src">Source: Company Reports, IDC, TrendForce</div>
-      </div>
-
-      <h4 class="sub">전통 DRAM — 선단 노드 선행, EUV 리더십</h4>
-      <ul class="pts">
-        <li>2025년 DRAM 매출 점유율 <b>하이닉스 35%</b>(HBM 포함 기준, 전통 DRAM만 보면 #2) / 삼성 34% / Micron 24% / 기타 7%. 삼성이 전통 DRAM 익스포저가 커 CY26에는 선두 탈환 가능</li>
-        <li>서버(RDIMM·MRDIMM·LRDIMM·SOCAMM2)·PC(UDIMM·SODIMM·LPCAMM2) 모듈까지 포괄하는 광범위 포트폴리오</li>
-        <li><b>1c 최초 개발</b>, 2025년 2월 양산 개시(Micron 초도 출하와 동시기, 삼성 2H26 양산 대비 크게 선행). 1d·0a는 전 메이커가 mid-CY28 및 CY30 시점에 유사하게 양산 예상</li>
-        <li>AI DRAM 전 영역 커버 — server DDR5, LPDDR5X, SOCAMM2(Vera Rubin 채택), CXL memory, GDDR7. DRAM 계층 전반의 full-stack 솔루션 보유</li>
-        <li>EUV: 삼성이 1z에서 최초 도입했으나 <b>EUV 양산은 하이닉스가 1a 노드로 mid-CY21 최초</b>. M16 팹에 <b>production-class High-NA EUV</b> 최초 설치 — NA 0.33→0.55(+40%)로 트랜지스터 1.7배 축소, 밀도 2.9배 향상. 1d에서 1~2개 레이어 제한 적용 후 0a에서 본격 사용 전망</li>
-      </ul>
-
-      <h4 class="sub">NAND — eSSD 강점과 Solidigm 이슈</h4>
-      <ul class="pts">
-        <li>2025년 NAND 매출 점유율 <b>하이닉스 21%</b>로 #2(삼성 32%), 이어 Kioxia 15%, Micron 14%, SanDisk 12%, 기타 6%</li>
-        <li>CY25 종료 시점 <b>eSSD 점유율 ~30%</b>로 전체 NAND 점유율을 크게 상회. 2025년 <b>QLC eSSD 점유율 50% 이상</b> — AI inference·training 데이터 레이크, 벡터 DB/RAG store 등 read-intensive 워크로드에 최적. 2H26 <b>321L QLC</b> 출시로 격차 확대 목표</li>
-        <li>업계 최고 layer count — V9 <b>321단</b>(삼성 V9 286단, Micron G9 276단, Kioxia/SanDisk BiCS8 218단·BiCS10 332단 샘플링 중). PUC(4D NAND) 구조에서 V10부터 hybrid bonding 전환 예상</li>
-        <li><b>"Three Plugs"</b> 공정 — 수직 채널을 3회 분할 식각·증착. 낮은 aspect ratio로 채널홀 균일도·수율 개선 및 고단 적층 가능, 다만 공정 스텝 증가로 원가·사이클 타임 부담</li>
-        <li>SanDisk와 <b>HBF(High Bandwidth Flash)</b> 표준화 협업 — 긴 컨텍스트 윈도우, 대규모 벡터 추론, HBM에 담기지 않는 대형 모델의 로컬 서빙용 고용량 솔루션</li>
-        <li><b>Solidigm</b>: 2020년 10월 Intel NAND/SSD 사업(NSG) $9B 인수. 2022–2023 downturn 중 마진 압박·현금 소진(~$3–5B 추정)이 있었으나 이후 고용량 eSSD 리더십과 상당한 자본이득으로 회수. 리스크는 중국 Dalian 생산 자산과 기술 통합</li>
-        <li><b>Charge trap / Floating gate 이슈</b>: 업계는 charge trap으로 수렴했으나 Solidigm만 floating gate 잔존(Micron은 2020년 전환). floating gate는 QLC용 전압 제어·신뢰성에 유리하나 수직 확장성이 열위. Solidigm의 floating-gate NAND가 미국 수출통제로 장비 업그레이드가 제한된 Dalian 팹에서 생산된다는 점이 전환 판단을 복잡하게 만듦</li>
-      </ul>
-
-      <!-- ===== 6. 생산거점 ===== -->
-      <h3 class="sec" id="fab"><span class="n">6</span>생산 거점 &amp; 증설 계획</h3>
-      <ul class="pts">
-        <li>생산거점 5곳(전부 아시아, 일부 복수 팹), R&amp;D 5곳(아시아 3·미국 1·유럽 1), 영업사무소 22곳(아시아 13·미국 4·유럽 5)</li>
-        <li>DRAM: 이천 <b>M10/M14/M16</b> 3개 전공정 팹, 이천 단지 합산 <b>~180–210k wspm</b> 추정. 청주 <b>M15X</b>는 2026년 초 램프 개시, CY26 말 ~50k wspm → 2027년 70–100k wspm</li>
-        <li>중국 <b>우시</b>가 최대 DRAM 팹(~180–200k wspm)이나 무역 제한으로 증설 불가·<b>1a-nm 노드 제한</b>. 다만 1a는 DDR5(commodity server/PC), LPDDR5, mainstream GDDR6, DDR4 전반에 적용되므로 제약은 최선단 D5/LP6/GDDR7에 국한</li>
-        <li>NAND: 청주 <b>M11/M12/M15</b> 합산 90–100k wspm. 중국 <b>Dalian</b>(Solidigm 인수분) 현 가동 50–70k wspm(설치 캐파는 &gt;100k wspm) — 우시와 동일하게 증설·노드 업그레이드 제한</li>
-        <li>후공정: HBM 백엔드는 청주 <b>P&amp;T3</b>, 중국 <b>충칭</b>은 conventional DRAM/NAND 담당</li>
-      </ul>
-
-      <div class="tbl-wrap">
-      <table class="tbl">
-        <thead><tr><th>사이트</th><th>지역</th><th>제품 / 단계</th><th>Wafer starts (추정)</th><th>비고</th></tr></thead>
-        <tbody>
-          <tr><td><b>이천 M10</b></td><td>이천</td><td>DRAM(legacy)/CIS · FE</td><td class="num">~20K</td><td>최고참 팹, 일부 이미지센서 전환</td></tr>
-          <tr><td><b>이천 M14</b></td><td>이천</td><td>DRAM · FE</td><td class="num">~70–90K</td><td>주력 DRAM 전공정</td></tr>
-          <tr><td><b>이천 M16</b></td><td>이천</td><td>DRAM(선단)+HBM · FE</td><td class="num">~90–100K</td><td>최대·플래그십, EUV(1a/1b/1c), HBM base die</td></tr>
-          <tr><td><b>청주 M11/M12/M15</b></td><td>청주</td><td>NAND · FE</td><td class="num">~90–100K</td><td>국내 NAND 핵심 거점(M15 최대)</td></tr>
-          <tr><td><b>청주 M17 (신규)</b></td><td>청주</td><td>NAND · FE</td><td class="num">~2029</td><td>~₩80조(청주 ₩100조 계획 중), AI 스토리지/QLC 대응</td></tr>
-          <tr><td><b>청주 M15X</b></td><td>청주</td><td>DRAM/HBM(1b) · FE</td><td class="num">~10K→50K+ (’26말)<br>85–100K (’27)</td><td>Feb-2026 가동 개시 확인</td></tr>
-          <tr><td><b>청주 P&amp;T3</b></td><td>청주</td><td>HBM 패키징 · BE</td><td class="num">가동 중</td><td>MR-MUF 스태킹, TSV, KGD 테스트</td></tr>
-          <tr><td><b>청주 P&amp;T7 (신규)</b></td><td>청주</td><td>HBM 패키징 · BE</td><td class="num">—</td><td>~₩19조(~$12.9B), Apr-26→’27말 완공</td></tr>
-          <tr><td><b>용인 반도체 클러스터</b></td><td>용인</td><td>DRAM(HBM4/4E 중심) · FE</td><td class="num">+~360K wspm</td><td>Fab1 ~₩31조, 클린룸 Feb-27로 pull-in, 2030–31 ~1M wspm</td></tr>
-          <tr><td><b>우시</b></td><td>중국 장쑤</td><td>DRAM(1a nm) · FE</td><td class="num">~180–200K<br>(전사 30–36%)</td><td>수출 라이선스상 유지보수 수준 cap</td></tr>
-          <tr><td><b>Dalian</b></td><td>중국 랴오닝</td><td>NAND/eSSD · FE</td><td class="num">~50–70K 가동<br>(설치 ~95–120K)</td><td>구 Intel 팹(2020–21 인수), 통제로 설치 캐파 미달 가동</td></tr>
-          <tr><td><b>충칭</b></td><td>중국</td><td>후공정 조립/테스트</td><td class="num">—</td><td>commodity DRAM/NAND A&amp;T</td></tr>
-          <tr><td><b>West Lafayette</b></td><td>미국 인디애나</td><td>Advanced packaging · BE</td><td class="num">—</td><td>~$3.9B(US CHIPS Act ~$450M 포함), 2H28 착수</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <div class="tbl-note">Source: Company Reports</div>
-
-      <h4 class="sub">업계 증설 — 대규모 greenfield는 2029년에나 bit 기여</h4>
-      <ul class="pts">
-        <li><b>하이닉스</b>: M15X 램프를 ~4개월 pull-in(bit output 2026년 2월 개시), 용인 Fab1 장비 반입도 ~3개월 앞당겨 2027년 5월→2월. 정부의 인허가·전력/용수·부지 지원으로 용인 클러스터(4개 팹) 전체 완공이 최대 12년 앞당겨져, 4번째 팹 완공 목표가 <b>2045년→2033년</b>. 청주 M17은 2027년 착공·2029년 양산, 용인 Fab1은 2H27/2028 초도 output, 6개 클린룸 개별 툴링으로 2030년 <b>360k wspm</b> 규모</li>
-        <li><b>Micron</b>: 2026년 1월 싱가포르 NAND 신팹 발표(10년간 $24B, 클린룸 ~700k sqft, 초도 웨이퍼 2H28). Idaho ID2(bit 2028년 말), Clay NY 최대 4개 팹(2026년 말 착공·2030년 양산), 히로시마 DRAM/HBM(2H28 툴링·2029 램프·2030 풀가동). 뉴욕 팹 bit output은 2028년→2030년 지연</li>
-        <li><b>삼성</b>: 평택 P4 일정 ~6개월 앞당겨 2026년 2월 bit output 개시(풀램프 시 DRAM <b>100–120k wspm</b> 추가), P5는 2년 중단 후 재개하여 2028년 초도 물량. P5 2개 팹 합산 계획 output <b>600k wspm</b>이나 DRAM/HBM/NAND/파운드리 혼재로 메모리 비중 판단은 어려움</li>
-      </ul>
-
-      <!-- ===== 7. Kioxia ===== -->
-      <h3 class="sec" id="kioxia"><span class="n">7</span>과소평가된 Kioxia 지분</h3>
-      <ul class="pts">
-        <li>현재 Kioxia 지분 <b>~14.4%</b>를 ~$1.2B 규모 전환사채 형태로 보유. 2018년 Bain 주도 컨소시엄(Pangea)의 Toshiba 메모리 인수 참여분</li>
-        <li>한때 ~24%를 보유했으나 2026년 7월 Bain 엑시트 시 LP 지분 10%가 현금화되며 전환사채만 잔존</li>
-        <li>다중 관할 경쟁당국 심사, FX·대외무역 신고 완료 전까지 <b>의결권 없음</b>. 심사를 통과해도 <b>2028년까지 의결권 15% 초과 보유 불가</b></li>
-        <li>보유 의미 3가지 — ① Bain 포지션 현금화 + 전환사채 지속 보유의 경제적 이익, ② NAND 업계 내 #2 지위와 영향력 유지(과거 WDC의 $20B 인수 시도가 하이닉스 반대로 2023년 무산), ③ 미전환 상태로도 재무상태표 가치 기여(7/30 기준 <b>~$20B</b>)</li>
-        <li>회사 측은 Kioxia 지분을 현금화할 계획이 없으며 장기 보유 방침</li>
-      </ul>
-
-      <div class="tbl-wrap">
-      <table class="tbl">
-        <thead><tr><th>시점</th><th>주요 이벤트</th></tr></thead>
-        <tbody>
-          <tr><td><b>2017.09</b></td><td>Toshiba, 메모리 사업부를 Bain Capital 주도 컨소시엄(SK하이닉스·Apple·Dell·Seagate·Kingston·Hoya 참여)에 ~US$18B 매각 합의</td></tr>
-          <tr><td><b>2018.06.01</b></td><td>거래 종결. SK하이닉스는 ~¥395B(~US$2.7B) 출자 — Bain 펀드 LP로 ~¥266B + 전환사채 ~¥129B(반독점 승인 조건부 최대 ~15% 지분 전환). 기술 접근권·이사회 권한 없음</td></tr>
-          <tr><td><b>2024.12.18</b></td><td>Kioxia 도쿄증권거래소 상장, 공모가 ¥1,455(~¥784B / ~US$6.6B 밸류). 전환 시 ~14% 경제적 지분의 3대 주주 지위</td></tr>
-          <tr><td><b>2025–2026</b></td><td>AI발 NAND 부족으로 Kioxia 주가 IPO 대비 <b>12–14배</b> 상승. SK하이닉스 지분가치 ₩13조 이상 증가(~US$2.7B 투자 대비 평가이익 ~US$9B+)</td></tr>
-          <tr><td><b>~2026.07</b></td><td>Bain 완전 엑시트(~US$15B / ~¥2.5T 차익). LP 공동투자분 ~¥266B는 현금화(~¥750B 추정), 전환사채 ~¥129B(~14%)는 유지 — Toshiba(~15%)에 이은 사실상 2대 주주</td></tr>
-        </tbody>
-      </table>
-      </div>
-
-      <!-- ===== 8. 실적 ===== -->
-      <h3 class="sec" id="fin"><span class="n">8</span>실적 추정 — 매출·마진·FCF의 구조적 레벨업</h3>
-
-      <div class="tbl-wrap">
-      <table class="tbl">
-        <thead><tr><th>KRW bn</th><th>CY25A</th><th>CY26E</th><th>CY27E</th><th>CY28E</th></tr></thead>
-        <tbody>
-          <tr class="hl"><td>Revenue</td><td class="num">97,147</td><td class="num">350,537</td><td class="num">564,800</td><td class="num">670,000</td></tr>
-          <tr><td>YoY</td><td class="num">47%</td><td class="num pos">261%</td><td class="num pos">61%</td><td class="num pos">19%</td></tr>
-          <tr><td>Gross Profit</td><td class="num">58,691</td><td class="num">296,668</td><td class="num">492,485</td><td class="num">575,930</td></tr>
-          <tr><td>Gross Margin</td><td class="num">60.4%</td><td class="num">84.6%</td><td class="num">87.2%</td><td class="num">86.0%</td></tr>
-          <tr><td>Opex</td><td class="num">11,484</td><td class="num">22,018</td><td class="num">32,100</td><td class="num">36,200</td></tr>
-          <tr><td>Opex % of Rev</td><td class="num">11.8%</td><td class="num">6.3%</td><td class="num">5.7%</td><td class="num">5.4%</td></tr>
-          <tr class="hl"><td>Operating Income</td><td class="num">47,206</td><td class="num">274,649</td><td class="num">460,385</td><td class="num">539,730</td></tr>
-          <tr><td>OM</td><td class="num">48.6%</td><td class="num">78.4%</td><td class="num">81.5%</td><td class="num">80.6%</td></tr>
-          <tr><td>Net Income</td><td class="num">42,919</td><td class="num">280,205</td><td class="num">378,250</td><td class="num">434,078</td></tr>
-          <tr class="hl"><td>EPS (KRW)</td><td class="num">58,955</td><td class="num">388,404</td><td class="num">520,000</td><td class="num">600,000</td></tr>
-          <tr><td>EPS (USD)</td><td class="num">41.46</td><td class="num">263.02</td><td class="num">355.24</td><td class="num">409.89</td></tr>
-          <tr><td>EBITDA</td><td class="num">61,096</td><td class="num">290,468</td><td class="num">476,505</td><td class="num">555,850</td></tr>
-          <tr><td>Capex</td><td class="num">(27,519)</td><td class="num">(48,000)</td><td class="num">(61,000)</td><td class="num">(70,000)</td></tr>
-          <tr class="hl"><td>Free Cash Flow</td><td class="num">25,854</td><td class="num">169,012</td><td class="num">286,787</td><td class="num">345,812</td></tr>
-          <tr><td>FCF Margin</td><td class="num">27%</td><td class="num">48%</td><td class="num">51%</td><td class="num">52%</td></tr>
-          <tr><td>순현금성자산(기말)</td><td class="num">34,863</td><td class="num">225,632</td><td class="num">511,328</td><td class="num">856,054</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <div class="tbl-note">Source: Company Reports</div>
-
-      <div class="chart-card">
-        <div class="ct">매출 및 마진 추이 — CY25A–CY28E</div>
-        <div class="legend">
-          <span><i style="background:#12284c"></i>Revenue (KRW조)</span>
-          <span><i style="background:#c0392b"></i>Gross Margin</span>
-          <span><i style="background:#5b8fc9"></i>Operating Margin</span>
-        </div>
-        <svg viewBox="0 0 880 320" width="100%" role="img" aria-label="매출 및 마진 추이">
-          <g stroke="#e6ebf2">
-            <line x1="80" y1="270" x2="820" y2="270"/><line x1="80" y1="226" x2="820" y2="226"/>
-            <line x1="80" y1="182" x2="820" y2="182"/><line x1="80" y1="138" x2="820" y2="138"/>
-            <line x1="80" y1="94" x2="820" y2="94"/><line x1="80" y1="50" x2="820" y2="50"/>
-          </g>
-          <g fill="#9aa3b2" font-size="10">
-            <text x="34" y="274">0</text><text x="26" y="230">140</text><text x="26" y="186">280</text>
-            <text x="26" y="142">420</text><text x="26" y="98">560</text><text x="26" y="54">700</text>
-          </g>
-          <g fill="#9aa3b2" font-size="10" text-anchor="end">
-            <text x="856" y="274">0%</text><text x="856" y="226">20%</text><text x="856" y="182">40%</text>
-            <text x="856" y="138">60%</text><text x="856" y="94">80%</text><text x="856" y="50">100%</text>
-          </g>
-
-          <rect x="130" y="239.5" width="92" height="30.5" fill="#12284c"/>
-          <rect x="320" y="159.8" width="92" height="110.2" fill="#12284c"/>
-          <rect x="510" y="92.5" width="92" height="177.5" fill="#12284c"/>
-          <rect x="700" y="59.4" width="92" height="210.6" fill="#12284c"/>
-          <g font-size="11.5" font-weight="700" fill="#12284c" text-anchor="middle">
-            <text x="176" y="233">97.1</text><text x="366" y="153">350.5</text>
-            <text x="556" y="86">564.8</text><text x="746" y="53">670.0</text>
-          </g>
-          <g fill="#525866" font-size="11" text-anchor="middle">
-            <text x="176" y="290">CY25A</text><text x="366" y="290">CY26E</text>
-            <text x="556" y="290">CY27E</text><text x="746" y="290">CY28E</text>
-          </g>
-
-          <!-- GM line: 60.4 / 84.6 / 87.2 / 86.0 -> y=270-pct*2.2 -->
-          <polyline points="176,137.1 366,83.9 556,78.2 746,80.8" fill="none" stroke="#c0392b" stroke-width="2.5"/>
-          <g fill="#c0392b">
-            <circle cx="176" cy="137.1" r="4.5"/><circle cx="366" cy="83.9" r="4.5"/>
-            <circle cx="556" cy="78.2" r="4.5"/><circle cx="746" cy="80.8" r="4.5"/>
-          </g>
-          <g font-size="10.5" font-weight="700" fill="#c0392b" text-anchor="middle">
-            <text x="176" y="127">60.4%</text><text x="366" y="74">84.6%</text>
-            <text x="556" y="68">87.2%</text><text x="746" y="71">86.0%</text>
-          </g>
-
-          <!-- OM line: 48.6 / 78.4 / 81.5 / 80.6 -->
-          <polyline points="176,163.1 366,97.5 556,90.7 746,92.7" fill="none" stroke="#5b8fc9" stroke-width="2.5" stroke-dasharray="6 4"/>
-          <g fill="#5b8fc9">
-            <circle cx="176" cy="163.1" r="4.5"/><circle cx="366" cy="97.5" r="4.5"/>
-            <circle cx="556" cy="90.7" r="4.5"/><circle cx="746" cy="92.7" r="4.5"/>
-          </g>
-          <g font-size="10.5" font-weight="700" fill="#3d6fa0" text-anchor="middle">
-            <text x="176" y="181">48.6%</text><text x="366" y="115">78.4%</text>
-            <text x="556" y="108">81.5%</text><text x="746" y="110">80.6%</text>
-          </g>
-        </svg>
-        <div class="chart-src">Source: Company Reports</div>
-      </div>
-
-      <h4 class="sub">제품별 매출·마진·bit·ASP 추정 (USD $M)</h4>
-      <div class="tbl-wrap">
-      <table class="tbl">
-        <thead><tr><th>항목</th><th>CY25A</th><th>CY26E</th><th>CY27E</th><th>CY28E</th></tr></thead>
-        <tbody>
-          <tr class="hl"><td>Total Revenue</td><td class="num">68,333</td><td class="num">238,071</td><td class="num">385,846</td><td class="num">457,713</td></tr>
-          <tr><td>YoY / Total GM</td><td class="num">41% / 48.6%</td><td class="num">248% / 78.4%</td><td class="num">62% / 81.5%</td><td class="num">19% / 80.6%</td></tr>
-          <tr class="hl"><td>DRAM Revenue</td><td class="num">52,935</td><td class="num">177,537</td><td class="num">287,643</td><td class="num">357,338</td></tr>
-          <tr><td>DRAM GM</td><td class="num">63%</td><td class="num">85%</td><td class="num">87%</td><td class="num">86%</td></tr>
-          <tr><td>DRAM Bit Growth / ASP</td><td class="num">24% / +29%</td><td class="num">22% / +175%</td><td class="num">18% / +38%</td><td class="num">23% / +1%</td></tr>
-          <tr class="hl"><td>Trad. DRAM Revenue</td><td class="num">32,397</td><td class="num">143,034</td><td class="num">223,631</td><td class="num">235,236</td></tr>
-          <tr><td>Trad. DRAM GM</td><td class="num">60%</td><td class="num">88%</td><td class="num">89%</td><td class="num">88%</td></tr>
-          <tr><td>Trad. DRAM Bit / ASP</td><td class="num">18% / +16%</td><td class="num">22% / +262%</td><td class="num">16% / +34%</td><td class="num">20% / <span style="color:#c0392b">-12%</span></td></tr>
-          <tr class="hl"><td>HBM Revenue</td><td class="num">20,538</td><td class="num">34,503</td><td class="num">64,012</td><td class="num">122,102</td></tr>
-          <tr><td>HBM GM</td><td class="num">68%</td><td class="num">74%</td><td class="num">80%</td><td class="num">82%</td></tr>
-          <tr><td>HBM Bit / ASP</td><td class="num">84% / +17%</td><td class="num">24% / +35%</td><td class="num">25% / +48%</td><td class="num">37% / +39%</td></tr>
-          <tr class="hl"><td>NAND Revenue</td><td class="num">14,179</td><td class="num">60,164</td><td class="num">97,935</td><td class="num">100,109</td></tr>
-          <tr><td>NAND GM</td><td class="num">36%</td><td class="num">83%</td><td class="num">88%</td><td class="num">86%</td></tr>
-          <tr><td>NAND Bit / ASP</td><td class="num">9% / <span style="color:#c0392b">-7%</span></td><td class="num">18% / +259%</td><td class="num">20% / +36%</td><td class="num">20% / <span style="color:#c0392b">-15%</span></td></tr>
-        </tbody>
-      </table>
-      </div>
-      <div class="tbl-note">Source: Company Reports</div>
-
-      <ul class="pts">
-        <li>HBM: CY26·CY27 성장은 NVIDIA GPU 수요 주도. 전통 DRAM 대비 낮았던 마진이 <b>CY25 68% → CY28 82%</b>로 격차 축소(완전 해소는 아님)</li>
-        <li>전통 DRAM: CY26 ASP <b>+262%</b> 이후 CY27에도 상승 지속, CY28에는 LTA를 통해 HBM 가격이 따라붙으며 두 자릿수% 하락</li>
-        <li>NAND: bit 성장 ~20% 유지, ASP는 CY28 mid-teens% 하락 전환 → CY26/CY27 큰 폭 성장 후 CY28 flattish</li>
-        <li>마진 지속성의 근거는 LTA price floor와 LTA 적용 bit 비중(삼성은 전체 bit의 <b>60–70%</b> 언급). CY28까지 GM 80% 이상 유지 전망</li>
-        <li>비용은 DRAM/HBM 모두 상승 가정 — 제품 믹스 변화(세대별 HBM 원가 상승)와 전통 DRAM 내 고부가 솔루션 확대가 원인</li>
-      </ul>
-
-      <div class="callout"><span class="t">주목</span>ADR은 primary offering이므로 통상의 ADR과 달리 <b>한국 법인 주식수가 ~18M주 증가</b>한다. 현재 컨센서스 추정에는 반영되어 있지 않은 것으로 판단된다.</div>
-
-      <!-- ===== 9. 밸류에이션 ===== -->
-      <h3 class="sec" id="val"><span class="n">9</span>밸류에이션 &amp; ADR 프리미엄</h3>
-
-      <div class="tbl-wrap">
-      <table class="tbl">
-        <thead><tr><th>Company</th><th>Ticker</th><th>Price</th><th>Mkt Cap ($M)</th><th>PT</th><th>EV/S CY26</th><th>P/E CY26</th><th>P/E CY27</th><th>P/E CY28</th></tr></thead>
-        <tbody>
-          <tr><td>Kioxia</td><td>285A-TKS</td><td class="num">$300.25</td><td class="num">164,542</td><td class="num">—</td><td class="num">3.4x</td><td class="num">6.2x</td><td class="num">3.8x</td><td class="num">3.2x</td></tr>
-          <tr><td>Micron</td><td>MU</td><td class="num">$823.03</td><td class="num">929,525</td><td class="num">$2,000</td><td class="num">5.4x</td><td class="num">8.2x</td><td class="num">5.2x</td><td class="num">4.8x</td></tr>
-          <tr><td>Samsung</td><td>005930-KRX</td><td class="num">$163.70</td><td class="num">1,054,686</td><td class="num">—</td><td class="num">2.0x</td><td class="num">5.0x</td><td class="num">3.4x</td><td class="num">3.3x</td></tr>
-          <tr><td>SanDisk</td><td>SNDK</td><td class="num">$1,214.83</td><td class="num">179,904</td><td class="num">$2,900</td><td class="num">5.4x</td><td class="num">8.9x</td><td class="num">5.4x</td><td class="num">5.1x</td></tr>
-          <tr><td>SK Hynix (KRX)</td><td>000660-KRX</td><td class="num">$107.11</td><td class="num">782,421</td><td class="num">—</td><td class="num">3.1x</td><td class="num">4.6x</td><td class="num">3.3x</td><td class="num">3.1x</td></tr>
-          <tr class="hl"><td>SK Hynix (U.S.)</td><td>SKHY</td><td class="num">$143.73</td><td class="num">802,891</td><td class="num">$300</td><td class="num">3.2x</td><td class="num">6.2x</td><td class="num">4.5x</td><td class="num">4.1x</td></tr>
-          <tr><td><b>Median</b></td><td>—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">3.4x</td><td class="num">6.2x</td><td class="num">3.8x</td><td class="num">3.3x</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <div class="tbl-note">Note: 2026/8/3 pre-market 기준, USD/KRW 1,463.0 · USD/JPY 163.73, 배수는 FactSet 추정 기준 · Source: Company Data, FactSet</div>
-
-      <h4 class="sub">목표주가 $300 산출 근거</h4>
-      <ul class="pts">
-        <li>CY27E EPS <b>$35.52</b>(KRW→USD 환산 및 ADR 10:1 비율 조정)에 <b>8x</b> 적용</li>
-        <li>Micron에 적용한 CY27 EPS <b>10x</b> 대비 <b>~16% 할인</b> — Korea Discount를 충분히 보상하는 수준이라는 판단이며, 동시에 KRX 상장분 대비로는 프리미엄</li>
-        <li>공모 직후 실적 miss로 당분간 penalty box에 놓인 점을 반영</li>
-      </ul>
-
-      <h4 class="sub">Korea Discount와 ADR 프리미엄의 구조</h4>
-      <ul class="pts">
-        <li>Korea Discount의 배경 — ① 재벌·창업가문의 지배구조 이슈, ② 북한 등 지정학적 오버행, ③ 낮은 주주환원(현금 보유, 자사주 미소각·자기주식 잔존)</li>
-        <li>ADR은 현재 KRX 상장분 대비 <b>~34% 프리미엄</b>. 7월 10일 거래 개시 이후 <b>중위 27%</b>, 레인지 <b>16–62%</b></li>
-        <li>프리미엄 원인은 한국 시장 투자가 불가능하거나 어려운 투자자의 수요 + 작은 float(발행주식의 <b>2.5%</b>)</li>
-        <li>핵심은 이 프리미엄이 <b>차익거래로 해소되지 않는다</b>는 점 — 한국의 conversion cap 규정상 ADR 상장 한도가 발행주식의 2.5%로 제한. ~18M주(ADR 10:1 기준 177.9M ADR) 발행으로 한도가 이미 소진되어 ADR→국내주 일방향 전환만 가능하며, ADR이 프리미엄 상태면 전환이 발생하지 않음</li>
-        <li>동일 구조의 <b>TSMC</b> 사례 — 2010–2026 중위 프리미엄 ~4%였으나, 2023–2026 YTD 기준 <b>19%</b>로 대폭 상승. AI 인프라 종목 수요를 감안하면 하이닉스 ADR 프리미엄도 유사하거나 그 이상 수준 유지 전망</li>
-      </ul>
-
-      <div class="bbgrid">
-        <div class="bb bull"><div class="lbl">ADR 프리미엄</div><div class="px">~34%</div><div class="ret">중위 27% / 레인지 16–62%</div>
-          <ul><li>float 2.5%의 희소성</li><li>conversion cap으로 차익거래 불가</li></ul></div>
-        <div class="bb base"><div class="lbl">TSMC 벤치마크</div><div class="px">19%</div><div class="ret">2023–2026 YTD 중위</div>
-          <ul><li>2010–2023 중위는 4%</li><li>AI 수요기에 프리미엄 확대</li></ul></div>
-        <div class="bb bear"><div class="lbl">인덱스 편입</div><div class="px">제한적</div><div class="ret">Nasdaq 100(’26.12~)·SOX 가능</div>
-          <ul><li>모회사 한국 소재로 S&amp;P500·Dow·MSCI USA·Russell 편입 불가</li><li>편입 시에도 US float만 반영</li></ul></div>
       </div>
 
       <ul class="pts">
-        <li>거래대금: ADR 개시 이후 일평균 거래량은 하향 추세. 최저치였던 7/24 <b>26M주</b>(첫날 108M주 대비)도 발행주식의 ~15%, 명목 <b>$4B 이상</b> 규모로 여전히 견조하나 모니터링 필요</li>
+        <li><b>Catalyst ①</b> 3Q26 실적발표(10월 말까지)에서의 주주환원 프로그램 상세 공개</li>
+        <li><b>Catalyst ②</b> HBM 계약가격 업데이트 (9월 말까지)</li>
+        <li><b>Catalyst ③</b> 미국 자회사 상장(US subsidiary listing) 계획 업데이트 (다음 달)</li>
       </ul>
 
-      <!-- ===== 리스크 ===== -->
-      <h3 class="sec" id="risk"><span class="n">!</span>리스크 &amp; 모니터링 포인트</h3>
+      <h3 class="sec"><span class="n">6</span>투자논리 & 밸류에이션</h3>
+      <ul class="pts">
+        <li><b>투자논리:</b> 탄탄한 AI 솔루션 실행 역량이 이익 창출력을 구조적으로 개선 — 현재는 메모리 up-cycle 초입 국면이며, conventional 메모리 펀더멘털 개선 국면에서 순수 메모리 업체 특성상 <b>높은 beta</b>가 유리하게 작용</li>
+        <li><b>목표가 산정:</b> Jun-27 목표가 W2.75M은 <b>FY26-27E 평균 EPS의 7x</b> 적용 — 더 강하고 긴 메모리 upcycle 관점을 반영하며, 향후 3년간 크게 개선된 이익 체력의 내구성·지속성을 감안</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">!</span>리스크 & 모니터링 포인트</h3>
       <div class="risk-box">
-        <h4>Key Risks to Rating &amp; Price Target</h4>
+        <h4>Key Risks to Rating & Price Target</h4>
         <ul>
-          <li><b>수요 전망 미달 → 공급과잉:</b> upcycle에 대한 최대 리스크. hyperscaler·foundation model builder·neocloud 측 오판이 원인이 될 수 있으며, ① GW급 빌드아웃 자금 조달 실패, ② 데이터센터 전력 확보 실패, ③ 기존 capex의 ROI 미달 판단 등. 하이닉스조차 spot 가격이 충분히 낮으면 합리적 고객은 페널티를 감수하고 계약을 이탈할 수 있다고 인정 (대부분 계약이 non-binding, Micron은 binding임을 명시)</li>
-          <li><b>업계 증설에 따른 공급과잉 심화:</b> 예상보다 빠른 공급 증가는 깊은 downturn으로 이어질 수 있음. 산업 전반 증설 또는 단일 경쟁사의 점유율 확보 시도(과거 삼성 사례)가 트리거. 현재는 "점유율보다 가격" 기조가 유지되고 있으나 greenfield가 가동되는 시점의 리스크</li>
-          <li><b>예상보다 큰 HBM 점유율 상실:</b> 3사 모두 NVIDIA 퀄 통과로 삼성 진입 시 하이닉스 점유율 하락폭이 가장 클 수 있음. HBM3 ~100% → H200/B200 HBM3E 80–90% → GB200/GB300 70–80%로 이미 하락. Micron 대비 높은 HBM GM이 NVIDIA의 물량 이전을 쉽게 만드는 요인이나, HBM 부족 심각도를 감안하면 과장된 우려라는 판단</li>
-          <li><b>지배구조 리스크:</b> SK그룹은 삼성에 이은 2대 재벌. 최태원 회장이 SK Inc. ~18% 보유, SK Inc.는 SK스퀘어 32%, SK스퀘어는 SK하이닉스 20% 보유. 차등의결권이 없어 1주 1의결권이며 오너 일가의 직접 경제적 지분(look-through)은 ~1–2%에 불과하나, SK스퀘어를 통해 최대 의결권 블록(~20%) 통제</li>
-          <li><b>공정 전환 리스크:</b> custom logic base die, hybrid bonding 등 신기술 도입 과정에서 HBM 기술 리더십 상실 가능성. 전통 DRAM은 리스크가 낮으며, NAND는 Solidigm(floating gate)·Kioxia(CuA/CBA)·자체 charge trap/PUC로 기술 익스포저 분산</li>
-          <li><b>LTA가 의도대로 작동하지 않을 위험:</b> 고객이 계약을 이탈하면 매출·마진에 상당한 downside가 발생하며 "구조적으로 더 이익률 높은 산업" 논지가 부분적으로 훼손</li>
-          <li><b>중국 위협:</b> CXMT(DRAM)·YMTC(NAND)의 대형화 시 수급 균형 교란 + 공급 규율 미준수 가능성. 다만 YMTC는 entity list로 서방 장비 조달이 제한되고 CXMT를 포함한 중국 업체는 EUV 접근 불가. 중국 내수 수요조차 충족하지 못하는 상황이어서 장기·tail 리스크로 판단</li>
-          <li><b>중국 생산거점 지정학 리스크:</b> 우시·Dalian·충칭은 선단 노드 전환 및 증설이 제한. 현재는 lagging-edge 생산으로 완화되나, 선단과의 격차가 벌어질수록 이슈 확대</li>
-          <li><b>미국 관련 지정학 리스크:</b> 관세가 미국 내 투자를 유인해 증설 계획과 겹치며 공급과잉을 유발할 가능성, 상무부·정부의 정책 변화(수출 금지 등)</li>
-          <li><b>KRW/USD FX 리스크:</b> DRAM·NAND는 대형 OEM·hyperscaler 대상 거래에서 USD로 호가·결제되므로 USD 약세 시 실적 훼손. KRW 강세 시 Capex/Opex 측 상쇄 효과가 있으나 매출 역풍이 이를 상회</li>
+          <li><b>DRAM 가격·마진 하회:</b> 예상 대비 낮은 DRAM 가격과 마진은 핵심 downside 리스크</li>
+          <li><b>최종수요·재고 불확실성:</b> end demand 및 재고 수준을 둘러싼 불확실성</li>
+          <li><b>Upside catalyst:</b> 예상보다 강한 수요가 이끄는 추가적인 DRAM ASP 랠리</li>
         </ul>
         <h4 style="margin-top:14px;">모니터링 포인트</h4>
         <ul>
-          <li>hyperscaler capex 가이던스 및 GW급 빌드아웃 자금·전력 확보 진척</li>
-          <li>하이닉스 LTA 조건 구체화 — price cap 제거 이후 floor 잔존 여부, 계약 기간, 선수금 규모</li>
-          <li>NVIDIA 내 HBM4 배분 및 삼성 점유율 회복 속도</li>
-          <li>M15X·용인 Fab1 램프 일정과 실제 bit output 기여 시점</li>
-          <li>ADR 일평균 거래량 추이 및 KRX 대비 프리미엄 밴드</li>
-          <li>Nasdaq 100 편입(2026년 12월 이후) 관련 수급</li>
-          <li>Solidigm의 floating gate → charge trap 전환 여부와 Dalian 팹 장비 제약</li>
+          <li>3Q26 실적발표(10월 말)에서의 차기 주주환원 정책·value-up 전략(자본배분/자본집약도 목표) 공개 내용</li>
+          <li>9월 말까지의 HBM 계약가격 협상 결과 및 2027년 HBM 점유율 dynamics</li>
+          <li>미국 자회사 상장 계획 진행 상황 (다음 달 업데이트 예정)</li>
+          <li>AI Capex 지속가능성·오픈소스 모델 확산 등 주가 조정을 촉발했던 매크로 변수의 향방</li>
+          <li>특별배당 도입 여부 — 정책 기간(2025~2027) 특성상 배당보다 자사주 매입 비중 확대 예상</li>
         </ul>
       </div>
 
