@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Sovereignty</title>
+<style>
+  :root{
+    --brand:#00264d;
+    --brand-deep:#001830;
+    --accent:#0077c8;
+    --accent2:#00539b;
+    --paper:#f4f6f9;
+    --card:#ffffff;
+    --ink:#1b1e24;
+    --ink-soft:#525866;
+    --line:#dde3ec;
+    --buy:#1f7a4d;
+    --bear:#c0392b;
+    --bull:#1f6fb2;
+    --warn:#8a4b15;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Helvetica Neue','Pretendard','Noto Sans KR',Arial,sans-serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  .topbar{
+    background:var(--brand-deep);
+    color:#fff;padding:14px 6vw;
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;
+    border-bottom:3px solid var(--accent);
+    position:sticky;top:0;z-index:50;
+  }
+  .topbar .logo{font-weight:700;font-size:18px;letter-spacing:0.5px;}
+  .topbar .logo span{color:var(--accent);}
+  .topbar nav{display:flex;gap:8px;flex-wrap:wrap;}
+  .topbar nav a{
+    color:#cfd8e6;text-decoration:none;font-size:12.5px;
+    padding:6px 12px;border:1px solid rgba(255,255,255,0.2);border-radius:20px;
+    transition:all .15s;
+  }
+  .topbar nav a:hover{background:var(--accent);color:#fff;border-color:var(--accent);}
+
+  .wrap{max-width:960px;margin:0 auto;padding:40px 6vw 90px;}
+
+  .intro{
+    border-left:4px solid var(--accent);
+    padding:8px 0 8px 20px;margin-bottom:48px;
+  }
+  .intro .eyebrow{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent2);font-weight:700;}
+  .intro h1{font-size:26px;margin:8px 0 6px;color:var(--brand);}
+
+  .report{margin-bottom:64px;scroll-margin-top:70px;}
+  .report-head{
+    background:linear-gradient(135deg,var(--brand) 0%, var(--brand-deep) 100%);
+    color:#fff;border-radius:10px 10px 0 0;padding:28px 30px;
+  }
+  .report-head .tag{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#9fb4d4;font-weight:700;}
+  .report-head h2{margin:8px 0 14px;font-size:23px;line-height:1.35;}
+  .report-head .lede{
+    font-family:'Georgia',serif;font-size:15.5px;color:#e3ebf6;
+    border-top:1px solid rgba(255,255,255,0.16);padding-top:14px;margin:0;
+  }
+  .report-body{
+    background:var(--card);border:1px solid var(--line);border-top:none;
+    border-radius:0 0 10px 10px;padding:30px;
+  }
+
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px;}
+  .chip{border:1px solid var(--line);border-radius:8px;padding:10px 16px;background:#fafbfd;flex:1;min-width:130px;}
+  .chip .k{font-size:10.5px;letter-spacing:0.5px;text-transform:uppercase;color:var(--ink-soft);}
+  .chip .v{font-size:19px;font-weight:700;color:var(--brand);margin-top:2px;}
+  .chip .v.buy{color:var(--buy);}
+  .chip .s{font-size:11px;color:var(--ink-soft);}
+
+  h3.sec{
+    font-size:17px;color:var(--brand);margin:34px 0 12px;
+    padding-bottom:8px;border-bottom:1.5px solid var(--line);
+    display:flex;align-items:center;gap:10px;
+    scroll-margin-top:70px;
+  }
+  h3.sec .n{
+    background:var(--brand);color:#fff;font-size:12px;font-weight:700;
+    width:24px;height:24px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  ul.pts{margin:0;padding:0;list-style:none;}
+  ul.pts li{position:relative;padding:7px 0 7px 20px;font-size:14.5px;border-bottom:1px dashed var(--line);}
+  ul.pts li:last-child{border-bottom:none;}
+  ul.pts li::before{content:"—";position:absolute;left:0;color:var(--accent2);font-weight:700;}
+  ul.pts b{color:var(--brand);}
+
+  table.tbl{width:100%;border-collapse:collapse;font-size:13px;margin:6px 0 4px;}
+  table.tbl th{background:var(--brand);color:#fff;text-align:left;padding:8px 10px;font-weight:600;}
+  table.tbl td{padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top;}
+  table.tbl tr:nth-child(even) td{background:#f7f9fc;}
+  table.tbl td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;}
+  table.tbl td.buy{color:var(--buy);font-weight:700;}
+  .tbl-wrap{overflow-x:auto;}
+
+  .chart-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:22px 22px 14px;margin:14px 0;}
+  .chart-card .ct{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:12px;}
+  .chart-src{font-size:10.5px;color:#9aa3b2;margin-top:8px;}
+  .legend{display:flex;gap:18px;font-size:11.5px;color:var(--ink-soft);margin-bottom:4px;flex-wrap:wrap;}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .legend i{width:11px;height:11px;border-radius:2px;display:inline-block;}
+
+  .bbgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0;}
+  @media(max-width:680px){.bbgrid{grid-template-columns:1fr;}}
+  .bb{border-radius:8px;padding:16px;border:1px solid var(--line);background:#fafbfd;}
+  .bb.bull{border-top:3px solid var(--bull);}
+  .bb.base{border-top:3px solid var(--ink-soft);}
+  .bb.bear{border-top:3px solid var(--bear);}
+  .bb .lbl{font-size:11px;letter-spacing:0.6px;text-transform:uppercase;font-weight:700;color:var(--ink-soft);}
+  .bb .px{font-size:16px;font-weight:700;color:var(--brand);margin:4px 0;}
+  .bb ul{margin:8px 0 0;padding-left:16px;font-size:12px;color:var(--ink-soft);}
+  .bb li{margin-bottom:4px;}
+
+  .callout{background:#fbf6ec;border:1px solid #e8dcc3;border-radius:8px;padding:14px 18px;font-size:13px;color:var(--ink-soft);margin-top:14px;}
+  .callout .t{font-size:10.5px;font-weight:700;letter-spacing:0.6px;color:var(--warn);text-transform:uppercase;display:block;margin-bottom:5px;}
+
+  .risk-box{background:var(--brand);color:#dde6f3;border-radius:8px;padding:22px 24px;margin-top:14px;}
+  .risk-box h4{margin:0 0 10px;color:#fff;font-size:14.5px;}
+  .risk-box ul{margin:0;padding-left:18px;}
+  .risk-box li{margin-bottom:8px;font-size:13px;}
+  .risk-box li b{color:#fff;}
+
+  footer{border-top:1px solid var(--line);margin-top:50px;padding-top:20px;font-size:11px;color:#9aa3b2;line-height:1.6;}
+
+  @media(max-width:560px){
+    .intro h1{font-size:21px;}
+    .report-head h2{font-size:19px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">Research<span>·</span>Digest</div>
+  <nav>
+    <a href="#sec-us">미국</a>
+    <a href="#sec-cn">중국</a>
+    <a href="#sec-eu">유럽</a>
+    <a href="#sec-asia">아시아·ASEAN</a>
+    <a href="#sec-kr">한국</a>
+    <a href="#sec-theme">투자 테마</a>
+    <a href="#sec-cal">캘린더</a>
+  </nav>
+</div>
+
+<div class="wrap">
+
+  <div class="intro">
+    <div class="eyebrow">19 August 2026</div>
+    <h1>AI Sovereignty: 정책·시장·경제적 함의</h1>
+  </div>
+
+  <section class="report" id="rpt1">
+
+    <div class="report-head">
+      <div class="tag">US Public Policy &amp; Global Thematics · Global Insight</div>
+      <h2>AI Sovereignty — 국가 전략이 된 AI 인프라, 분절화가 오히려 키우는 글로벌 AI Capex 사이클</h2>
+      <p class="lede">컴퓨트·데이터·에너지·모델·공급망에 대한 주권적 통제가 각국 정부의 전략적 명제가 되면서, 미국 연간 $860bn AI capex 사이클을 지지하는 동시에 더 넓은 기술 규제 리스크를 낳고 있다 — 미·중·지역별 AI 생태계로의 분절화는 수요를 훼손하기보다 오히려 글로벌 TAM을 확대하며, 인프라·소프트웨어/클라우드·Colocation DC 전반에 기회를 만든다.</p>
+    </div>
+
+    <div class="report-body">
+
+      <div class="chips">
+        <div class="chip"><div class="k">US AI Capex</div><div class="v">$860bn</div><div class="s">2026년 한 해, 연방 지원 지속 전망</div></div>
+        <div class="chip"><div class="k">China Capex</div><div class="v">RMB 35tn</div><div class="s">'Six Networks' 2026–30 총 capex</div></div>
+        <div class="chip"><div class="k">Europe 필요 투자</div><div class="v">€750–800bn</div><div class="s">Draghi 리포트, 2025–30</div></div>
+        <div class="chip"><div class="k">ASEAN DC Capacity</div><div class="v">3.3→19GW</div><div class="s">2025→2035e, 약 6배 (+19% CAGR)</div></div>
+        <div class="chip"><div class="k">테마 EPS 성장</div><div class="v">High-teens</div><div class="s">AI Sovereignty &amp; Semi Localization, 2027–28E</div></div>
+      </div>
+
+      <h3 class="sec"><span class="n">1</span>Sovereign AI 프레임 — 'Two Worlds'와 두 가지 정책 귀결</h3>
+      <ul class="pts">
+        <li>Sovereign AI는 <b>컴퓨트·에너지·데이터·인재·모델·핵심 공급망에 대한 의미 있는 통제</b>를 확보하려는 국가적 의지로 정의 — 완전 자급자족이 아니라 국내 역량 + 신뢰할 수 있는 파트너(trusted partners) 조합이 현실적 경로</li>
+        <li>정책 귀결은 두 갈래: 1) <b>$860bn 규모 미국 AI 인프라 build-out을 뒷받침하는 연방 지원 지속</b>(permitting 개혁, DPA 확대 등), 2) 칩을 넘어 <b>클라우드·모델 접근·조달·유통까지 확장되는 미·중 'de-risking' 규제</b></li>
+        <li>단일 글로벌 AI 시장이 아닌 <b>다극화(multipolar) AI 생태계</b>로의 이행은 별도 체제 발전을 가속 — 국가·지역별 데이터센터, 중복 설비, 전력·송전 투자, 현지화된 클라우드·네트워킹 수요가 더해지며 <b>글로벌 TAM은 오히려 확대</b></li>
+        <li>시장 관점: sovereign AI는 AI capex 사이클을 <b>훼손하기보다 강화·연장</b> — 반도체, 데이터센터, 네트워킹, 전력, 클라우드 전반의 기회. 다만 기술 규제 확대는 차별화된 결과를 낳음: 저비용 중국 모델이 제한되면 미국 모델 제공사의 점유율·가격결정력은 상승하나, 인퍼런스 비용 상승이 기업 도입 속도를 늦출 수 있고, Physical AI에서는 비중국 로봇 OEM 보호와 부품 비용 상승·보복 리스크가 공존</li>
+        <li>전체 3,800개 커버리지 종목을 'AI Sovereignty &amp; Semi Localization' 테마로 매핑 — <b>시장에서 가장 빠르게 성장하는 테마 그룹 중 하나</b>이며 밸류에이션 프리미엄 동반</li>
+        <li>미국의 데이터센터 전면 중단·모라토리엄 가능성은 낮게 평가 — 컴퓨트 역량이 전략 인프라로 간주되는 상황에서 국내 build-out 제한은 대중국 경쟁력 약화 리스크. 중간선거 이후에도 AI 정책 이니셔티브는 <b>선거 결과와 무관하게 유사한 방향</b>(초당적 전략 우선순위) 전망</li>
+      </ul>
+
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>지역</th><th>Sovereign AI 전략</th><th>핵심 과제</th><th>리포트 시각 / 수혜</th></tr></thead>
+        <tbody>
+          <tr><td><b>미국</b></td><td>인프라·칩·클라우드 플랫폼·모델·데이터 전반의 리더십 구축·보호, 기술 통제 강화</td><td>국가안보 규제와 혁신·글로벌 AI 도입 간 균형</td><td>Capex 사이클 강화, 규제 확대 가능성 병존 — 인프라, Microsoft, CoreWeave, Nebius, 네트워킹, 데이터센터·전력 인프라</td></tr>
+          <tr><td><b>중국</b></td><td>Localization·국내 조달·자체 인프라를 통한 자급 생태계 + China-호환 생태계의 해외 확장</td><td>수출 통제, 선진 칩 접근 제한, 선진시장 진입 장벽</td><td>분절화가 국내 도입·Global South 확장을 가속 — 국내 반도체, sovereign 클라우드, 통신 인프라, 데이터센터, 전력 장비</td></tr>
+          <tr><td><b>유럽</b></td><td>국내 컴퓨트·클라우드·반도체·AI 역량으로 전략적 자율성 추구</td><td>대규모 자금조달 요구 &amp; 시장 분절 — 재원 계획 부재</td><td>장기 기회는 상당하나 배치·실행이 관건 — 데이터센터, 클라우드 인프라, 반도체 제조, 디지털 주권 이니셔티브</td></tr>
+          <tr><td><b>ASEAN</b></td><td>국내 인프라 + 신뢰 기반 국제 파트너십을 통한 sovereign AI</td><td>Frontier AI·반도체 역량 제한, 외부 기술 의존</td><td>가장 빠르게 성장하는 sovereign AI 인프라 기회 — Singtel 등 통신사, sovereign 클라우드, 데이터센터, GPU 인프라</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3 class="sec" id="sec-us"><span class="n">2</span>미국 — 규제의 형태·실행수단·타이밍: 'Frontier에서 통제, 그 아래는 개방'</h3>
+      <ul class="pts">
+        <li>중국 AI 모델 사용에 대한 규제 확률 상승 — 의회 교착(NDAA·CR·3차 reconciliation 등 현안 산적)을 감안하면 <b>행정부 주도</b>가 유력. 목표는 중국의 선진 AI 접근 제한 + 지정 중국 기술의 미국 내 유통 제한</li>
+        <li>Base case는 <b>'graduated' 중간 경로</b>: 1) open-weight 모델의 확산·개발·접근은 일정 수준 허용, 2) 미국 frontier LLM IP 탈취 방지 — 특정 중국 AI 모델 개발사를 제한 리스트에 올려 미국 기업의 해당 모델 사용을 금지하는 방식. 즉 <b>전면 금지(blanket ban)가 아닌 'open below the frontier, controlled at the frontier'</b></li>
+        <li>기존 행정부 수단: BIS Entity List 확대(중국 AI 랩 추가 시 미국 클라우드의 호스팅 제거·라이선스 종료·마켓플레이스 삭제 가능), Commerce의 <b>ICTS(connected software applications) 심사</b>, OFAC/IEEPA 제재, DOJ 대량 민감정보 거래 제한, FTC 'algorithmic disgorgement'(불법 취득 데이터로 학습된 모델 삭제 명령), BIS Affiliates Rule(지분 50%+ 자회사 자동 적용) 등</li>
+        <li>입법 경로: <b>AI OVERWATCH Act</b>(최고성능 칩 수출 제한 codify, 특정 수출 승인에 의회 심사)와 <b>MATCH Act</b>(반도체 장비 통제 강화 + 네덜란드 등 동맹국 정렬) — <b>FY27 NDAA(연내 통과 예상)에 일부 조항 포함 가능성</b>, 하원-상원 협상이 관건</li>
+        <li>행정부 발언도 강경화: 4월 백악관 과학보좌관 Kratsios "중국 기관들의 조직적·산업적 규모의 (모델) 추출 캠페인 진행 중, 확인 시 처벌 메커니즘 개발" / 7월 재무장관 Bessent "도난된 미국 기술을 쓰는 개발사 제재 권한 보유… IP 탈취 선을 넘는 covert·industrial-scale distillation 공격에는 제재와 Entity List 지정이 테이블 위에 있다"</li>
+        <li>미국 정부 관점의 효과: 1) 기존 관계 범위를 넘는 확전 회피로 대중 전략적 안정 유지, 2) 미국 모델 distillation 기반으로 개발됐다고 보는 중국 모델 사용 제한, 3) 미국 frontier LLM 개발사의 IP 보호(자본조달 지속 뒷받침), 4) 타깃되지 않은 미·중 기업의 open 모델 접근은 유지</li>
+      </ul>
+
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>밸류체인</th><th>주요 정책 수단</th><th>내용</th><th>권한</th></tr></thead>
+        <tbody>
+          <tr><td rowspan="4"><b>AI 모델<br>(미국 내 사용·호스팅)</b></td><td>Entity List 확대</td><td>BIS가 특정 중국 AI 랩 추가 → 미국 클라우드 de-host, 기업 소프트웨어 라이선스 종료, 마켓플레이스 삭제 압박</td><td>행정부 (Commerce)</td></tr>
+          <tr><td>ICTS 심사 ('connected software applications')</td><td>국가안보 리스크로 판단되는 외국 연계 소프트웨어·클라우드·AI 앱 거래 심사·금지 — 미국 기업의 중국 모델 국내 사용 금지 가능</td><td>행정부 (open-weight 예외 여지)</td></tr>
+          <tr><td>OFAC/IEEPA 제재</td><td>중국 AI 랩 지정 시 미국 재산 차단·상업 거래 금지 — 모델 자유 다운로드 자체를 차단 가능</td><td>행정부 (Treasury)</td></tr>
+          <tr><td>연방 조달 금지 / 신규 입법</td><td>연방기관·계약자의 중국 AI 모델 사용·구매 금지, 모델 사용 금지 입법(DAAMTA 등)</td><td>행정부·의회</td></tr>
+          <tr><td rowspan="2"><b>칩·장비 수출</b></td><td>AI OVERWATCH Act</td><td>최고성능 AI 칩 수출을 foreign-military-sale 방식으로 재분류, 의회 심사 도입 — FY27 NDAA 포함 가능성</td><td>입법 (FY27 NDAA)</td></tr>
+          <tr><td>MATCH Act</td><td>반도체 제조장비(특히 DUV) 대중 수출 통제 강화 + 동맹국(네덜란드·일본) 정렬</td><td>입법 (FY27 NDAA 가능)</td></tr>
+          <tr><td><b>클라우드·컴퓨트</b></td><td>'Know Your Customer' 규정</td><td>미국 클라우드에 제한 대상 최종사용자 스크리닝 의무화, 중국 모델 학습용 컴퓨트 우회 차단</td><td>행정부 (Commerce/BIS)</td></tr>
+          <tr><td><b>자본·투자</b></td><td>Outbound 투자 심사 / CFIUS</td><td>중국 AI·반도체 기업에 대한 미국 투자 제한·심사</td><td>행정부 (Treasury, IEEPA/FIRRMA)</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="callout"><span class="t">경제 파급 — AI와 미국 노동시장</span>AI 노출도가 높은 직군의 잔여 실업률은 경기순환 요인으로 설명 가능한 수준 대비 <b>+0.5pp</b>(전체 실업률 기준 +0.15pp 초과 실업) — 아직 micro story이나 가시성 확대, 해당 이직자들의 실업 기간 장기화 증거도 관찰. 생산성 측면에서는 2025년 생산성 증가 2.4pp 중 <b>1.7pp가 기술 등 고노출 산업</b>에서 발생 — 하이퍼스케일러 capex가 build-out 국면의 산출 성장을 견인하고 있으며, 전 산업 확산에는 수년~10년 이상 소요 전망. 대부분의 보정된 확산 속도 하에서 미국 경제의 AI 전환은 관리 가능하다는 판단.</div>
+
+      <h3 class="sec" id="sec-cn"><span class="n">3</span>중국 — Localization을 통한 생태계 구축, 그리고 Global South</h3>
+      <ul class="pts">
+        <li>중국 AI 전략의 핵심은 frontier 역량 경쟁이 아닌 <b>확산(diffusion)</b> — 배포 속도·비용 효율·시스템 통합에 강점. 2025년 8월 국무원 <b>'AI Plus' 가이드라인</b>: 차세대 지능형 단말·AI 에이전트 보급률 <b>2027년 70%, 2030년 90%</b> 목표</li>
+        <li>2026년 4월 정치국 <b>'Six Networks'(六网) 지침</b>: 컴퓨트 네트워크를 수도·전력·물류와 동급의 국가 전략 인프라로 격상 — <b>15차 5개년(2026–30) 총 capex RMB 35tn 이상</b>, 2026년 컴퓨트 네트워크에만 RMB 1tn. 전국 AI 데이터센터 네트워크에 5년간 <b>RMB 2tn(~$295bn)</b>, China Mobile·China Telecom 운영, <b>국산 하드웨어(Huawei 등) 80% 이상</b> 의무</li>
+        <li>시장접근 통제: 공개 서비스는 CAC 등록·보안평가·알고리즘 등록 의무 — <b>Apple Intelligence는 글로벌 스택 대신 Alibaba Qwen 통합으로 2026년 7월 15일 CAC 등록 완료</b>, Tesla China는 국산 LLM Doubao를 음성비서로 탑재. 전면 금지 없이도 현지 모델 파트너·데이터 국내 저장·승인 플랫폼 유통 요구로 미국 AI를 사실상 배제</li>
+        <li>Countermeasure toolkit: 2023년 Micron 사이버보안 심사(핵심 정보 인프라 조달 금지), <b>갈륨·게르마늄·안티몬·희토류 수출 라이선스</b>, Unreliable Entity List — 광범위 적용보다 선별적 대응 수단</li>
+        <li>해외 확장: <b>WAICO(세계AI협력기구) 창립협정에 29개국 서명</b>(HQ 상하이), 개도국 대상 <b>5년간 5,000명 AI 트레이닝</b>, AI 기상경보 시스템 30개국 확대 — Global South가 AI 표준의 swing market. 중국의 가치제안은 'best frontier model'이 아닌 <b>"good-enough, affordable, deployable, financeable AI"</b>(공공재 성격)</li>
+        <li>수출 패키지: 모델(open-weight LLM)·컴퓨트(보조금 클라우드)·인프라(통신망·DC·전력·냉각)·훈련/거버넌스·파이낸싱(정책은행·SOE 펀딩) — 앞의 3개는 상업적 가치평가 가능, 뒤의 2개는 'National Service' 성격으로 <b>주주수익률에 단기 희석적</b>일 수 있음</li>
+        <li>주식 전략: <b>A주 시장이 가장 넓은 기회</b>(하드테크 자급, AI 서버, 광모듈, 전력/그리드/냉각), 홍콩은 멀티레이어 수익화가 가능한 하이퍼스케일러 선호 — pure-play LLM보다 우선. 무분별한 AI beta 지양: 수주 가시성·가격결정력·병목 포지션·이익 전환 트랙레코드 중심</li>
+      </ul>
+
+      <h3 class="sec" id="sec-eu"><span class="n">4</span>유럽 — 이니셔티브는 많지만, 재원 계획이 없다</h3>
+      <ul class="pts">
+        <li>EU는 핵심 디지털 제품·서비스·인프라·IP의 <b>80% 이상을 역외에 의존</b> — LLM frontier 모델, AI 칩, 클라우드 인프라 모두 핵심 종속. 문제는 우선순위 여부가 아니라 '전략적 자율성' 달성 가능성</li>
+        <li>2024 Draghi 리포트: 2025–30 총 투자 수요 <b>€750–800bn</b> — 이 중 디지털 리더십에 €150bn(연 GDP의 0.8pp), 혁신 통한 생산성 제고에 €100–150bn. 'EU Cloud and Development Act' 실행률 23%, 'EU Chips Act' 17%에 불과(진행 중 이니셔티브 감안 시 60%·80%까지 상향 가능)</li>
+        <li>'Tech Sovereignty package'가 인정한 투자 수요: <b>반도체 생태계 €120bn + 데이터센터 capacity 확장 €200bn + 클라우드·AI 리더십(AI Factories·Gigafactories 배치 포함) €100bn</b> — 그러나 명확한 재원 조달 계획 부재</li>
+        <li>실행 중 수단: EuroHPC JU(<b>AI Factory 19곳 + Antenna 13곳</b>), InvestAI(민간 포함 <b>€200bn</b> 동원 목표, 공공자금 €20bn으로 AI Gigafactories 배치), 2026년 6월 Chips Act 2.0·CADA(Cloud and AI Development Act — 5~7년 내 EU DC capacity <b>최소 3배</b> 목표) 제안</li>
+        <li>재원 경로: 1) 2028–34 MFF 내 European Competitiveness Fund(<b>€234bn</b> 목표, 디지털 리더십 €51.5bn), 2) NGEU 2.0 스타일 전용 프로그램(1차 NGEU는 €750bn) — 다만 고령화·국방·이자비용 부담으로 재정 여력 제약, <b>민간이 heavy lifting을 해야 하는 구조</b></li>
+        <li>데이터센터: 유럽 DC capacity 장기 전망 상향(<b>35GW → 41GW by 2035e</b>, 누적 build-out 비용 ~€1.5tr) — 성장은 미국에 뒤지지만 장기 전망은 견조. FLAPD 허브를 넘어 북프랑스·영국·북스페인·노르웨이 등 secondary 시장이 2030년대 초 FLAPD 추월 전망, <b>풍부한 원전 전력을 보유한 프랑스가 유럽 AI 인프라 허브 후보</b></li>
+      </ul>
+
+      <div class="chart-card">
+        <div class="ct">유럽 데이터센터 capacity 전망 — 장기 추정 +15% 상향 (35GW → 41GW by 2035e)</div>
+        <div class="legend">
+          <span><i style="background:#00264d"></i>NEW Forecasts</span>
+          <span><i style="background:#9fc4e8"></i>OLD Forecasts</span>
+        </div>
+        <svg viewBox="0 0 880 300" width="100%">
+          <line x1="60" y1="20" x2="60" y2="260" stroke="#cfd6e0"/>
+          <line x1="60" y1="260" x2="860" y2="260" stroke="#cfd6e0"/>
+          <text x="52" y="264" font-size="11" fill="#8a93a3" text-anchor="end">0</text>
+          <line x1="60" y1="205" x2="860" y2="205" stroke="#eef1f6"/><text x="52" y="209" font-size="11" fill="#8a93a3" text-anchor="end">10GW</text>
+          <line x1="60" y1="150" x2="860" y2="150" stroke="#eef1f6"/><text x="52" y="154" font-size="11" fill="#8a93a3" text-anchor="end">20GW</text>
+          <line x1="60" y1="95" x2="860" y2="95" stroke="#eef1f6"/><text x="52" y="99" font-size="11" fill="#8a93a3" text-anchor="end">30GW</text>
+          <line x1="60" y1="40" x2="860" y2="40" stroke="#eef1f6"/><text x="52" y="44" font-size="11" fill="#8a93a3" text-anchor="end">40GW</text>
+          <!-- pairs: year, new, old (GW): 2024a 7.5/7 · 2026e 10/9.5 · 2028e 14.5/14 · 2030e 21.5/20 · 2032e 29.5/26 · 2034e 37/32.5 · 2035e 41/35.5 ; scale 5.5px/GW -->
+          <g>
+            <rect x="90"  y="218.75" width="26" height="41.25" fill="#00264d"/><rect x="119" y="221.5" width="26" height="38.5" fill="#9fc4e8"/>
+            <text x="117" y="278" font-size="11" fill="#525866" text-anchor="middle">2024a</text>
+            <rect x="200" y="205" width="26" height="55" fill="#00264d"/><rect x="229" y="207.75" width="26" height="52.25" fill="#9fc4e8"/>
+            <text x="227" y="278" font-size="11" fill="#525866" text-anchor="middle">2026e</text>
+            <rect x="310" y="180.25" width="26" height="79.75" fill="#00264d"/><rect x="339" y="183" width="26" height="77" fill="#9fc4e8"/>
+            <text x="337" y="278" font-size="11" fill="#525866" text-anchor="middle">2028e</text>
+            <rect x="420" y="141.75" width="26" height="118.25" fill="#00264d"/><rect x="449" y="150" width="26" height="110" fill="#9fc4e8"/>
+            <text x="447" y="278" font-size="11" fill="#525866" text-anchor="middle">2030e</text>
+            <rect x="530" y="97.75" width="26" height="162.25" fill="#00264d"/><rect x="559" y="117" width="26" height="143" fill="#9fc4e8"/>
+            <text x="557" y="278" font-size="11" fill="#525866" text-anchor="middle">2032e</text>
+            <rect x="640" y="56.5" width="26" height="203.5" fill="#00264d"/><rect x="669" y="81.25" width="26" height="178.75" fill="#9fc4e8"/>
+            <text x="667" y="278" font-size="11" fill="#525866" text-anchor="middle">2034e</text>
+            <rect x="750" y="34.5" width="26" height="225.5" fill="#00264d"/><rect x="779" y="64.75" width="26" height="195.25" fill="#9fc4e8"/>
+            <text x="777" y="278" font-size="11" fill="#525866" text-anchor="middle">2035e</text>
+            <text x="763" y="26" font-size="12" font-weight="700" fill="#00264d">41GW</text>
+          </g>
+        </svg>
+      </div>
+
+      <h3 class="sec" id="sec-asia"><span class="n">5</span>아시아·ASEAN — 데이터센터 렌즈: '자본 자급'이 아닌 '선별적 통제'</h3>
+      <ul class="pts">
+        <li>아시아 sovereign AI는 자본 자급자족과 동의어가 아님 — 현실적 모델은 <b>전략 레이어(데이터·물리적 컴퓨트 접근·전력·규제)의 선별적 국내 통제 + 외국 자본·기술·크로스보더 debt의 결합</b></li>
+        <li>포워드 파이프라인은 <b>인도·중국 본토·말레이시아</b>에 집중(파이프라인 국가 비중: 중국 45%, 인도 13%). 6대 시장에서 국내 사업자의 파이프라인 점유율은 pre-2020 대비 하락: 인도 62%→37%, 말레이시아 70%→27%→파이프라인 21%(싱가포르계 사업자만 ~36%), 일본 파이프라인 37%, 호주 59% — 중국만 국내 앵커 유지, 싱가포르는 예외적으로 ~42%→64%(자국 사업자의 지역 플랫폼화)</li>
+        <li>하이퍼스케일러(AWS·Microsoft·Google, 말레이시아는 Oracle) 공표 투자: <b>인도 $80bn+ &gt; 호주 $45bn+ &gt; 일본 $25bn+ &gt; 싱가포르 $18bn+ &gt; 말레이시아 $14–16bn &gt; 한국 $10bn+ &gt; 인도네시아 $7bn+</b>, 중국은 domestic-led</li>
+        <li>자본 구조 5유형: 하이퍼스케일러 자체 capex(Microsoft 일본 $10bn, 2026–29) / JV·프로젝트 파이낸스(SK–AWS 울산 AI Zone: SK 7조원($5.1bn) 투자, AWS 15년 약정 $4bn 포함) / 국제 신디케이트 debt(AdaniConneX $1.44bn) / 플랫폼 M&amp;A / 국부·국가펀드 공동투자</li>
+        <li>국가별 프레임: 일본 2차 AI Basic Plan(2026.7.14)이 <b>'open AI sovereignty'를 명시</b> — 특정 벤더·국가 과의존 없는 컴퓨트·데이터·모델·반도체·통신·전력의 전략적 자율성. 인도 IndiaAI Mission(컴퓨트 접근 민주화), 싱가포르 NAIS 2.0(거버넌스 주도·trusted hub), 호주 National AI Plan(파트너십 주도), 말레이시아 13차 계획('Made by Malaysia'), 인도네시아 National AI Roadmap</li>
+        <li><b>ASEAN AI 관련 capacity 3.3GW(2025) → ~19GW(2035e), 약 6배(+19% CAGR)</b> — 국영 통신사·유틸리티와 협력 구축. 2035e ASEAN DC 비중: <b>말레이시아 52%</b>·태국 16%·싱가포르 13%(2025년 싱가포르 29%·말레이시아 56%→ 말레이·태국이 최대 시장화)</li>
+        <li><b>Singtel(싱가포르)</b>: NVIDIA 기반 AI Factory를 동남아 전역에 구축, Bridge Alliance(35개 통신사)로 GPU-as-a-Service(GPUaaS) 확장 — AIS·Maxis·Telkomsel 조기 도입. DC capacity <b>62MW → 2026년말 200MW+(224MW)</b>, 파이프라인 400MW+. NVIDIA와 Applied AI CoE 설립(싱가포르 대기업·정부기관 50–60곳), Nxera 모델을 태국(GULF·AIS)·인도네시아(Telkomsel·Medco)·말레이시아(TM·TNB)로 복제</li>
+        <li><b>Indosat(인도네시아)</b>: GoTo와 공동개발한 open-source Bahasa LLM 'Sahabat-AI', H100 기반 AI Factory(20+ 기업 서비스), Nokia+NVIDIA AI-RAN 연구센터 — AI 매출 1H26 $33mn, <b>F26 $100mn(매출의 ~3%) → F27e $300mn+(9%, EBITDA 마진 80%)</b> 목표, AI capex $628mn. Zankore(2026.8 발표): NVIDIA DSX 기반 <b>1GW 목표 풀스택 AI 팩토리, 1단계 ~200MW를 GB300 NVL72로 2027년 상반기</b></li>
+      </ul>
+
+      <div class="chart-card">
+        <div class="ct">APAC 하이퍼스케일러 공표 투자 규모 (국가별, US$bn)</div>
+        <svg viewBox="0 0 880 300" width="100%">
+          <!-- scale: 8.6px per $bn, base x=150 -->
+          <g font-size="12.5" fill="#3a4150">
+            <text x="140" y="38" text-anchor="end">인도</text>
+            <rect x="150" y="24" width="688" height="20" fill="#00264d"/>
+            <text x="830" y="38" text-anchor="end" fill="#fff" font-weight="700">~$80bn+</text>
+            <text x="140" y="74" text-anchor="end">호주</text>
+            <rect x="150" y="60" width="387" height="20" fill="#0077c8"/>
+            <text x="545" y="74" fill="#00264d" font-weight="700">~$45bn+</text>
+            <text x="140" y="110" text-anchor="end">일본</text>
+            <rect x="150" y="96" width="215" height="20" fill="#0077c8"/>
+            <text x="373" y="110" fill="#00264d" font-weight="700">~$25bn+</text>
+            <text x="140" y="146" text-anchor="end">싱가포르</text>
+            <rect x="150" y="132" width="155" height="20" fill="#0077c8"/>
+            <text x="313" y="146" fill="#00264d" font-weight="700">~$18bn+</text>
+            <text x="140" y="182" text-anchor="end">말레이시아</text>
+            <rect x="150" y="168" width="129" height="20" fill="#0077c8"/>
+            <text x="287" y="182" fill="#00264d" font-weight="700">~$14–16bn</text>
+            <text x="140" y="218" text-anchor="end">한국</text>
+            <rect x="150" y="204" width="86" height="20" fill="#0077c8"/>
+            <text x="244" y="218" fill="#00264d" font-weight="700">~$10bn+</text>
+            <text x="140" y="254" text-anchor="end">인도네시아</text>
+            <rect x="150" y="240" width="60" height="20" fill="#0077c8"/>
+            <text x="218" y="254" fill="#00264d" font-weight="700">~$7bn+</text>
+            <text x="150" y="290" font-size="11" fill="#8a93a3">중국: Domestic-led (Alibaba·ByteDance 등 자국 주도, 국가 단위 공시 불투명)</text>
+          </g>
+        </svg>
+        <div class="chart-src">Source: Company announcements, Bloomberg</div>
+      </div>
+
+      <h3 class="sec" id="sec-kr"><span class="n">6</span>한국 — 민관 협력으로 약한 고리 보강, 'AI G3' 전략</h3>
+      <ul class="pts">
+        <li>한국은 AI를 국가 전략 산업으로 격상, <b>세계 3대 AI 강국(AI G3)</b> 목표 — 완전 자급이 아닌 "핵심 역량 통제 + 글로벌 AI 생태계 활용"의 전략적 자율성. 대통령 직속 National AI Strategy Committee가 총괄, 2026년 1월 <b>AI Basic Act</b> 시행(고영향 AI·생성형 AI 투명성 규정)</li>
+        <li><b>Sovereign AI 파운데이션 모델 컨소시엄</b>: 토너먼트식 경쟁 진행 중, <b>8월 26일 신청 마감 — NAVER Cloud(클라우드+인터넷 생태계), LG AI Research(엔터프라이즈·산업 AI), SK Telecom(통신+AI 인프라), Upstage(AI 네이티브 독립 개발사)</b> 참여 예상, 단 1개 컨소시엄만 선정되어 NVIDIA B200 256개를 10개월간 지원받고 결과물은 오픈소스 공개</li>
+        <li>정부 지원: National Growth Fund(5년 KRW 150tn(~$100bn+), AI·반도체에 KRW 50tn), National AI Computing Center, 대규모 GPU 조달(기존 계획 대비 15배+ 확장), <b>2026년 AI 예산 ~KRW 10tn(전년 대비 3배+), 민관 합산 최대 KRW 30tn</b></li>
+        <li><b>'Three Mega Investment Projects'(2026.6.29 발표)</b>: 총 <b>KRW 2,000tn+(~US$1.5tr)</b>, 역대 최대 국내 투자 — 효과적 실행 시 <b>2030년까지 GDP 성장 +50–70bps</b>, AI 생산성 향상 시 추가 +100–150bps</li>
+        <li>실행 리스크: 전력·용수·부지·인허가 확보가 핵심 병목 — KEPCO·규제기관·정부부처 간 논의 진행 중, 대형 AI DC는 지방 입지가 유력해 승인·계통 연결 지연 리스크. 중앙정부의 지속적 정책 지원이 관건</li>
+      </ul>
+
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>프로젝트</th><th>개요</th><th>세부 내용</th></tr></thead>
+        <tbody>
+          <tr><td><b>1. 반도체 클러스터</b></td><td>삼성전자·SK하이닉스 대형 건설 투자 + 첨단 패키징 허브(청주권) KRW 81tn</td><td>— 삼성전자: 2040년 12월까지 <b>~KRW 2,450tn</b> 투자(반도체 KRW 2,100tn — 용인·강월 칩 클러스터 확장, 천안·온양 HBM fab, 구미 휴머노이드 로봇 생산라인), 호남권 AI 칩·로봇·배터리·IT 부품에 추가 KRW 625tn<br>— SK하이닉스: <b>KRW 1,100tn</b>으로 청주 AI 메모리 생산 네트워크 구축(용인 클러스터 KRW 600tn + 남서권 신규 클러스터 KRW 400tn), 용인 4번째 fab 2033년 완공(기존 2045 대비 대폭 앞당김)</td></tr>
+          <tr><td><b>2. AI 데이터센터</b></td><td>민관 합동 KRW 550tn, 2029년까지 8.4GW → 2035년 15GW</td><td>— SK텔레콤: <b>2029년부터 15GW를 단계 개발(1차 5GW) + 추가 10GW</b><br>— SK그룹: AWS 협력 울산 AI 데이터센터(2027년 가동), Nvidia 협업 차세대 DC 계획<br>— 세종 데이터센터 프로젝트에 한국 인터넷 포털·Nvidia 참여</td></tr>
+          <tr><td><b>3. Physical AI·로보틱스</b></td><td>향후 3년을 physical AI 강국 도약의 'golden time'으로 규정</td><td>— 삼성: 구미(북구미)에 휴머노이드 로봇 공장 설립, <b>2028년까지 10개 산업에 휴머노이드 상용화</b> 목표<br>— 제조업 경쟁력과 로보틱스 간 시너지 극대화, 종합 데이터 관리 시스템 구축</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <ul class="pts" style="margin-top:16px;">
+        <li><b>SK그룹</b>: SK텔레콤 울산 클러스터(최대 1GW, 1단계 100MW는 AWS 사용·2027년 하반기 가동), 2026년 7월 NVIDIA와 <b>Vera Rubin 시스템 + SK하이닉스 HBM 기반 최대 2GW AI DC</b> 개발 계획 공개, 신설 법인 SK Hyper로 토큰 수요 대응 — 울산을 base로 전국 복제·확장</li>
+        <li><b>삼성SDS</b>: 구미 풀스택 AI DC — 고전력 GPU rack + 하이브리드 공랭·수냉, <b>1단계 60MW(2029년 3월 상업화 목표) → 120MW 확장</b>, 삼성 관계사(삼성전자 포함) 토큰 capacity 공급. National AI Computing Center 컨소시엄 주도 — <b>2028년까지 첨단 GPU 15,000개+ 배치</b>, 정부기관·R&amp;D 시설 대상</li>
+        <li><b>KT</b>: 5년 내 DC capacity 1GW로 확대 — 레거시 통신 부동산의 엣지 AI 인퍼런스 활용 + 해저케이블 투자 확대, <b>2031년 AI DC 매출 W4.4tn</b> 목표(고객 수요 초기 지표 기반)</li>
+      </ul>
+
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>종목</th><th>서브테마</th><th>등급</th><th class="num">목표가 (KRW)</th></tr></thead>
+        <tbody>
+          <tr><td><b>삼성전자</b> (005930.KS)</td><td>AI Adopters + Compute Infra</td><td class="buy">Overweight</td><td class="num">381,000</td></tr>
+          <tr><td><b>SK하이닉스</b> (000660.KS)</td><td>AI Compute Infrastructure</td><td class="buy">Overweight</td><td class="num">2,600,000</td></tr>
+          <tr><td><b>삼성전기</b> (009150.KS)</td><td>AI Adopters + Compute Infra</td><td class="buy">Overweight</td><td class="num">2,620,000</td></tr>
+          <tr><td><b>HD현대일렉트릭</b> (267260.KS)</td><td>AI Compute Infrastructure</td><td class="buy">Overweight</td><td class="num">1,500,000</td></tr>
+          <tr><td><b>삼성SDS</b> (018260.KS)</td><td>AI Compute Infrastructure</td><td class="buy">Overweight</td><td class="num">270,000</td></tr>
+          <tr><td><b>카카오</b> (035720.KS)</td><td>AI Adopters</td><td class="buy">Overweight</td><td class="num">70,000</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="callout"><span class="t">참고</span>한국 커버리지 중 AI가 투자 논거의 중심인 'Core to Thesis' 6개 종목 — AI Adopters와 AI Compute Infrastructure 카테고리에 걸쳐 전 종목 Overweight.</div>
+
+      <h3 class="sec" id="sec-theme"><span class="n">7</span>투자 테마 — AI Sovereignty &amp; Semi Localization: 가장 빠르게 성장하는 테마</h3>
+      <ul class="pts">
+        <li>글로벌 Thematic Map에 'AI Sovereignty &amp; Semi Localization' 서브테마 신설 — 3,800개 커버리지 전 종목의 노출 중요도(materiality)를 매핑. 섹터 구성: <b>반도체 24.7%, 테크 하드웨어 17.1%, 통신 13.1%, 자본재 10.9%</b>, 지역 구성: EMEA 25%, Americas 23%, Japan 22%, China/HK 17%</li>
+        <li>Core-to-Thesis/Significant/Moderate 종목의 median 기준 <b>2027–28 EPS 성장 컨센서스 high-teens</b> — 성장·밸류에이션 맵 최상단(NTM P/E ~20x 전후). 7월 모멘텀 반전·de-crowding으로 밸류에이션은 고점 대비 조정</li>
+        <li>최근 조정은 펀더멘털과 무관 — <b>이익 추정치 상향 폭(earnings revisions breadth)은 2Q26 들어 가속</b>, 정체 조짐 없음. 1차 자본시장 활동도 견조(CXMT가 최근 중국 시총 1위 등극)</li>
+        <li>Open vs Closed 논쟁: 기업의 60%+가 closed·open-weight 혼용, Artificial Analysis Intelligence Index 상위 5개 오픈소스 모델은 모두 중국계 — 중국 모델 금지 시 글로벌 도입에 파급. <b>미국 open-weight 생태계 중요성 부각</b>: Meta가 8월 10일 Muse Glimmer·Muse Spark 1.2 weights 공개(open-weight 회귀), Thinking Machines(비중국 최고 성능), Cohere, Ai2, Reflection AI('서구의 DeepSeek'), Arcee, Mistral 등 주목</li>
+        <li>US 소프트웨어: <b>Microsoft가 sovereign AI의 가장 명확한 풀스택 수혜</b> — Sovereign Public/Private Cloud, National Partner Clouds(프랑스 Bleu, 독일 Delos), Azure Local·M365 Local·Foundry Local로 통제·차단 환경 지원. <b>Nebius</b>는 Missouri·Pennsylvania 캠퍼스 각 최대 1.2GW의 미국 중심 build + 현지 소유 인프라에 클라우드 스택을 얹는 파트너십 모델, <b>CoreWeave</b>는 자산의 88%가 미국(49개 DC), CoreWeave Federal·SUNK Anywhere로 확장</li>
+        <li>Colocation DC(EQIX·DLR·CSQR)는 <b>'어느 칩·모델이 이기든' 컴퓨트의 위치와 연결에 노출되는 클린한 수혜</b> — Equinix가 최선호: Fabric Geo Zones로 국가 내 트래픽 geofence, 인터커넥션 수익화. 로보틱스: 7월 28일 FCC가 외국산 '첨단 로봇 기기'를 Covered List에 추가 — 미국산 인정에 국내 부품비중 65%(2028)→75%(2029) 요구, 중국이 희토류 자석 공급의 &gt;94% 통제(IEA) — 비중국 로봇 OEM(Tesla·Figure·Agility 등)에 단기 우호적이나 부품 의존·보복 리스크 병존</li>
+      </ul>
+
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Ticker</th><th>기업</th><th>Materiality</th><th>산업</th><th>등급</th><th class="num">목표가</th><th class="num">Base 대비</th></tr></thead>
+        <tbody>
+          <tr><td>005930.KS</td><td><b>Samsung Electronics</b></td><td>Core to Thesis</td><td>Tech Hardware</td><td class="buy">OW</td><td class="num">₩381,000</td><td class="num">+42%</td></tr>
+          <tr><td>TXN.O</td><td><b>Texas Instruments</b></td><td>Core to Thesis</td><td>Semiconductors</td><td>UW</td><td class="num">$255.0</td><td class="num">-8%</td></tr>
+          <tr><td>2317.TW</td><td><b>Hon Hai Precision</b></td><td>Core to Thesis</td><td>Tech Hardware</td><td class="buy">OW</td><td class="num">NT$310.0</td><td class="num">+18%</td></tr>
+          <tr><td>688256.SS</td><td><b>Cambricon</b></td><td>Core to Thesis</td><td>Semiconductors</td><td class="buy">OW</td><td class="num">Rmb1,408.0</td><td class="num">+27%</td></tr>
+          <tr><td>0981.HK</td><td><b>SMIC</b></td><td>Core to Thesis</td><td>Semiconductors</td><td class="buy">OW</td><td class="num">HK$85.0</td><td class="num">+26%</td></tr>
+          <tr><td>AMAT.O</td><td><b>Applied Materials</b></td><td>Significant</td><td>Semiconductors</td><td class="buy">OW</td><td class="num">$646.0</td><td class="num">+18%</td></tr>
+          <tr><td>LRCX.O</td><td><b>Lam Research</b></td><td>Significant</td><td>Semiconductors</td><td class="buy">OW</td><td class="num">$367.0</td><td class="num">+13%</td></tr>
+          <tr><td>BABA.N</td><td><b>Alibaba</b></td><td>Significant</td><td>Cons. Discret.</td><td class="buy">OW</td><td class="num">$180.0</td><td class="num">+44%</td></tr>
+          <tr><td>EQIX.O</td><td><b>Equinix</b></td><td>Significant</td><td>REITs</td><td class="buy">OW</td><td class="num">$1,250.0</td><td class="num">+17%</td></tr>
+          <tr><td>8035.T</td><td><b>Tokyo Electron</b></td><td>Significant</td><td>Semiconductors</td><td class="buy">OW</td><td class="num">¥65,000</td><td class="num">+9%</td></tr>
+          <tr><td>1810.HK</td><td><b>Xiaomi</b></td><td>Significant</td><td>Tech Hardware</td><td class="buy">OW</td><td class="num">HK$32.0</td><td class="num">+24%</td></tr>
+          <tr><td>DTEGn.DE</td><td><b>Deutsche Telekom</b></td><td>Significant</td><td>Telecoms</td><td class="buy">OW</td><td class="num">€38.0</td><td class="num">+34%</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="callout"><span class="t">주목</span>Top 50 글로벌 수혜주(시총 $3bn+, materiality·시총순) 중 발췌 — 최상위에는 SpaceX(비상장 밸류에이션 $1.7tr)와 삼성전자가 위치하며, 중국 semi localization 체인(Cambricon·SMIC·NAURA·Hua Hong 등)과 미·일 장비주가 폭넓게 포진.</div>
+
+      <h3 class="sec"><span class="n">8</span>'3 States of the World' — 모델 생태계 시나리오별 수혜주</h3>
+      <div class="bbgrid">
+        <div class="bb bull">
+          <div class="lbl">Scenario 1 · Closed 모델 승리</div>
+          <div class="px">소수 frontier lab 독주</div>
+          <ul>
+            <li>하이퍼스케일 DC·커스텀 칩 레버리지 선호</li>
+            <li>클라우드: GOOGL, AMZN / 모델: GOOGL, META</li>
+            <li>보안 SW: PANW, CRWD, ZS / 네트워킹: ANET, LITE, COHR</li>
+            <li>전력: BE, INIO, SEI, WMB, LBRT / Semis: NVDA, AVGO</li>
+          </ul>
+        </div>
+        <div class="bb base">
+          <div class="lbl">Scenario 2 · Hybrid (혼용)</div>
+          <div class="px">멀티모델 워크플로우 확산</div>
+          <ul>
+            <li>on-prem/클라우드 병행 — 오케스트레이션·observability 수혜</li>
+            <li>클라우드: AMZN, GOOGL, MSFT / 인프라 SW: DDOG, PLTR, APPN</li>
+            <li>SaaS: SAP, NOW / 네트워킹: CSCO, FFIV / Semis: NVDA</li>
+            <li>Colocation: EQIX, DLR / Neocloud: CRWV, NBIS</li>
+          </ul>
+        </div>
+        <div class="bb bear">
+          <div class="lbl">Scenario 3 · Open 모델 승리</div>
+          <div class="px">토큰 비용 하락·확산 가속</div>
+          <ul>
+            <li>on-prem·엣지 워크로드 증가 — 하드웨어 수혜</li>
+            <li>클라우드: MSFT / 모델: MiniMax, Knowledge Atlas, BABA, Tencent</li>
+            <li>인프라 SW: PLTR / SaaS: SAP, NOW, SHOP</li>
+            <li>엣지: DELL, HPQ, AAPL / 유통: SNX, INGM, CDW / Semis: NVDA</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 class="sec" id="sec-cal"><span class="n">9</span>Catalyst Calendar — 향후 촉매 일정</h3>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>일정</th><th>이벤트</th><th>내용 / 영향 범위</th></tr></thead>
+        <tbody>
+          <tr><td class="num"><b>2026.8.26</b></td><td>한국 sovereign AI 파운데이션 모델 컨소시엄 신청 마감</td><td>1개 컨소시엄만 정부 지원 GPU 접근 획득 — NAVER Cloud, LG AI Research, SK Telecom, Upstage</td></tr>
+          <tr><td class="num"><b>2026.9.24</b></td><td>시진핑 주석 워싱턴 방문 / 미·중 정상회담 (예정)</td><td>통상 이슈 전반, AI 'tech dialogue' — AI 노출 종목 광범위 영향</td></tr>
+          <tr><td class="num"><b>Fall 2026 (진행형)</b></td><td>중국 AI 모델 사용에 대한 행정부 규제 가능성 (Entity List·ICTS·OFAC/IEEPA·신규 EO)</td><td>'middle path' 기본 시나리오: 특정 중국 모델 개발사 제한 리스트 — (+) 미국 near-frontier·오픈소스(Meta, Amazon, Microsoft, Alphabet), (–) Alibaba·Tencent·MiniMax 등 미국 접근 상실 시</td></tr>
+          <tr><td class="num"><b>2026.11.9–10</b></td><td>Fall 2025 무역 휴전 만료</td><td>BIS Affiliates Rule 스냅백 + 중국 희토류/entity-list 유예 만료 — 중국 희토류·핵심광물 의존 기업</td></tr>
+          <tr><td class="num"><b>2026.11.27</b></td><td>MOFCOM Announcement 46 유예 만료</td><td>갈륨·게르마늄·안티몬·초경질소재·흑연 수입 미국 기업 — 9월 정상회담 결과에 연동</td></tr>
+          <tr><td class="num"><b>2026.12</b></td><td>FY27 NDAA 통과</td><td>AI OVERWATCH/MATCH Act·칩 보안 조항 부분 포함 여지 — 미국 칩 메이커, 반도체 장비, 타깃된 중국 기업</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3 class="sec"><span class="n">!</span>리스크 &amp; 모니터링 포인트</h3>
+      <div class="risk-box">
+        <h4>Key Risks</h4>
+        <ul>
+          <li><b>규제 강도 상회:</b> base case(middle path)를 넘는 광범위 제한 — blanket ban, 컴퓨트 임계치 기반 일괄 규제 시 기업 AI 도입 속도·글로벌 TAM 훼손 가능</li>
+          <li><b>중국 보복 확전:</b> 희토류·자석(중국이 글로벌 자석 공급 &gt;94% 통제)·갈륨/게르마늄 수출 통제 확대 — 미국 로봇·방산·전자 공급망이 중국 인풋에 여전히 깊이 노출</li>
+          <li><b>유럽 자금조달 실패:</b> €750–800bn 투자 수요 대비 재원 계획 부재 — MFF/NGEU 2.0 합의 불발 시 전략적 자율성 목표와 현실 간 괴리 확대</li>
+          <li><b>과잉설비·수익성:</b> 국가 주도(state-sponsored) capex의 마진·ROE 압박, 중국 Six Networks build-out의 주기적 공급과잉 가능성, 보조금·정치 주도 수요의 이익 전환 불확실성</li>
+          <li><b>전력·인허가 병목:</b> 한국(KEPCO 승인·용수·부지)·유럽(계통 연결 대기·장비 비용)·미국(에너지 가용성·permitting·노동) 공통의 물리적 제약 — 선거가 배치의 속도·지리적 분포를 좌우</li>
+        </ul>
+        <h4 style="margin-top:14px;">모니터링 포인트</h4>
+        <ul>
+          <li>FY27 NDAA 내 AI OVERWATCH·MATCH Act 조항 포함 여부와 House-Senate 협상 (연내)</li>
+          <li>9월 미·중 정상회담 전후의 tech dialogue — 11월 휴전 만료·MOFCOM 46 유예 만료와 연동</li>
+          <li>미국 open-weight 생태계: VC 투자·인재 이동·기업 도입·정부 지원 정책 (Meta Muse weights 공개 후속)</li>
+          <li>이미 인증된 로봇 모델에 대한 소급 규제(드론 전례), 액추에이터·자석 등 부품 단위 규제 확대 신호</li>
+          <li>AI Sovereignty 테마의 earnings revisions breadth 지속 여부 — 2Q26 가속 이후 정체 조짐 발생 시 주의</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div>본 문서는 투자 권유를 목적으로 하지 않습니다.</div>
+  </footer>
+
+</div>
+</body>
+</html>
