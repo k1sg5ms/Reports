@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crowding Out &amp; Steeper Curve — Cross Asset Strategy</title>
+<style>
+  :root{
+    --brand:#0a2240;
+    --brand-deep:#06182e;
+    --accent:#5c1a26;
+    --accent2:#3a5a8c;
+    --paper:#f4f6f9;
+    --card:#ffffff;
+    --ink:#1b1e24;
+    --ink-soft:#525866;
+    --line:#dde3ec;
+    --buy:#1f7a4d;
+    --bear:#c0392b;
+    --bull:#1f6fb2;
+    --warn:#8a4b15;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Helvetica Neue','Pretendard','Noto Sans KR',Arial,sans-serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:960px;margin:0 auto;padding:40px 6vw 90px;}
+
+  .intro{border-left:4px solid var(--accent);padding:8px 0 8px 20px;margin-bottom:48px;}
+  .intro .eyebrow{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent2);font-weight:700;}
+  .intro h1{font-size:26px;margin:8px 0 6px;color:var(--brand);}
+
+  .report{margin-bottom:64px;scroll-margin-top:70px;}
+  .report-head{
+    background:linear-gradient(135deg,var(--brand) 0%, var(--brand-deep) 100%);
+    color:#fff;border-radius:10px 10px 0 0;padding:28px 30px;
+  }
+  .report-head .tag{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#9fb4d4;font-weight:700;}
+  .report-head h2{margin:8px 0 14px;font-size:23px;line-height:1.35;}
+  .report-head .lede{
+    font-family:'Georgia',serif;font-size:15.5px;color:#e3ebf6;
+    border-top:1px solid rgba(255,255,255,0.16);padding-top:14px;margin:0;
+  }
+  .report-body{
+    background:var(--card);border:1px solid var(--line);border-top:none;
+    border-radius:0 0 10px 10px;padding:30px;
+  }
+
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px;}
+  .chip{border:1px solid var(--line);border-radius:8px;padding:10px 16px;background:#fafbfd;flex:1;min-width:130px;}
+  .chip .k{font-size:10.5px;letter-spacing:0.5px;text-transform:uppercase;color:var(--ink-soft);}
+  .chip .v{font-size:19px;font-weight:700;color:var(--brand);margin-top:2px;}
+  .chip .v.sell{color:var(--bear);}
+  .chip .v.buy{color:var(--buy);}
+  .chip .s{font-size:11px;color:var(--ink-soft);}
+
+  h3.sec{
+    font-size:17px;color:var(--brand);margin:30px 0 12px;
+    padding-bottom:8px;border-bottom:1.5px solid var(--line);
+    display:flex;align-items:center;gap:10px;
+  }
+  h3.sec .n{
+    background:var(--brand);color:#fff;font-size:12px;font-weight:700;
+    width:24px;height:24px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  ul.pts{margin:0;padding:0;list-style:none;}
+  ul.pts li{position:relative;padding:7px 0 7px 20px;font-size:14.5px;border-bottom:1px dashed var(--line);}
+  ul.pts li:last-child{border-bottom:none;}
+  ul.pts li::before{content:"—";position:absolute;left:0;color:var(--accent2);font-weight:700;}
+  ul.pts b{color:var(--brand);}
+
+  table.tbl{width:100%;border-collapse:collapse;font-size:13px;margin:6px 0 4px;}
+  table.tbl th{background:var(--brand);color:#fff;text-align:left;padding:8px 10px;font-weight:600;}
+  table.tbl td{padding:7px 10px;border-bottom:1px solid var(--line);}
+  table.tbl tr:nth-child(even) td{background:#f7f9fc;}
+  table.tbl td.num{text-align:right;font-variant-numeric:tabular-nums;}
+  table.tbl td.buy{color:var(--buy);font-weight:700;}
+  table.tbl td.sell{color:var(--bear);font-weight:700;}
+  .tbl-wrap{overflow-x:auto;}
+
+  .chart-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:22px 22px 14px;margin:14px 0;}
+  .chart-card .ct{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:12px;}
+  .chart-src{font-size:10.5px;color:#9aa3b2;margin-top:8px;}
+  .legend{display:flex;gap:18px;font-size:11.5px;color:var(--ink-soft);margin-bottom:4px;}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .legend i{width:11px;height:11px;border-radius:2px;display:inline-block;}
+
+  .callout{background:#fbf6ec;border:1px solid #e8dcc3;border-radius:8px;padding:14px 18px;font-size:13px;color:var(--ink-soft);margin-top:14px;}
+  .callout .t{font-size:10.5px;font-weight:700;letter-spacing:0.6px;color:var(--warn);text-transform:uppercase;display:block;margin-bottom:5px;}
+
+  .risk-box{background:var(--brand);color:#dde6f3;border-radius:8px;padding:22px 24px;margin-top:14px;}
+  .risk-box h4{margin:0 0 10px;color:#fff;font-size:14.5px;}
+  .risk-box ul{margin:0;padding-left:18px;}
+  .risk-box li{margin-bottom:8px;font-size:13px;}
+  .risk-box li b{color:#fff;}
+
+  footer{border-top:1px solid var(--line);margin-top:50px;padding-top:20px;font-size:11px;color:#9aa3b2;line-height:1.6;}
+
+  @media(max-width:560px){
+    .intro h1{font-size:21px;}
+    .report-head h2{font-size:19px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="intro">
+    <div class="eyebrow">22 August 2026</div>
+    <h1>Crowding Out &amp; 커브 스티프닝 — Jackson Hole을 지나는 Carry 전략</h1>
+  </div>
+
+  <section class="report" id="rpt1">
+
+    <div class="report-head">
+      <div class="tag">Global Markets Strategy · Cross Asset</div>
+      <h2>Crowding Out과 커브 스티프닝: 장기금리 상승은 리스크오프 촉발 요인이 아니다</h2>
+      <p class="lede">최근 DM 장기물 매도와 커브 스티프닝은 재정·중앙은행 신뢰 훼손이 아니라, hyperscaler capex와 국채 발행 간 자금 경쟁(crowding out) 및 AI 수익화 기대에 따른 실질금리 상승이 주도 — 완만한 term premium 상승 baseline 하에서 리스크오프 촉매가 아니며, carry 전략과 주식 연말 랠리(grind higher &amp; rotation) 뷰 유지</p>
+    </div>
+
+    <div class="report-body">
+
+      <div class="chips">
+        <div class="chip"><div class="k">US 10Y 국채금리</div><div class="v">4.73%</div><div class="s">YTD +54bp (실질금리 +44bp 주도)</div></div>
+        <div class="chip"><div class="k">Hyperscaler 발행</div><div class="v">$182bn</div><div class="s">YTD, 2025 연간($93bn)의 약 2배</div></div>
+        <div class="chip"><div class="k">Gold</div><div class="v">+13.4%</div><div class="s">MTD, 1999년 9월 이후 최고 월간 성과</div></div>
+        <div class="chip"><div class="k">첫 Fed 인상 전망</div><div class="v">Dec-26</div><div class="s">시장은 12월까지 ~22bp만 반영</div></div>
+        <div class="chip"><div class="k">S&amp;P 500 전망</div><div class="v">8,000</div><div class="s">Dec-26 (현재 7,667)</div></div>
+      </div>
+
+      <h3 class="sec"><span class="n">1</span>장기물 매도의 두 가지 구조적 동인</h3>
+      <ul class="pts">
+        <li>최근 수주간 핵심 매크로 스토리는 <b>DM 커브 장기물의 급격한 매도와 스티프닝</b> — 7월 FOMC 기자회견 이후 US 커브의 twist steepening은 Warsh 의장의 물가안정 목표 재설정 가능성도 일부 반영</li>
+        <li>동인 ① <b>공급발 crowding out</b>: hyperscaler capex가 국채 발행과 자금 조달 경쟁 — USD 크레딧에서 hyperscaler는 YTD <b>$182bn</b> 발행(미국 HG 총발행의 ~12%), 2025 연간 $93bn의 거의 2배</li>
+        <li>미국 HG 회사채 지수 내 hyperscaler(AMZN, GOOGL, META, MSFT, ORCL, SPCX) 비중은 1년 새 <b>2% → 4.5% 이상</b>으로 2배 이상 확대, AI 노출 섹터 전체는 <b>15.5%</b>로 Financials 비중 상회</li>
+        <li>동인 ② <b>AI 수익화 신뢰 회복에 따른 기대 실질수익률 상승</b>: 강한 실질 투자 기회는 장기적으로 실질금리가 잠재성장률에 수렴한다는 가정 하에 실질금리 상승으로 귀결</li>
+        <li>재정 우려(특히 일본)는 여전하나, DM 장기물 <b>swap spread가 안정적</b>이고 장기 인플레이션 breakeven 상승도 미미 — 재정·중앙은행 신뢰 훼손이 주도했다는 해석은 과장. 얇은 여름 유동성, 예상보다 빠른 30Y 독일 신디케이트, 8월 채권 공급 확대는 증폭 요인</li>
+        <li>미 재무장관 Bessent도 장기금리 상승 요인으로 <b>자본 조달 경쟁</b>을 직접 언급 — crowding out은 공급뿐 아니라 수요 측면의 스토리이기도: 미국 intermediate core 채권펀드의 회사채 배분 비중이 연초 이후 증가세</li>
+      </ul>
+
+      <div class="chart-card">
+        <div class="ct">AI 관련 USD 채권 발행 — YTD $182bn으로 2025 연간의 약 2배 (단위: $bn)</div>
+        <div class="legend">
+          <span><i style="background:var(--brand)"></i>Hyperscalers</span>
+          <span><i style="background:#8ba3c7"></i>데이터센터·반도체</span>
+        </div>
+        <svg viewBox="0 0 880 320" width="100%">
+          <line x1="70" y1="280" x2="850" y2="280" stroke="#cfd6e0"/>
+          <line x1="70" y1="237.5" x2="850" y2="237.5" stroke="#eef1f6"/>
+          <line x1="70" y1="195" x2="850" y2="195" stroke="#eef1f6"/>
+          <line x1="70" y1="152.5" x2="850" y2="152.5" stroke="#eef1f6"/>
+          <line x1="70" y1="110" x2="850" y2="110" stroke="#eef1f6"/>
+          <line x1="70" y1="67.5" x2="850" y2="67.5" stroke="#eef1f6"/>
+          <text x="62" y="284" font-size="11" fill="#9aa3b2" text-anchor="end">0</text>
+          <text x="62" y="241" font-size="11" fill="#9aa3b2" text-anchor="end">50</text>
+          <text x="62" y="199" font-size="11" fill="#9aa3b2" text-anchor="end">100</text>
+          <text x="62" y="156" font-size="11" fill="#9aa3b2" text-anchor="end">150</text>
+          <text x="62" y="114" font-size="11" fill="#9aa3b2" text-anchor="end">200</text>
+          <text x="62" y="71" font-size="11" fill="#9aa3b2" text-anchor="end">250</text>
+
+          <!-- 2022: hyper 38, other 12, total 50 -->
+          <rect x="105" y="247.7" width="90" height="32.3" fill="var(--brand)"/>
+          <rect x="105" y="237.5" width="90" height="10.2" fill="#8ba3c7"/>
+          <text x="150" y="229" font-size="12" font-weight="700" fill="#1b1e24" text-anchor="middle">50</text>
+          <text x="150" y="300" font-size="12" fill="#525866" text-anchor="middle">2022</text>
+
+          <!-- 2023: hyper 14, other 12, total 26 -->
+          <rect x="255" y="268.1" width="90" height="11.9" fill="var(--brand)"/>
+          <rect x="255" y="257.9" width="90" height="10.2" fill="#8ba3c7"/>
+          <text x="300" y="249" font-size="12" font-weight="700" fill="#1b1e24" text-anchor="middle">26</text>
+          <text x="300" y="300" font-size="12" fill="#525866" text-anchor="middle">2023</text>
+
+          <!-- 2024: hyper 17, other 12, total 29 -->
+          <rect x="405" y="265.6" width="90" height="14.4" fill="var(--brand)"/>
+          <rect x="405" y="255.4" width="90" height="10.2" fill="#8ba3c7"/>
+          <text x="450" y="247" font-size="12" font-weight="700" fill="#1b1e24" text-anchor="middle">29</text>
+          <text x="450" y="300" font-size="12" fill="#525866" text-anchor="middle">2024</text>
+
+          <!-- 2025: hyper 93, other 46, total 139 -->
+          <rect x="555" y="201" width="90" height="79" fill="var(--brand)"/>
+          <rect x="555" y="161.9" width="90" height="39.1" fill="#8ba3c7"/>
+          <text x="600" y="153" font-size="12" font-weight="700" fill="#1b1e24" text-anchor="middle">139</text>
+          <text x="600" y="300" font-size="12" fill="#525866" text-anchor="middle">2025</text>
+
+          <!-- 2026 YTD: hyper 182, other 84, total 266 -->
+          <rect x="705" y="125.3" width="90" height="154.7" fill="var(--brand)"/>
+          <rect x="705" y="53.9" width="90" height="71.4" fill="#8ba3c7"/>
+          <text x="750" y="45" font-size="12" font-weight="700" fill="#1b1e24" text-anchor="middle">266</text>
+          <text x="750" y="300" font-size="12" fill="#525866" text-anchor="middle">2026 YTD</text>
+        </svg>
+        <div class="chart-src">Source: Dealogic</div>
+      </div>
+
+      <h3 class="sec"><span class="n">2</span>Treasury의 바이백 확대 — "장기금리 상승이 불편하다"는 신호</h3>
+      <ul class="pts">
+        <li>미 재무부가 10Y·30Y 장기물 바이백 운영당 상한을 <b>$2bn → "최소" $4bn</b>으로 확대한다고 깜짝 발표 — 수요일 커브 전반의 급격하지만 일시적인 되돌림(플래트닝) 촉발</li>
+        <li>2주 전 8월 refunding에서 3개월 바이백 캘린더를 이미 공표했고 시장 기능상 급박한 촉매도 부재 — <b>타이밍 자체가 이례적</b>이며, 7월 말 US–Japan FX 개입과 일관되게 원치 않는 시장 움직임에 맞서겠다는 의지 표명으로 해석</li>
+        <li>리스크: 실질적인 재정 건전화 없이 기회주의적 부채관리로 기울면 <b>"regular and predictable" 프레임워크 훼손</b>으로 오히려 term premium과 장기금리를 높일 수 있음</li>
+        <li>장기물 입찰 축소 가능성도 재부상하나, 자금 조달 격차 확대 국면에서 신중하지 않고 지속적인 금리 하락 효과도 어려움 — 유사한 DMO 조치의 글로벌 경험상 커브 효과는 일시적</li>
+        <li>이 배경에서 <b>UST 2s/10s 스티프너를 전술적으로 유지</b>, term premium 15-20bp 추가 상승 여지 감안</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">3</span>미 국채 밸류에이션 — 장기투자자에게 매력적인 진입 레벨</h3>
+      <ul class="pts">
+        <li>2026년 들어 10Y 명목금리 <b>+54bp</b>, 거의 전부 실질금리 주도(10Y TIPS +44bp) — 현재 10Y UST·TIPS 금리는 3년 레인지의 <b>96·95 percentile</b></li>
+        <li>1997년 1월 이후 표본에서 시작 시점 실질금리가 양(+)이면 3M·6M·12M 전 구간 ex-post 총수익률이 평균적으로 플러스, 1년 수익률 평균 <b>3.7% 상회</b> — 명목금리 2% 초과 시에도 동일</li>
+        <li>시작 실질금리 <b>2% 이상 + 명목금리 5% 이상</b>이면 1년 수익률이 위험조정 기준으로도 매력적(<b>Sharpe &gt;2</b>) — 높은 시작 금리에서는 쿠폰 수익이 mark-to-market 손실 버퍼로 작동</li>
+        <li>시작 금리와 사후 수익률의 관계는 <b>보유기간이 길수록 강화</b> — 10년 보유 시 최선의 수익률 추정치는 매입 시점의 만기수익률이라는 장기 전략 분석과 일관</li>
+        <li>결론: term premium이 15-20bp 추가 상승하더라도 현재 밸류에이션에서 <b>장기금리는 장기투자자에게 매력적</b></li>
+      </ul>
+
+      <h3 class="sec"><span class="n">4</span>통화정책 — Fed는 12월, BoJ는 9월</h3>
+      <ul class="pts">
+        <li><b>Fed</b>: 7월 의사록은 조건부 매파(디스인플레이션 정체 시 인상 편향)였으나, 회의 후 지표 둔화로 근시일 인상 시급성 약화 — 반응함수 내부 이견, AI 관련 불확실성, 금융여건의 기술적 긴축이 교차. <b>Jackson Hole이 반응함수 논쟁을 완전히 해소하지는 못할 전망</b>, 9월 인상 확률은 후퇴하고 12월이 base case</li>
+        <li><b>BoJ</b>: 분기 페이스 전망 — 다음 인상은 <b>9월(10월에서 앞당김)</b>, 12월 추가 인상, 2027년 세 차례 25bp 인상으로 최종 <b>2.25%</b> 도달</li>
+        <li><b>Brent $90 상회</b>가 DM 인상 기대를 재가격화(EUR·UK 채권 언더퍼폼) — 미국은 12월까지 <b>~22bp</b>의 긴축만 반영 중</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">5</span>주식 — 연말까지 grind higher &amp; rotation</h3>
+      <ul class="pts">
+        <li>매크로 조합이 새 상승 촉매를 주진 않지만 <b>단기 정책 tail risk를 제거</b> — 궤도 안의 인플레이션과 질서 있는 고용 둔화가 임박한 Fed 인상 확률을 낮추며 변동성 억제 요인으로 작동</li>
+        <li>어닝시즌이 성장 내구성에 대한 신뢰를 재고정, 리더십 논쟁은 "AI가 얼마나 좁은가"에서 <b>"AI 지출이 얼마나 빨리 가시적 현금흐름으로 전환되는가"</b>로 이동</li>
+        <li>다음 상승 구간은 단일 매크로 지표보다 <b>positioning·dispersion·상대가치</b>가 주도할 가능성 — 순수 beta보다 개별 어닝·재무 건전성 보유가 유리하고, 리스크 여건이 안정적이면 대형 IPO 런칭·랠리 여건도 조성</li>
+        <li>메모리 주식으로의 반등 리더십 회전은 <b>"리스크 선호 회복(risk appetite healing)"의 전술적 신호</b> — 다만 snapback 이후 최고 beta 표현을 추격할 이유는 아님</li>
+        <li>선호: <b>Quality Growth &amp; Hyperscalers</b>, 재가격화를 감안하면 <b>Semis도 매력적</b> — 진성 디스인플레이션 속 Fed 동결(Goldilocks)은 변동성을 더 압축하고 랠리 참여폭 확대 가능</li>
+        <li>연말까지 신고가 경신 지속 전망이나, 경로는 단일 촉매의 melt-up이 아닌 <b>지속적인 grind &amp; rotation</b> — 미국 중간선거는 아직 수익률의 주동인이 아닌 캘린더 리스크</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">6</span>자산군별 핵심 뷰 &amp; 신규 추천</h3>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>자산군</th><th>핵심 포지션</th></tr></thead>
+        <tbody>
+          <tr><td><b>Equities</b></td><td>국가: OW Eurozone·일본(N)·UK, OW EM vs DM ex US / 섹터: OW Technology·Comm Services·Utilities, UW Energy·Materials·Real Estate</td></tr>
+          <tr><td><b>DM Rates</b></td><td>UST 2s/10s 스티프너·5Yx5Y 인플레이션 스왑 와이드너 유지, <b>10Y Bund outright long은 청산</b>하되 10Y Bund vs UST cross-market long 유지, 신규: 3Mx10Y GBP gamma 매수 vs EUR gamma</td></tr>
+          <tr><td><b>Credit</b></td><td>US HG: OW 은행(US &amp; Yankee)·금융·헬스케어, UW Autos·소비재·미디어 / iTraxx Main 75bp August payer 청산 / EM: sovereigns·corporates MW</td></tr>
+          <tr><td><b>FX</b></td><td>신규: <b>SEK/JPY 숏 진입(현물)</b> — USD는 넓게 중립 유지, 고금리 통화 중심 procyclical carry 노출 지속, EM FX OW·TRY OW 상향(MW에서)</td></tr>
+          <tr><td><b>Commodities</b></td><td>Long: Gold·Copper·Aluminum·Silver·Platinum / Short: Zinc</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="callout"><span class="t">Gold</span>금 +13.4% MTD, 1999년 9월 이후 최고 월간 성과 — 단기 실질금리 하락과 약달러가 주 동인이며 Treasury activist 우려는 부분적 요인. 바이백 발표로 5월 중순 이후 처음 $4,500/oz 상회. 핵심 리스크는 Fed 재긴축: OIS 선도가 반영한 것보다 ~2회 이상 추가 인상으로 재가격화 시 <b>$4,000/oz 하향 이탈</b> 및 $3,500-3,600 기술적 하락 리스크</div>
+
+      <h3 class="sec"><span class="n">7</span>Special Focus: 라틴아메리카 정치 — 이벤트 헤비 분기의 carry 기회</h3>
+      <ul class="pts">
+        <li><b>브라질 — 선거가 가격 결정의 지배 변수</b>: 최근 여론조사에서 Lula가 Flávio Bolsonaro에 결선 기준 5-6%p 앞서고, Polymarket 확률은 Lula 64% vs Flávio 33% — 양극화된 경합 구도에 결선(10월 25일) 가능성 높음</li>
+        <li>BRL은 <b>MW 유지</b>(연초 OW 청산 이후): 고금리에도 crowded position과 리스크 프리미엄 부재로 취약 — 선거 시나리오별 5.50(bearish)/4.90(bullish)로 대칭적 payoff</li>
+        <li>브라질 로컬금리·채권도 <b>MW</b>: bearish 시나리오는 bear steepening과 GBI-EM Brazil 금리 <b>+90bp</b>, bullish는 bull flattening과 장기물 주도 <b>~160bp 랠리</b> 함의 — 정치 리스크 상승 국면에서 금리 앵커 부재, 중립 유지</li>
+        <li>브라질 주식 <b>2H26 Neutral</b>: 아웃퍼폼을 이끄는 두 기둥(글로벌 매크로 순풍 + 국내 금리인하 스토리)이 모두 약화 — 12m forward P/E <b>~7.9x</b>로 5년 평균 상회, 선거 전 조정도 ~10%로 완만해 선거 후 relief 랠리 여지 제한적</li>
+        <li><b>콜롬비아 — regime-change 낙관과 초고 carry</b>: 12% 정책금리가 자금 유입을 지지, 8월 7일 취임 이후 지출 동결·9월 세제개편·안보 이니셔티브·외교 리셋 발표, Petro 시대 석유·가스 규제 완화 및 Ecopetrol 리더십 개편 기대</li>
+        <li>콜롬비아는 <b>OW COP·OW 로컬금리 / UW 주식</b>: COP은 더 깨끗한 carry 트레이드(선거 리스크는 브라질로 이동), long COLTES Sep-30 유지 — 커브 역전 해소 중이며 belly가 장기물 대비 저평가, ~50bp 추가 랠리 예상</li>
+        <li>주식 UW 근거: MSCI Colombia <b>+54.4% YTD</b>로 밸류에이션이 어닝보다 빠르게 re-rate, 재정 신뢰·유가 약세 가능성·급격한 COP 절상 이후 FX 리스크 상존 — 장기적으로는 Energy(특히 Ecopetrol) capex와 MSCI 재편입 가능성에 건설적</li>
+      </ul>
+
+      <div class="chart-card">
+        <div class="ct">MSCI Brazil의 선거 사이클 중 MSCI EM 대비 평균 상대성과 (선거 전후 6개월)</div>
+        <svg viewBox="0 0 880 300" width="100%">
+          <line x1="70" y1="150" x2="850" y2="150" stroke="#cfd6e0"/>
+          <line x1="70" y1="70" x2="850" y2="70" stroke="#eef1f6"/>
+          <line x1="70" y1="110" x2="850" y2="110" stroke="#eef1f6"/>
+          <line x1="70" y1="190" x2="850" y2="190" stroke="#eef1f6"/>
+          <line x1="70" y1="230" x2="850" y2="230" stroke="#eef1f6"/>
+          <text x="62" y="74" font-size="11" fill="#9aa3b2" text-anchor="end">+10%</text>
+          <text x="62" y="114" font-size="11" fill="#9aa3b2" text-anchor="end">+5%</text>
+          <text x="62" y="154" font-size="11" fill="#9aa3b2" text-anchor="end">0</text>
+          <text x="62" y="194" font-size="11" fill="#9aa3b2" text-anchor="end">-5%</text>
+          <text x="62" y="234" font-size="11" fill="#9aa3b2" text-anchor="end">-10%</text>
+
+          <!-- Total -7.5 -->
+          <rect x="115" y="150" width="110" height="60" fill="var(--bear)" opacity="0.85"/>
+          <text x="170" y="226" font-size="12" font-weight="700" fill="#c0392b" text-anchor="middle">-7.5%</text>
+          <text x="170" y="285" font-size="12" fill="#525866" text-anchor="middle">Total</text>
+
+          <!-- Before -12.6 -->
+          <rect x="305" y="150" width="110" height="100.8" fill="var(--bear)" opacity="0.85"/>
+          <text x="360" y="267" font-size="12" font-weight="700" fill="#c0392b" text-anchor="middle">-12.6%</text>
+          <text x="360" y="285" font-size="12" fill="#525866" text-anchor="middle">Before</text>
+
+          <!-- During +10.2 -->
+          <rect x="495" y="68.4" width="110" height="81.6" fill="var(--buy)" opacity="0.9"/>
+          <text x="550" y="60" font-size="12" font-weight="700" fill="#1f7a4d" text-anchor="middle">+10.2%</text>
+          <text x="550" y="285" font-size="12" fill="#525866" text-anchor="middle">During</text>
+
+          <!-- After -4.3 -->
+          <rect x="685" y="150" width="110" height="34.4" fill="var(--bear)" opacity="0.85"/>
+          <text x="740" y="200" font-size="12" font-weight="700" fill="#c0392b" text-anchor="middle">-4.3%</text>
+          <text x="740" y="285" font-size="12" fill="#525866" text-anchor="middle">After</text>
+        </svg>
+        <div class="chart-src">Source: Bloomberg Finance L.P., MSCI</div>
+      </div>
+
+      <h3 class="sec"><span class="n">8</span>주요 전망치 (Current → Dec-26)</h3>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>구분</th><th>지표</th><th>Current</th><th>Dec-26</th></tr></thead>
+        <tbody>
+          <tr><td rowspan="4"><b>Rates</b></td><td>US 10Y</td><td class="num">4.73%</td><td class="num">4.85%</td></tr>
+          <tr><td>독일 10Y</td><td class="num">3.25%</td><td class="num">2.90%</td></tr>
+          <tr><td>일본 10Y</td><td class="num">2.87%</td><td class="num">3.05%</td></tr>
+          <tr><td>US SOFR</td><td class="num">3.63%</td><td class="num">3.90%</td></tr>
+          <tr><td rowspan="3"><b>FX</b></td><td>EUR/USD</td><td class="num">1.17</td><td class="num">1.13</td></tr>
+          <tr><td>USD/JPY</td><td class="num">159</td><td class="num">164</td></tr>
+          <tr><td>USD/KRW</td><td class="num">1,387</td><td class="num">1,490</td></tr>
+          <tr><td rowspan="4"><b>Equities</b></td><td>S&amp;P 500</td><td class="num">7,667</td><td class="num buy">8,000</td></tr>
+          <tr><td>TOPIX</td><td class="num">4,067</td><td class="num buy">4,600</td></tr>
+          <tr><td>KOSPI</td><td class="num">6,913</td><td class="num buy">9,000</td></tr>
+          <tr><td>MSCI China</td><td class="num">76</td><td class="num buy">100</td></tr>
+          <tr><td rowspan="3"><b>Commodities</b></td><td>Brent ($/bbl)</td><td class="num">94</td><td class="num sell">80</td></tr>
+          <tr><td>Gold ($/oz)</td><td class="num">4,598</td><td class="num">4,500</td></tr>
+          <tr><td>Copper ($/mt)</td><td class="num">14,103</td><td class="num buy">14,800</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="callout"><span class="t">YTD 성과</span>크로스에셋 YTD 수익률 상위는 <b>MSCI Korea +90%</b>, Commodities +30%, Russell 2000 +21% — "메모리 가격이 froth 이후 바닥을 다지며 한국이 다시 매수세를 받는" 구도. 하위는 MSCI India -10%, MSCI China -9% (Source: Bloomberg Finance L.P.)</div>
+
+      <h3 class="sec"><span class="n">!</span>리스크 &amp; 모니터링 포인트</h3>
+      <div class="risk-box">
+        <h4>Key Risks</h4>
+        <ul>
+          <li><b>Fed 재긴축 재가격화:</b> 매파적 소수의견·타이트한 노동시장·인플레이션 재점화로 OIS 대비 ~2회 이상 추가 인상 반영 시 금 $4,000/oz 하향 이탈 및 리스크자산 변동성 확대</li>
+          <li><b>Treasury의 activist 접근:</b> 재정 건전화 없는 기회주의적 부채관리가 "regular and predictable" 프레임워크를 훼손하면 term premium·장기금리 상승 역풍</li>
+          <li><b>브라질 선거 변동성:</b> 1차 투표까지 약 50일 + 결선까지 추가 ~21일, 과거 5차례 선거의 교훈상 막판 반전 가능 — bearish 결과 시 GBI-EM Brazil +90bp</li>
+          <li><b>콜롬비아 실행 리스크:</b> COP 고평가 부담 속 재정·정책 실행 신뢰가 뒷받침되지 않으면 되돌림 — 지진 이후 재정 리스크, 타이트한 여건도 watchpoint</li>
+        </ul>
+        <h4 style="margin-top:14px;">모니터링 포인트</h4>
+        <ul>
+          <li>Jackson Hole 심포지엄에서의 반응함수 논쟁 전개와 9월 FOMC 시그널</li>
+          <li>BoJ 9월 인상 여부(10월에서 앞당겨진 전망) 및 일본발 재정 우려의 장기물 파급</li>
+          <li>Hyperscaler 채권 발행 페이스와 국채 수급 경쟁 — 8월 이후 공급 캘린더</li>
+          <li>브라질 여론조사·Polymarket 확률 추이, 10월 25일 결선 일정</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div>본 문서는 투자 권유를 목적으로 하지 않습니다.</div>
+  </footer>
+
+</div>
+</body>
+</html>
