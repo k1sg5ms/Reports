@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>일본 전자부품 섹터 — 4~6월 실적 총정리</title>
+<style>
+  :root{
+    --brand:#7e1416;
+    --brand-deep:#4a0c0e;
+    --accent:#d6262e;
+    --accent2:#a5343a;
+    --paper:#f4f6f9;
+    --card:#ffffff;
+    --ink:#1b1e24;
+    --ink-soft:#525866;
+    --line:#dde3ec;
+    --buy:#1f7a4d;
+    --bear:#c0392b;
+    --bull:#1f6fb2;
+    --warn:#8a4b15;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Helvetica Neue','Pretendard','Noto Sans KR',Arial,sans-serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  .serif{font-family:'Georgia','Noto Serif KR',serif;}
+
+  .wrap{max-width:960px;margin:0 auto;padding:40px 6vw 90px;}
+
+  .intro{
+    border-left:4px solid var(--accent);
+    padding:8px 0 8px 20px;margin-bottom:48px;
+  }
+  .intro .eyebrow{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent2);font-weight:700;}
+  .intro h1{font-size:26px;margin:8px 0 6px;color:var(--brand);}
+
+  .report{margin-bottom:64px;scroll-margin-top:70px;}
+  .report-head{
+    background:linear-gradient(135deg,var(--brand) 0%, var(--brand-deep) 100%);
+    color:#fff;border-radius:10px 10px 0 0;padding:28px 30px;
+  }
+  .report-head .tag{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#e8b8ba;font-weight:700;}
+  .report-head h2{margin:8px 0 14px;font-size:23px;line-height:1.35;}
+  .report-head .lede{
+    font-family:'Georgia',serif;font-size:15.5px;color:#f6e4e5;
+    border-top:1px solid rgba(255,255,255,0.16);padding-top:14px;margin:0;
+  }
+  .report-body{
+    background:var(--card);border:1px solid var(--line);border-top:none;
+    border-radius:0 0 10px 10px;padding:30px;
+  }
+
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px;}
+  .chip{border:1px solid var(--line);border-radius:8px;padding:10px 16px;background:#fafbfd;flex:1;min-width:130px;}
+  .chip .k{font-size:10.5px;letter-spacing:0.5px;text-transform:uppercase;color:var(--ink-soft);}
+  .chip .v{font-size:19px;font-weight:700;color:var(--brand);margin-top:2px;}
+  .chip .v.buy{color:var(--buy);}
+  .chip .s{font-size:11px;color:var(--ink-soft);}
+
+  h3.sec{
+    font-size:17px;color:var(--brand);margin:30px 0 12px;
+    padding-bottom:8px;border-bottom:1.5px solid var(--line);
+    display:flex;align-items:center;gap:10px;
+  }
+  h3.sec .n{
+    background:var(--brand);color:#fff;font-size:12px;font-weight:700;
+    width:24px;height:24px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  ul.pts{margin:0;padding:0;list-style:none;}
+  ul.pts li{position:relative;padding:7px 0 7px 20px;font-size:14.5px;border-bottom:1px dashed var(--line);}
+  ul.pts li:last-child{border-bottom:none;}
+  ul.pts li::before{content:"—";position:absolute;left:0;color:var(--accent2);font-weight:700;}
+  ul.pts b{color:var(--brand);}
+
+  table.tbl{width:100%;border-collapse:collapse;font-size:13px;margin:6px 0 4px;}
+  table.tbl th{background:var(--brand);color:#fff;text-align:left;padding:8px 10px;font-weight:600;}
+  table.tbl td{padding:7px 10px;border-bottom:1px solid var(--line);}
+  table.tbl tr:nth-child(even) td{background:#f9f6f6;}
+  table.tbl td.num{text-align:right;font-variant-numeric:tabular-nums;}
+  table.tbl td.buy{color:var(--buy);font-weight:700;}
+  table.tbl td.neu{color:var(--ink-soft);font-weight:600;}
+  table.tbl td.neg{color:var(--bear);}
+  .tbl-wrap{overflow-x:auto;}
+
+  .chart-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:22px 22px 14px;margin:14px 0;}
+  .chart-card .ct{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:12px;}
+  .legend{display:flex;gap:18px;font-size:11.5px;color:var(--ink-soft);margin-bottom:4px;}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .legend i{width:11px;height:11px;border-radius:2px;display:inline-block;}
+
+  .callout{background:#fbf6ec;border:1px solid #e8dcc3;border-radius:8px;padding:14px 18px;font-size:13px;color:var(--ink-soft);margin-top:14px;}
+  .callout .t{font-size:10.5px;font-weight:700;letter-spacing:0.6px;color:var(--warn);text-transform:uppercase;display:block;margin-bottom:5px;}
+
+  .risk-box{background:var(--brand);color:#f3dfe0;border-radius:8px;padding:22px 24px;margin-top:14px;}
+  .risk-box h4{margin:0 0 10px;color:#fff;font-size:14.5px;}
+  .risk-box ul{margin:0;padding-left:18px;}
+  .risk-box li{margin-bottom:8px;font-size:13px;}
+  .risk-box li b{color:#fff;}
+
+  footer{border-top:1px solid var(--line);margin-top:50px;padding-top:20px;font-size:11px;color:#9aa3b2;line-height:1.6;}
+
+  @media(max-width:560px){
+    .intro h1{font-size:21px;}
+    .report-head h2{font-size:19px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="intro">
+    <div class="eyebrow">24 August 2026</div>
+    <h1>일본 전자부품 섹터 — 4~6월 실적 총정리</h1>
+  </div>
+
+  <section class="report" id="rpt1">
+
+    <div class="report-head">
+      <div class="tag">Japan Electronic Parts</div>
+      <h2>4~6월 실적 총정리: 사이클은 한층 더 커질 전망</h2>
+      <p class="lede">FA·데이터센터 관련 수요가 급증하며 실적·가이던스 모두 서프라이즈. 컨슈머 어플리케이션은 신제품 보유 여부에 따라 업체별 차별화. 재고 사이클은 2013~15년 이후 최대 규모의 대순환에 진입.</p>
+    </div>
+
+    <div class="report-body">
+
+      <div class="chips">
+        <div class="chip"><div class="k">Q1 합산 매출</div><div class="v">¥2,972.0bn</div><div class="s">+19.6% y-y · 추정치 +3.9% 상회</div></div>
+        <div class="chip"><div class="k">Q1 합산 영업이익</div><div class="v">¥353.8bn</div><div class="s">+55.4% y-y · 추정치 +7.6% 상회</div></div>
+        <div class="chip"><div class="k">가이던스 진척률</div><div class="v">24.3%</div><div class="s">상향 가이던스 대비 Q1 OP</div></div>
+        <div class="chip"><div class="k">재고 (6월 말)</div><div class="v">2.9개월</div><div class="s">q-q +0.1개월 · 대순환 확대</div></div>
+      </div>
+
+      <h3 class="sec"><span class="n">1</span>Q1 실적: 매출·이익 모두 사전 추정치 대폭 상회</h3>
+      <ul class="pts">
+        <li>커버리지 일본 전자부품 10사 합산: 매출 <b>¥2,972.0bn (+19.6% y-y)</b>, 영업이익 <b>¥353.8bn (+55.4% y-y)</b> — 사전 추정치(¥2,859.3bn / ¥328.8bn) 대비 각각 +3.9% / +7.6% 상회</li>
+        <li>데이터센터·FA/산업기계향 매출 성장이 가속. 스마트폰 등 컨슈머 어플리케이션은 <b>신제품 기여 여부</b>에 따라 업체별로 성장률 차별화</li>
+        <li>매출·이익 증가폭이 가장 컸던 곳은 <b>TDK</b> — 데이터센터·FA뿐 아니라 박형 배터리·센서 등 신제품 효과로 컨슈머향까지 동반 성장</li>
+        <li>엔저 효과(주요 5사 기준): Q1 매출 <b>+4.3ppt</b>, 영업이익 <b>+17.4ppt</b> 부양 — 환율·인수합병 효과 제외 시 매출 +15.9%, 영업이익 +43.4%</li>
+      </ul>
+
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>기업 (코드)</th><th style="text-align:right">Q1 매출 (¥mn)</th><th style="text-align:right">y-y</th><th style="text-align:right">Q1 영업이익 (¥mn)</th><th style="text-align:right">y-y</th></tr></thead>
+        <tbody>
+          <tr><td><b>Murata Manufacturing</b> (6981)</td><td class="num">502,264</td><td class="num">+20.7%</td><td class="num">98,454</td><td class="num">+59.8%</td></tr>
+          <tr><td><b>TDK</b> (6762)</td><td class="num">741,005</td><td class="num">+38.3%</td><td class="num">86,310</td><td class="num">+53.0%</td></tr>
+          <tr><td><b>Kyocera</b> (6971)</td><td class="num">525,383</td><td class="num">+9.9%</td><td class="num">49,101</td><td class="num">+164.7%</td></tr>
+          <tr><td><b>Niterra</b> (5334)</td><td class="num">203,705</td><td class="num">+19.9%</td><td class="num">41,778</td><td class="num">+24.4%</td></tr>
+          <tr><td><b>Ibiden</b> (4062)</td><td class="num">123,219</td><td class="num">+26.4%</td><td class="num">26,880</td><td class="num">+52.4%</td></tr>
+          <tr><td><b>Minebea Mitsumi</b> (6479)</td><td class="num">426,567</td><td class="num">+16.3%</td><td class="num">26,313</td><td class="num">+50.9%</td></tr>
+          <tr><td><b>Hirose Electric</b> (6806)</td><td class="num">62,085</td><td class="num">+26.8%</td><td class="num">13,338</td><td class="num">+35.6%</td></tr>
+          <tr><td><b>Mabuchi Motor</b> (6592)</td><td class="num">56,011</td><td class="num">+16.8%</td><td class="num">7,752</td><td class="num">+35.1%</td></tr>
+          <tr><td><b>Taiyo Yuden</b> (6976)</td><td class="num">93,897</td><td class="num">+10.7%</td><td class="num">4,818</td><td class="num">+53.3%</td></tr>
+          <tr><td><b>Alps Alpine</b> (6770)</td><td class="num">237,889</td><td class="num neg">-0.4%</td><td class="num neg">-921</td><td class="num neg">적자전환</td></tr>
+          <tr><td><b>합계 (10사)</b></td><td class="num"><b>2,972,025</b></td><td class="num"><b>+19.6%</b></td><td class="num"><b>353,823</b></td><td class="num"><b>+55.4%</b></td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3 class="sec"><span class="n">2</span>가이던스: 6개사 상향, Q1 진척률 24.3%로 높은 수준</h3>
+      <ul class="pts">
+        <li>Q1 발표와 함께 <b>6개사가 연간 매출·영업이익 가이던스를 상향</b>. 12월 결산 Mabuchi Motor 제외 9사 합산 27/3 가이던스: 매출 ¥11,519.0bn(+6.6% y-y), 영업이익 <b>¥1,425.5bn(+31.8%)</b></li>
+        <li>리포트 추정치는 매출 ¥12,301.0bn / 영업이익 ¥1,581.0bn으로 <b>가이던스를 추가 상회</b></li>
+        <li>Q1 영업이익은 상향 반영 후 연간 가이던스의 <b>24.3%</b>에 해당 — 진척률 상위는 Kyocera 30.7%, TDK 29.3%, Hirose Electric 26.8%</li>
+        <li>QUICK 컨센서스 대비 추정치 괴리가 가장 큰 곳: 27/3 영업이익 기준 <b>Kyocera·TDK·Alps Alpine</b>, 28/3 기준으로는 여기에 <b>Hirose Electric·Niterra</b> 추가</li>
+        <li>Kyocera는 시총 대비 대규모 자사주 매입으로 주가 밸류에이션이 일시적으로 상승했다는 판단에 <b>Neutral</b> 유지</li>
+      </ul>
+
+      <div class="chart-card">
+        <div class="ct">Q1 영업이익의 연간 가이던스(상향 반영 후) 대비 진척률</div>
+        <svg viewBox="0 0 880 340" width="100%">
+          <line x1="70" y1="280" x2="860" y2="280" stroke="#8a8f99" stroke-width="1.2"/>
+          <line x1="70" y1="210" x2="860" y2="210" stroke="#e3e7ee"/>
+          <line x1="70" y1="140" x2="860" y2="140" stroke="#e3e7ee"/>
+          <line x1="70" y1="70" x2="860" y2="70" stroke="#e3e7ee"/>
+          <text x="62" y="284" font-size="11" fill="#8a8f99" text-anchor="end">0%</text>
+          <text x="62" y="214" font-size="11" fill="#8a8f99" text-anchor="end">10%</text>
+          <text x="62" y="144" font-size="11" fill="#8a8f99" text-anchor="end">20%</text>
+          <text x="62" y="74" font-size="11" fill="#8a8f99" text-anchor="end">30%</text>
+          <line x1="70" y1="105" x2="860" y2="105" stroke="#c0392b" stroke-width="1" stroke-dasharray="5 4"/>
+          <text x="856" y="99" font-size="10.5" fill="#c0392b" text-anchor="end">균등 진척 25%</text>
+
+          <rect x="93" y="65" width="50" height="215" fill="#7e1416"/>
+          <text x="118" y="57" font-size="11.5" font-weight="700" fill="#7e1416" text-anchor="middle">30.7%</text>
+          <text x="118" y="298" font-size="11" fill="#525866" text-anchor="middle">Kyocera</text>
+
+          <rect x="180" y="75" width="50" height="205" fill="#d6262e"/>
+          <text x="205" y="67" font-size="11.5" font-weight="700" fill="#d6262e" text-anchor="middle">29.3%</text>
+          <text x="205" y="298" font-size="11" fill="#525866" text-anchor="middle">TDK</text>
+
+          <rect x="267" y="85" width="50" height="195" fill="#7e1416"/>
+          <text x="292" y="77" font-size="11.5" font-weight="700" fill="#7e1416" text-anchor="middle">27.9%</text>
+          <text x="292" y="298" font-size="11" fill="#525866" text-anchor="middle">Niterra</text>
+
+          <rect x="354" y="93" width="50" height="187" fill="#d6262e"/>
+          <text x="379" y="85" font-size="11.5" font-weight="700" fill="#d6262e" text-anchor="middle">26.7%</text>
+          <text x="379" y="298" font-size="11" fill="#525866" text-anchor="middle">Hirose</text>
+
+          <rect x="441" y="120" width="50" height="160" fill="#7e1416"/>
+          <text x="466" y="112" font-size="11.5" font-weight="700" fill="#7e1416" text-anchor="middle">22.9%</text>
+          <text x="466" y="298" font-size="11" fill="#525866" text-anchor="middle">Murata</text>
+
+          <rect x="528" y="127" width="50" height="153" fill="#7e1416"/>
+          <text x="553" y="119" font-size="11.5" font-weight="700" fill="#7e1416" text-anchor="middle">21.9%</text>
+          <text x="553" y="298" font-size="11" fill="#525866" text-anchor="middle">Minebea</text>
+
+          <rect x="615" y="132" width="50" height="148" fill="#7e1416"/>
+          <text x="640" y="124" font-size="11.5" font-weight="700" fill="#7e1416" text-anchor="middle">21.2%</text>
+          <text x="640" y="298" font-size="11" fill="#525866" text-anchor="middle">Ibiden</text>
+
+          <rect x="702" y="205" width="50" height="75" fill="#7e1416"/>
+          <text x="727" y="197" font-size="11.5" font-weight="700" fill="#7e1416" text-anchor="middle">10.7%</text>
+          <text x="727" y="298" font-size="11" fill="#525866" text-anchor="middle">Taiyo Yuden</text>
+
+          <rect x="789" y="280" width="50" height="13" fill="#c0392b"/>
+          <text x="814" y="308" font-size="11.5" font-weight="700" fill="#c0392b" text-anchor="middle">-1.9%</text>
+          <text x="814" y="322" font-size="11" fill="#525866" text-anchor="middle">Alps Alpine</text>
+        </svg>
+      </div>
+
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>기업</th><th style="text-align:right">Q1 OP (¥mn)</th><th style="text-align:right">현행 연간 가이던스</th><th>상향 여부</th><th style="text-align:right">상향폭 (¥mn)</th></tr></thead>
+        <tbody>
+          <tr><td><b>Kyocera</b></td><td class="num">49,101</td><td class="num">160,000</td><td class="buy">상향</td><td class="num">+30,000</td></tr>
+          <tr><td><b>TDK</b></td><td class="num">86,310</td><td class="num">295,000</td><td class="neu">유지</td><td class="num">-</td></tr>
+          <tr><td><b>Niterra</b></td><td class="num">41,778</td><td class="num">150,000</td><td class="neu">유지</td><td class="num">-</td></tr>
+          <tr><td><b>Hirose Electric</b></td><td class="num">13,338</td><td class="num">50,000</td><td class="buy">상향</td><td class="num">+4,000</td></tr>
+          <tr><td><b>Murata Manufacturing</b></td><td class="num">98,454</td><td class="num">430,000</td><td class="buy">상향</td><td class="num">+50,000</td></tr>
+          <tr><td><b>Minebea Mitsumi</b></td><td class="num">26,313</td><td class="num">120,000</td><td class="neu">유지</td><td class="num">-</td></tr>
+          <tr><td><b>Ibiden</b></td><td class="num">26,880</td><td class="num">127,000</td><td class="buy">상향</td><td class="num">+37,000</td></tr>
+          <tr><td><b>Taiyo Yuden</b></td><td class="num">4,818</td><td class="num">45,000</td><td class="buy">상향</td><td class="num">+15,000</td></tr>
+          <tr><td><b>Alps Alpine</b></td><td class="num neg">-921</td><td class="num">48,500</td><td class="neu">유지</td><td class="num">-</td></tr>
+          <tr><td><b>Mabuchi Motor</b> (H1 기준)</td><td class="num">13,147</td><td class="num">26,500</td><td class="buy">상향</td><td class="num">+500</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="callout"><span class="t">가이던스 상향의 배경</span>대부분 USD/JPY 가정을 150에서 152~159.7 수준으로 변경하며 상향. Murata는 데이터센터향 매출 가이던스를 ¥325.0bn에서 ¥370.6bn으로 올렸고, Taiyo Yuden은 고용량 MLCC 전환 가속·유닛 수 증가로 AI 서버 수요가 당초 예상을 상회할 것으로 판단. Ibiden은 고부가 패키지의 수요·판가 호조로 매출 +¥50.0bn, 영업이익 +¥37.0bn 상향. Hirose는 자사주 매입(상한 ¥15.0bn, 8/10~11/30)도 함께 발표.</div>
+
+      <h3 class="sec"><span class="n">3</span>밸류에이션: 일시적 급등은 진정, 정상 수준 회귀 전망</h3>
+      <ul class="pts">
+        <li>5월 말부터 데이터센터향 수급 타이트 속 <b>커패시터 등 가격 인상 기대</b>로 주가 밸류에이션 급등 — 이후 실적 추정 상향과 주가 조정으로 과열은 대체로 해소</li>
+        <li>Bloomberg 컨센서스 기준 24개월 forward P/E(FY2 P/E)가 2025년까지 5년래 최고치를 상회하는 기업은 <b>Ibiden, Niterra, Murata Manufacturing, Kyocera 4개사</b>뿐</li>
+        <li>현 밸류에이션의 배경: (1) <b>Ibiden</b> — 고사양 반도체 패키지 수요 강세 속 capa가 따라가지 못해 29/3 이익 고성장 기대 (2) <b>Niterra</b> — SPE용 정전척(electrostatic chuck) 성장성 (3) <b>Murata</b> — AI 서버용 소형·고용량 MLCC 경쟁우위와 29/3 이후 고성장 지속 기대</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">4</span>재고 사이클: 2013~15년 이후 최대 사이클로 전환</h3>
+      <ul class="pts">
+        <li>10사 합산 6월 말 재고는 <b>2.9개월</b>로 3월 말 대비 +0.1개월. 매출 +19.6% / 재고 +17.6%로 사이클은 <b>제1사분면</b>에 위치</li>
+        <li>2025년 10~12월, 2023년 초 이후 지속되던 소순환에서 이탈해 대순환으로 전환 — Q1 들어 대순환 궤적이 한층 확대</li>
+        <li>유사한 대형 궤적은 <b>2013년 1~3월~2015년 10~12월</b>에 관찰 — 당시 전자부품주는 TOPIX 대비 지속적으로 아웃퍼폼</li>
+        <li>2013~15년이 스마트폰 보급기였다면, 현 사이클의 동력은 <b>AI 데이터센터 인프라 구축</b></li>
+      </ul>
+
+      <h3 class="sec"><span class="n">5</span>데이터센터 인프라를 지지하는 부품·기술 포인트</h3>
+      <ul class="pts">
+        <li><b>EMIB-T</b>(Embedded Multi-Die Interconnect Bridge Through-Silicon Via): 패키지당 가속기 4개 탑재를 가능케 하는 유망 기술 — 다만 패키지 생산능력의 빠른 확충이 과제</li>
+        <li>AI 가속기 전원용으로 MLCC가 주목받지만, 확산이 예상되는 <b>수직 전원공급(vertical power)</b>에서는 MLCC 용량이 감소할 가능성 — 이 방식에서 채용 수가 늘어나는 <b>인덕터와의 세트 수요</b>를 주시할 필요</li>
+        <li>고속 광모듈(광트랜시버, NPO, CPO) 전원공급에는 <b>소형 인덕터</b>가 핵심</li>
+        <li>AI 가속기의 3D 패키징·고속 I/O(HBM, SerDes) 채용 확대 → <b>프로브 등 테스트 부품</b>의 중요성 상승</li>
+        <li>데이터센터의 <b>HVDC 전환(+400/-400V, 800V)</b>은 2026년 시작되는 장기 산업 트렌드</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">6</span>실적의 주목 포인트: 공급능력 부족과 가격 인상 진전</h3>
+      <ul class="pts">
+        <li>대만·한국 업체의 가격 인상 이후 일본 업체향 <b>MLCC 주문 급증</b> — 고객단 혼란에 대한 가시성 확대. Q1 커패시터 B/B ratio: <b>Taiyo Yuden 1.7x, Murata 1.2x</b></li>
+        <li><b>Ibiden</b>: 27/3 중 반도체 패키지 추가 capex를 결정할 방침 — 엔지니어 부족이 증설을 제약하고 있으며, 현재 2개 공장에서 신규 라인 가동 개시 중</li>
+        <li>가격 개정 진전: <b>TDK</b>는 HDD 관련 부품을 이르면 Q2 인상 가능, <b>Niterra</b>는 H2 스파크플러그 인상 계획, <b>Kyocera</b>는 초경공구 인상 예정(Q1에 선(先)수요 발생)</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">7</span>종목 선정: TDK·Hirose Electric의 P/E 상승 기대</h3>
+      <ul class="pts">
+        <li><b>TDK (Buy, TP ¥4,500)</b>: ROIC 경영의 성과로 배터리 외 영역까지 전사 매출 성장·마진 개선. 데이터센터향 고전압 부품(800V DC용 수동부품·LFP 배터리)의 이익 성장이 밸류에이션 상승으로 이어질 가능성 — 컨센서스가 낮아 P/E 리레이팅 여지</li>
+        <li><b>Hirose Electric (Buy, TP ¥33,400)</b>: Q1 일반산업 세그먼트 고성장(+46% y-y). 금값 상승에 따른 마진 하락은 일시적 — 가격 개정과 저(低)금 사용 제품 전환으로 개선 전망. <b>프로브카드 사업의 신성장축 부상</b>이 리레이팅 촉매</li>
+        <li><b>Ibiden (Buy, TP ¥19,000)</b>: 엔지니어 부족 영향이 불투명해 추정치에는 미반영이나, <b>EMIB-T 추가 증설 발표 여부를 주시</b> — 채택 확산 시 성장 전망 상향 요인</li>
+        <li><b>Murata Manufacturing (Buy, TP ¥9,000)</b>: AI 서버용 차세대 MLCC에서의 압도적 경쟁력·성장성을 긍정 평가</li>
+        <li><b>Niterra (Buy, TP ¥10,800)</b>: 스파크플러그·산소센서의 업계 재편 기대, 컴포넌트 솔루션 부문의 정전척·질화규소 세라믹·SOFC 성장성</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">8</span>Valuation 일람</h3>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>기업 (코드)</th><th>Rating</th><th style="text-align:right">목표가 (¥)</th><th style="text-align:right">주가 8/24 (¥)</th><th style="text-align:right">Upside</th><th style="text-align:right">P/E 27/3E</th><th style="text-align:right">P/E 28/3E</th><th style="text-align:right">배당수익률</th></tr></thead>
+        <tbody>
+          <tr><td><b>Murata Manufacturing</b> (6981)</td><td class="buy">Buy</td><td class="num">9,000</td><td class="num">7,067.0</td><td class="num">+27.4%</td><td class="num">34.7x</td><td class="num">23.8x</td><td class="num">1.0%</td></tr>
+          <tr><td><b>TDK</b> (6762)</td><td class="buy">Buy</td><td class="num">4,500</td><td class="num">3,042.0</td><td class="num">+47.9%</td><td class="num">20.8x</td><td class="num">17.7x</td><td class="num">1.4%</td></tr>
+          <tr><td><b>Ibiden</b> (4062)</td><td class="buy">Buy</td><td class="num">19,000</td><td class="num">18,795.0</td><td class="num">+1.1%</td><td class="num">58.0x</td><td class="num">41.4x</td><td class="num">0.2%</td></tr>
+          <tr><td><b>Niterra</b> (5334)</td><td class="buy">Buy</td><td class="num">10,800</td><td class="num">8,719.0</td><td class="num">+23.9%</td><td class="num">13.0x</td><td class="num">11.4x</td><td class="num">2.7%</td></tr>
+          <tr><td><b>Hirose Electric</b> (6806)</td><td class="buy">Buy</td><td class="num">33,400</td><td class="num">25,255.0</td><td class="num">+32.3%</td><td class="num">20.8x</td><td class="num">16.2x</td><td class="num">2.1%</td></tr>
+          <tr><td><b>Taiyo Yuden</b> (6976)</td><td class="neu">Neutral</td><td class="num">9,200</td><td class="num">9,149.0</td><td class="num">+0.6%</td><td class="num">35.3x</td><td class="num">20.4x</td><td class="num">1.0%</td></tr>
+          <tr><td><b>Minebea Mitsumi</b> (6479)</td><td class="neu">Neutral</td><td class="num">3,820</td><td class="num">3,344.0</td><td class="num">+14.2%</td><td class="num">14.8x</td><td class="num">12.9x</td><td class="num">1.8%</td></tr>
+          <tr><td><b>Kyocera</b> (6971)</td><td class="neu">Neutral</td><td class="num">3,400</td><td class="num">3,575.0</td><td class="num neg">-4.9%</td><td class="num">27.0x</td><td class="num">23.3x</td><td class="num">1.6%</td></tr>
+          <tr><td><b>Alps Alpine</b> (6770)</td><td class="neu">Neutral</td><td class="num">2,480</td><td class="num">2,206.5</td><td class="num">+12.4%</td><td class="num">14.4x</td><td class="num">10.6x</td><td class="num">3.0%</td></tr>
+          <tr><td><b>Mabuchi Motor</b> (6592)</td><td class="neu">Neutral</td><td class="num">1,730</td><td class="num">1,748.5</td><td class="num neg">-1.1%</td><td class="num">18.5x</td><td class="num">17.7x</td><td class="num">4.0%</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-src" style="font-size:10.5px;color:#9aa3b2;margin-top:8px;">Source: Company data</div>
+
+      <h3 class="sec"><span class="n">!</span>리스크 & 모니터링 포인트</h3>
+      <div class="risk-box">
+        <h4>Key Risks</h4>
+        <ul>
+          <li><b>AI 데이터센터 공급과잉:</b> 언어모델의 토큰 사용량을 대폭 줄이는 기술이 등장하거나 AI 수익화가 지연될 경우, 대규모 capex 대비 매출 미달로 가속기 수요가 감소하며 패키지·부품 수요에 타격 가능</li>
+          <li><b>엔화 강세 전환:</b> Q1 영업이익을 +17.4ppt 부양한 엔저 효과의 역회전 리스크 — 급격한 엔고 시 전 업체 실적 추정 하방</li>
+          <li><b>수직 전원공급 확산:</b> MLCC 용량 수요 감소 가능성 — 인덕터 세트 수요로의 이전 여부가 관건</li>
+          <li><b>경쟁 구도 변화:</b> 중국 업체의 low-end RF 부품 시장 진입, 웨어러블용 커넥터에서의 중국 업체 점유율 확대</li>
+          <li><b>매크로 둔화·고객 재고조정:</b> 선진국 경기 둔화 시 MLCC 등 범용 부품의 재고 축소 트리거 가능</li>
+        </ul>
+        <h4 style="margin-top:14px;">모니터링 포인트</h4>
+        <ul>
+          <li>Ibiden의 EMIB-T 추가 capex 발표 여부와 엔지니어 확보 진행 상황</li>
+          <li>커패시터 B/B ratio 추이 및 각사 가격 인상(TDK HDD 부품, Niterra 스파크플러그, Kyocera 초경공구)의 실행</li>
+          <li>데이터센터 HVDC(800V) 전환 관련 고전압 부품 수주 동향</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div>본 문서는 투자 권유를 목적으로 하지 않습니다.</div>
+  </footer>
+
+</div>
+</body>
+</html>
