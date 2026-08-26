@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>US Equity Strategy Weekly</title>
+<style>
+  :root{
+    --brand:#00264d;
+    --brand-deep:#001830;
+    --accent:#0077c8;
+    --accent2:#005a9e;
+    --paper:#f4f6f9;
+    --card:#ffffff;
+    --ink:#1b1e24;
+    --ink-soft:#525866;
+    --line:#dde3ec;
+    --buy:#1f7a4d;
+    --bear:#c0392b;
+    --bull:#1f6fb2;
+    --warn:#8a4b15;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Helvetica Neue','Pretendard','Noto Sans KR',Arial,sans-serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:960px;margin:0 auto;padding:40px 6vw 90px;}
+  .intro{border-left:4px solid var(--accent);padding:8px 0 8px 20px;margin-bottom:48px;}
+  .intro .eyebrow{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent2);font-weight:700;}
+  .intro h1{font-size:26px;margin:8px 0 6px;color:var(--brand);}
+  .report{margin-bottom:64px;scroll-margin-top:70px;}
+  .report-head{background:linear-gradient(135deg,var(--brand) 0%, var(--brand-deep) 100%);color:#fff;border-radius:10px 10px 0 0;padding:28px 30px;}
+  .report-head .tag{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#9fb4d4;font-weight:700;}
+  .report-head h2{margin:8px 0 14px;font-size:23px;line-height:1.35;}
+  .report-head .lede{font-family:'Georgia',serif;font-size:15.5px;color:#e3ebf6;border-top:1px solid rgba(255,255,255,0.16);padding-top:14px;margin:0;}
+  .report-body{background:var(--card);border:1px solid var(--line);border-top:none;border-radius:0 0 10px 10px;padding:30px;}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px;}
+  .chip{border:1px solid var(--line);border-radius:8px;padding:10px 16px;background:#fafbfd;flex:1;min-width:130px;}
+  .chip .k{font-size:10.5px;letter-spacing:0.5px;text-transform:uppercase;color:var(--ink-soft);}
+  .chip .v{font-size:19px;font-weight:700;color:var(--brand);margin-top:2px;}
+  .chip .v.buy{color:var(--buy);}
+  .chip .s{font-size:11px;color:var(--ink-soft);}
+  h3.sec{font-size:17px;color:var(--brand);margin:30px 0 12px;padding-bottom:8px;border-bottom:1.5px solid var(--line);display:flex;align-items:center;gap:10px;}
+  h3.sec .n{background:var(--brand);color:#fff;font-size:12px;font-weight:700;width:24px;height:24px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}
+  ul.pts{margin:0;padding:0;list-style:none;}
+  ul.pts li{position:relative;padding:7px 0 7px 20px;font-size:14.5px;border-bottom:1px dashed var(--line);}
+  ul.pts li:last-child{border-bottom:none;}
+  ul.pts li::before{content:"—";position:absolute;left:0;color:var(--accent2);font-weight:700;}
+  ul.pts b{color:var(--brand);}
+  table.tbl{width:100%;border-collapse:collapse;font-size:13px;margin:6px 0 4px;}
+  table.tbl th{background:var(--brand);color:#fff;text-align:left;padding:8px 10px;font-weight:600;}
+  table.tbl td{padding:7px 10px;border-bottom:1px solid var(--line);}
+  table.tbl tr:nth-child(even) td{background:#f7f9fc;}
+  table.tbl td.num{text-align:right;font-variant-numeric:tabular-nums;}
+  table.tbl td.buy{color:var(--buy);font-weight:700;}
+  table.tbl td.sell{color:var(--bear);font-weight:700;}
+  .tbl-wrap{overflow-x:auto;}
+  .chart-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:22px 22px 14px;margin:14px 0;}
+  .chart-card .ct{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:12px;}
+  .chart-src{font-size:10.5px;color:#9aa3b2;margin-top:8px;}
+  .legend{display:flex;gap:18px;font-size:11.5px;color:var(--ink-soft);margin-bottom:4px;}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .legend i{width:11px;height:11px;border-radius:2px;display:inline-block;}
+  .bbgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0;}
+  @media(max-width:680px){.bbgrid{grid-template-columns:1fr;}}
+  .bb{border-radius:8px;padding:16px;border:1px solid var(--line);background:#fafbfd;}
+  .bb.bull{border-top:3px solid var(--bull);}
+  .bb.base{border-top:3px solid var(--ink-soft);}
+  .bb.bear{border-top:3px solid var(--bear);}
+  .bb .lbl{font-size:11px;letter-spacing:0.6px;text-transform:uppercase;font-weight:700;color:var(--ink-soft);}
+  .bb .px{font-size:22px;font-weight:700;color:var(--brand);margin:4px 0;}
+  .bb .ret{font-size:13px;font-weight:600;}
+  .bb.bull .ret{color:var(--bull);}
+  .bb.bear .ret{color:var(--bear);}
+  .bb ul{margin:8px 0 0;padding-left:16px;font-size:12px;color:var(--ink-soft);}
+  .bb li{margin-bottom:4px;}
+  .callout{background:#fbf6ec;border:1px solid #e8dcc3;border-radius:8px;padding:14px 18px;font-size:13px;color:var(--ink-soft);margin-top:14px;}
+  .callout .t{font-size:10.5px;font-weight:700;letter-spacing:0.6px;color:var(--warn);text-transform:uppercase;display:block;margin-bottom:5px;}
+  .risk-box{background:var(--brand);color:#dde6f3;border-radius:8px;padding:22px 24px;margin-top:14px;}
+  .risk-box h4{margin:0 0 10px;color:#fff;font-size:14.5px;}
+  .risk-box ul{margin:0;padding-left:18px;}
+  .risk-box li{margin-bottom:8px;font-size:13px;}
+  .risk-box li b{color:#fff;}
+  footer{border-top:1px solid var(--line);margin-top:50px;padding-top:20px;font-size:11px;color:#9aa3b2;line-height:1.6;}
+  @media(max-width:560px){
+    .intro h1{font-size:21px;}
+    .report-head h2{font-size:19px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="intro">
+    <div class="eyebrow">24 August 2026</div>
+    <h1>재무부 국채 Buyback과 "Run It Hot" 체제 — 대형 퀄리티·AI Adopter 선호</h1>
+  </div>
+
+  <section class="report" id="rpt1">
+
+    <div class="report-head">
+      <div class="tag">US Equity Strategy | North America</div>
+      <h2>재무부 국채 Buyback, "Run It Hot" 논지의 연장선 — 퀄리티 로테이션 진행 중, 단기 리스크는 유가</h2>
+      <p class="lede">포스트 코로나 인플레이션 회귀가 더 짧은 사이클, 더 반응적인 정책, 더 잦은 리더십 교체를 낳았다 — 대형 퀄리티·AI adopter·S&amp;P 500을 국제 증시 대비 선호하며, 단기 리스크인 유가에 대해서는 Energy 주식이 최선의 헤지.</p>
+    </div>
+
+    <div class="report-body">
+
+      <div class="chips">
+        <div class="chip"><div class="k">S&amp;P 500</div><div class="v">7,674</div><div class="s">Current P/E 19.7x</div></div>
+        <div class="chip"><div class="k">12M Target (Base)</div><div class="v">8,300</div><div class="s">+8% / P/E 20.5x</div></div>
+        <div class="chip"><div class="k">2Q26E EPS 성장</div><div class="v buy">+45%</div><div class="s">컨센서스, y/y</div></div>
+        <div class="chip"><div class="k">비중확대 섹터</div><div class="v">금융·산업재</div><div class="s">+ Consumer Disc. Goods</div></div>
+      </div>
+
+      <h3 class="sec"><span class="n">1</span>퀄리티 로테이션 — 콜이 현실화되는 중</h3>
+      <ul class="pts">
+        <li>최근 2개월간 퀄리티 팩터 강세: <b>high FCF +16%</b>, high gross margin +9%, 매출 성장 안정성 +9%, low capex-to-sales +8%</li>
+        <li>테마 리더십은 서비스 지향·수수료 기반·자산경량(asset-light) 섹터로 이동 중이며, 이들이 시장 내 가장 강한 earnings revisions를 시현</li>
+        <li>금융 비중확대 내에서는 <b>Financial Services와 보험</b>이 부각 — EPS revisions가 가속하며 주가 대비 괴리 확대</li>
+        <li>6월 earnings revisions breadth 변화율 정점(반도체 주도) 이후 리더십 교체 본격화 — 퀄리티 팩터가 12개월 부진을 끝내고 재차 아웃퍼폼, 침체 이후 국면의 전형적 패턴</li>
+        <li>6~7월 하락 국면에서 다수 종목이 30%+ 조정되며 <b>기록적 momentum unwind</b> 발생 — momentum 전략 자체는 유효하나 구성 종목이 퀄리티로 교체되는 과정</li>
+        <li>S&amp;P 500은 세계 최고 퀄리티 지수 — 종목 레벨 리더십은 계속 바뀌어도 지수 레벨 리더십은 유지·강화 전망</li>
+        <li>반도체(SOX)와 silver stocks 간 가격 아날로그가 계속 유효 — 반도체가 단기에 momentum 리더십을 재탈환하기 어렵다는 시사. <b>AI adopter &gt; enabler</b>, early cycle에서 mid cycle·퀄리티로의 로테이션과 부합</li>
+      </ul>
+
+      <div class="chart-card">
+        <div class="ct">퀄리티 팩터 최근 2개월 수익률 (%)</div>
+        <svg viewBox="0 0 880 300" width="100%">
+          <line x1="70" y1="250" x2="850" y2="250" stroke="#cfd6e0"/>
+          <line x1="70" y1="200" x2="850" y2="200" stroke="#eef1f6"/>
+          <line x1="70" y1="150" x2="850" y2="150" stroke="#eef1f6"/>
+          <line x1="70" y1="100" x2="850" y2="100" stroke="#eef1f6"/>
+          <line x1="70" y1="50" x2="850" y2="50" stroke="#eef1f6"/>
+          <text x="60" y="254" font-size="11" fill="#9aa3b2" text-anchor="end">0</text>
+          <text x="60" y="204" font-size="11" fill="#9aa3b2" text-anchor="end">4</text>
+          <text x="60" y="154" font-size="11" fill="#9aa3b2" text-anchor="end">8</text>
+          <text x="60" y="104" font-size="11" fill="#9aa3b2" text-anchor="end">12</text>
+          <text x="60" y="54" font-size="11" fill="#9aa3b2" text-anchor="end">16</text>
+          <rect x="120" y="50" width="120" height="200" fill="#00264d"/>
+          <rect x="320" y="137.5" width="120" height="112.5" fill="#0077c8"/>
+          <rect x="520" y="137.5" width="120" height="112.5" fill="#0077c8"/>
+          <rect x="720" y="150" width="120" height="100" fill="#0077c8"/>
+          <text x="180" y="40" font-size="13" font-weight="700" fill="#00264d" text-anchor="middle">+16%</text>
+          <text x="380" y="127" font-size="13" font-weight="700" fill="#005a9e" text-anchor="middle">+9%</text>
+          <text x="580" y="127" font-size="13" font-weight="700" fill="#005a9e" text-anchor="middle">+9%</text>
+          <text x="780" y="140" font-size="13" font-weight="700" fill="#005a9e" text-anchor="middle">+8%</text>
+          <text x="180" y="270" font-size="11" fill="#525866" text-anchor="middle">High FCF</text>
+          <text x="380" y="270" font-size="11" fill="#525866" text-anchor="middle">High Gross Margin</text>
+          <text x="580" y="270" font-size="11" fill="#525866" text-anchor="middle">매출 성장 안정성</text>
+          <text x="780" y="270" font-size="11" fill="#525866" text-anchor="middle">Low Capex/Sales</text>
+        </svg>
+        <div class="chart-src">Source: Compustat</div>
+      </div>
+
+      <h3 class="sec"><span class="n">2</span>재무부 국채 Buyback — "Run It Hot" 체제의 최신 국면</h3>
+      <ul class="pts">
+        <li>6년 전 코로나 침체 저점에서 인플레이션 회귀를 예고한 콜의 연장선 — <b>"Hotter but Shorter Cycle"</b> 논지: 1982~2020년 약 40년 디스인플레이션 붐이 끝나고, 높은 명목 GDP 성장과 2%를 상회하는 인플레이션이 사이클을 주도했던 2차 대전 이후 시기와 유사한 국면</li>
+        <li>디스인플레이션 종료의 최대 증거는 국채 금리 장기 차트 — 1982~2020년 최대의 채권 강세장이 반전됐고, <b>36년 주기 Kondratieff 사이클</b> 기준 금리는 장기적으로 상방 추세 (1945~1982년의 세속적 약세장과 유사, 중간중간 순환적 강세장 동반)</li>
+        <li>금리 상승의 주요인은 부채·적자에 대한 구조적 우려가 아니라 <b>코로나 이후의 매우 강한 명목 GDP 성장</b> — 공격적 재정정책이 만든 fiscal dominance 시대라는 판단</li>
+        <li>최근 재무부의 두 차례 개입: JPY/USD 시장 개입, 그리고 Quarterly Refunding Announcement 불과 2주 만의 <b>buyback 프로그램 서프라이즈 증액</b> — 둘 다 시장의 원활한 작동을 위한 금융여건 안정화 조치</li>
+        <li>QE나 Yield Curve Control은 아님 — 시장 규모와 향후 공급량 대비 buyback 규모가 훨씬 커야 하기 때문. 다만 <b>gold·crypto 시장은 더 큰 개입의 첫걸음일 가능성</b>에 반응하며 상승</li>
+        <li>은행 지준이 abundant가 아닌 ample 수준 → funding·국채·통화시장에 주기적 스트레스 발생. Reserve Management Program(RMP), 국채 buyback, 은행 규제완화 등으로 필요 시 유동성 공급 — 과잉 공급이 아닌 <b>시장 작동에 필요한 최소한</b></li>
+        <li>Term premium 약 80bp — 2020년 이후 상승했지만 현재 수준에서 정체, 지난 60년 역사 대비 경고 신호 아님. 시장이 재정 조달 능력에 대한 무질서한 금리 상승을 우려하지 않는다는 방증</li>
+        <li>연준 의장 Warsh는 balance sheet의 공격적 사용에 <b>"emergency"가 전제</b>라는 입장 — 그 시점이 오면 적극적 유동성 공급(printing) 전망, 귀금속·crypto·주식시장이 이에 동의하는 가격 흐름</li>
+      </ul>
+      <div class="callout"><span class="t">주목</span>리포트가 강조하는 핵심: 최근 재무부 개입은 지난 20년, 특히 코로나 이후 이어져 온 정책 패턴의 연장선이며, 채권시장이 불안정하다는 신호가 아니라 당국이 시장 작동을 유지하겠다는 의지의 표현이라는 해석.</div>
+
+      <h3 class="sec"><span class="n">3</span>유가 — 단기 최대 리스크, 그리고 비대칭적</h3>
+      <ul class="pts">
+        <li>Brent 최근 2주간 <b>+13%</b> — 유가 상승은 유가 하락이 순풍이 되는 정도보다 훨씬 신뢰할 만한 주식시장 역풍</li>
+        <li>최근 2개월 oil vs. equity beta는 <b>Brent 상승 국면에서 하락 국면 대비 2배</b> — 리스크의 비대칭성</li>
+        <li>낙관적 견해에 유가 반락은 필요 없음 — <b>상승만 멈추면 충분</b></li>
+        <li>해협(Strait) 폐쇄 지속에 따른 유가 재급등 시 투입비용 압박, 금리·채권 변동성 상방 압력 — 이때 대응은 재무부보다 <b>연준의 몫</b>이나, 일부 시장 불안정을 거친 뒤에야 대응할 가능성</li>
+        <li>이 리스크가 소진될 때까지 <b>Energy 주식이 주식 포트폴리오의 유효한 헤지</b></li>
+      </ul>
+
+      <h3 class="sec"><span class="n">4</span>2Q26 어닝시즌 — 기업들이 말하는 것</h3>
+      <ul class="pts">
+        <li>가이던스 상향('raise guidance') 언급이 전체 transcript의 <b>~25%로 사상 최고</b> — earnings revisions breadth도 2Q 이후 +24%로 견조한 플러스 영역</li>
+        <li>order book·수요 관련 언급이 전분기 대비 개선 — 가이던스 상향이 비용이 아닌 <b>수요 주도</b>임을 시사</li>
+        <li>Russell 3000 중앙값 기준 2Q 실적: <b>EPS +14% y/y</b>, 매출 +8%, capex +10% — 펀더멘털 견조</li>
+        <li>다만 시장 전반의 퀄리티 이동으로 EPS beat만으로는 부족 — <b>FCF 가이던스가 EPS와 함께 상향</b>되는 종목이 필요</li>
+        <li>AI: 빌드아웃 지속 속 논의의 축이 capacity에서 <b>ROI·monetization</b>으로 이동, 관련 언급 q/q 증가. 데이터센터·전력 언급도 계속 상승 — <b>전력 가용성이 빌드아웃의 binding constraint</b>. capex 성장률 정점 시점에 관심 집중</li>
+        <li>매크로: 비용·투입가격 언급은 높지만 관리 가능한 수준, 노동시장 언급은 중립(고용·해고 상쇄), 소비 언급도 중립이나 <b>K자형 양극화 지속</b>. 침체·사이클 종반 언급은 드묾</li>
+        <li>인플레이션과 연준 reaction function이 매크로 논쟁의 중심 — soft payrolls가 2026년 연준 동결을 지지한다는 전망, 글로벌 금리(특히 장기물)가 S&amp;P 500 압박 요인으로 주시 대상</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">5</span>데이터센터 반대 움직임 — 정치 이슈화 가속</h3>
+      <ul class="pts">
+        <li>제3자 집계 기준 <b>2025년 약 $156bn</b> 규모 프로젝트 취소·지연, <b>1Q26에만 이미 $130bn</b> — 중간선거를 앞두고 wedge issue로 부상</li>
+        <li>주·지역 단위 모라토리엄 확산: 인프라 비용분담 요건, 요금 납부자 보호, 환경 공시, 조닝 변경 등 가드레일 도입. 다만 대부분 한시적 조치로 <b>빌드아웃을 되돌리기보다 늦추는 방향</b></li>
+        <li>주 전체 단위 모라토리엄 발의는 민주 트리펙타·공화 트리펙타·분점정부에서 <b>고르게 등장</b> — 특정 정파 이슈가 아님</li>
+        <li>Texas: ERCOT 계통연계 심사 중인 <b>474GW+ 신청(약 90%가 데이터센터 관련)</b> 전수 감사, 주요 개발사 협조 의사</li>
+        <li>Virginia: 7월 31일 Rider T1 명령으로 Dominion을 직접연결 송전에 대한 "cost causer pays" 방향으로 이동</li>
+        <li>Ohio: "Ohioans-First" 제안은 현행법이 아니며 프로젝트 경제성 변화보다 <b>센티먼트 지표</b>로 해석이 적절</li>
+        <li>Pennsylvania: 주지사 행정명령으로 fast-track 인허가 종료, 지역 당국 사전 승인 의무화, NDA 사용 금지, 신규 환경 기준 및 자체 전력 확보 요건 도입</li>
+        <li>커뮤니티 반발의 3대 쟁점: (1) <b>전기요금 인상 우려</b>(affordability), (2) 물 사용·대기오염 등 환경, (3) 소음·먼지·교통 등 삶의 질</li>
+        <li>이 역학은 <b>off-grid 발전</b>에 유리 — 관련 종목: CIFR, WULF, GLXY, SEI, BE, GEV, INIO, NEE, WMB, LBRT, EROC, CMI</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">6</span>실적 전망 &amp; 시나리오</h3>
+      <div class="chart-card">
+        <div class="ct">S&amp;P 500 컨센서스 EPS 성장률 (y/y, 분기별)</div>
+        <div class="legend">
+          <span><i style="background:var(--brand)"></i>실적</span>
+          <span><i style="background:var(--accent)"></i>추정치</span>
+        </div>
+        <svg viewBox="0 0 880 320" width="100%">
+          <line x1="60" y1="270" x2="860" y2="270" stroke="#cfd6e0"/>
+          <line x1="60" y1="220" x2="860" y2="220" stroke="#eef1f6"/>
+          <line x1="60" y1="170" x2="860" y2="170" stroke="#eef1f6"/>
+          <line x1="60" y1="120" x2="860" y2="120" stroke="#eef1f6"/>
+          <line x1="60" y1="70" x2="860" y2="70" stroke="#eef1f6"/>
+          <text x="52" y="274" font-size="11" fill="#9aa3b2" text-anchor="end">0%</text>
+          <text x="52" y="224" font-size="11" fill="#9aa3b2" text-anchor="end">10%</text>
+          <text x="52" y="174" font-size="11" fill="#9aa3b2" text-anchor="end">20%</text>
+          <text x="52" y="124" font-size="11" fill="#9aa3b2" text-anchor="end">30%</text>
+          <text x="52" y="74" font-size="11" fill="#9aa3b2" text-anchor="end">40%</text>
+          <rect x="72" y="240" width="38" height="30" fill="#00264d"/>
+          <rect x="134" y="215" width="38" height="55" fill="#00264d"/>
+          <rect x="195" y="235" width="38" height="35" fill="#00264d"/>
+          <rect x="257" y="180" width="38" height="90" fill="#00264d"/>
+          <rect x="318" y="205" width="38" height="65" fill="#00264d"/>
+          <rect x="380" y="200" width="38" height="70" fill="#00264d"/>
+          <rect x="441" y="205" width="38" height="65" fill="#00264d"/>
+          <rect x="503" y="205" width="38" height="65" fill="#00264d"/>
+          <rect x="564" y="135" width="38" height="135" fill="#00264d"/>
+          <rect x="626" y="45" width="38" height="225" fill="#0077c8"/>
+          <rect x="687" y="140" width="38" height="130" fill="#0077c8"/>
+          <rect x="749" y="145" width="38" height="125" fill="#0077c8"/>
+          <rect x="810" y="205" width="38" height="65" fill="#0077c8"/>
+          <text x="91" y="234" font-size="10" fill="#525866" text-anchor="middle">6%</text>
+          <text x="153" y="209" font-size="10" fill="#525866" text-anchor="middle">11%</text>
+          <text x="214" y="229" font-size="10" fill="#525866" text-anchor="middle">7%</text>
+          <text x="276" y="174" font-size="10" fill="#525866" text-anchor="middle">18%</text>
+          <text x="337" y="199" font-size="10" fill="#525866" text-anchor="middle">13%</text>
+          <text x="399" y="194" font-size="10" fill="#525866" text-anchor="middle">14%</text>
+          <text x="460" y="199" font-size="10" fill="#525866" text-anchor="middle">13%</text>
+          <text x="522" y="199" font-size="10" fill="#525866" text-anchor="middle">13%</text>
+          <text x="583" y="129" font-size="10" fill="#525866" text-anchor="middle">27%</text>
+          <text x="645" y="39" font-size="11" font-weight="700" fill="#005a9e" text-anchor="middle">45%</text>
+          <text x="706" y="134" font-size="10" fill="#525866" text-anchor="middle">26%</text>
+          <text x="768" y="139" font-size="10" fill="#525866" text-anchor="middle">25%</text>
+          <text x="829" y="199" font-size="10" fill="#525866" text-anchor="middle">13%</text>
+          <text x="91" y="288" font-size="9" fill="#9aa3b2" text-anchor="middle">1Q24</text>
+          <text x="153" y="288" font-size="9" fill="#9aa3b2" text-anchor="middle">2Q24</text>
+          <text x="214" y="288" font-size="9" fill="#9aa3b2" text-anchor="middle">3Q24</text>
+          <text x="276" y="288" font-size="9" fill="#9aa3b2" text-anchor="middle">4Q24</text>
+          <text x="337" y="288" font-size="9" fill="#9aa3b2" text-anchor="middle">1Q25</text>
+          <text x="399" y="288" font-size="9" fill="#9aa3b2" text-anchor="middle">2Q25</text>
+          <text x="460" y="288" font-size="9" fill="#9aa3b2" text-anchor="middle">3Q25</text>
+          <text x="522" y="288" font-size="9" fill="#9aa3b2" text-anchor="middle">4Q25</text>
+          <text x="583" y="288" font-size="9" fill="#9aa3b2" text-anchor="middle">1Q26</text>
+          <text x="645" y="288" font-size="9" fill="#9aa3b2" text-anchor="middle">2Q26E</text>
+          <text x="706" y="288" font-size="9" fill="#9aa3b2" text-anchor="middle">3Q26E</text>
+          <text x="768" y="288" font-size="9" fill="#9aa3b2" text-anchor="middle">4Q26E</text>
+          <text x="829" y="288" font-size="9" fill="#9aa3b2" text-anchor="middle">1Q27</text>
+        </svg>
+        <div class="chart-src">Source: Refinitiv, FactSet</div>
+      </div>
+
+      <div class="bbgrid">
+        <div class="bb bull"><div class="lbl">🐂 Bull</div><div class="px">9,400</div><div class="ret">+22% Upside</div>
+          <ul><li>Target P/E 21.0x</li><li>Top-down EPS: 2026 $352 (+28%) → 2027 $416 (+18%)</li></ul></div>
+        <div class="bb base"><div class="lbl">⊕ Base</div><div class="px">8,300</div><div class="ret">+8%</div>
+          <ul><li>Target P/E 20.5x</li><li>Top-down EPS: 2026 $339 (+23%) → 2027 $380 (+12%)</li></ul></div>
+        <div class="bb bear"><div class="lbl">🐻 Bear</div><div class="px">5,900</div><div class="ret">-23% Downside</div>
+          <ul><li>Target P/E 19.0x</li><li>Top-down EPS: 2026 $299 (+9%) → 2027 $300 (0%)</li></ul></div>
+      </div>
+
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>시나리오</th><th>12M Target</th><th>% to Current</th><th>P/E Target</th><th>2026E EPS</th><th>2027E EPS</th><th>2028E EPS</th></tr></thead>
+        <tbody>
+          <tr><td><b>Bull</b></td><td class="num">9,400</td><td class="num buy">+22%</td><td class="num">21.0x</td><td class="num">$352</td><td class="num">$416</td><td class="num">$480</td></tr>
+          <tr><td><b>Base</b></td><td class="num">8,300</td><td class="num">+8%</td><td class="num">20.5x</td><td class="num">$339</td><td class="num">$380</td><td class="num">$429</td></tr>
+          <tr><td><b>Bear</b></td><td class="num">5,900</td><td class="num sell">-23%</td><td class="num">19.0x</td><td class="num">$299</td><td class="num">$300</td><td class="num">$322</td></tr>
+          <tr><td><b>Bottom-up 컨센서스</b></td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">$360</td><td class="num">$407</td><td class="num">$467</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3 class="sec"><span class="n">7</span>섹터 추천 &amp; 포커스 종목 리스트</h3>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>비중</th><th colspan="3">섹터</th></tr></thead>
+        <tbody>
+          <tr><td class="buy"><b>Overweight</b></td><td>금융</td><td>산업재</td><td>Consumer Discretionary Goods</td></tr>
+          <tr><td><b>Equal Weight</b></td><td>Tech · 소재 · Energy</td><td>Comm. Services · 유틸리티</td><td>헬스케어 · Consumer Services</td></tr>
+          <tr><td class="sell"><b>Underweight</b></td><td>필수소비재</td><td>부동산</td><td></td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="tbl-wrap" style="margin-top:16px;">
+      <table class="tbl">
+        <thead><tr><th>종목</th><th>티커</th><th>등급</th><th>섹터</th><th>현재가</th><th>목표가</th><th>상승여력</th><th>편입 후 수익률</th></tr></thead>
+        <tbody>
+          <tr><td><b>Abbvie</b></td><td>ABBV</td><td class="buy">Overweight</td><td>헬스케어</td><td class="num">$266.07</td><td class="num">296</td><td class="num">+11.2%</td><td class="num">+49.0%</td></tr>
+          <tr><td><b>American Tower</b></td><td>AMT</td><td class="buy">Overweight</td><td>부동산</td><td class="num">$174.49</td><td class="num">220</td><td class="num">+26.1%</td><td class="num">-15.7%</td></tr>
+          <tr><td><b>CenterPoint Energy</b></td><td>CNP</td><td>Equal-Weight</td><td>유틸리티</td><td class="num">$40.41</td><td class="num">39</td><td class="num">-3.5%</td><td class="num">+49.4%</td></tr>
+          <tr><td><b>Delta Air Lines</b></td><td>DAL</td><td class="buy">Overweight</td><td>산업재</td><td class="num">$83.29</td><td class="num">125</td><td class="num">+50.1%</td><td class="num">+42.2%</td></tr>
+          <tr><td><b>EQT</b></td><td>EQT</td><td class="buy">Overweight</td><td>Energy</td><td class="num">$53.65</td><td class="num">67</td><td class="num">+24.9%</td><td class="num">-9.6%</td></tr>
+          <tr><td><b>Knight-Swift</b></td><td>KNX</td><td class="buy">Overweight</td><td>산업재</td><td class="num">$69.73</td><td class="num">100</td><td class="num">+43.4%</td><td class="num">+68.2%</td></tr>
+          <tr><td><b>Northrop Grumman</b></td><td>NOC</td><td class="buy">Overweight</td><td>산업재</td><td class="num">$583.00</td><td class="num">745</td><td class="num">+27.8%</td><td class="num">+15.3%</td></tr>
+          <tr><td><b>Atlassian</b></td><td>TEAM</td><td class="buy">Overweight</td><td>IT</td><td class="num">$174.23</td><td class="num">180</td><td class="num">+3.3%</td><td class="num">+13.2%</td></tr>
+          <tr><td><b>Target</b></td><td>TGT</td><td class="buy">Overweight</td><td>필수소비재</td><td class="num">$159.08</td><td class="num">170</td><td class="num">+6.9%</td><td class="num">+89.0%</td></tr>
+          <tr><td><b>Walmart</b></td><td>WMT</td><td class="buy">Overweight</td><td>필수소비재</td><td class="num">$114.30</td><td class="num">125</td><td class="num">+9.4%</td><td class="num">+128.1%</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="callout"><span class="t">참고</span>포커스 리스트 전체 성과: 현재 리스트 평균(동일가중) 절대수익 +42.9%, 편입 후 평균 보유기간 20.7개월. 전체 기간 기준 평균 절대수익 +30.9%, 승률(절대) 75%.</div>
+
+      <h3 class="sec"><span class="n">!</span>리스크 &amp; 모니터링 포인트</h3>
+      <div class="risk-box">
+        <h4>Key Risks</h4>
+        <ul>
+          <li><b>유가 재급등:</b> 해협 폐쇄 장기화에 따른 crude spike 시 투입비용·금리·채권 변동성 동반 상승 — 연준 대응 이전 일부 시장 불안정 국면 가능</li>
+          <li><b>장기 금리:</b> back-end yields 상승이 S&amp;P 500 밸류에이션 압박 요인 — 글로벌 금리 흐름 주시 필요</li>
+          <li><b>Capex 성장률 정점:</b> capex revisions breadth와 capex/sales 팩터가 성장률 정점 임박 가능성 시사</li>
+          <li><b>데이터센터 정치화:</b> 중간선거를 앞두고 반대 여론 확산 시 프로젝트 취소·지연 규모 추가 확대 가능</li>
+        </ul>
+        <h4 style="margin-top:14px;">모니터링 포인트</h4>
+        <ul>
+          <li>Term premium(현재 ~80bp) — 무질서한 상승 여부</li>
+          <li>Brent 가격 흐름 — 상승 지속 여부가 헤지 필요성 좌우</li>
+          <li>FCF 가이던스 상향 동반 여부 — 퀄리티 이동 국면의 종목 선별 기준</li>
+          <li>Earnings revisions breadth 및 momentum 구성 종목의 퀄리티 교체 진행</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div>본 문서는 투자 권유를 목적으로 하지 않습니다.</div>
+  </footer>
+
+</div>
+</body>
+</html>
