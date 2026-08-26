@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SpaceX</title>
+<style>
+  :root{
+    --brand:#0a2240;
+    --brand-deep:#06182e;
+    --accent:#5c1a26;
+    --accent2:#3d5a80;
+    --paper:#f4f6f9;
+    --card:#ffffff;
+    --ink:#1b1e24;
+    --ink-soft:#525866;
+    --line:#dde3ec;
+    --buy:#1f7a4d;
+    --bear:#c0392b;
+    --bull:#1f6fb2;
+    --warn:#8a4b15;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Helvetica Neue','Pretendard','Noto Sans KR',Arial,sans-serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  .serif{font-family:'Georgia','Noto Serif KR',serif;}
+
+  .wrap{max-width:960px;margin:0 auto;padding:40px 6vw 90px;}
+
+  .intro{
+    border-left:4px solid var(--accent);
+    padding:8px 0 8px 20px;margin-bottom:48px;
+  }
+  .intro .eyebrow{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent2);font-weight:700;}
+  .intro h1{font-size:26px;margin:8px 0 6px;color:var(--brand);}
+
+  .report{margin-bottom:64px;scroll-margin-top:70px;}
+  .report-head{
+    background:linear-gradient(135deg,var(--brand) 0%, var(--brand-deep) 100%);
+    color:#fff;border-radius:10px 10px 0 0;padding:28px 30px;
+  }
+  .report-head .tag{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#9fb4d4;font-weight:700;}
+  .report-head h2{margin:8px 0 14px;font-size:23px;line-height:1.35;}
+  .report-head .lede{
+    font-family:'Georgia',serif;font-size:15.5px;color:#e3ebf6;
+    border-top:1px solid rgba(255,255,255,0.16);padding-top:14px;margin:0;
+  }
+  .report-body{
+    background:var(--card);border:1px solid var(--line);border-top:none;
+    border-radius:0 0 10px 10px;padding:30px;
+  }
+
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px;}
+  .chip{border:1px solid var(--line);border-radius:8px;padding:10px 16px;background:#fafbfd;flex:1;min-width:130px;}
+  .chip .k{font-size:10.5px;letter-spacing:0.5px;text-transform:uppercase;color:var(--ink-soft);}
+  .chip .v{font-size:19px;font-weight:700;color:var(--brand);margin-top:2px;}
+  .chip .v.buy{color:var(--buy);}
+  .chip .s{font-size:11px;color:var(--ink-soft);}
+
+  h3.sec{
+    font-size:17px;color:var(--brand);margin:30px 0 12px;
+    padding-bottom:8px;border-bottom:1.5px solid var(--line);
+    display:flex;align-items:center;gap:10px;
+  }
+  h3.sec .n{
+    background:var(--brand);color:#fff;font-size:12px;font-weight:700;
+    width:24px;height:24px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  ul.pts{margin:0;padding:0;list-style:none;}
+  ul.pts li{position:relative;padding:7px 0 7px 20px;font-size:14.5px;border-bottom:1px dashed var(--line);}
+  ul.pts li:last-child{border-bottom:none;}
+  ul.pts li::before{content:"—";position:absolute;left:0;color:var(--accent2);font-weight:700;}
+  ul.pts b{color:var(--brand);}
+
+  table.tbl{width:100%;border-collapse:collapse;font-size:13px;margin:6px 0 4px;}
+  table.tbl th{background:var(--brand);color:#fff;text-align:left;padding:8px 10px;font-weight:600;}
+  table.tbl td{padding:7px 10px;border-bottom:1px solid var(--line);}
+  table.tbl tr:nth-child(even) td{background:#f7f9fc;}
+  table.tbl td.num{text-align:right;font-variant-numeric:tabular-nums;}
+  table.tbl td.hl{background:#f6ecec !important;font-weight:700;}
+  table.tbl tr.subhead td{background:#e8edf5 !important;font-weight:700;color:var(--brand);font-size:12px;}
+  .tbl-wrap{overflow-x:auto;}
+
+  .chart-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:22px 22px 14px;margin:14px 0;}
+  .chart-card .ct{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:12px;}
+  .chart-src{font-size:10.5px;color:#9aa3b2;margin-top:8px;}
+  .legend{display:flex;gap:18px;font-size:11.5px;color:var(--ink-soft);margin-bottom:4px;flex-wrap:wrap;}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .legend i{width:11px;height:11px;border-radius:2px;display:inline-block;}
+
+  .callout{background:#fbf6ec;border:1px solid #e8dcc3;border-radius:8px;padding:14px 18px;font-size:13px;color:var(--ink-soft);margin-top:14px;}
+  .callout .t{font-size:10.5px;font-weight:700;letter-spacing:0.6px;color:var(--warn);text-transform:uppercase;display:block;margin-bottom:5px;}
+
+  .risk-box{background:var(--brand);color:#dde6f3;border-radius:8px;padding:22px 24px;margin-top:14px;}
+  .risk-box h4{margin:0 0 10px;color:#fff;font-size:14.5px;}
+  .risk-box ul{margin:0;padding-left:18px;}
+  .risk-box li{margin-bottom:8px;font-size:13px;}
+  .risk-box li b{color:#fff;}
+
+  footer{border-top:1px solid var(--line);margin-top:50px;padding-top:20px;font-size:11px;color:#9aa3b2;line-height:1.6;}
+
+  @media(max-width:560px){
+    .intro h1{font-size:21px;}
+    .report-head h2{font-size:19px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="intro">
+    <div class="eyebrow">25 August 2026</div>
+    <h1>SpaceX — 주요 AI 혁신에 대한 최신 시각</h1>
+  </div>
+
+  <section class="report" id="spacex">
+
+    <div class="report-head">
+      <div class="tag">Internet / Communications Infrastructure / Aerospace &amp; Defense</div>
+      <h2>SpaceX Overweight 유지 — Cursor 인수, Frontier 모델, Enterprise AI 기회로 Grok에 대해 더욱 긍정적</h2>
+      <p class="lede">Cursor 인수 완료와 Grok 4.6의 Pareto frontier 진입으로 SpaceX의 enterprise AI 전략이 구체화 — 목표주가 $240(Dec-27), 34x 2028E GAAP EPS 기반 Overweight 유지.</p>
+    </div>
+
+    <div class="report-body">
+
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Overweight</div><div class="s">유지</div></div>
+        <div class="chip"><div class="k">Target Price (Dec-27)</div><div class="v">$240.00</div><div class="s">↑ from $225 (8/5)</div></div>
+        <div class="chip"><div class="k">Price (24 Aug 26)</div><div class="v">$135.00</div><div class="s">Upside +78%</div></div>
+        <div class="chip"><div class="k">Valuation</div><div class="v">34x</div><div class="s">2028E GAAP EPS $7.02</div></div>
+        <div class="chip"><div class="k">Lock-up 해제</div><div class="v">~370M주</div><div class="s">9/9~9/10, float +20%</div></div>
+      </div>
+
+      <h3 class="sec"><span class="n">1</span>Cursor 인수 완료 — Enterprise AI 역량 구축의 핵심 이정표</h3>
+      <ul class="pts">
+        <li>8/14 Cursor 인수 공식 완료 — enterprise AI 역량 구축의 <b>중요한 이정표</b>로 평가</li>
+        <li>Cursor ARR <b>약 $4B</b> (2026년 6월 기준), 이 중 <b>약 75%가 기업 고객</b>에서 발생 — go-to-market 전략 간소화 기대</li>
+        <li>Cursor 데이터가 Grok의 supplemental training에 이미 반영되어 <b>최근 모델 성능 개선에 실질적으로 기여</b></li>
+        <li>Cursor 데이터 + SpaceX의 <b>약 25년치 사내 독점 데이터</b> 결합으로 코딩·실제 엔지니어링 역량의 추가 개선 기대</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">2</span>Grok 4.6 — Frontier 지능과 압도적 비용 효율의 결합</h3>
+      <ul class="pts">
+        <li>8/12 공개된 Grok 4.6, Artificial Analysis Intelligence Index <b>61점</b> — 7/16 출시된 Grok 4.5 대비 약 한 달 만에 <b>+5점</b> 개선</li>
+        <li>GPT 5.6-Sol과 동점, <b>Claude Fable 5·Claude Opus 5에만 뒤지는</b> 리더보드 상위권</li>
+        <li>Long-running agent에 초점을 두고 광범위한 agentic RL 태스크로 학습 — 고난도 기술·엔지니어링 데이터 큐레이션 기반</li>
+        <li>가격은 <b>input $2 / output $6 per M tokens</b>부터 시작 — 경쟁사 대비 훨씬 낮은 비용으로 frontier급 지능 제공, <b>intelligence vs cost-per-task Pareto frontier에 위치</b></li>
+        <li>채택률은 아직 경쟁사에 뒤지지만, frontier 지능 + 비용 효율 조합이 개발자·기업 고객 확산을 뒷받침할 전망</li>
+      </ul>
+
+      <div class="chart-card">
+        <div class="ct">Artificial Analysis Intelligence Index — Grok 4.6, 한 달 만에 4.5 대비 +5점</div>
+        <div class="legend">
+          <span><i style="background:#5c1a26"></i>Grok</span>
+          <span><i style="background:#0a2240"></i>주요 경쟁 모델</span>
+        </div>
+        <svg viewBox="0 0 880 320" width="100%">
+          <line x1="60" y1="280" x2="850" y2="280" stroke="#cfd6e0"/>
+          <line x1="60" y1="280" x2="60" y2="30" stroke="#cfd6e0"/>
+          <text x="52" y="284" font-size="11" fill="#9aa3b2" text-anchor="end">0</text>
+          <line x1="56" y1="160" x2="850" y2="160" stroke="#eef1f6"/>
+          <text x="52" y="164" font-size="11" fill="#9aa3b2" text-anchor="end">30</text>
+          <line x1="56" y1="40" x2="850" y2="40" stroke="#eef1f6"/>
+          <text x="52" y="44" font-size="11" fill="#9aa3b2" text-anchor="end">60</text>
+
+          <!-- Claude Opus 5: 63 -->
+          <rect x="90" y="28" width="90" height="252" fill="#0a2240" rx="3"/>
+          <text x="135" y="48" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">63</text>
+          <text x="135" y="300" font-size="11" fill="#525866" text-anchor="middle">Claude Opus 5</text>
+
+          <!-- Claude Fable 5: 62 -->
+          <rect x="215" y="32" width="90" height="248" fill="#0a2240" rx="3"/>
+          <text x="260" y="52" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">62</text>
+          <text x="260" y="300" font-size="11" fill="#525866" text-anchor="middle">Claude Fable 5</text>
+
+          <!-- Grok 4.6: 61 -->
+          <rect x="340" y="36" width="90" height="244" fill="#5c1a26" rx="3"/>
+          <text x="385" y="56" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">61</text>
+          <text x="385" y="300" font-size="11" font-weight="700" fill="#5c1a26" text-anchor="middle">Grok 4.6</text>
+
+          <!-- GPT 5.6-Sol: 61 -->
+          <rect x="465" y="36" width="90" height="244" fill="#0a2240" rx="3"/>
+          <text x="510" y="56" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">61</text>
+          <text x="510" y="300" font-size="11" fill="#525866" text-anchor="middle">GPT 5.6-Sol</text>
+
+          <!-- Kimi K3: 60 -->
+          <rect x="590" y="40" width="90" height="240" fill="#0a2240" rx="3"/>
+          <text x="635" y="60" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">60</text>
+          <text x="635" y="300" font-size="11" fill="#525866" text-anchor="middle">Kimi K3</text>
+
+          <!-- Grok 4.5: 56 -->
+          <rect x="715" y="56" width="90" height="224" fill="#5c1a26" opacity="0.55" rx="3"/>
+          <text x="760" y="76" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">56</text>
+          <text x="760" y="300" font-size="11" fill="#525866" text-anchor="middle">Grok 4.5</text>
+
+          <!-- +5 improvement arrow -->
+          <path d="M 760 48 C 700 18, 450 14, 390 28" stroke="#5c1a26" stroke-width="2" fill="none" marker-end="url(#arr)"/>
+          <defs><marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#5c1a26"/></marker></defs>
+          <text x="575" y="14" font-size="12" font-weight="700" fill="#5c1a26" text-anchor="middle">+5pt (약 1개월)</text>
+        </svg>
+        <div class="chart-src">Source: Artificial Analysis</div>
+      </div>
+
+      <div class="callout"><span class="t">주목</span>Intelligence vs Cost-Per-Task 분석에서 Grok 4.6은 상위권 지능을 유지하면서 태스크당 비용이 GPT 5.6-Sol(max)·Claude Opus 5(max)·Claude Fable 5 대비 크게 낮아 '가장 매력적인 사분면'에 근접한 Pareto frontier에 위치 — 리포트는 이 조합이 채택 확대를 뒷받침할 핵심 요인이라고 강조.</div>
+
+      <h3 class="sec"><span class="n">3</span>Grok Bot 조기 베타 — Enterprise AI Agent 시장 본격 진출</h3>
+      <ul class="pts">
+        <li>8/11 공개된 <b>Grok Bot</b> — 직원들이 이미 쓰는 앱·웹사이트 전반에서 실제 업무를 수행하는 <b>상시 가동(always-on) agent 팀</b></li>
+        <li>사용자는 지속형 Bot을 생성하고 역할을 부여해 <b>팀원처럼 업무를 위임</b> — Bot은 앱 인터페이스 직접 조작, 태스크 간 메모리 유지, Bot 간 협업 가능</li>
+        <li>SpaceX는 엔지니어링·성장·마케팅 전반에 사내 활용 중 — 현재 <b>SuperGrok Heavy, Cursor Ultra, Cursor Teams</b> 프리미엄 구독자 대상 데스크톱·iOS 베타</li>
+        <li>베타 사용자 초기 피드백 긍정적 — 빠르게 성장하는 enterprise AI agent 시장 내 경쟁력 제고 노력을 긍정적으로 평가</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">4</span>Grok 4.7 임박 &amp; Grok 5 연내 출시 — 월 단위 모델 릴리즈 지속</h3>
+      <ul class="pts">
+        <li>연말까지 <b>월 단위(monthly cadence)</b> 신모델 출시 계획 — 빠른 혁신 속도 지속 전망</li>
+        <li><b>Grok 4.7은 9월 초 발표 예상</b> — "모든 면에서 4.6보다 우수하되 서빙 속도는 약간 느리지만 토큰 효율은 더 개선"으로 소개, 초기 학습은 이미 완료</li>
+        <li><b>Grok 5는 12월(연내) 출시 예상</b> — 지능·전반적 역량에서 한층 더 큰 도약 전망</li>
+        <li>Grok 5는 <b>Colossus 2 Blackwell supercluster</b>에서 학습 중, <b>6T+ 파라미터</b> 예상 — 코딩/엔지니어링, agentic 행동, 멀티스텝 추론, 비디오 이해 전반의 개선 기대</li>
+        <li>단기 AI 매출은 프리미엄 컴퓨트 계약(<b>$30~$50/watt</b>)이 주도하나, <b>기업향 Grok 수익화</b>가 시간이 갈수록 점점 더 중요한 동력이 될 전망</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">5</span>투자 논거 &amp; 밸류에이션 — $28T+ TAM을 향한 프런티어 구축</h3>
+      <ul class="pts">
+        <li>합산 TAM <b>$28T+</b> — 다행성 생존, 우주 기반 AI, 달 기지·행성 도시 등 전례 없는 규모의 야심</li>
+        <li>발사(launch)가 핵심 enabler — 누적 <b>약 670회 궤도 발사, 성공률 99%+</b>, 2023년 이후 <b>전 세계 궤도 투입 질량의 80%+</b> 담당</li>
+        <li>Starship은 Falcon 9 대비 <b>10x 비용 개선·약 4x 페이로드</b> — 발사 횟수 2026년 소수 회 → <b>2031년 약 5,000회</b> 전망</li>
+        <li>Starlink 브로드밴드 가입자 <b>2025년 9M → 2030년 95M+</b> 성장 전망, 모바일 MVNO는 해외 시장 우선 옵셔널리티</li>
+        <li>AI가 장기 핵심 동력 — 지상 컴퓨트 <b>2.2GW('26E) → 8.6GW(2028년 말)</b>, 2029년부터는 궤도 컴퓨트로 <b>2031년 말 약 75GW</b> 추진 (지상 대비 현저히 낮은 비용)</li>
+      </ul>
+
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>항목</th><th>2025</th><th>2028E</th><th>비교 (Mag7+PLTR)</th></tr></thead>
+        <tbody>
+          <tr><td><b>총매출</b></td><td class="num">$19B</td><td class="num">$196B</td><td class="num">CAGR 119% vs 26%</td></tr>
+          <tr><td><b>GAAP 영업이익률</b></td><td class="num">-14%</td><td class="num">~44%</td><td class="num">'28E 38% (comps 평균)</td></tr>
+          <tr><td><b>목표 멀티플</b></td><td class="num" colspan="2">~34x 2028E GAAP EPS $7.02</td><td class="num">peers median ~20x</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="callout"><span class="t">밸류에이션</span>Dec-27 목표주가 $240은 2028E GAAP EPS $7.02에 약 34x 적용 — launch·connectivity·AI 전반의 시장 리더십과 comps를 크게 상회하는 성장·마진 프로파일이 mega-cap peers(median ~20x) 대비 프리미엄을 정당화한다는 판단.</div>
+
+      <h3 class="sec"><span class="n">6</span>Lock-up 스케줄 — 9/9~9/10 약 370M주 해제 임박</h3>
+      <ul class="pts">
+        <li>차기 lock-up 해제는 <b>9월 9일·10일</b> — 합산 약 <b>370M주(319.0M + 59.1M)</b> 해제로 <b>float 약 20% 증가</b> 가능성</li>
+        <li>3Q26 실적 +2일 시점에 <b>1,300M주(총 발행주식의 10%)</b> 대규모 해제, 12/8에 797.6M주 추가 해제 예정</li>
+        <li>2027년 6월 12일 <b>6,400M주(총 발행의 49%)</b> 해제로 float 100% 도달</li>
+      </ul>
+
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>일자</th><th>경과일</th><th>해제 주식수 (M)</th><th>Float (M)</th><th>Float 비중</th><th>Float 증가율</th></tr></thead>
+        <tbody>
+          <tr class="subhead"><td colspan="6">180-Day Shares</td></tr>
+          <tr><td>06/11/2026</td><td class="num">0</td><td class="num">—</td><td class="num">639</td><td class="num">5%</td><td class="num">—</td></tr>
+          <tr><td>2Q26+2일 (8/6)</td><td class="num">56</td><td class="num">911.5</td><td class="num">1,550</td><td class="num">12%</td><td class="num">143%</td></tr>
+          <tr><td>08/20/2026</td><td class="num">70</td><td class="num">319.0</td><td class="num">1,869</td><td class="num">14%</td><td class="num">21%</td></tr>
+          <tr><td class="hl">09/09/2026</td><td class="num hl">90</td><td class="num hl">319.0</td><td class="num hl">2,188</td><td class="num hl">17%</td><td class="num hl">17%</td></tr>
+          <tr><td class="hl">09/10/2026</td><td class="num hl">91</td><td class="num hl">59.1</td><td class="num hl">2,247</td><td class="num hl">17%</td><td class="num hl">3%</td></tr>
+          <tr><td>09/24/2026</td><td class="num">105</td><td class="num">328.4</td><td class="num">2,576</td><td class="num">20%</td><td class="num">15%</td></tr>
+          <tr><td>10/09/2026</td><td class="num">120</td><td class="num">328.4</td><td class="num">2,904</td><td class="num">22%</td><td class="num">13%</td></tr>
+          <tr><td>10/24/2026</td><td class="num">135</td><td class="num">328.4</td><td class="num">3,233</td><td class="num">25%</td><td class="num">11%</td></tr>
+          <tr><td>3Q26+2일</td><td class="num">—</td><td class="num">1,300.0</td><td class="num">4,533</td><td class="num">34%</td><td class="num">40%</td></tr>
+          <tr><td>12/08/2026</td><td class="num">180</td><td class="num">797.6</td><td class="num">5,330</td><td class="num">41%</td><td class="num">18%</td></tr>
+          <tr class="subhead"><td colspan="6">365+ Day Shares</td></tr>
+          <tr><td>4Q26+2일</td><td class="num">—</td><td class="num">351.9</td><td class="num">5,682</td><td class="num">43%</td><td class="num">7%</td></tr>
+          <tr><td>03/18/2027</td><td class="num">280</td><td class="num">176.0</td><td class="num">5,858</td><td class="num">45%</td><td class="num">3%</td></tr>
+          <tr><td>1Q27+2일</td><td class="num">—</td><td class="num">351.9</td><td class="num">6,210</td><td class="num">47%</td><td class="num">6%</td></tr>
+          <tr><td>05/17/2027</td><td class="num">340</td><td class="num">176.0</td><td class="num">6,386</td><td class="num">49%</td><td class="num">3%</td></tr>
+          <tr><td>06/12/2027</td><td class="num">366</td><td class="num">351.9</td><td class="num">6,738</td><td class="num">51%</td><td class="num">6%</td></tr>
+          <tr><td>06/12/2027</td><td class="num">366</td><td class="num">6,400.0</td><td class="num">13,138</td><td class="num">100%</td><td class="num">95%</td></tr>
+          <tr><td>2Q27+2일</td><td class="num">—</td><td class="num">351.9</td><td class="num">13,490</td><td class="num">—</td><td class="num">—</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-src">Source: Company Reports</div>
+
+      <h3 class="sec"><span class="n">!</span>리스크 &amp; 모니터링 포인트</h3>
+      <div class="risk-box">
+        <h4>Key Risks to Rating &amp; Price Target</h4>
+        <ul>
+          <li><b>모든 것이 Starship에 달림:</b> 신속·완전한 재사용성이 장기 성장의 핵심 enabler(레거시 대비 발사비용 ~80%+ 구조적 절감) — 지연·기술적 차질·규제 장애 시 여러 사업 라인의 성장 저해</li>
+          <li><b>공급 제약 (특히 AI):</b> 전력·실리콘/칩 공급 병목이 constellation 구축 지연, 발사 케이던스 둔화, 총마진 압박 요인 — 첨단 칩 의존은 지정학/무역 노출 확대 (Terafab 자체 칩 제조는 후반 연도 예상)</li>
+          <li><b>극도로 높은 실행력 요구:</b> 규모·복잡성·프런티어 특성상 예기치 못한 난관 불가피 — Blue Origin, AMZN, 해외 플레이어 등 경쟁 심화로 가격·수주율·R&amp;D 지출 압박 가능</li>
+          <li><b>높은 자본집약도 &amp; 단기 FCF 소진:</b> Starship·Starlink·컴퓨트 전반의 선행 투자로 2026~2030년 <b>$300B+ FCF 적자 및 부채 조달</b> 전망, 흑자 전환은 2031년 이후 — 비용 초과·일정 지연 시 추가 자본 조달 필요성 확대 ($85B+ IPO + $25B 부채 조달에도 불구)</li>
+          <li><b>규제:</b> 수출 통제, ITAR, 주파수 할당, 환경 심사(특히 Starship 관련)가 발사 속도·시장 접근에 변수 — 다만 현 정책 기조는 마찰보다 간소화에 무게</li>
+          <li><b>There's Only One Elon:</b> Elon Musk의 압도적 영향력·지배력(<b>의결권 약 82%</b>)은 성공의 원동력이었으나, 지배구조 이슈 및 key-man/리더십 승계 리스크 — Nasdaq 규정상 "controlled company"로 이사회 독립성 제한적</li>
+        </ul>
+        <h4 style="margin-top:14px;">모니터링 포인트</h4>
+        <ul>
+          <li><b>9/9~9/10 lock-up 해제(~370M주, float +20%)</b> 전후 수급 및 주가 변동성</li>
+          <li>9월 초 Grok 4.7 발표 및 연말 Grok 5 출시 — 월 단위 모델 릴리즈 케이던스 이행 여부</li>
+          <li>기업향 Grok 수익화 진전 — 프리미엄 컴퓨트 계약($30~$50/watt) 중심에서 enterprise 매출로의 다변화</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div>본 문서는 투자 권유를 목적으로 하지 않습니다.</div>
+  </footer>
+
+</div>
+</body>
+</html>
