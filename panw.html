@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Palo Alto Networks (PANW) — 4Q26 프리뷰</title>
+<style>
+  :root{
+    --brand:#00264d;
+    --brand-deep:#061a33;
+    --accent:#0077c8;
+    --accent2:#3d5a80;
+    --paper:#f4f6f9;
+    --card:#ffffff;
+    --ink:#1b1e24;
+    --ink-soft:#525866;
+    --line:#dde3ec;
+    --buy:#1f7a4d;
+    --bear:#c0392b;
+    --bull:#1f6fb2;
+    --warn:#8a4b15;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Helvetica Neue','Pretendard','Noto Sans KR',Arial,sans-serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  .serif{font-family:'Georgia','Noto Serif KR',serif;}
+
+  .topbar{
+    background:var(--brand-deep);
+    color:#fff;padding:14px 6vw;
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;
+    border-bottom:3px solid var(--accent);
+    position:sticky;top:0;z-index:50;
+  }
+  .topbar .logo{font-weight:700;font-size:18px;letter-spacing:0.5px;}
+  .topbar .logo span{color:var(--accent);}
+  .topbar nav{display:flex;gap:8px;flex-wrap:wrap;}
+  .topbar nav a{
+    color:#cfd8e6;text-decoration:none;font-size:12.5px;
+    padding:6px 12px;border:1px solid rgba(255,255,255,0.2);border-radius:20px;
+    transition:all .15s;
+  }
+  .topbar nav a:hover{background:var(--accent);color:#fff;border-color:var(--accent);}
+
+  .wrap{max-width:960px;margin:0 auto;padding:40px 6vw 90px;}
+
+  .intro{
+    border-left:4px solid var(--accent);
+    padding:8px 0 8px 20px;margin-bottom:48px;
+  }
+  .intro .eyebrow{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent2);font-weight:700;}
+  .intro h1{font-size:26px;margin:8px 0 6px;color:var(--brand);}
+
+  .report{margin-bottom:64px;scroll-margin-top:70px;}
+  .report-head{
+    background:linear-gradient(135deg,var(--brand) 0%, var(--brand-deep) 100%);
+    color:#fff;border-radius:10px 10px 0 0;padding:28px 30px;
+  }
+  .report-head .tag{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#9fb4d4;font-weight:700;}
+  .report-head h2{margin:8px 0 14px;font-size:23px;line-height:1.35;}
+  .report-head .lede{
+    font-family:'Georgia',serif;font-size:15.5px;color:#e3ebf6;
+    border-top:1px solid rgba(255,255,255,0.16);padding-top:14px;margin:0;
+  }
+  .report-body{
+    background:var(--card);border:1px solid var(--line);border-top:none;
+    border-radius:0 0 10px 10px;padding:30px;
+  }
+
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px;}
+  .chip{border:1px solid var(--line);border-radius:8px;padding:10px 16px;background:#fafbfd;flex:1;min-width:130px;}
+  .chip .k{font-size:10.5px;letter-spacing:0.5px;text-transform:uppercase;color:var(--ink-soft);}
+  .chip .v{font-size:19px;font-weight:700;color:var(--brand);margin-top:2px;}
+  .chip .v.buy{color:var(--buy);}
+  .chip .v.sell{color:var(--bear);}
+  .chip .s{font-size:11px;color:var(--ink-soft);}
+
+  h3.sec{
+    font-size:17px;color:var(--brand);margin:30px 0 12px;
+    padding-bottom:8px;border-bottom:1.5px solid var(--line);
+    display:flex;align-items:center;gap:10px;
+  }
+  h3.sec .n{
+    background:var(--brand);color:#fff;font-size:12px;font-weight:700;
+    width:24px;height:24px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  ul.pts{margin:0;padding:0;list-style:none;}
+  ul.pts li{position:relative;padding:7px 0 7px 20px;font-size:14.5px;border-bottom:1px dashed var(--line);}
+  ul.pts li:last-child{border-bottom:none;}
+  ul.pts li::before{content:"—";position:absolute;left:0;color:var(--accent2);font-weight:700;}
+  ul.pts b{color:var(--brand);}
+
+  table.tbl{width:100%;border-collapse:collapse;font-size:13px;margin:6px 0 4px;}
+  table.tbl th{background:var(--brand);color:#fff;text-align:left;padding:8px 10px;font-weight:600;}
+  table.tbl td{padding:7px 10px;border-bottom:1px solid var(--line);}
+  table.tbl tr:nth-child(even) td{background:#f7f9fc;}
+  table.tbl td.num{text-align:right;font-variant-numeric:tabular-nums;}
+  table.tbl td.buy{color:var(--buy);font-weight:700;}
+  .tbl-wrap{overflow-x:auto;}
+
+  .chart-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:22px 22px 14px;margin:14px 0;}
+  .chart-card .ct{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:12px;}
+  .chart-src{font-size:10.5px;color:#9aa3b2;margin-top:8px;}
+  .legend{display:flex;gap:18px;font-size:11.5px;color:var(--ink-soft);margin-bottom:4px;}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .legend i{width:11px;height:11px;border-radius:2px;display:inline-block;}
+
+  .bbgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0;}
+  @media(max-width:680px){.bbgrid{grid-template-columns:1fr;}}
+  .bb{border-radius:8px;padding:16px;border:1px solid var(--line);background:#fafbfd;}
+  .bb.bull{border-top:3px solid var(--bull);}
+  .bb.base{border-top:3px solid var(--ink-soft);}
+  .bb.bear{border-top:3px solid var(--bear);}
+  .bb .lbl{font-size:11px;letter-spacing:0.6px;text-transform:uppercase;font-weight:700;color:var(--ink-soft);}
+  .bb .px{font-size:22px;font-weight:700;color:var(--brand);margin:4px 0;}
+  .bb .ret{font-size:13px;font-weight:600;}
+  .bb.bull .ret{color:var(--bull);}
+  .bb.bear .ret{color:var(--bear);}
+  .bb ul{margin:8px 0 0;padding-left:16px;font-size:12px;color:var(--ink-soft);}
+  .bb li{margin-bottom:4px;}
+
+  .callout{background:#fbf6ec;border:1px solid #e8dcc3;border-radius:8px;padding:14px 18px;font-size:13px;color:var(--ink-soft);margin-top:14px;}
+  .callout .t{font-size:10.5px;font-weight:700;letter-spacing:0.6px;color:var(--warn);text-transform:uppercase;display:block;margin-bottom:5px;}
+
+  .risk-box{background:var(--brand);color:#dde6f3;border-radius:8px;padding:22px 24px;margin-top:14px;}
+  .risk-box h4{margin:0 0 10px;color:#fff;font-size:14.5px;}
+  .risk-box ul{margin:0;padding-left:18px;}
+  .risk-box li{margin-bottom:8px;font-size:13px;}
+  .risk-box li b{color:#fff;}
+
+  footer{border-top:1px solid var(--line);margin-top:50px;padding-top:20px;font-size:11px;color:#9aa3b2;line-height:1.6;}
+
+  @media(max-width:560px){
+    .intro h1{font-size:21px;}
+    .report-head h2{font-size:19px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">Research<span>·</span>Digest</div>
+  <nav>
+    <a href="#rpt1">8/21 프리뷰 · FY27 가이드 촉매</a>
+    <a href="#rpt2">8/25 프리뷰 · 플랫폼화 모멘텀</a>
+  </nav>
+</div>
+
+<div class="wrap">
+
+  <div class="intro">
+    <div class="eyebrow">21 &amp; 25 August 2026</div>
+    <h1>Palo Alto Networks (PANW) — 4Q26 실적 프리뷰 &amp; FY27 가이던스 전망</h1>
+  </div>
+
+  <!-- ============ 리포트 1 ============ -->
+  <section class="report" id="rpt1">
+
+    <div class="report-head">
+      <div class="tag">Software | United States of America</div>
+      <h2>4Q26 프리뷰: 견조한 방화벽 판매를 넘어, FY27 가이던스가 촉매로</h2>
+      <p class="lede">긍정적 파트너 체크를 바탕으로 FQ4 실적 상회를 예상하며, 인수합병으로 플랫폼이 확장되는 가운데 FY27 가이던스(매출 +23~24% 전망)를 핵심 촉매로 보고 Overweight 유지.</p>
+    </div>
+
+    <div class="report-body">
+
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Overweight</div><div class="s">유지 · Industry View: Attractive</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$387.00</div><div class="s">유지 · 업사이드 +10.7%</div></div>
+        <div class="chip"><div class="k">Price (8/20)</div><div class="v">$349.56</div><div class="s">시가총액 $282.1B · 52주 $139.57–398.88</div></div>
+        <div class="chip"><div class="k">Valuation</div><div class="v">52x</div><div class="s">EV/CY27 FCF (FCF $6,081M 기준)</div></div>
+        <div class="chip"><div class="k">EPS (FY26e→FY28e)</div><div class="v">$3.77→$4.71</div><div class="s">FY27e $4.02</div></div>
+      </div>
+
+      <h3 class="sec"><span class="n">1</span>채널 체크 &amp; 리셀러 서베이 — 수요 견조 지속</h3>
+      <ul class="pts">
+        <li>최신 채널 논의·리셀러 서베이(n=29)에서 PANW가 <b>복수 보안 카테고리에 걸쳐 점유율 확대 지속</b> — 라이브 대화 기준 가장 강한 벤더로 평가</li>
+        <li>6월 서베이: 전분기 대비 소폭 하락에도 <b>응답자 79%가 계획 상회 또는 부합</b> (Above Target 52% + In line 28%)</li>
+        <li>강세 배경은 방화벽 refresh + 가격 인상 전 선구매(pull-forward)뿐 아니라, <b>대형 멀티프로덕트 커밋·계약금액 확대·Network Security/SecOps 점유율 확대</b>로 폭넓게 확인</li>
+        <li>코어 방화벽 외에는 <b>XSIAM이 가장 명확한 성장 동력</b> — 그린필드 AI-SOC 구축 및 레거시 SIEM 대체 수요, Prisma SASE도 분산 사용자·워크로드·엣지 보안 수요로 견조</li>
+        <li>Prisma AIRS·Mythos 관련 고객 관심 확대 중이나, 단기 수익화는 Unit 42 서비스 및 파이프라인 창출에 무게</li>
+        <li>CyberArk 리셀러 성과 전분기 대비 개선, AI Security 매출 비중도 분기 중 상승 — 하드웨어 단독 서프라이즈(FTNT·CSCO·FFIV)는 주가 반응이 제한적이었던 만큼 <b>FY27 코멘터리가 촉매 역할</b> 기대</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">2</span>FQ4 핵심 지표별 전망 — 전반적 상회 예상</h3>
+      <ul class="pts">
+        <li><b>RPO/cRPO:</b> FQ4 RPO는 가이던스($20.9~21.0B) 상단 또는 소폭 상회, <b>+~33% YoY</b> 전망 — cRPO 성장률은 컨센서스(~28~29% YoY) 소폭 상회 예상</li>
+        <li><b>매출:</b> 총매출 성장률 가이던스(~32%) 상회한 <b>~33% YoY</b> 전망 — Fortinet(제품매출 +21% beat)·Cisco(네트워킹 +5% beat) 호실적 이후, PANW 제품매출도 컨센서스(~18~19%) 대비 <b>~22~23% YoY</b> 예상</li>
+        <li><b>NGS ARR:</b> 가이던스($8.90~8.95B) 상단 마감, <b>+~60% YoY</b> — FQ3 이후 기대치가 크게 올라온 만큼 추가 상회 폭은 제한적일 전망</li>
+        <li><b>마진:</b> FQ4 영업이익률 <b>~30%</b>까지 상승 여지 — 매출 호조·대형 플랫폼 딜의 영업 생산성 개선 효과, 하드웨어 비중 확대·부품 원가 상승이 일부 상쇄</li>
+        <li><b>FCF:</b> FY26 조정 FCF 마진은 가이던스 37.5% 부합~소폭 상회, FY27 high-30s 전망으로 <b>FY28 40% 목표 경로 유지</b></li>
+      </ul>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>항목</th><th>4Q26e 추정</th><th>4Q26e Cons.</th><th>FY27e 추정</th><th>FY27e Cons.</th></tr></thead>
+        <tbody>
+          <tr><td><b>Product Revenue</b></td><td class="num">$657.0M (+14.5%)</td><td class="num">$680.9M (+18.6%)</td><td class="num">$2,418.9M (+10.0%)</td><td class="num">$2,489.7M (+12.0%)</td></tr>
+          <tr><td><b>Total Revenue</b></td><td class="num">$3,350.0M (+32.1%)</td><td class="num">$3,353.2M (+32.2%)</td><td class="num">$13,501.1M (+18.2%)</td><td class="num">$13,812.3M (+20.9%)</td></tr>
+          <tr><td><b>RPO</b></td><td class="num">$20,950.0M (+32.6%)</td><td class="num">$20,900.6M (+32.3%)</td><td class="num">$24,825.8M (+18.5%)</td><td class="num">$24,621.2M (+17.8%)</td></tr>
+          <tr><td><b>cRPO</b></td><td class="num">$9,076.8M (+30.6%)</td><td class="num">$9,007.8M (+28.7%)</td><td class="num">$10,694.0M (+17.8%)</td><td class="num">$10,579.0M (+17.4%)</td></tr>
+          <tr><td><b>NGS ARR</b></td><td class="num">$8,925.2M (+59.9%)</td><td class="num">$8,921.5M (+59.9%)</td><td class="num">$10,759.0M (+20.5%)</td><td class="num">$10,932.7M (+22.9%)</td></tr>
+          <tr><td><b>Operating Margin</b></td><td class="num">29.1%</td><td class="num">29.3%</td><td class="num">30.4%</td><td class="num">29.6%</td></tr>
+          <tr><td><b>FCF (마진)</b></td><td class="num">$1,423.5M (42.5%)</td><td class="num">$1,278.0M (38.1%)</td><td class="num">$5,062.9M (37.5%)</td><td class="num">$5,156.5M (37.3%)</td></tr>
+          <tr><td><b>Non-GAAP EPS</b></td><td class="num">$0.97</td><td class="num">$0.98</td><td class="num">$4.02</td><td class="num">$4.10</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-src">Source: Company data, Visible Alpha</div>
+
+      <h3 class="sec"><span class="n">3</span>RPO·cRPO 성장 추이 — FQ4 업사이드 여지</h3>
+      <div class="chart-card">
+        <div class="ct">RPO YoY 성장률 vs. cRPO YoY 성장률 (7/23 ~ 7/26E)</div>
+        <div class="legend">
+          <span><i style="background:var(--brand)"></i>RPO Growth, YoY</span>
+          <span><i style="background:var(--accent)"></i>cRPO Growth, YoY</span>
+        </div>
+        <svg viewBox="0 0 880 320" width="100%">
+          <line x1="60" y1="280" x2="850" y2="280" stroke="#cfd6e0"/>
+          <line x1="60" y1="215" x2="850" y2="215" stroke="#eef1f6"/>
+          <line x1="60" y1="150" x2="850" y2="150" stroke="#eef1f6"/>
+          <line x1="60" y1="85" x2="850" y2="85" stroke="#eef1f6"/>
+          <line x1="60" y1="20" x2="850" y2="20" stroke="#eef1f6"/>
+          <text x="52" y="284" font-size="11" fill="#9aa3b2" text-anchor="end">0%</text>
+          <text x="52" y="219" font-size="11" fill="#9aa3b2" text-anchor="end">10%</text>
+          <text x="52" y="154" font-size="11" fill="#9aa3b2" text-anchor="end">20%</text>
+          <text x="52" y="89" font-size="11" fill="#9aa3b2" text-anchor="end">30%</text>
+          <text x="52" y="24" font-size="11" fill="#9aa3b2" text-anchor="end">40%</text>
+          <polyline fill="none" stroke="#00264d" stroke-width="2.5"
+            points="60,91.5 125.8,117.5 191.7,130.5 257.5,130.5 323.3,150 389.2,143.5 455,143.5 520.8,156.5 586.7,124 652.5,130.5 718.3,130.5 784.2,46 850,65.5"/>
+          <polyline fill="none" stroke="#0077c8" stroke-width="2.5"
+            points="60,124 125.8,156.5 191.7,163 257.5,150 323.3,169.5 389.2,163 455,169.5 520.8,176 586.7,169.5 652.5,176 718.3,176 784.2,59 850,78.5"/>
+          <circle cx="784.2" cy="46" r="4" fill="#00264d"/><text x="784.2" y="36" font-size="11" font-weight="700" fill="#00264d" text-anchor="middle">36%</text>
+          <circle cx="850" cy="65.5" r="4" fill="#00264d"/><text x="846" y="56" font-size="11" font-weight="700" fill="#00264d" text-anchor="middle">33%</text>
+          <circle cx="784.2" cy="59" r="4" fill="#0077c8"/><text x="784.2" y="76" font-size="11" font-weight="700" fill="#0077c8" text-anchor="middle">34%</text>
+          <circle cx="850" cy="78.5" r="4" fill="#0077c8"/><text x="846" y="95" font-size="11" font-weight="700" fill="#0077c8" text-anchor="middle">31%</text>
+          <text x="60" y="298" font-size="10" fill="#9aa3b2" text-anchor="middle">7/23</text>
+          <text x="191.7" y="298" font-size="10" fill="#9aa3b2" text-anchor="middle">1/24</text>
+          <text x="323.3" y="298" font-size="10" fill="#9aa3b2" text-anchor="middle">7/24</text>
+          <text x="455" y="298" font-size="10" fill="#9aa3b2" text-anchor="middle">1/25</text>
+          <text x="586.7" y="298" font-size="10" fill="#9aa3b2" text-anchor="middle">7/25</text>
+          <text x="718.3" y="298" font-size="10" fill="#9aa3b2" text-anchor="middle">1/26</text>
+          <text x="850" y="298" font-size="10" fill="#9aa3b2" text-anchor="middle">7/26E</text>
+        </svg>
+        <div class="chart-src">Source: Company data</div>
+      </div>
+
+      <div class="chart-card">
+        <div class="ct">FQ4 QoQ 순증액: RPO vs. cRPO ($M)</div>
+        <div class="legend">
+          <span><i style="background:var(--brand)"></i>RPO q/q 증가</span>
+          <span><i style="background:#d9c9a3"></i>cRPO q/q 증가</span>
+        </div>
+        <svg viewBox="0 0 880 320" width="100%">
+          <line x1="70" y1="280" x2="850" y2="280" stroke="#cfd6e0"/>
+          <rect x="160" y="150.8" width="90" height="129.2" fill="#00264d"/>
+          <rect x="258" y="229.7" width="90" height="50.3" fill="#d9c9a3"/>
+          <text x="205" y="142" font-size="12" font-weight="700" fill="#00264d" text-anchor="middle">1,400</text>
+          <text x="303" y="221" font-size="12" font-weight="700" fill="#8a7a4d" text-anchor="middle">545</text>
+          <rect x="400" y="67.7" width="90" height="212.3" fill="#00264d"/>
+          <rect x="498" y="214.5" width="90" height="65.5" fill="#d9c9a3"/>
+          <text x="445" y="59" font-size="12" font-weight="700" fill="#00264d" text-anchor="middle">2,300</text>
+          <text x="543" y="206" font-size="12" font-weight="700" fill="#8a7a4d" text-anchor="middle">710</text>
+          <rect x="640" y="44.6" width="90" height="235.4" fill="#00264d"/>
+          <rect x="738" y="212" width="90" height="68" fill="#d9c9a3"/>
+          <text x="685" y="36" font-size="12" font-weight="700" fill="#00264d" text-anchor="middle">2,550</text>
+          <text x="783" y="203" font-size="12" font-weight="700" fill="#8a7a4d" text-anchor="middle">737</text>
+          <text x="254" y="300" font-size="11" fill="#525866" text-anchor="middle">7/24</text>
+          <text x="494" y="300" font-size="11" fill="#525866" text-anchor="middle">7/25</text>
+          <text x="734" y="300" font-size="11" fill="#525866" text-anchor="middle">7/26E</text>
+        </svg>
+        <div class="chart-src">Source: Company data</div>
+      </div>
+
+      <h3 class="sec"><span class="n">4</span>FY27 가이던스 — 성장률만큼 '성장의 원천'이 중요</h3>
+      <ul class="pts">
+        <li>경영진의 FY27 매출 성장 가이던스는 <b>~23~24%</b>로 컨센서스(~21%)를 상회할 전망 — 통상 초기 연간 가이던스가 컨센서스 대비 ~1% 상회했던 이력 대비 이번엔 <b>평균 이상의 상회</b> 기대</li>
+        <li>FY27 부수 전망: <b>low-20s NGS ARR 성장, high-teens RPO 성장, high-30s 조정 FCF 마진</b>, 부담스럽지 않은 FQ1 가이던스</li>
+        <li>FY27 성장에는 CyberArk·Chronosphere <b>온기(fuller-year) 반영 효과</b> 포함 — FQ3 기준 두 인수가 매출 ~$388M, NGS ARR ~$1.6B, RPO ~$1.8B 기여, organic NGS ARR·RPO는 각각 <b>+28% / +22%</b></li>
+        <li>IR 커뮤니케이션 기준 <b>Network Security가 사업의 ~70%</b>를 차지하며 두 자릿수 성장 지속 — 클라우드 보안은 재가속보다 안정화, agentic identity는 CY27부터 유의미한 기여 전망</li>
+        <li>Prisma SASE·소프트웨어 방화벽·구독 attach가 하드웨어 역기저를 상쇄하며 Network Security 두 자릿수 성장 유지 — <b>Cortex XSIAM이 Network Security 외 organic 가속의 가장 명확한 증거</b>가 될 것</li>
+        <li>FY27부터 Network Security·Cortex·Identity <b>세그먼트별 매출 공시 신설</b> — organic NGS ARR/RPO, 계약 duration, FQ1 가이던스, FY27 FCF 마진과 함께 '플랫폼 가속 vs. M&amp;A 온기'를 가려낼 핵심 체크포인트</li>
+      </ul>
+      <div class="callout"><span class="t">Bottom Line</span>플랫폼화 트렌드·방화벽 수요·XSIAM/SASE 트랙션으로 FQ4 셋업은 우호적이나, 최근 3개월 주가 +41%, CY27 EV/FCF ~57x(보안 피어 ~25x) 수준에서는 <b>분기 실적 상회만으로는 부족</b>. FY27 가이던스(~23~24%)와 신규 세그먼트 공시를 통한 organic 성장 가시성 확보가 관건.</div>
+
+      <h3 class="sec"><span class="n">5</span>밸류에이션 &amp; Bull/Base/Bear 시나리오</h3>
+      <ul class="pts">
+        <li>목표가 <b>$387</b>: CY27 FCF 추정 $6,081M에 <b>52x EV/CY27 FCF/Share</b> 적용 — EV/CY27 Sales ~20x에 해당, 유사 성장 대형 소프트웨어 피어 대비 프리미엄</li>
+        <li>옵션 내재확률(8/20 기준): <b>$387 상회 확률 ~9.8%</b>, $492 상회 ~0.0%, $192 하회 ~34.5%</li>
+        <li>컨센서스: Overweight 77% / Equal-weight 21% / Underweight 2%, 목표가 분포 $201~475 (평균 $358.96)</li>
+      </ul>
+      <div class="bbgrid">
+        <div class="bb bull"><div class="lbl">🐂 Bull</div><div class="px">$492.00</div><div class="ret">+40.8% Upside</div>
+          <ul><li>52x Bull Case 2027e FCF/Share $8.52</li><li>광의 보안시장 통합: 매출 19% CAGR로 CY28 ~$18.1B</li><li>CY28 영업마진 ~33%, FCF 마진 ~40.5%, 55x EV/FCF</li></ul></div>
+        <div class="bb base"><div class="lbl">⊕ Base</div><div class="px">$387.00</div><div class="ret">+10.7%</div>
+          <ul><li>52x Base Case 2028e FCF/Share $7.05</li><li>시장 상회 성장 지속: low-teens 매출 CAGR로 CY28 ~$15.7B</li><li>CY28 영업마진 ~32%, FCF 마진 ~39%, 52x EV/FCF 유지</li></ul></div>
+        <div class="bb bear"><div class="lbl">🐻 Bear</div><div class="px">$192.00</div><div class="ret">-45.1% Downside</div>
+          <ul><li>25x Bear Case 2028e FCF/Share $6.87</li><li>매크로 둔화 장기화·방화벽 수요 부진·신제품 트랙션 정체</li><li>영업 레버리지 제한·duration 역풍으로 FCF 마진 하락, 25x EV/FCF</li></ul></div>
+      </div>
+
+      <h3 class="sec"><span class="n">!</span>리스크 &amp; 모니터링 포인트</h3>
+      <div class="risk-box">
+        <h4>Key Risks to Rating &amp; Price Target</h4>
+        <ul>
+          <li><b>업사이드 리스크:</b> 방화벽 refresh 사이클 강화 및 구독 attach율 상승, Cortex(AI 기반 보안 분석)·Prisma SASE 등 클라우드 Next-Gen 보안 채택 가속</li>
+          <li><b>다운사이드 리스크:</b> 방화벽 refresh 둔화 시 매출 성장에 예상보다 큰 타격, 경쟁 심화에 따른 S&amp;M 지출 확대로 마진 레버리지 제한</li>
+        </ul>
+        <h4 style="margin-top:14px;">모니터링 포인트</h4>
+        <ul>
+          <li>세그먼트별(Network Security/Cortex/Identity) 매출 공시와 organic NGS ARR·RPO, 계약 duration — FY27 가이던스의 organic vs. 인수 기여 판별</li>
+          <li>수요 지표: 헤지펀드 섹터 Long/Short ratio 2.1x, 섹터 net exposure 33.6%, 기관 액티브 보유 47.8%</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ 리포트 2 ============ -->
+  <section class="report" id="rpt2">
+
+    <div class="report-head">
+      <div class="tag">Software — Large Cap / Mid &amp; Small Cap | North America</div>
+      <h2>프리뷰: 플랫폼화 모멘텀 강화 속 4Q26에 대한 건설적 시각 — 목표가 $384로 상향</h2>
+      <p class="lede">플랫폼 모멘텀이 견조한 4Q26 실적과 강한 FCF 창출을 뒷받침하고, 높아진 파이프라인이 가이던스에 아직 온전히 반영되지 않아 NGS ARR 전망에 업사이드 — 실적 발표(9/1 장 마감 후)를 앞두고 목표가를 $326에서 $384(Dec-27)로 상향, Overweight 유지.</p>
+    </div>
+
+    <div class="report-body">
+
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Overweight</div><div class="s">유지</div></div>
+        <div class="chip"><div class="k">Target Price (Dec-27)</div><div class="v">$384.00</div><div class="s">↑ from $326 (Dec-26)</div></div>
+        <div class="chip"><div class="k">Price (8/24)</div><div class="v">$350.90</div><div class="s">시가총액 $243.9B · YTD +90.5%</div></div>
+        <div class="chip"><div class="k">Valuation</div><div class="v">50x</div><div class="s">EV/CY27E FCF (FCF $6,249M)</div></div>
+        <div class="chip"><div class="k">실적 발표</div><div class="v">9/1 (화)</div><div class="s">장 마감 후</div></div>
+      </div>
+
+      <h3 class="sec"><span class="n">1</span>투자 논지 — 플랫폼화 전략의 수혜가 집중되는 국면</h3>
+      <ul class="pts">
+        <li>Mythos 이후 환경에서 <b>보안 태세 강화를 향한 CIO의 긴박감이 가속</b> — 위협의 볼륨·정교함 증가와 함께 커버리지 전반에서 파이프라인 가속 확인</li>
+        <li>PANW는 보안 소프트웨어 시장의 <b>주요 세그먼트 전반에 플랫폼을 구축한 최초의 전업 보안 벤더</b>로, 신흥 AI 보안 카테고리 진입 속도도 빠름</li>
+        <li>높아진 파이프라인 트랙션이 아직 가이던스에 온전히 반영되지 않아 <b>4Q26 실적 및 FY27 전망에 업사이드 여지</b></li>
+        <li>이번 분기 파트너·업계 대화는 매우 긍정적 — <b>방화벽·SASE 시장 내 점유율 통합 지속, XSIAM 견조, Prisma AIRS 초기 트랙션, CyberArk 모멘텀</b> 확인</li>
+        <li>파이프라인 창출이 유의미하게 커지면 판매 사이클 압축 가능성 — 다만 회사 측은 통상적 사이클 대비 유의미한 변화는 아직 없다는 입장</li>
+        <li>어닝콜의 핵심 관전 포인트는 <b>성장의 지속가능성과 향후 성장에서 M&amp;A의 역할</b> — FY30 NGS ARR $20bn 목표는 FY26 추정치($8.94bn) 대비 <b>~22% CAGR(low-20s%)</b> 함의</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">2</span>NGS ARR 성장 동력 — SASE·AI 보안·플랫폼화</h3>
+      <ul class="pts">
+        <li>4Q26에도 organic NGS ARR 강세 지속 전망 — <b>SASE 모멘텀, AI 보안 채택, 광범위한 플랫폼화</b>가 견인</li>
+        <li>SASE가 NGS ARR 성장의 앵커: <b>3Q26 SASE displacement 약 50건</b>, 소프트웨어 방화벽·클라우드 전송 보안 채택 지속</li>
+        <li>Prisma AIRS: 3Q26 고객 수 <b>3배 증가</b>, 향후 몇 분기 내 <b>ARR $100mm 가시성</b> 제시</li>
+        <li>Portkey 인수로 AI gateway 기회 공략 — <b>월간 수조 개 토큰 처리</b>, 대규모 agent 간 상호작용의 enforcement point 역할로 에이전트 확산 시 추가 수익화 레버</li>
+        <li>FY26 인수 관련(inorganic) NGS ARR 가정을 딜 종결 시점 $50mm에서 <b>$150mm로 상향</b> — 대형 frontier AI lab이 기존 업체에서 이관하며 Chronosphere 소비를 계획보다 빠르게 확대한 영향, <b>AI-native 트랙션</b>의 방증</li>
+        <li>CyberArk는 인수 후 첫 분기부터 <b>성장·수익성 모두 계획 상회</b> — 통합 진전·크로스 플랫폼 딜 확대에 따른 추가 업사이드 여지, Venafi 인증서 솔루션은 차세대 trust security 상위 구독에 편입되어 AI 인프라·머신 아이덴티티 확산과 함께 모멘텀 기대</li>
+        <li>고급 virtual patching 오퍼링 신설 — 초기 매출은 professional services를 통해 인식</li>
+      </ul>
+      <div class="callout"><span class="t">참고 · NGS ARR 정의</span>NGS ARR은 Prisma·Cortex·Network Security·identity·observability를 포함한 전체 유효 계약의 연환산 매출로, 하드웨어·레거시 부속 구독·professional services는 제외. CyberArk와 달리 <b>선불 term license 매출도 NGS ARR에서 제외</b>되는 점이 계산 방식의 차이.</div>
+
+      <h3 class="sec"><span class="n">3</span>마진 경로 — AI 지출 선행 국면에서도 복수의 레버 확보</h3>
+      <ul class="pts">
+        <li>메모리 원가 상승에도 <b>소프트웨어 중심 믹스와 운영 효율 레버</b>로 마진 궤적 유지 전망</li>
+        <li>4월 초 <b>하드웨어 가격 10% 인상</b> 단행 — 반복매출 구조(<b>CyberArk 제외 사업의 84~85%</b>)를 자연 헤지로 활용</li>
+        <li>경영진은 FCF 마진을 <b>37% 이상</b> 수준으로 앵커링(cash tax 지원) — 시너지 목표 달성 시점을 <b>3~6개월 앞당기고</b> 12~18개월 내 마진 수렴 예상, <b>FY28 FCF 마진 40% 경로</b> 강화</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">4</span>FY27 세그먼트 공시 개편 — 플랫폼 전략과 리포팅 정렬</h3>
+      <ul class="pts">
+        <li>FY27부터 <b>Network Security / Cortex / Identity</b> 세그먼트별 매출 공시로 전환</li>
+        <li>구성 전망: Network Security = 방화벽·SASE·클라우드 전송 보안 서비스, Cortex = XSIAM·XDR·Cortex Cloud, Identity = 특권접근(privileged access)·ITDR</li>
+        <li>크로스 플랫폼 딜의 할인 구조상 organic vs. inorganic 귀속이 자의적이어서 <b>세그먼트 관점이 통합 사업 관리 실태를 더 잘 반영</b>한다는 취지 — 모델링 연속성을 위해 <b>최소 1개 기간의 y/y 비교 제공 약속</b></li>
+      </ul>
+
+      <h3 class="sec"><span class="n">5</span>실적 추정 — 매출·FCF 동반 성장 경로</h3>
+      <div class="chart-card">
+        <div class="ct">매출 &amp; Adj. FCF 추이 (FY25A~FY28E, $M)</div>
+        <div class="legend">
+          <span><i style="background:var(--brand)"></i>Revenue</span>
+          <span><i style="background:var(--accent)"></i>Adj. Free Cash Flow</span>
+        </div>
+        <svg viewBox="0 0 880 320" width="100%">
+          <line x1="70" y1="280" x2="850" y2="280" stroke="#cfd6e0"/>
+          <rect x="120" y="144.4" width="70" height="135.6" fill="#00264d"/>
+          <rect x="198" y="229" width="70" height="51" fill="#0077c8"/>
+          <text x="155" y="136" font-size="12" font-weight="700" fill="#00264d" text-anchor="middle">9,222</text>
+          <text x="233" y="221" font-size="12" font-weight="700" fill="#0077c8" text-anchor="middle">3,471</text>
+          <rect x="310" y="112.1" width="70" height="167.9" fill="#00264d"/>
+          <rect x="388" y="218.5" width="70" height="61.5" fill="#0077c8"/>
+          <text x="345" y="104" font-size="12" font-weight="700" fill="#00264d" text-anchor="middle">11,419</text>
+          <text x="423" y="210" font-size="12" font-weight="700" fill="#0077c8" text-anchor="middle">4,184</text>
+          <rect x="500" y="72.6" width="70" height="207.4" fill="#00264d"/>
+          <rect x="578" y="201.1" width="70" height="78.9" fill="#0077c8"/>
+          <text x="535" y="64" font-size="12" font-weight="700" fill="#00264d" text-anchor="middle">14,101</text>
+          <text x="613" y="193" font-size="12" font-weight="700" fill="#0077c8" text-anchor="middle">5,367</text>
+          <rect x="690" y="40.6" width="70" height="239.4" fill="#00264d"/>
+          <rect x="768" y="184.3" width="70" height="95.7" fill="#0077c8"/>
+          <text x="725" y="32" font-size="12" font-weight="700" fill="#00264d" text-anchor="middle">16,279</text>
+          <text x="803" y="176" font-size="12" font-weight="700" fill="#0077c8" text-anchor="middle">6,510</text>
+          <text x="194" y="300" font-size="11" fill="#525866" text-anchor="middle">FY25A</text>
+          <text x="384" y="300" font-size="11" fill="#525866" text-anchor="middle">FY26E</text>
+          <text x="574" y="300" font-size="11" fill="#525866" text-anchor="middle">FY27E</text>
+          <text x="764" y="300" font-size="11" fill="#525866" text-anchor="middle">FY28E</text>
+        </svg>
+        <div class="chart-src">Source: Company reports</div>
+      </div>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>$M (FYE Jul)</th><th>FY25A</th><th>FY26E</th><th>FY27E</th><th>FY28E</th></tr></thead>
+        <tbody>
+          <tr><td><b>Revenue</b></td><td class="num">9,222</td><td class="num">11,419</td><td class="num">14,101</td><td class="num">16,279</td></tr>
+          <tr><td><b>매출 성장률 Y/Y</b></td><td class="num">14.9%</td><td class="num">23.8%</td><td class="num">23.5%</td><td class="num">15.4%</td></tr>
+          <tr><td><b>Adj. EBIT (마진)</b></td><td class="num">2,652 (28.8%)</td><td class="num">3,319 (29.1%)</td><td class="num">4,165 (29.5%)</td><td class="num">4,965 (30.5%)</td></tr>
+          <tr><td><b>Adj. EPS</b></td><td class="num">$3.34</td><td class="num">$3.77</td><td class="num">$4.13</td><td class="num">$4.84</td></tr>
+          <tr><td><b>Adj. FCF (성장률)</b></td><td class="num">3,471 (+11.8%)</td><td class="num">4,184 (+20.5%)</td><td class="num">5,367 (+28.3%)</td><td class="num">6,510 (+21.3%)</td></tr>
+          <tr><td><b>EV/EBITDA</b></td><td class="num">87.1x</td><td class="num">68.9x</td><td class="num">52.4x</td><td class="num">43.1x</td></tr>
+          <tr><td><b>Adj. P/E</b></td><td class="num">105.0x</td><td class="num">93.1x</td><td class="num">84.9x</td><td class="num">72.5x</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-src">Source: Company reports</div>
+
+      <h3 class="sec"><span class="n">6</span>F4Q 주요 체크포인트 (컨센서스)</h3>
+      <ul class="pts">
+        <li><b>NGS ARR:</b> 컨센서스 $8,864mm</li>
+        <li><b>Total Revenue:</b> 컨센서스 $3,352mm</li>
+        <li><b>Total Billings:</b> 컨센서스 $4,460mm</li>
+        <li><b>Free Cash Flow:</b> 컨센서스 $1,283mm (FCF 마진 39.1%)</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">7</span>밸류에이션 — 목표가 $384 (Dec-27)</h3>
+      <ul class="pts">
+        <li>CY27E FCF $6,249mm에 <b>50x EV/CY27E FCF</b> 적용 — 성장률 20% 이상 보안 피어 대비로는 할인, rule of 40 고성장 소프트웨어 피어 대비로는 프리미엄</li>
+        <li>프리미엄의 근거: <b>end-to-end 플랫폼의 통합(consolidation) 견인력, AI발 보안 수요 가속, 내구성 있는 FCF 마진 궤적</b></li>
+        <li>목표가 상향($326→$384)은 실적 발표를 앞두고 <b>실행력에 대한 확신 제고 + 피어그룹 멀티플 확장</b>을 반영</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">!</span>리스크 &amp; 모니터링 포인트</h3>
+      <div class="risk-box">
+        <h4>Risks to Rating &amp; Price Target</h4>
+        <ul>
+          <li><b>통합 리스크:</b> CyberArk·Chronosphere 통합 지연 또는 차질 시 시너지 실현·비용 절감 지연 가능성</li>
+          <li><b>매크로 리스크:</b> 거시 역풍과 고객 예산 제약이 기업 IT 지출 결정에 부정적 영향</li>
+        </ul>
+        <h4 style="margin-top:14px;">모니터링 포인트</h4>
+        <ul>
+          <li>FY27 세그먼트 공시 전환 과정의 히스토리컬 지표 브릿지 제공 여부 — 신·구 지표 간 비교 가능성</li>
+          <li>파이프라인 가속의 판매 사이클 압축 전환 여부, Prisma AIRS ARR $100mm 도달 시점</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div>본 문서는 투자 권유를 목적으로 하지 않습니다.</div>
+  </footer>
+
+</div>
+</body>
+</html>
