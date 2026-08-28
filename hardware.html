@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>US IT Hardware C2Q26 Preview</title>
+<style>
+  :root{
+    --brand:#0a2240;
+    --brand-deep:#06182e;
+    --accent:#5c1a26;
+    --accent2:#44618c;
+    --paper:#f4f6f9;
+    --card:#ffffff;
+    --ink:#1b1e24;
+    --ink-soft:#525866;
+    --line:#dde3ec;
+    --buy:#1f7a4d;
+    --bear:#c0392b;
+    --bull:#1f6fb2;
+    --warn:#8a4b15;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Helvetica Neue','Pretendard','Noto Sans KR',Arial,sans-serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  .topbar{
+    background:var(--brand-deep);
+    color:#fff;padding:14px 6vw;
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;
+    border-bottom:3px solid var(--accent);
+    position:sticky;top:0;z-index:50;
+  }
+  .topbar .logo{font-weight:700;font-size:18px;letter-spacing:0.5px;}
+  .topbar .logo span{color:#b98a94;}
+  .topbar nav{display:flex;gap:8px;flex-wrap:wrap;}
+  .topbar nav a{
+    color:#cfd8e6;text-decoration:none;font-size:12.5px;
+    padding:6px 12px;border:1px solid rgba(255,255,255,0.2);border-radius:20px;
+    transition:all .15s;
+  }
+  .topbar nav a:hover{background:var(--accent);color:#fff;border-color:var(--accent);}
+
+  .wrap{max-width:960px;margin:0 auto;padding:40px 6vw 90px;}
+
+  .intro{
+    border-left:4px solid var(--accent);
+    padding:8px 0 8px 20px;margin-bottom:48px;
+  }
+  .intro .eyebrow{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent2);font-weight:700;}
+  .intro h1{font-size:26px;margin:8px 0 6px;color:var(--brand);}
+
+  .report{margin-bottom:64px;scroll-margin-top:70px;}
+  .report-head{
+    background:linear-gradient(135deg,var(--brand) 0%, var(--brand-deep) 100%);
+    color:#fff;border-radius:10px 10px 0 0;padding:28px 30px;
+  }
+  .report-head .tag{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#9fb4d4;font-weight:700;}
+  .report-head h2{margin:8px 0 14px;font-size:23px;line-height:1.35;}
+  .report-head .lede{
+    font-family:'Georgia',serif;font-size:15.5px;color:#e3ebf6;
+    border-top:1px solid rgba(255,255,255,0.16);padding-top:14px;margin:0;
+  }
+  .report-body{
+    background:var(--card);border:1px solid var(--line);border-top:none;
+    border-radius:0 0 10px 10px;padding:30px;
+  }
+
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px;}
+  .chip{border:1px solid var(--line);border-radius:8px;padding:10px 16px;background:#fafbfd;flex:1;min-width:130px;}
+  .chip .k{font-size:10.5px;letter-spacing:0.5px;text-transform:uppercase;color:var(--ink-soft);}
+  .chip .v{font-size:19px;font-weight:700;color:var(--brand);margin-top:2px;}
+  .chip .v.buy{color:var(--buy);}
+  .chip .v.sell{color:var(--bear);}
+  .chip .s{font-size:11px;color:var(--ink-soft);}
+
+  h3.sec{
+    font-size:17px;color:var(--brand);margin:34px 0 12px;
+    padding-bottom:8px;border-bottom:1.5px solid var(--line);
+    display:flex;align-items:center;gap:10px;
+    scroll-margin-top:80px;
+  }
+  h3.sec .n{
+    background:var(--brand);color:#fff;font-size:12px;font-weight:700;
+    min-width:24px;height:24px;padding:0 4px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  ul.pts{margin:0;padding:0;list-style:none;}
+  ul.pts li{position:relative;padding:7px 0 7px 20px;font-size:14.5px;border-bottom:1px dashed var(--line);}
+  ul.pts li:last-child{border-bottom:none;}
+  ul.pts li::before{content:"—";position:absolute;left:0;color:var(--accent2);font-weight:700;}
+  ul.pts b{color:var(--brand);}
+  .up{color:var(--buy);font-weight:700;}
+  .dn{color:var(--bear);font-weight:700;}
+
+  table.tbl{width:100%;border-collapse:collapse;font-size:13px;margin:6px 0 4px;}
+  table.tbl th{background:var(--brand);color:#fff;text-align:left;padding:8px 10px;font-weight:600;}
+  table.tbl td{padding:7px 10px;border-bottom:1px solid var(--line);}
+  table.tbl tr:nth-child(even) td{background:#f7f9fc;}
+  table.tbl td.num{text-align:right;font-variant-numeric:tabular-nums;}
+  table.tbl th.num{text-align:right;}
+  table.tbl td.buy{color:var(--buy);font-weight:700;}
+  table.tbl td.neu{color:var(--ink-soft);font-weight:700;}
+  .tbl-wrap{overflow-x:auto;}
+
+  .chart-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:22px 22px 14px;margin:14px 0;}
+  .chart-card .ct{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:12px;}
+
+  .callout{background:#fbf6ec;border:1px solid #e8dcc3;border-radius:8px;padding:14px 18px;font-size:13px;color:var(--ink-soft);margin-top:14px;}
+  .callout .t{font-size:10.5px;font-weight:700;letter-spacing:0.6px;color:var(--warn);text-transform:uppercase;display:block;margin-bottom:5px;}
+
+  .risk-box{background:var(--brand);color:#dde6f3;border-radius:8px;padding:22px 24px;margin-top:14px;}
+  .risk-box h4{margin:0 0 10px;color:#fff;font-size:14.5px;}
+  .risk-box ul{margin:0;padding-left:18px;}
+  .risk-box li{margin-bottom:8px;font-size:13px;}
+  .risk-box li b{color:#fff;}
+
+  footer{border-top:1px solid var(--line);margin-top:50px;padding-top:20px;font-size:11px;color:#9aa3b2;line-height:1.6;}
+
+  @media(max-width:560px){
+    .intro h1{font-size:21px;}
+    .report-head h2{font-size:19px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">Research<span>·</span>Digest</div>
+  <nav>
+    <a href="#overview">총론</a>
+    <a href="#dell">DELL</a>
+    <a href="#hpe">HPE</a>
+    <a href="#ntap">NTAP</a>
+    <a href="#pstv">P</a>
+    <a href="#hpq">HPQ</a>
+  </nav>
+</div>
+
+<div class="wrap">
+
+  <div class="intro">
+    <div class="eyebrow">27 August 2026</div>
+    <h1>미국 IT 하드웨어 C2Q26 실적 프리뷰 — DELL·HPE·P 긍정적, HPQ 중립, NTAP 단기 경계</h1>
+  </div>
+
+  <section class="report" id="overview">
+
+    <div class="report-head">
+      <div class="tag">IT Hardware / Telecom &amp; Networking Equipment</div>
+      <h2>하드웨어 C2Q26 EPS 프리뷰: DELL·HPE·P 긍정적 셋업, HPQ 중립, NTAP은 밸류에이션 부담으로 단기 부정적 관찰 대상 지정</h2>
+      <p class="lede">AI·전통 IT 인프라 수요가 동반 견조한 가운데, 종목별 밸류에이션과 기대치 수준에 따라 실적 발표 전후 셋업이 뚜렷하게 차별화</p>
+    </div>
+
+    <div class="report-body">
+
+      <div class="chips">
+        <div class="chip"><div class="k">긍정적 셋업</div><div class="v buy">DELL · HPE · P</div><div class="s">가이던스 상향 + 밸류에이션 여력</div></div>
+        <div class="chip"><div class="k">중립</div><div class="v">HPQ</div><div class="s">호실적 기대 상당 부분 선반영</div></div>
+        <div class="chip"><div class="k">단기 경계</div><div class="v sell">NTAP</div><div class="s">역사적 고점 밸류에이션 부담</div></div>
+        <div class="chip"><div class="k">목표주가</div><div class="v">전 종목 상향</div><div class="s">EPS 추정치 일괄 상향 동반</div></div>
+      </div>
+
+      <h3 class="sec"><span class="n">1</span>프리뷰 총론 — AI와 전통 인프라의 동반 강세</h3>
+      <ul class="pts">
+        <li>오프사이클 하드웨어 실적 시즌에서 <b>AI·전통 인프라를 아우르는 긍정적 IT 수요</b>가 확인될 전망 — 최근 채널 체크와 서버·네트워킹 OEM(ANET, CSCO, SMCI), 채널 파트너(CDW, INGM, NSIT)의 기발표 실적이 이를 뒷받침</li>
+        <li>AI 모멘텀을 넘어, 부품 가격 인상 전 pull-forward나 가격 효과가 아닌 <b>보다 광범위하고 구조적인 IT 인프라 교체(refresh) 수요</b>가 전통 부문 성장의 동력임이 입증될 것으로 기대</li>
+        <li>종목별로는 <b>DELL과 HPE의 셋업이 가장 긍정적</b>이며 P가 그 뒤를 이음 — HPQ는 위험보상이 중립~다소 비매력적, NTAP은 단기 부정적 촉매 관찰 대상으로 지정</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">2</span>투자등급 &amp; 목표주가 — 전 종목 상향</h3>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>기업</th><th>티커</th><th class="num">시가총액($mn)</th><th class="num">주가($)</th><th>등급</th><th class="num">목표가(Dec-27)</th><th class="num">직전</th><th class="num">Upside</th></tr></thead>
+        <tbody>
+          <tr><td><b>Dell Technologies</b></td><td>DELL US</td><td class="num">284,172.6</td><td class="num">433.19</td><td class="buy">OW</td><td class="num"><b>$565</b></td><td class="num">$550</td><td class="num">+30%</td></tr>
+          <tr><td><b>Hewlett Packard Enterprise</b></td><td>HPE US</td><td class="num">70,780.5</td><td class="num">52.43</td><td class="buy">OW</td><td class="num"><b>$70</b></td><td class="num">$68</td><td class="num">+34%</td></tr>
+          <tr><td><b>HP Inc</b></td><td>HPQ US</td><td class="num">26,436.5</td><td class="num">28.58</td><td class="neu">N</td><td class="num"><b>$30</b></td><td class="num">$27</td><td class="num">+5%</td></tr>
+          <tr><td><b>NetApp</b></td><td>NTAP US</td><td class="num">37,185.1</td><td class="num">186.86</td><td class="neu">N</td><td class="num"><b>$195</b></td><td class="num">$175</td><td class="num">+4%</td></tr>
+          <tr><td><b>Everpure</b></td><td>P US</td><td class="num">34,500.4</td><td class="num">100.44</td><td class="buy">OW</td><td class="num"><b>$130</b></td><td class="num">$95</td><td class="num">+29%</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-src" style="font-size:10.5px;color:#9aa3b2;margin-top:8px;">Source: Company data, Bloomberg Finance L.P. 주가는 24 Aug 26 종가 기준.</div>
+
+      <div class="chart-card">
+        <div class="ct">목표주가 대비 Upside (%)</div>
+        <svg viewBox="0 0 880 300" width="100%">
+          <line x1="60" y1="250" x2="850" y2="250" stroke="#cfd6e0"/>
+          <line x1="60" y1="250" x2="60" y2="30" stroke="#cfd6e0"/>
+          <text x="52" y="254" font-size="11" fill="#9aa3b2" text-anchor="end">0%</text>
+          <line x1="60" y1="132" x2="850" y2="132" stroke="#eef1f6"/>
+          <text x="52" y="136" font-size="11" fill="#9aa3b2" text-anchor="end">20%</text>
+          <line x1="60" y1="14" x2="850" y2="14" stroke="#eef1f6"/>
+          <text x="52" y="18" font-size="11" fill="#9aa3b2" text-anchor="end">40%</text>
+
+          <rect x="110" y="73" width="90" height="177" fill="#0a2240"/>
+          <text x="155" y="63" font-size="14" font-weight="700" fill="#0a2240" text-anchor="middle">+30%</text>
+          <text x="155" y="272" font-size="13" fill="#525866" text-anchor="middle">DELL</text>
+
+          <rect x="265" y="49" width="90" height="201" fill="#0a2240"/>
+          <text x="310" y="39" font-size="14" font-weight="700" fill="#0a2240" text-anchor="middle">+34%</text>
+          <text x="310" y="272" font-size="13" fill="#525866" text-anchor="middle">HPE</text>
+
+          <rect x="420" y="79" width="90" height="171" fill="#0a2240"/>
+          <text x="465" y="69" font-size="14" font-weight="700" fill="#0a2240" text-anchor="middle">+29%</text>
+          <text x="465" y="272" font-size="13" fill="#525866" text-anchor="middle">P</text>
+
+          <rect x="575" y="221" width="90" height="29" fill="#9aa3b2"/>
+          <text x="620" y="211" font-size="14" font-weight="700" fill="#525866" text-anchor="middle">+5%</text>
+          <text x="620" y="272" font-size="13" fill="#525866" text-anchor="middle">HPQ</text>
+
+          <rect x="730" y="227" width="90" height="23" fill="#9aa3b2"/>
+          <text x="775" y="217" font-size="14" font-weight="700" fill="#525866" text-anchor="middle">+4%</text>
+          <text x="775" y="272" font-size="13" fill="#525866" text-anchor="middle">NTAP</text>
+        </svg>
+      </div>
+
+      <h3 class="sec"><span class="n">3</span>Adj. EPS 추정치 변경</h3>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>기업</th><th>FY1E</th><th class="num">직전</th><th class="num">변경</th><th class="num">∆</th><th>FY2E</th><th class="num">직전</th><th class="num">변경</th><th class="num">∆</th></tr></thead>
+        <tbody>
+          <tr><td><b>DELL</b></td><td>'27</td><td class="num">18.20</td><td class="num"><b>18.95</b></td><td class="num">+4.1%</td><td>'28</td><td class="num">21.05</td><td class="num"><b>21.95</b></td><td class="num">+4.25%</td></tr>
+          <tr><td><b>HPE</b></td><td>'26</td><td class="num">3.40</td><td class="num"><b>3.50</b></td><td class="num">+2.85%</td><td>'27</td><td class="num">4.00</td><td class="num"><b>4.10</b></td><td class="num">+2.49%</td></tr>
+          <tr><td><b>HPQ</b></td><td>'26</td><td class="num">3.00</td><td class="num"><b>3.05</b></td><td class="num">+1.59%</td><td>'27</td><td class="num">3.10</td><td class="num"><b>3.10</b></td><td class="num">+0.22%</td></tr>
+          <tr><td><b>NTAP</b></td><td>'27</td><td class="num">8.85</td><td class="num"><b>9.05</b></td><td class="num">+2.17%</td><td>'28</td><td class="num">9.65</td><td class="num"><b>9.95</b></td><td class="num">+3.08%</td></tr>
+          <tr><td><b>P</b></td><td>'27</td><td class="num">2.50</td><td class="num"><b>2.55</b></td><td class="num">+2.05%</td><td>'28</td><td class="num">3.05</td><td class="num"><b>3.15</b></td><td class="num">+3.53%</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-src" style="font-size:10.5px;color:#9aa3b2;margin-top:8px;">Source: Bloomberg Finance L.P.</div>
+
+      <h3 class="sec" id="dell"><span class="n">4</span>DELL — AI·비AI 인프라 동반 강세로 또 한 번의 FY27 가이던스 상향, 성장 스토리 강화</h3>
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">OW</div><div class="s">유지</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$565</div><div class="s">↑ from $550 (Dec-27)</div></div>
+        <div class="chip"><div class="k">Price (24 Aug)</div><div class="v">$433.19</div><div class="s">Upside +30%</div></div>
+        <div class="chip"><div class="k">Valuation</div><div class="v">~22x</div><div class="s">CY28E EPS $25.15 기준</div></div>
+      </div>
+      <ul class="pts">
+        <li>기존 <b>+47% 성장</b> 전망 위에 FY27(1월 결산) 매출 가이던스의 <b>추가 상향</b> 예상 — 직전 분기의 대폭 상향보다는 완만하겠으나 여전히 의미 있는 개선 여지</li>
+        <li>동력 (1): AI 서버 수요 견조 — 650 Group의 AI 서버 시장 전망이 2026년 <b>+80% y/y 이상</b>으로 상향 (90일 전 +64% 대비)</li>
+        <li>동력 (2): 비AI 인프라(서버 포함) 산업 전망도 상향 지속 — 2026년 서버 성장 기대치 <b>+30% y/y 이상</b> (기존 +22%), 기발표 실적의 비AI 서프라이즈와 채널 체크가 이를 확인</li>
+        <li>가격 인상 실행력, 공급 확보, 메모리 역풍 대응력을 감안하면 implied 영업이익률도 컨센서스(<b>9.4%</b>)를 상회할 전망 — 고마진 비AI 인프라 믹스 개선이 특히 기여</li>
+        <li>저마진 PC는 부진 지속 — C2Q26 출하 <b>9.3mn대, -5% y/y / -10% q/q</b>로 부진하나 인프라 강세가 이를 상쇄할 전망</li>
+        <li>FY27 EPS 가이던스가 기존 <b>$17.90(+74% y/y)</b>에서 <b>$20 내외(+85~95% y/y)</b>로 상향될 것으로 추정</li>
+        <li>연초 이후 주가 3배 이상 상승(S&amp;P 500 +12% 대비)으로 기대치는 높으나, 직전 실적 발표 이후로는 <b>주가 횡보</b> — 20x+ 멀티플은 중기 <b>35%+ 이익성장</b> 전망 대비 충분히 정당화 가능하며, 추가 가이던스 상향이 성장 스토리를 재확인시킬 촉매</li>
+      </ul>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>P/E 기반 목표주가 산출</th><th class="num">NTM (Qtrs 1-4)</th><th class="num">CY28E</th></tr></thead>
+        <tbody>
+          <tr><td>추정 순이익($mn)</td><td class="num">12,393</td><td class="num">15,834</td></tr>
+          <tr><td>추정 EPS</td><td class="num">$19.09</td><td class="num">$25.15</td></tr>
+          <tr><td>적용 P/E</td><td class="num">23x (현재)</td><td class="num"><b>22x (목표)</b></td></tr>
+          <tr><td>Implied Share Price</td><td class="num">$433.2</td><td class="num"><b>$565.0</b></td></tr>
+          <tr><td>Implied EV/EBITDA</td><td class="num">16x</td><td class="num">16x</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3 class="sec" id="hpe"><span class="n">5</span>HPE — 낮은 밸류에이션이 낮은 허들, 컴퓨트·네트워킹 수요가 FY26 추가 상향 견인</h3>
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">OW</div><div class="s">유지</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$70</div><div class="s">↑ from $68 (Dec-27)</div></div>
+        <div class="chip"><div class="k">Price (24 Aug)</div><div class="v">$52.43</div><div class="s">Upside +34%</div></div>
+        <div class="chip"><div class="k">Valuation</div><div class="v">~15x</div><div class="s">FY28E EPS $4.55 기준</div></div>
+      </div>
+      <ul class="pts">
+        <li>컴퓨트·네트워킹을 아우르는 AI·비AI 인프라 수요가 FY26(10월 결산) 매출·이익 전망의 <b>추가 상향</b>을 뒷받침 — Traditional Servers, Campus Networking, Cloud Routing 강세가 확인됨</li>
+        <li>엔터프라이즈 refresh 사이클과 강한 하이퍼스케일러 투자(특히 DCI 관련)의 수혜 — 공급 차질과 인플레이션 부담은 경영진 대응력이 관건인 watchpoint</li>
+        <li>고마진 비AI 사업의 견조한 수요와 <b>Juniper 인수 시너지</b>(비용 절감)로 이러한 압력을 상쇄, FY26 가이던스를 기존 범위 <b>상단 이상</b>으로 제시할 전망</li>
+        <li>직전 실적 발표 이후 주가 <b>-10%</b>(S&amp;P 500 +1% 대비), <b>13x NTM</b>(피어 대부분 20x 이상)으로 단기 위험보상이 매우 우호적</li>
+        <li>중기 컨센서스가 이미 <b>30%+ EPS CAGR</b>에 근접 — 성장 지속성에 대한 투자자 확신이 쌓이며 리레이팅 기회 병존</li>
+      </ul>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>P/E 기반 목표주가 산출</th><th class="num">NTM (Qtrs 1-4)</th><th class="num">FY28E</th></tr></thead>
+        <tbody>
+          <tr><td>추정 순이익($mn)</td><td class="num">5,502</td><td class="num">6,512</td></tr>
+          <tr><td>추정 EPS</td><td class="num">$3.87</td><td class="num">$4.55</td></tr>
+          <tr><td>적용 P/E</td><td class="num">14x (현재)</td><td class="num"><b>15x (목표)</b></td></tr>
+          <tr><td>Implied Share Price</td><td class="num">$52.4</td><td class="num"><b>$70.0</b></td></tr>
+          <tr><td>Implied EV/EBITDA</td><td class="num">10x</td><td class="num">11x</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3 class="sec" id="ntap"><span class="n">6</span>NTAP — 단기 수요는 FY27 상향을 지지하나, 부담스러운 밸류에이션이 어려운 셋업 조성</h3>
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v">N</div><div class="s">유지 · 단기 부정적 관찰 지정</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$195</div><div class="s">↑ from $175 (Dec-27)</div></div>
+        <div class="chip"><div class="k">Price (24 Aug)</div><div class="v">$186.86</div><div class="s">Upside +4%</div></div>
+        <div class="chip"><div class="k">Valuation</div><div class="v">~18x</div><div class="s">2028E EPS $10.81 기준</div></div>
+      </div>
+      <ul class="pts">
+        <li>F1Q27(7월 결산 분기) 실적에서 <b>FY27(4월 결산) 가이던스 상향</b> 예상 — all-flash, public cloud 등 광범위한 수요 호조와 견조한 IT 인프라 지출이 배경 (다만 서버·네트워킹 refresh 대비 스토리지 수요는 상대적 watchpoint)</li>
+        <li>투자자들은 단기 top-line보다 <b>fiscal 2H 수요와 전사 마진 궤적</b>에 주목할 전망 — 메모리 원가 상승과 가격 인상의 영향이 관건이며, 경영진의 forward 코멘터리는 보수적으로 유지될 것으로 예상</li>
+        <li>주가는 <b>20x+ NTM</b>의 역사적 고점 밸류에이션 — 연간 전망 상향 폭과 보수적일 가능성이 큰 fiscal 2H implied 가이던스로는 <b>높아진 투자자 기대치를 충족하기 어려운 구도</b></li>
+        <li>이에 따라 실적 발표를 앞두고 <b>단기 부정적 촉매 관찰 대상으로 지정</b> — 다만 예상보다 양호한 수요 환경을 반영해 추정치와 목표주가는 상향</li>
+      </ul>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>P/E 기반 목표주가 산출</th><th class="num">NTM (Qtrs 1-4)</th><th class="num">CY28E</th></tr></thead>
+        <tbody>
+          <tr><td>추정 순이익($mn)</td><td class="num">1,764</td><td class="num">2,013</td></tr>
+          <tr><td>추정 EPS</td><td class="num">$9.05</td><td class="num">$10.81</td></tr>
+          <tr><td>적용 P/E</td><td class="num">21x (현재)</td><td class="num"><b>18x (목표)</b></td></tr>
+          <tr><td>Implied Share Price</td><td class="num">$186.9</td><td class="num"><b>$195.0</b></td></tr>
+          <tr><td>Implied EV/EBITDA</td><td class="num">14.7x</td><td class="num">12.1x</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="callout"><span class="t">주목</span>목표 P/E ~18x는 현재 ~21x NTM보다 낮지만 전통 IT 하드웨어 피어보다는 높은 수준 — 구조적으로 우월한 마진을 반영하되, 산업 평균 수준으로의 성장 둔화 전망이 이를 부분 상쇄.</div>
+
+      <h3 class="sec" id="pstv"><span class="n">7</span>P (Everpure) — 견조한 코어 수요 + 하이퍼스케일러 수주가 추정치·목표가를 끌어올림</h3>
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">OW</div><div class="s">유지</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$130</div><div class="s">↑ from $95 (Dec-27)</div></div>
+        <div class="chip"><div class="k">Price (24 Aug)</div><div class="v">$100.44</div><div class="s">Upside +29%</div></div>
+        <div class="chip"><div class="k">Valuation</div><div class="v">~33x</div><div class="s">2028E EPS $3.90 기준</div></div>
+      </div>
+      <ul class="pts">
+        <li>직전 실적 발표 이후 주가 <b>+17%</b>(S&amp;P 500 +2% 대비) — 분기 중 발표된 <b>두 번째 대형 하이퍼스케일러 계약</b>이 FY28(1월 결산) 전망 개선을 견인, 차기 회계연도의 의미 있는 기여 예상</li>
+        <li>강한 랠리에도 F2Q27(7월 결산 분기) 실적 셋업은 긍정적 — 견조한 엔터프라이즈 지출, 컨센서스에 부합하는 매출총이익률(완만한 q/q 개선), NAND 가격 상승 속도 둔화와 가격 인상 효과로 <b>이익 서프라이즈</b> 예상</li>
+        <li>보다 큰 upside는 F3Q27·연간: (1) fiscal 2H implied 가이던스 <b>+14% y/y</b>는 1H <b>+30%+</b> 대비 과도하게 보수적 — 우려됐던 NAND발 인플레이션·공급 제약 역풍은 현실화되지 않음, (2) F3Q27은 <b>하이퍼스케일러 매출이 본격화되는 첫 분기</b>로 기존 기대를 상회할 가능성</li>
+        <li>관전 포인트: F2Q27 이후 매출총이익률 확장 궤적, 두 번째 하이퍼스케일러 계약 규모, <b>세 번째 계약의 시점</b></li>
+        <li>목표 P/E ~33x는 스토리지 피어(NetApp 등) 대비 크게 높은 수준이나, 100% flash 집중이 이끄는 우월한 매출 성장 프로파일과 하이퍼스케일러 성장 기회, 최근 평균 멀티플 수준임을 감안하면 정당화 가능</li>
+      </ul>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>P/E 기반 목표주가 산출</th><th class="num">NTM (Qtrs 1-4)</th><th class="num">FY28E</th></tr></thead>
+        <tbody>
+          <tr><td>추정 순이익($mn)</td><td class="num">910</td><td class="num">1,391</td></tr>
+          <tr><td>추정 EPS</td><td class="num">$2.65</td><td class="num">$3.90</td></tr>
+          <tr><td>적용 P/E</td><td class="num">38x (현재)</td><td class="num"><b>33x (목표)</b></td></tr>
+          <tr><td>Implied Share Price</td><td class="num">$100</td><td class="num"><b>$130</b></td></tr>
+          <tr><td>Implied EV/EBITDA</td><td class="num">29.3x</td><td class="num">24.9x</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3 class="sec" id="hpq"><span class="n">8</span>HPQ — 개선된 PC 트렌드는 이미 주가에 반영, 촉매는 F4Q26까지 대기</h3>
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v">N</div><div class="s">유지</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$30</div><div class="s">↑ from $27 (Dec-27)</div></div>
+        <div class="chip"><div class="k">Price (24 Aug)</div><div class="v">$28.58</div><div class="s">Upside +5%</div></div>
+        <div class="chip"><div class="k">Valuation</div><div class="v">~9x</div><div class="s">FY28E EPS $3.35 기준</div></div>
+      </div>
+      <ul class="pts">
+        <li>F3Q26(7월 결산 분기)은 가이던스 <b>상단</b> 수준 예상 — C2Q26 PC 출하 <b>13mn대(+7% q/q, -9% y/y)</b>로 계절성엔 못 미치나 예상보다 양호</li>
+        <li>Windows 11 refresh와 가격 인상 효과로 2H26 수요 호조 지속 시사(채널 체크·ODM 데이터) — FY26(10월 결산) 연간 가이던스 <b>상단</b> 달성 가능성. 다만 유가 상승에 따른 resin 원가 부담으로 <b>Print 마진</b>이 핵심 watchpoint</li>
+        <li>직전 실적 발표 이후 주가 <b>+15%</b>(S&amp;P 500 +2% 대비), <b>10x NTM</b>(역사적 범위 8~9x 상회)으로 beat &amp; raise 기대는 이미 상당 부분 반영</li>
+        <li>투자자 관심은 FY27 PC 수요 모멘텀 지속 여부(Windows 11 refresh 소멸 우려)와 FY26 하반기 PC·Print 마진 바닥 확인 — 이에 대한 가시성은 FY27 연간 가이던스가 제시되는 <b>F4Q26 실적까지 지연</b>될 전망이어서 이번 발표 자체는 상대적으로 밋밋할 가능성</li>
+      </ul>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>P/E 기반 목표주가 산출</th><th class="num">NTM (Qtrs 1-4)</th><th class="num">FY28E</th></tr></thead>
+        <tbody>
+          <tr><td>추정 순이익($mn)</td><td class="num">2,631</td><td class="num">2,830</td></tr>
+          <tr><td>추정 EPS</td><td class="num">$2.89</td><td class="num">$3.35</td></tr>
+          <tr><td>적용 P/E</td><td class="num">10x (현재)</td><td class="num"><b>9x (목표)</b></td></tr>
+          <tr><td>Implied Share Price</td><td class="num">$28.6</td><td class="num"><b>$30.0</b></td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3 class="sec"><span class="n">!</span>리스크 &amp; 모니터링 포인트</h3>
+      <div class="risk-box">
+        <h4>Key Risks to Ratings &amp; Price Targets</h4>
+        <ul>
+          <li><b>부품 원가 인플레이션:</b> 메모리 등 핵심 부품 가격이 반도체 공급 사이클에 좌우되며 서버·네트워킹 OEM 마진 압박 — pass-through 가격 인상은 달러 마진을 방어하나 고객 예산 한계 시 수요 둔화 위험</li>
+          <li><b>수요 정상화(pull-forward 소멸):</b> 특정 기술 사이클이 수요를 앞당긴 경우, 사이클 성숙 이후 섹터 전반의 물량 압박 가능</li>
+          <li><b>AI 투자→일반 컴퓨트 파급 불발(DELL):</b> AI 컴퓨트 투자가 일반 컴퓨트 성장으로 이어지지 않을 경우 ISG 성장률·이익 하회 위험, opex 상승 시 마진 부담</li>
+          <li><b>Juniper 통합 실행 리스크(HPE):</b> 시너지 실현 지연·차질 시 마진과 현금흐름이 딜 논리 대비 구조적으로 약화, 인수 부채로 레버리지 상승 — 플랫폼 전환에 따른 단기 수요 교란 가능성도 상존</li>
+          <li><b>메모리發 수요 훼손(NTAP):</b> 메모리 원가의 고객 전가가 스토리지 수요에 미치는 영향이 업계 기대보다 클 위험 — 반대로 on-prem 엔터프라이즈 AI 투자 변곡 시 스토리지 수요 upside, AFX 신제품의 NeoCloud 트랙션도 잠재 upside</li>
+          <li><b>클라우드 이전 가속·매출 lumpiness(P):</b> 워크로드의 public cloud 이동 가속과 하드웨어 어플라이언스 중심의 낮은 recurring 매출 비중, 대형 벤더(Dell/EMC, HPE, IBM)의 공격적 할인·번들 경쟁</li>
+          <li><b>PC·Print 사이클(HPQ):</b> PC 수요 회복 지연, 부품 원가 상승·공급 제약, Print 점유율·마진 훼손, Canon 등 핵심 공급사 계약 리스크</li>
+        </ul>
+        <h4 style="margin-top:14px;">모니터링 포인트</h4>
+        <ul>
+          <li>650 Group AI 서버 전망 추가 상향 여부와 비AI 서버 수요 지표</li>
+          <li>DELL FY27 EPS 가이던스 상향 폭($20 내외 도달 여부)과 implied 영업이익률</li>
+          <li>HPE FY26 가이던스의 기존 범위 상단 상회 여부, Juniper 시너지 진척</li>
+          <li>NTAP fiscal 2H 코멘터리와 메모리 원가·가격 인상의 마진 영향</li>
+          <li>P의 F3Q27 하이퍼스케일러 매출 본격화, 매출총이익률 확장 궤적, 세 번째 계약 시점</li>
+          <li>HPQ F4Q26 FY27 가이던스와 PC·Print 마진 바닥 신호</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div>본 문서는 투자 권유를 목적으로 하지 않습니다.</div>
+  </footer>
+
+</div>
+</body>
+</html>
