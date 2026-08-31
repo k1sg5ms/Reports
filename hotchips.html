@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hot Chips 2026 — AI 가속기·메모리·인터커넥트 핵심 정리</title>
+<style>
+  :root{
+    --brand:#1f2933;
+    --brand-deep:#111820;
+    --accent:#d61f26;
+    --accent2:#a8161c;
+    --paper:#f4f6f9;
+    --card:#ffffff;
+    --ink:#1b1e24;
+    --ink-soft:#525866;
+    --line:#dde3ec;
+    --buy:#1f7a4d;
+    --bear:#c0392b;
+    --bull:#1f6fb2;
+    --warn:#8a4b15;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Helvetica Neue','Pretendard','Noto Sans KR',Arial,sans-serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  .topbar{
+    background:var(--brand-deep);
+    color:#fff;padding:14px 6vw;
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;
+    border-bottom:3px solid var(--accent);
+    position:sticky;top:0;z-index:50;
+  }
+  .topbar .logo{font-weight:700;font-size:18px;letter-spacing:0.5px;}
+  .topbar .logo span{color:var(--accent);}
+  .topbar nav{display:flex;gap:8px;flex-wrap:wrap;}
+  .topbar nav a{
+    color:#cfd8e6;text-decoration:none;font-size:12.5px;
+    padding:6px 12px;border:1px solid rgba(255,255,255,0.2);border-radius:20px;
+    transition:all .15s;
+  }
+  .topbar nav a:hover{background:var(--accent);color:#fff;border-color:var(--accent);}
+
+  .wrap{max-width:960px;margin:0 auto;padding:40px 6vw 90px;}
+
+  .intro{border-left:4px solid var(--accent);padding:8px 0 8px 20px;margin-bottom:48px;}
+  .intro .eyebrow{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent2);font-weight:700;}
+  .intro h1{font-size:26px;margin:8px 0 6px;color:var(--brand);}
+
+  .report{margin-bottom:64px;scroll-margin-top:70px;}
+  .report-head{
+    background:linear-gradient(135deg,var(--brand) 0%, var(--brand-deep) 100%);
+    color:#fff;border-radius:10px 10px 0 0;padding:28px 30px;
+  }
+  .report-head .tag{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#c7cfda;font-weight:700;}
+  .report-head h2{margin:8px 0 14px;font-size:23px;line-height:1.35;}
+  .report-head .lede{
+    font-family:'Georgia',serif;font-size:15.5px;color:#e6eaf0;
+    border-top:1px solid rgba(255,255,255,0.16);padding-top:14px;margin:0;
+  }
+  .report-body{
+    background:var(--card);border:1px solid var(--line);border-top:none;
+    border-radius:0 0 10px 10px;padding:30px;
+  }
+
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px;}
+  .chip{border:1px solid var(--line);border-radius:8px;padding:10px 16px;background:#fafbfd;flex:1;min-width:130px;}
+  .chip .k{font-size:10.5px;letter-spacing:0.5px;text-transform:uppercase;color:var(--ink-soft);}
+  .chip .v{font-size:19px;font-weight:700;color:var(--brand);margin-top:2px;}
+  .chip .v.buy{color:var(--buy);}
+  .chip .v.sell{color:var(--bear);}
+  .chip .s{font-size:11px;color:var(--ink-soft);}
+
+  h3.sec{
+    font-size:17px;color:var(--brand);margin:30px 0 12px;
+    padding-bottom:8px;border-bottom:1.5px solid var(--line);
+    display:flex;align-items:center;gap:10px;scroll-margin-top:70px;
+  }
+  h3.sec .n{
+    background:var(--brand);color:#fff;font-size:12px;font-weight:700;
+    width:24px;height:24px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  h3.sec .n.alert{background:var(--accent);}
+  ul.pts{margin:0;padding:0;list-style:none;}
+  ul.pts li{position:relative;padding:7px 0 7px 20px;font-size:14.5px;border-bottom:1px dashed var(--line);}
+  ul.pts li:last-child{border-bottom:none;}
+  ul.pts li::before{content:"—";position:absolute;left:0;color:var(--accent2);font-weight:700;}
+  ul.pts b{color:var(--brand);}
+
+  table.tbl{width:100%;border-collapse:collapse;font-size:12.5px;margin:6px 0 4px;}
+  table.tbl th{background:var(--brand);color:#fff;text-align:left;padding:8px 10px;font-weight:600;white-space:nowrap;}
+  table.tbl td{padding:7px 10px;border-bottom:1px solid var(--line);white-space:nowrap;}
+  table.tbl tr:nth-child(even) td{background:#f7f9fc;}
+  table.tbl td.num{text-align:right;font-variant-numeric:tabular-nums;}
+  table.tbl tr.hl td{background:#fdf0f0;font-weight:700;color:var(--accent2);}
+  table.tbl th.grp{text-align:center;background:var(--brand-deep);border-left:1px solid rgba(255,255,255,0.15);}
+  .tbl-wrap{overflow-x:auto;}
+
+  .chart-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:22px 22px 14px;margin:14px 0;}
+  .chart-card .ct{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:12px;}
+  .chart-src{font-size:10.5px;color:#9aa3b2;margin-top:8px;}
+  .legend{display:flex;gap:18px;font-size:11.5px;color:var(--ink-soft);margin-bottom:4px;}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .legend i{width:11px;height:11px;border-radius:2px;display:inline-block;}
+
+  .callout{background:#fbf6ec;border:1px solid #e8dcc3;border-radius:8px;padding:14px 18px;font-size:13px;color:var(--ink-soft);margin-top:14px;}
+  .callout .t{font-size:10.5px;font-weight:700;letter-spacing:0.6px;color:var(--warn);text-transform:uppercase;display:block;margin-bottom:5px;}
+
+  .takeaway{background:#f3f5f8;border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:12px 16px;font-size:13.5px;color:var(--ink);margin-top:12px;}
+  .takeaway b{color:var(--accent2);}
+
+  .risk-box{background:var(--brand);color:#dde6f3;border-radius:8px;padding:22px 24px;margin-top:14px;}
+  .risk-box h4{margin:0 0 10px;color:#fff;font-size:14.5px;}
+  .risk-box ul{margin:0;padding-left:18px;}
+  .risk-box li{margin-bottom:8px;font-size:13px;}
+  .risk-box li b{color:#fff;}
+
+  footer{border-top:1px solid var(--line);margin-top:50px;padding-top:20px;font-size:11px;color:#9aa3b2;line-height:1.6;}
+
+  @media(max-width:560px){
+    .intro h1{font-size:21px;}
+    .report-head h2{font-size:19px;}
+    .report-body{padding:22px 18px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">Research<span>·</span>Digest</div>
+  <nav>
+    <a href="#s-nvda">NVDA</a>
+    <a href="#s-amd">AMD</a>
+    <a href="#s-intc">INTC</a>
+    <a href="#s-oai">OpenAI ASIC</a>
+    <a href="#s-hyper">MSFT·META·GOOGL</a>
+    <a href="#s-alt">LPX·d-Matrix·CBRS·SambaNova</a>
+    <a href="#s-cpu">CPU·FPGA</a>
+    <a href="#s-mem">메모리·네트워킹</a>
+    <a href="#s-table">스펙 비교표</a>
+  </nav>
+</div>
+
+<div class="wrap">
+
+  <div class="intro">
+    <div class="eyebrow">31 August 2026</div>
+    <h1>Hot Chips 2026 — AI 가속기·메모리·인터커넥트 핵심 정리</h1>
+  </div>
+
+  <section class="report" id="rpt1">
+
+    <div class="report-head">
+      <div class="tag">US Semiconductors</div>
+      <h2>Hot Chips 2026 Download: NVDA 풀스택 AI 팩토리 우위 재확인, AMD 로드맵 강화, 그리고 "메모리가 컴퓨트만큼 중요하다"</h2>
+      <p class="lede">OpenAI-AVGO 신규 ASIC(Jalapeño) 공개가 화제였지만, 가장 큰 시사점은 (1) NVDA가 풀스택 AI 팩토리에서 상당히 앞서 있다는 점, (2) AMD 하드웨어 로드맵이 매우 강력하다는 점, (3) AI 추론에서 메모리가 컴퓨트만큼 — 어쩌면 그 이상 — 중요해지고 있다는 점. 모델 사이즈와 KV cache window가 계속 빠르게 커지면서, 모든 하드웨어 로드맵이 메모리 용량·메모리 대역폭·scale-up interconnect 병목 해소에 집중되고 있다.</p>
+    </div>
+
+    <div class="report-body">
+
+      <div class="chips">
+        <div class="chip"><div class="k">NVDA Rating</div><div class="v buy">Buy</div><div class="s">PT $300 · 현재가 $217.55 (28 Aug)</div></div>
+        <div class="chip"><div class="k">AMD Rating</div><div class="v buy">Buy</div><div class="s">PT $730 · 현재가 $465.58 (28 Aug)</div></div>
+        <div class="chip"><div class="k">Rubin vs Blackwell</div><div class="v">10~30x</div><div class="s">MW당 토큰 처리량 (NVDA 주장)</div></div>
+        <div class="chip"><div class="k">ASIC 시장 비중 전망</div><div class="v">~30%</div><div class="s">가속기 시장 내 장기 안착 수준</div></div>
+        <div class="chip"><div class="k">Jalapeño 개발 기간</div><div class="v">9개월</div><div class="s">초기 RTL 완성까지 (AVGO 협업)</div></div>
+      </div>
+
+      <h3 class="sec"><span class="n">1</span>전체 요약 — 3가지 핵심 시사점</h3>
+      <ul class="pts">
+        <li>OpenAI의 신규 ASIC(AVGO 협업, 코드명 Jalapeño) 공개 외에, 컨퍼런스 전반을 관통하는 시사점은 세 가지: <b>NVDA는 풀스택 AI 팩토리 제공에서 상당히 앞서 있고</b>, <b>AMD 하드웨어 로드맵은 매우 강력하며</b>, <b>신규 메모리 아키텍처 관련 움직임이 매우 중요</b>하다는 것. AI 추론에서 메모리는 컴퓨트만큼, 혹은 그 이상으로 중요.</li>
+        <li>모든 세션에서 <b>AI 모델 사이즈와 KV cache window는 계속 빠르게 증가</b>하는 방향이 명확했고, 하드웨어 로드맵은 이에 대응해 <b>메모리 용량·메모리 대역폭·scale-up interconnect</b>라는 핵심 병목에 집중.</li>
+        <li>OpenAI 프로젝트는 <b>신규 ASIC 개발 타임라인이 얼마나 빨라졌는지</b>를 보여줌 — NVDA 하드웨어 로드맵에 더 큰 압박을 가하는 요인으로 해석 가능.</li>
+      </ul>
+
+      <h3 class="sec" id="s-nvda"><span class="n">2</span>NVDA — 단품 GPU에서 ~100MW 규모 AI 팩토리로</h3>
+      <ul class="pts">
+        <li>판매 단위가 단일 가속기에서 <b>~100MW 데이터센터 규모 시스템</b>으로 이동. 최적화 지표는 peak FLOPS가 아니라 <b>tokens/MW, time-to-first-token(TTFT), 신뢰성</b>.</li>
+        <li><b>시스템 효율성이 핵심 가치 지표</b>로 설정 — 에이전틱 AI 워크로드는 원시 컴퓨트 성능보다 토큰 처리량과 인프라 활용도를 점점 더 보상.</li>
+        <li>NVDA 주장: Rubin은 Blackwell 대비 <b>MW당 토큰 처리량 10~30x</b>, <b>프로비저닝 와트당 GPU 수 최대 40% 증가</b>. 동인은 adaptive NVFP4 sparsity, 저지연 NVLink 6 동기화, 랙 단위 power smoothing.</li>
+        <li><b>80개 이상 파트너의 MGX 생태계</b>를 통해 해자를 실리콘 너머 네트워킹·냉각·전력 공급·랙 설계로 확장 — 전환비용 상승, 머천트 실리콘 경쟁사 대비 프리미엄 ASP 지지.</li>
+      </ul>
+      <div class="takeaway"><b>시사점:</b> 플랫폼 lock-in 심화와 AI 인프라 스택 소유권 확대. 다만 NVDA가 시설 단위 설계·배포까지 확장하면서 <b>capex 집약도와 실행 리스크는 상승</b>.</div>
+
+      <h3 class="sec" id="s-amd"><span class="n">3</span>AMD — MI455X·Helios로 시스템급 비전 근접, 관건은 ROCm</h3>
+      <ul class="pts">
+        <li><b>MI455X</b>는 MI355X 대비 대규모 아키텍처 업그레이드: 칩렛 기반 <b>N2/N3P</b> 설계, <b>HBM4 432GB</b>, 메모리 대역폭 <b>23.3TB/s</b>, 피크 MXFP4 컴퓨트 <b>최대 4x</b> — 메모리·추론 집약 워크로드 타깃.</li>
+        <li><b>Helios</b>: EPYC Venice CPU + MI455X GPU + Pensando Vulcano AI NIC를 액체냉각 <b>72-GPU 시스템</b>으로 통합, <b>2.9 exaflops</b> AI 컴퓨트와 <b>HBM4 31TB</b> — 풀스택 AI 인프라 공급자로의 경쟁 의지.</li>
+        <li>NVLink 독점 방식과 달리 <b>Ethernet/ESUN 표준과 머천트 스위칭 기반 오픈 패브릭 전략</b> 강조 — 벤더 lock-in 축소, 유연성, 랙 단위 복원력을 원하는 하이퍼스케일러에 소구.</li>
+        <li><b>소프트웨어가 핵심 관전 포인트</b>: ROCm 개선, Hyperloom, AI 코딩 에이전트 통합으로 CUDA 마이그레이션 가속 및 생태계 격차 축소 시도.</li>
+      </ul>
+      <div class="takeaway"><b>시사점:</b> AMD는 NVDA의 시스템 수준 비전을 점점 따라잡고 있으나, 지속적인 점유율 확대는 하드웨어 스펙보다 <b>ROCm이 광범위한 프로덕션 도입을 이끌 경쟁력 있는 소프트웨어 플랫폼으로 성숙할 수 있는지</b>에 좌우.</div>
+
+      <h3 class="sec" id="s-intc"><span class="n">4</span>INTC — Crescent Island, 저전력·추론 우선의 TCO 대안</h3>
+      <ul class="pts">
+        <li>NVDA Rubin·AMD MI455X 대비 <b>저전력·추론 우선 대안</b>으로 포지셔닝: <b>350W 공랭 PCIe</b> 설계, <b>LPDDR5X 최대 480GB</b>, 액체냉각이나 특수 전력 인프라 없이 표준 서버 환경에 배치 가능.</li>
+        <li><b>Xe3P 아키텍처</b>: 32 Xe cores, 256 XMX engines, 확장된 캐시, 16-stage systolic array, MXFP4~FP64 지원. compute-bound prefill, 장문맥 추론, speculative decoding 수혜 MoE 모델 타깃.</li>
+        <li>peak 훈련 성능이 아닌 <b>메모리 용량과 tokens-per-watt</b> 중심 — 대용량 LPDDR로 더 큰 모델, 더 많은 동시 세션, KV cache 집약 에이전틱 워크로드 지원.</li>
+        <li>오픈·이종 추론 배치용 설계로, 랙 스케일 AI 팩토리와 정면 경쟁보다는 <b>disaggregated 아키텍처에서 고대역폭 HBM 가속기와 병행</b>하는 그림.</li>
+      </ul>
+      <div class="takeaway"><b>시사점:</b> TCO·배치 편의성 중심의 차별화된 추론 전략이나, <b>FLOPS와 메모리 대역폭이 미공개</b>라 2H26 출시 전까지 NVDA·AMD 대비 실제 경쟁력 판단은 어려움.</div>
+
+      <h3 class="sec" id="s-oai"><span class="n">5</span>OpenAI Jalapeño — 추론 ASIC의 경제성 입증, 그러나 ASIC 한계도 그대로</h3>
+      <ul class="pts">
+        <li>peak 이론 컴퓨트가 아닌 <b>실제 LLM 추론 효율</b>에 특화된 추론 ASIC. 투자자들이 첨단 ASIC 설계에서 <b>AVGO보다 MediaTek 등 다른 ASIC 공급사를 너무 성급하게 선호</b>한다는 점을 다시 한 번 부각.</li>
+        <li>OpenAI는 LLM 추론에서 주요 GPU 대비 <b>지연(latency)·상호작용성·와트당 성능</b> 우위 기대. 소비전력 <b>~700W vs GB200 ~1.2kW</b>. multi-token prediction, KV cache locality 최적화 memory-sliced 아키텍처 활용.</li>
+        <li>시스템: <b>128칩 랙</b>, 16개 랙을 Ethernet scale-up으로 묶어 <b>2,048칩 pod</b> 구성.</li>
+        <li>개발 타임라인이 매우 압축적 — <b>초기 RTL까지 9개월</b>, 컴퓨트 칩은 처음부터 자체 개발. 일부 인터페이스 IP와 I/O die는 AVGO에 의존.</li>
+        <li>한계: OpenAI 스스로 <b>워크로드·모델을 하드웨어에 명시적으로 매핑</b>해야 함을 인정. 아키텍처가 특정 추론 특성과 KV cache 증가·데이터 이동 가정에 고도로 최적화 → 프로그래머빌리티·유연성·거대 생태계를 갖춘 GPU 대비 <b>온보딩·소프트웨어 복잡성</b> 상당.</li>
+      </ul>
+      <div class="takeaway"><b>시사점:</b> 잘 설계된 ASIC은 충분한 물량을 가진 프론티어 모델 벤더에게 자본비용·운영비용 측면에서 매력적 — 이는 <b>ASIC이 가속기 시장의 약 30%에서 안착하고 머천트 GPU가 다수를 유지</b>한다는 장기 견해와 일치. ASIC 침투율은 안정적 대규모 추론을 돌리는 하이퍼스케일러·프론티어 모델 개발사에서 가장 높고, GPU는 가장 폭넓은 AI 애플리케이션과 오픈소스 생태계의 선호 플랫폼으로 유지.</div>
+
+      <h3 class="sec" id="s-hyper"><span class="n">6</span>하이퍼스케일러 자체 가속기 — MSFT Maia 200 · META MTIA 400 · GOOGL TPU 8</h3>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>항목</th><th>MSFT Maia 200</th><th>META MTIA 400</th><th>GOOGL TPU 8i (추론)</th><th>GOOGL TPU 8t (훈련)</th></tr></thead>
+        <tbody>
+          <tr><td><b>공정 / 구성</b></td><td>3nm SoC, 750W TDP</td><td>5 chiplets (3nm 컴퓨트 2 + SoC 1 + I/O die 2), 2.5D 패키징</td><td>2-die 추론 전용</td><td>Broadcom 설계, 대규모 pre-training용</td></tr>
+          <tr><td><b>On-chip SRAM</b></td><td class="num">272MB</td><td class="num">-</td><td class="num">384MB</td><td class="num">-</td></tr>
+          <tr><td><b>HBM 용량</b></td><td class="num">216GB</td><td class="num">288GB HBM3E</td><td class="num">288GB HBM3E</td><td class="num">2PB 공유 (Superpod)</td></tr>
+          <tr><td><b>메모리 대역폭</b></td><td class="num">7TB/s</td><td class="num">9.4TB/s</td><td class="num">-</td><td class="num">-</td></tr>
+          <tr><td><b>컴퓨트</b></td><td class="num">최대 1,268 BF16 Tensor TOPS</td><td class="num">-</td><td class="num">-</td><td class="num">121 Exaflops FP4 / 9,600칩 Superpod</td></tr>
+          <tr><td><b>인터커넥트</b></td><td>백엔드 1.4Tb/s, 28x400G Unified Ethernet Scale-Up</td><td>랙당 72칩, RDMA over NIC scale-up + PCIe scale-out</td><td class="num">inter-chip 19.2Tb/s</td><td class="num">-</td></tr>
+          <tr><td><b>타깃 워크로드</b></td><td>하이퍼스케일 훈련+추론</td><td>DLRM 추천 추론 + AI 훈련</td><td>reasoning·MoE·agentic 추론</td><td>모델 개발·pre-training</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <ul class="pts">
+        <li><b>MSFT</b>: Maia 200은 고도로 통합된 가속기+네트워킹 스택. 특히 <b>Unified Ethernet Scale-Up Network</b>로 대규모 가속기 연결 시 통신·동기화 오버헤드 최소화라는 업계 최대 난제에 대응. 실리콘·패키징·메모리·네트워킹 수직통합 전략 재확인 — 단, 소프트웨어 생태계 성숙이 동반돼야 함.</li>
+        <li><b>META</b>: MTIA 200(추론) → MTIA 300(첫 훈련 특화, 3nm·HBM3E 6 stacks·액체냉각) → 훨씬 큰 <b>MTIA 400</b>으로 세대 전환. 랙당 72칩 + 전용 스위칭 인프라. 통신 병목이 원시 컴퓨트보다 큰 제약이 되고 있어 고대역폭 scale-up·scale-out 네트워킹 강조.</li>
+        <li>META 시사점: 더 크고 복잡해진 MTIA 400 램프는 <b>AVGO에 더 큰 물량·매출</b>을 의미하나, META 특화 추천 워크로드에 집중되므로 <b>META의 GPU 의존도를 낮추지는 않을 것</b>.</li>
+        <li><b>GOOGL</b>: TPU 8 스펙은 연초에 대부분 공개된 바 있어, 핵심은 <b>훈련 실리콘과 추론 실리콘을 분리하는 아키텍처적 근거</b>. reasoning·MoE·agentic 추론이 점점 메모리 대역폭 bound가 되면서 <b>컴퓨트 단위당 필요 메모리 대역폭이 훈련보다 훨씬 커짐</b> → 전용 추론 가속기 TPU 8i 개발.</li>
+        <li>GOOGL 시사점: 훈련과 추론이 별도 아키텍처를 정당화할 만큼 분기. AI 인프라의 다음 병목은 pure FLOPs가 아니라 <b>메모리 이동과 통신</b> — 에이전틱 AI가 더 긴 컨텍스트 윈도우, 더 많은 reasoning step, 더 무거운 칩 간 통신을 요구하기 때문.</li>
+      </ul>
+
+      <h3 class="sec" id="s-alt"><span class="n">7</span>메모리 중심 대안 아키텍처 — LPX · d-Matrix · Cerebras · SambaNova</h3>
+      <ul class="pts">
+        <li><b>LPX (Groq/NVIDIA)</b>: 핵심은 랙 하드웨어보다 <b>이종 추론과 워크로드 disaggregation</b>. 복잡한 reasoning 워크로드가 처리량 최적화 GPU와 지연 최적화 추론 가속기로 이분화되는 가운데, Groq 3 LPX를 Vera Rubin 옆에서 <b>decode·drafting·FFN 워크로드를 담당하는 보완 엔진</b>으로 포지셔닝. 신규 벤치마크: LPX+Rubin 결합 시 장문맥 에이전틱 워크로드에서 <b>상호작용성·처리량 효율 약 3~5x</b> 개선.</li>
+        <li>LPX 아키텍처: <b>외부 HBM 없는 완전 SRAM 기반</b>, 랙당 256 LPU, SRAM 128GB, FP8 315 PFLOPS, aggregate SRAM 대역폭 40PB/s, chip-to-chip 지연 350ns. disaggregation으로 토큰당 비용이 하락하면서 에이전틱 스택의 지연 민감 부분을 점점 더 담당할 NVDA 특화 추론 가속기의 핵심 축.</li>
+        <li><b>d-Matrix Raptor 3D-DRAM</b>: CTO와 함께 <b>META 엔지니어가 무대에 등장</b> — 프론티어급 모델용 대안 추론 아키텍처에 대한 하이퍼스케일러 관심 방증. 수직 통합 compute-on-memory 설계로 <b>SRAM급 대역폭 + HBM 대비 훨씬 우수한 용량·전력 효율</b> 주장.</li>
+        <li>Raptor 스펙: TSMC N4 logic die + 3D-DRAM die face-to-face 통합, <b>카드당 32GB, ~100TB/s 대역폭</b>, 72-card 랙에서 <b>1M-token context 프론티어 모델</b> 지원. co-design 기법: stream blocking(메모리 overfetch 제거), pinless DBI(I/O 전력 ~20% 절감), thermal-aware refresh(고온에서 대역폭 손실 최소화). decode·KV cache 집약 에이전틱 워크로드에서 관련성 증가 전망.</li>
+        <li><b>Cerebras (CBRS)</b>: 8/18 SuperNova 이벤트와 대체로 일치. wafer-scale + 신규 <b>CS-4</b>: GPU 대비 <b>최대 30x 빠른 추론</b>, CS-3 대비 <b>토큰 처리량 2x</b>, Nexus 랙 아키텍처로 메모리·패브릭·I/O 대역폭 대폭 개선. 핵심 논지는 AI 스케일링의 제약이 컴퓨트가 아닌 메모리 대역폭·지연·인터커넥트 오버헤드라는 것.</li>
+        <li>가장 중요한 신규 공개는 <b>CS-6 조기 공개</b>: wafer-scale 위에 <b>3D-stacked DRAM</b>을 얹어 wafer-scale SRAM + 수직 통합 DRAM 결합 → 훨씬 작은 풋프린트에서 더 큰 모델, 지연 우위 유지. DRAM 스태킹은 2024년 착수, 공식 타임라인은 없으나 연간 케이던스 기준 <b>2028년 출시 가능성</b>. SRAM 한계 이상으로 메모리를 확장하면서 고대역폭을 유지하는 중요한 진전.</li>
+        <li><b>SambaNova SN50 RDU</b>(reconfigurable dataflow unit): operator fusion·data locality·동기화 최소화를 강조하는 dataflow 아키텍처, Ethernet 기반 scale-up/out. <b>랙 솔루션 완전 공랭</b> — 액체냉각 미비·개조 비용이 큰 엔터프라이즈 온프렘에서 의미 있는 차별화.</li>
+        <li>SN50 스펙: 5nm CoWoS-L, <b>FP8 3,200 TFLOPS</b>, on-chip SRAM 432MB, HBM 64GB(1.84TB/s), CXL 연결 DDR tier(100GB/s, prompt caching용) → <b>SRAM·HBM·DDR 3-tier 메모리 계층</b>. Ethernet scale-up 2TB/s, scale-up 도메인 내 256+ 가속기. 경영진 미팅에서 neo-cloud·엔터프라이즈 양쪽에서 상업적 견인이 형성 중이며, <b>Intel과의 관계가 엔터프라이즈 시장 진입에 도움</b>이 되고 있다는 언급.</li>
+      </ul>
+      <div class="callout"><span class="t">공통 논지</span>네 곳 모두 "AI 스케일링의 병목은 컴퓨트가 아니라 메모리 대역폭·지연·인터커넥트"라는 동일한 전제에서 출발. 접근법은 다르지만(SRAM-only, 3D-DRAM, wafer-scale, dataflow+3-tier) 모두 decode·KV cache·장문맥 에이전틱 추론을 겨냥.</div>
+
+      <h3 class="sec" id="s-cpu"><span class="n">8</span>CPU 세션 (NVDA·AMD·INTC·ARM) & AMD Versal FPGA</h3>
+      <ul class="pts">
+        <li>에이전틱 AI가 워크로드 오케스트레이션용 <b>CPU 수요를 계단식으로 증가</b>시키는 가운데 각사 CPU 로드맵 공개.</li>
+        <li><b>ARM AGI CPU</b>: 최대 136 cores, 코어당 메모리 대역폭 6GB/s, 칩당 DDR5-8000 6TB. 레퍼런스 서버·상용 서버·랙 스케일 시스템(공랭/액랭 옵션). ARM의 핵심 역량은 지연·효율로 하이퍼스케일러 니즈에 부합하나, <b>코어 수·처리량 한계</b>로 Gen1 AGI를 standalone AI 랙에 쓰기는 제한적 — 이 용도는 단일 머신에서 최대한 많은 코어로 스케일해야 하기 때문.</li>
+        <li><b>INTC Diamond Rapids</b>: 최대 256 cores, 메모리 1.6TB/s, last level cache 1.28GB. x86 옵션은 유지되나, 중기 업사이드는 <b>고코어·고성능 로드맵 개선</b>에 달려 있음.</li>
+        <li><b>NVDA Vera CPU</b>: 코어당 에이전트 성능 최적화 — spatial multi-threading, LPDDR5X 메모리 서브시스템, monolithic compute. 전통 CPU 대비 <b>와트당 전력 효율 우위</b> 강조.</li>
+        <li><b>AMD Versal Premium Gen2</b>: on-package LPDDR5X, PCIe Gen6/CXL 3.1, 128G SerDes(PCIe Gen7/CXL 4.0 가능), DSP 밀도 상향, 보안 강화 — 저지연 physical AI·인프라 가속 타깃.</li>
+        <li><b>차세대 Versal RF adaptive SoC</b>: RF 컨버터·hardened DSP·AI Engines·programmable logic 단일칩 통합. 전세대 RFSoC 대비 <b>DSP 컴퓨트 최대 19x, 샘플레이트 6.4x(32 GSPS ADC), RF 대역폭 18GHz</b>. 국방·통신·계측·양자 제어 워크로드, UCIe 칩렛으로 커스텀 RF/AI 확장 경로.</li>
+      </ul>
+
+      <h3 class="sec" id="s-mem"><span class="n">9</span>메모리 (PIM·CXL) & 네트워킹·인터커넥트</h3>
+      <ul class="pts">
+        <li>AI 메모리 대역폭·용량·전력 병목 해소를 위해 <b>컴퓨트를 메모리 가까이로 옮기는</b> 움직임 확대.</li>
+        <li><b>Samsung LPDDR5X-PIM</b>(양산화): DRAM bank 내부에 MAC 컴퓨트 내장. PIM 대역폭 <b>614GB/s(기존 LPDDR5X의 8x)</b>, Llama-3.1-8B 토큰 처리량 <b>~3x</b> — HBM 대비 저비용·저전력 추론 대안으로 포지셔닝.</li>
+        <li><b>XCENA CXL 3.0 MX1</b>: DDR5 최대 2TB + SSD-backed 메모리 + near-memory RISC-V 3,072 cores. Samsung이 랙 스케일 CXL pooling 시연 — <b>100K context에서 LLM decode 처리량 3.35x</b>. CXL/PIM은 RAG·KV cache·메모리 bound AI 워크로드의 신규 tier로 부상.</li>
+        <li><b>NVDA Spectrum-X multiplane</b>: 1.6T NIC 하나를 8개 스위치로 분산(fan-out) → <b>64x 스케일(8K → 512K Rubin GPU)</b>, 스위치 수 1.7x 감소, 내결함성 개선. <b>BlueField-4</b>는 Vera-Rubin 표준 인프라 프로세서로, 800G Ethernet / 플랫폼 aggregate 대역폭 7Tbps (네트워킹·보안·스토리지).</li>
+        <li><b>Broadcom Thor Ultra 800G NIC</b>: 최대 8-plane multipathing, 강화된 RoCE, 프로그래머블 혼잡 제어, <b>~96%+ line-rate collective 대역폭</b> 시연. NVDA 수직통합 fabric vs 개방형 Ethernet 솔루션 간 경쟁 지속.</li>
+      </ul>
+
+      <h3 class="sec" id="s-table"><span class="n">10</span>GPU vs 커스텀 ASIC 하드웨어 스펙 비교</h3>
+      <div class="chart-card">
+        <div class="ct">패키지당 FP8 TFLOPS</div>
+        <div class="legend">
+          <span><i style="background:var(--brand)"></i>머천트 GPU</span>
+          <span><i style="background:var(--accent)"></i>커스텀 ASIC</span>
+        </div>
+        <svg viewBox="0 0 880 320" width="100%" role="img" aria-label="패키지당 FP8 TFLOPS 비교">
+          <line x1="70" y1="270" x2="850" y2="270" stroke="#cfd6e0"/>
+          <line x1="70" y1="212.5" x2="850" y2="212.5" stroke="#eef1f5"/>
+          <line x1="70" y1="155" x2="850" y2="155" stroke="#eef1f5"/>
+          <line x1="70" y1="97.5" x2="850" y2="97.5" stroke="#eef1f5"/>
+          <line x1="70" y1="40" x2="850" y2="40" stroke="#eef1f5"/>
+          <text x="62" y="274" font-size="11" fill="#9aa3b2" text-anchor="end">0</text>
+          <text x="62" y="216" font-size="11" fill="#9aa3b2" text-anchor="end">8,000</text>
+          <text x="62" y="159" font-size="11" fill="#9aa3b2" text-anchor="end">16,000</text>
+          <text x="62" y="101" font-size="11" fill="#9aa3b2" text-anchor="end">24,000</text>
+          <text x="62" y="44" font-size="11" fill="#9aa3b2" text-anchor="end">32,000</text>
+
+          <rect x="85" y="155" width="56" height="115" fill="var(--brand)" rx="2"/>
+          <text x="113" y="149" font-size="11" fill="#1b1e24" text-anchor="middle" font-weight="700">16,000</text>
+          <text x="113" y="290" font-size="11" fill="#525866" text-anchor="middle">VR200</text>
+
+          <rect x="171.7" y="40" width="56" height="230" fill="var(--brand)" rx="2"/>
+          <text x="199.7" y="34" font-size="11" fill="#1b1e24" text-anchor="middle" font-weight="700">32,000</text>
+          <text x="199.7" y="290" font-size="11" fill="#525866" text-anchor="middle">VR300</text>
+
+          <rect x="258.4" y="126.2" width="56" height="143.8" fill="var(--brand)" rx="2"/>
+          <text x="286.4" y="120" font-size="11" fill="#1b1e24" text-anchor="middle" font-weight="700">20,000</text>
+          <text x="286.4" y="290" font-size="11" fill="#525866" text-anchor="middle">MI450</text>
+
+          <rect x="345.1" y="251.9" width="56" height="18.1" fill="var(--accent)" rx="2"/>
+          <text x="373.1" y="246" font-size="11" fill="#1b1e24" text-anchor="middle" font-weight="700">2,517</text>
+          <text x="373.1" y="290" font-size="11" fill="#525866" text-anchor="middle">Trainium3</text>
+
+          <rect x="431.8" y="236.3" width="56" height="33.7" fill="var(--accent)" rx="2"/>
+          <text x="459.8" y="230" font-size="11" fill="#1b1e24" text-anchor="middle" font-weight="700">4,688</text>
+          <text x="459.8" y="290" font-size="11" fill="#525866" text-anchor="middle">TPU v7</text>
+
+          <rect x="518.5" y="224.7" width="56" height="45.3" fill="var(--accent)" rx="2"/>
+          <text x="546.5" y="219" font-size="11" fill="#1b1e24" text-anchor="middle" font-weight="700">6,302</text>
+          <text x="546.5" y="290" font-size="11" fill="#525866" text-anchor="middle">TPU v8t</text>
+
+          <rect x="605.2" y="197.6" width="56" height="72.4" fill="var(--accent)" rx="2"/>
+          <text x="633.2" y="192" font-size="11" fill="#1b1e24" text-anchor="middle" font-weight="700">10,069</text>
+          <text x="633.2" y="290" font-size="11" fill="#525866" text-anchor="middle">TPU v8i</text>
+
+          <rect x="691.9" y="233.5" width="56" height="36.5" fill="var(--accent)" rx="2"/>
+          <text x="719.9" y="228" font-size="11" fill="#1b1e24" text-anchor="middle" font-weight="700">5,072</text>
+          <text x="719.9" y="290" font-size="11" fill="#525866" text-anchor="middle">Maia 200</text>
+
+          <rect x="778.6" y="262" width="56" height="8" fill="var(--accent)" rx="2"/>
+          <text x="806.6" y="256" font-size="11" fill="#1b1e24" text-anchor="middle" font-weight="700">1,120</text>
+          <text x="806.6" y="290" font-size="11" fill="#525866" text-anchor="middle">MTIA 300</text>
+        </svg>
+        <div class="chart-src">Source: Press reports</div>
+      </div>
+
+      <div class="chart-card">
+        <div class="ct">패키지당 HBM 용량 (GB)</div>
+        <div class="legend">
+          <span><i style="background:var(--brand)"></i>머천트 GPU</span>
+          <span><i style="background:var(--accent)"></i>커스텀 ASIC</span>
+        </div>
+        <svg viewBox="0 0 880 320" width="100%" role="img" aria-label="패키지당 HBM 용량 비교">
+          <line x1="70" y1="270" x2="850" y2="270" stroke="#cfd6e0"/>
+          <line x1="70" y1="212.5" x2="850" y2="212.5" stroke="#eef1f5"/>
+          <line x1="70" y1="155" x2="850" y2="155" stroke="#eef1f5"/>
+          <line x1="70" y1="97.5" x2="850" y2="97.5" stroke="#eef1f5"/>
+          <line x1="70" y1="40" x2="850" y2="40" stroke="#eef1f5"/>
+          <text x="62" y="274" font-size="11" fill="#9aa3b2" text-anchor="end">0</text>
+          <text x="62" y="216" font-size="11" fill="#9aa3b2" text-anchor="end">108</text>
+          <text x="62" y="159" font-size="11" fill="#9aa3b2" text-anchor="end">216</text>
+          <text x="62" y="101" font-size="11" fill="#9aa3b2" text-anchor="end">324</text>
+          <text x="62" y="44" font-size="11" fill="#9aa3b2" text-anchor="end">432</text>
+
+          <rect x="82" y="116.7" width="46" height="153.3" fill="var(--brand)" rx="2"/>
+          <text x="105" y="111" font-size="11" fill="#1b1e24" text-anchor="middle" font-weight="700">288</text>
+          <text x="105" y="290" font-size="10.5" fill="#525866" text-anchor="middle">VR200</text>
+
+          <rect x="152.9" y="65.6" width="46" height="204.4" fill="var(--brand)" rx="2"/>
+          <text x="175.9" y="60" font-size="11" fill="#1b1e24" text-anchor="middle" font-weight="700">384</text>
+          <text x="175.9" y="290" font-size="10.5" fill="#525866" text-anchor="middle">VR300</text>
+
+          <rect x="223.8" y="40" width="46" height="230" fill="var(--brand)" rx="2"/>
+          <text x="246.8" y="34" font-size="11" fill="#1b1e24" text-anchor="middle" font-weight="700">432</text>
+          <text x="246.8" y="290" font-size="10.5" fill="#525866" text-anchor="middle">MI450</text>
+
+          <rect x="294.7" y="193.3" width="46" height="76.7" fill="var(--accent)" rx="2"/>
+          <text x="317.7" y="187" font-size="11" fill="#1b1e24" text-anchor="middle" font-weight="700">144</text>
+          <text x="317.7" y="290" font-size="10.5" fill="#525866" text-anchor="middle">Trainium3</text>
+
+          <rect x="365.6" y="167.8" width="46" height="102.2" fill="var(--accent)" rx="2"/>
+          <text x="388.6" y="162" font-size="11" fill="#1b1e24" text-anchor="middle" font-weight="700">192</text>
+          <text x="388.6" y="290" font-size="10.5" fill="#525866" text-anchor="middle">TPU v7</text>
+
+          <rect x="436.5" y="155" width="46" height="115" fill="var(--accent)" rx="2"/>
+          <text x="459.5" y="149" font-size="11" fill="#1b1e24" text-anchor="middle" font-weight="700">216</text>
+          <text x="459.5" y="290" font-size="10.5" fill="#525866" text-anchor="middle">TPU v8t</text>
+
+          <rect x="507.4" y="116.7" width="46" height="153.3" fill="var(--accent)" rx="2"/>
+          <text x="530.4" y="111" font-size="11" fill="#1b1e24" text-anchor="middle" font-weight="700">288</text>
+          <text x="530.4" y="290" font-size="10.5" fill="#525866" text-anchor="middle">TPU v8i</text>
+
+          <rect x="578.3" y="116.7" width="46" height="153.3" fill="var(--accent)" rx="2"/>
+          <text x="601.3" y="111" font-size="11" fill="#1b1e24" text-anchor="middle" font-weight="700">288</text>
+          <text x="601.3" y="290" font-size="10.5" fill="#525866" text-anchor="middle">Maia 200</text>
+
+          <rect x="649.2" y="116.7" width="46" height="153.3" fill="var(--accent)" rx="2"/>
+          <text x="672.2" y="111" font-size="11" fill="#1b1e24" text-anchor="middle" font-weight="700">288</text>
+          <text x="672.2" y="290" font-size="10.5" fill="#525866" text-anchor="middle">Maia 300</text>
+
+          <rect x="720.1" y="167.8" width="46" height="102.2" fill="var(--accent)" rx="2"/>
+          <text x="743.1" y="162" font-size="11" fill="#1b1e24" text-anchor="middle" font-weight="700">192</text>
+          <text x="743.1" y="290" font-size="10.5" fill="#525866" text-anchor="middle">MTIA 300</text>
+
+          <rect x="791" y="40" width="46" height="230" fill="var(--accent)" rx="2"/>
+          <text x="814" y="34" font-size="11" fill="#1b1e24" text-anchor="middle" font-weight="700">432</text>
+          <text x="814" y="290" font-size="10.5" fill="#525866" text-anchor="middle">MTIA 400</text>
+        </svg>
+        <div class="chart-src">Source: Press reports</div>
+      </div>
+
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th></th>
+            <th class="grp" colspan="2">NVDA</th>
+            <th class="grp">AMD</th>
+            <th class="grp">AMZN</th>
+            <th class="grp" colspan="3">GOOGL</th>
+            <th class="grp" colspan="2">MSFT</th>
+            <th class="grp" colspan="2">META</th>
+          </tr>
+          <tr>
+            <th>HW Specifications</th><th>VR200</th><th>VR300</th><th>MI450</th><th>Trainium3</th><th>TPU v7</th><th>TPU v8t</th><th>TPU v8i</th><th>Maia 200</th><th>Maia 300</th><th>MTIA 300</th><th>MTIA 400</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><b>IC Partner</b></td><td>-</td><td>-</td><td>-</td><td>Alchip, MRVL</td><td>Broadcom</td><td>MediaTek</td><td>Broadcom</td><td>GUC</td><td>MRVL</td><td>Broadcom</td><td>Broadcom</td></tr>
+          <tr><td><b>Ramp Year</b></td><td class="num">2026</td><td class="num">2027</td><td class="num">2026</td><td class="num">2026</td><td class="num">2026</td><td class="num">2027</td><td class="num">2027</td><td class="num">2026</td><td class="num">2026+</td><td class="num">2025</td><td class="num">2026+</td></tr>
+          <tr><td><b>Front-End Foundry</b></td><td>TSMC</td><td>TSMC</td><td>TSMC</td><td>TSMC</td><td>TSMC</td><td>TSMC</td><td>TSMC</td><td>TSMC</td><td>TSMC</td><td>TSMC</td><td>TSMC</td></tr>
+          <tr><td><b>Foundry Node</b></td><td>N3</td><td>N3P</td><td>N2</td><td>N3P</td><td>N3</td><td>N3</td><td>N3</td><td>N3</td><td>N2</td><td>N3</td><td>N2</td></tr>
+          <tr><td><b>Die Size (mm²)</b></td><td class="num">1,628</td><td class="num">1,628</td><td class="num">840</td><td class="num">1,600</td><td class="num">750</td><td class="num">800</td><td class="num">1,600</td><td class="num">820</td><td class="num">-</td><td class="num">-</td><td class="num">-</td></tr>
+          <tr><td><b>Dies per GPU/XPU</b></td><td class="num">2</td><td class="num">2</td><td class="num">1</td><td class="num">2</td><td class="num">1</td><td class="num">1</td><td class="num">2</td><td class="num">1</td><td class="num">-</td><td class="num">-</td><td class="num">-</td></tr>
+          <tr><td><b>Dies per Rack</b></td><td class="num">72</td><td class="num">144</td><td class="num">72</td><td class="num">64</td><td class="num">64</td><td class="num">64</td><td class="num">64</td><td class="num">-</td><td class="num">-</td><td class="num">-</td><td class="num">-</td></tr>
+          <tr><td><b>CoWoS Type</b></td><td>CoWoS-L</td><td>CoWoS-L</td><td>CoWoS-L</td><td>CoWoS-R</td><td>CoWoS-L</td><td>CoWoS-L</td><td>CoWoS-L</td><td>CoWoS-L</td><td>CoWoS-L</td><td>-</td><td>-</td></tr>
+          <tr><td><b>HBM Type</b></td><td>HBM4</td><td>HBM4</td><td>HBM4</td><td>HBM3E</td><td>HBM3E</td><td>HBM3E</td><td>HBM3E</td><td>HBM3E</td><td>HBM4</td><td>HBM3E</td><td>HBM4</td></tr>
+          <tr><td><b>HBM Capacity (GB)</b></td><td class="num">288</td><td class="num">384</td><td class="num">432</td><td class="num">144</td><td class="num">192</td><td class="num">216</td><td class="num">288</td><td class="num">288</td><td class="num">288</td><td class="num">192</td><td class="num">432</td></tr>
+          <tr class="hl"><td>FP8 TFLOPS per Package</td><td class="num">16,000</td><td class="num">32,000</td><td class="num">20,000</td><td class="num">2,517</td><td class="num">4,688</td><td class="num">6,302</td><td class="num">10,069</td><td class="num">5,072</td><td class="num">-</td><td class="num">1,120</td><td class="num">-</td></tr>
+          <tr class="hl"><td>Power per Die (W)</td><td class="num">1,150</td><td class="num">1,200</td><td class="num">2,500</td><td class="num">700</td><td class="num">550</td><td class="num">800</td><td class="num">600</td><td class="num">750</td><td class="num">667</td><td class="num">-</td><td class="num">-</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-src">Source: Press reports</div>
+      <div class="callout"><span class="t">읽는 법</span>FP8 TFLOPS 기준 머천트 GPU(VR200/VR300/MI450)는 커스텀 ASIC 대비 여전히 2~10배 이상 앞서 있으나, HBM 용량에서는 MTIA 400(432GB)·MI450(432GB)·VR300(384GB)이 최상단에 있고 TPU v8i·Maia 200/300도 288GB로 VR200과 동급 — 메모리 용량 경쟁이 컴퓨트 경쟁보다 훨씬 평준화되어 있음을 시사.</div>
+
+      <h3 class="sec"><span class="n alert">!</span>리스크 & 모니터링 포인트</h3>
+      <div class="risk-box">
+        <h4>Valuation & Key Risks</h4>
+        <ul>
+          <li><b>밸류에이션 방법:</b> 본 리포트 커버리지 기업들은 P/E, EV/FCF 등 다양한 밸류에이션 기법으로 평가.</li>
+          <li><b>거시 리스크:</b> 경기 하강, 국제 무역 교란.</li>
+          <li><b>기술·산업구조 리스크:</b> 신기술 발명에 따른 기술적 파괴, 또는 비즈니스 모델 혁신에 따른 산업 구조 변화 — unit 판매량·ASP·매출의 향후 경로를 바꿀 수 있음.</li>
+        </ul>
+        <h4 style="margin-top:14px;">모니터링 포인트</h4>
+        <ul>
+          <li><b>ASIC 타임라인 가속:</b> Jalapeño의 9개월 RTL 사례가 NVDA 하드웨어 로드맵에 가하는 압박 — 후속 프론티어 모델 벤더의 커스텀 ASIC 착수 여부.</li>
+          <li><b>ROCm 성숙도:</b> AMD 점유율 확대의 실질 변수. Hyperloom·AI 코딩 에이전트 통합의 프로덕션 도입 사례.</li>
+          <li><b>INTC Crescent Island:</b> 2H26 출시 전 FLOPS·메모리 대역폭 공개 여부.</li>
+          <li><b>메모리 대역폭 병목 대응:</b> HBM4 램프, 3D-DRAM(d-Matrix Raptor, Cerebras CS-6 ~2028), LPDDR5X-PIM, CXL pooling 등 대안 tier의 실제 도입 속도.</li>
+          <li><b>훈련/추론 실리콘 분리:</b> GOOGL TPU 8i/8t 사례가 다른 하이퍼스케일러로 확산될지 — AVGO·MRVL 등 ASIC 파트너 물량에 직결.</li>
+          <li><b>네트워킹 경쟁:</b> NVDA Spectrum-X/BlueField-4 수직통합 vs Broadcom Thor Ultra 개방형 Ethernet 간 하이퍼스케일러 선택.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div>본 문서는 투자 권유를 목적으로 하지 않습니다.</div>
+  </footer>
+
+</div>
+</body>
+</html>
