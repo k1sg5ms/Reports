@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>US Weekly Prospects — 잭슨홀·이익 급증·주택 개보수·글로벌 데이터</title>
+<style>
+  :root{
+    --brand:#0a2240;
+    --brand-deep:#06182e;
+    --accent:#5c1a26;
+    --accent2:#4a6a8f;
+    --paper:#f4f6f9;
+    --card:#ffffff;
+    --ink:#1b1e24;
+    --ink-soft:#525866;
+    --line:#dde3ec;
+    --buy:#1f7a4d;
+    --bear:#c0392b;
+    --bull:#1f6fb2;
+    --warn:#8a4b15;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);font-family:'Helvetica Neue','Pretendard','Noto Sans KR',Arial,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+  .topbar{background:var(--brand-deep);color:#fff;padding:14px 6vw;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-bottom:3px solid var(--accent);position:sticky;top:0;z-index:50;}
+  .topbar .logo{font-weight:700;font-size:18px;letter-spacing:0.5px;}
+  .topbar .logo span{color:#c98a95;}
+  .topbar nav{display:flex;gap:8px;flex-wrap:wrap;}
+  .topbar nav a{color:#cfd8e6;text-decoration:none;font-size:12.5px;padding:6px 12px;border:1px solid rgba(255,255,255,0.2);border-radius:20px;transition:all .15s;}
+  .topbar nav a:hover{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .wrap{max-width:960px;margin:0 auto;padding:40px 6vw 90px;}
+  .intro{border-left:4px solid var(--accent);padding:8px 0 8px 20px;margin-bottom:48px;}
+  .intro .eyebrow{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent2);font-weight:700;}
+  .intro h1{font-size:26px;margin:8px 0 6px;color:var(--brand);}
+  .report{margin-bottom:64px;scroll-margin-top:70px;}
+  .report-head{background:linear-gradient(135deg,var(--brand) 0%, var(--brand-deep) 100%);color:#fff;border-radius:10px 10px 0 0;padding:28px 30px;}
+  .report-head .tag{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#9fb4d4;font-weight:700;}
+  .report-head h2{margin:8px 0 14px;font-size:23px;line-height:1.35;}
+  .report-head .lede{font-family:'Georgia',serif;font-size:15.5px;color:#e3ebf6;border-top:1px solid rgba(255,255,255,0.16);padding-top:14px;margin:0;}
+  .report-body{background:var(--card);border:1px solid var(--line);border-top:none;border-radius:0 0 10px 10px;padding:30px;}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px;}
+  .chip{border:1px solid var(--line);border-radius:8px;padding:10px 16px;background:#fafbfd;flex:1;min-width:130px;}
+  .chip .k{font-size:10.5px;letter-spacing:0.5px;text-transform:uppercase;color:var(--ink-soft);}
+  .chip .v{font-size:19px;font-weight:700;color:var(--brand);margin-top:2px;}
+  .chip .v.buy{color:var(--buy);}
+  .chip .v.sell{color:var(--bear);}
+  .chip .s{font-size:11px;color:var(--ink-soft);}
+  h3.sec{font-size:17px;color:var(--brand);margin:30px 0 12px;padding-bottom:8px;border-bottom:1.5px solid var(--line);display:flex;align-items:center;gap:10px;}
+  h3.sec .n{background:var(--brand);color:#fff;font-size:12px;font-weight:700;width:24px;height:24px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}
+  ul.pts{margin:0;padding:0;list-style:none;}
+  ul.pts li{position:relative;padding:7px 0 7px 20px;font-size:14.5px;border-bottom:1px dashed var(--line);}
+  ul.pts li:last-child{border-bottom:none;}
+  ul.pts li::before{content:"—";position:absolute;left:0;color:var(--accent2);font-weight:700;}
+  ul.pts b{color:var(--brand);}
+  table.tbl{width:100%;border-collapse:collapse;font-size:13px;margin:6px 0 4px;}
+  table.tbl th{background:var(--brand);color:#fff;text-align:left;padding:8px 10px;font-weight:600;}
+  table.tbl th.num{text-align:right;}
+  table.tbl td{padding:7px 10px;border-bottom:1px solid var(--line);}
+  table.tbl tr:nth-child(even) td{background:#f7f9fc;}
+  table.tbl td.num{text-align:right;font-variant-numeric:tabular-nums;}
+  table.tbl td.hi{color:var(--accent);font-weight:700;}
+  table.tbl tr.grp td{background:#eef2f7;font-weight:700;color:var(--brand);}
+  table.tbl td.sub{padding-left:22px;color:var(--ink-soft);}
+  .tbl-wrap{overflow-x:auto;}
+  .tbl-note{font-size:10.5px;color:#9aa3b2;margin-top:6px;}
+  .chart-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:22px 22px 14px;margin:14px 0;}
+  .chart-card .ct{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:12px;}
+  .chart-src{font-size:10.5px;color:#9aa3b2;margin-top:8px;}
+  .legend{display:flex;gap:18px;font-size:11.5px;color:var(--ink-soft);margin-bottom:4px;}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .legend i{width:11px;height:11px;border-radius:2px;display:inline-block;}
+  .callout{background:#fbf6ec;border:1px solid #e8dcc3;border-radius:8px;padding:14px 18px;font-size:13px;color:var(--ink-soft);margin-top:14px;}
+  .callout .t{font-size:10.5px;font-weight:700;letter-spacing:0.6px;color:var(--warn);text-transform:uppercase;display:block;margin-bottom:5px;}
+  .risk-box{background:var(--brand);color:#dde6f3;border-radius:8px;padding:22px 24px;margin-top:14px;}
+  .risk-box h4{margin:0 0 10px;color:#fff;font-size:14.5px;}
+  .risk-box ul{margin:0;padding-left:18px;}
+  .risk-box li{margin-bottom:8px;font-size:13px;}
+  .risk-box li b{color:#fff;}
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media(max-width:680px){.twocol{grid-template-columns:1fr;}}
+  .quote{border-left:3px solid var(--accent);background:#fafbfd;padding:10px 16px;margin:10px 0;font-size:13.5px;color:var(--ink-soft);font-family:'Georgia',serif;}
+  footer{border-top:1px solid var(--line);margin-top:50px;padding-top:20px;font-size:11px;color:#9aa3b2;line-height:1.6;}
+  @media(max-width:560px){.intro h1{font-size:21px;}.report-head h2{font-size:19px;}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">Research<span>·</span>Digest</div>
+  <nav>
+    <a href="#rpt1">Fed·US 경기</a>
+    <a href="#rpt2">이익 급증</a>
+    <a href="#rpt3">주택 개보수</a>
+    <a href="#rpt4">Global</a>
+    <a href="#rpt5">다음주 지표</a>
+    <a href="#rpt6">전망 테이블</a>
+  </nav>
+</div>
+
+<div class="wrap">
+
+  <div class="intro">
+    <div class="eyebrow">28 August 2026</div>
+    <h1>US Weekly Prospects — 잭슨홀 이후 Fed 경로, 이익 급증의 파급, 주택 개보수 부진, 글로벌 수요 재조정</h1>
+  </div>
+
+  <!-- ============================== RPT1 ============================== -->
+  <section class="report" id="rpt1">
+    <div class="report-head">
+      <div class="tag">US Economics · Weekly</div>
+      <h2>Warsh 잭슨홀 연설은 온건 매파적 — 12월 인상 전망 유지하되 9월도 live, 3Q GDP 추정치 2.5%→2.75% 상향</h2>
+      <p class="lede">연설 직후 시장의 9월 인상 확률은 36%→60%로 재가격. 2Q 기업이익 급증과 견조한 3Q 초반 지표가 성장 상향을 뒷받침하며, 다음주 8월 고용은 +50k·실업률 4.1%를 예상.</p>
+    </div>
+    <div class="report-body">
+
+      <div class="chips">
+        <div class="chip"><div class="k">3Q26 GDP Tracking</div><div class="v">2.75%</div><div class="s">↑ from 2.50% (saar)</div></div>
+        <div class="chip"><div class="k">9월 인상 확률 (시장)</div><div class="v">60%</div><div class="s">전일 36% → 연설 후 60%</div></div>
+        <div class="chip"><div class="k">Fed 기본 전망</div><div class="v">12월 인상</div><div class="s">9월 회의는 live</div></div>
+        <div class="chip"><div class="k">8월 NFP 예상</div><div class="v">+50k</div><div class="s">실업률 4.1% 유지</div></div>
+        <div class="chip"><div class="k">2Q 세전 기업이익</div><div class="v">+41%</div><div class="s">q/q saar · 전년비 +23%</div></div>
+      </div>
+
+      <h3 class="sec"><span class="n">1</span>잭슨홀: 두 가지 메시지 — 노동시장은 완전고용, 인플레이션은 "더 우려"</h3>
+      <ul class="pts">
+        <li>Warsh 의장은 이번에도 forward guidance를 거부했으나, 경제 현황과 반응함수에 대해 지금까지 중 가장 구체적으로 설명. 7월 기자회견에서 흔들렸던 <b>2% PCE 목표를 "확고한 고정 목표"로 재확인</b>.</li>
+        <li><b>노동시장</b>: "고용 측면에서 우리나라는 잘 하고 있다", "노동시장은 완전고용과 일치한다"고 평가. 낮은 이직률·낮은 고용 증가·청년 대졸자 등 우려 요인은 심각하지 않거나 총량 지표의 양호함이 더 중요하다고 정리.</li>
+        <li><b>인플레이션</b>: "숫자가 더 우려스럽다(more concerning)", 최근 둔화가 "기저 추세가 실질적으로 개선됐다는 것을 말해주지 않는다". 기저 인플레이션이 충분한 속도로 목표에 복귀하지 못하면 <b>"할 일이 있다(we have work to do)"</b>.</li>
+        <li>정책수단: <b>"단기금리가 이중책무 달성의 지배적 수단"</b>이라고 명시 — 7월 대비 긴축 수단에 대한 입장이 명확해짐. 금융여건은 "광범위하게 제약적이지 않다"고 평가한 점이 서프라이즈.</li>
+        <li>기저 인플레이션 지표로 <b>inflation breadth(확산도)</b>를 언급 (Waller 이사도 최근 강조). Trimmed-mean PCE와 달리 <b>12개월 상승률 3% 초과 PCE 구성항목 비중은 GFC 이전 정상 수준을 크게 상회</b> — 기회주의적으로 고른 지표라는 비판에서 자유로움.</li>
+        <li>Taylor rule 같은 명시적 반응함수 제시는 어렵다고 발언. 다만 이중책무 대비 성과를 서술하고 이를 정책 행동에 연결한 방식은 합리적이라는 평가.</li>
+        <li>종합: 시점과 무관하게 <b>인플레이션 우려를 실제 긴축으로 옮길 의지가 더 커진 의장</b>. 위원회 역학상 Warsh의 인내 요구는 매파 다수를 막지 못하겠지만, 그의 인상 옹호는 9월 인상을 성사시키기에 충분.</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">2</span>9월 FOMC까지의 경로 — 고용 1회, CPI 1회</h3>
+      <ul class="pts">
+        <li>다음주 8월 고용: <b>NFP +50k, 실업률 4.1%</b> 예상. 여름 고용 하방 서프라이즈 가능성은 있으나, 실업률 추세만으로도 FOMC 위원들이 노동시장을 우호적으로 볼 근거는 충분.</li>
+        <li>따라서 초점은 <b>8월 CPI(9/11)</b>로 이동. 헤드라인 <b>0.2% m/m 초반대</b>면 당분간 동결 유지에 충분하나, close call.</li>
+        <li>기본 전망은 <b>12월 인상</b> 유지. 단, 8월 CPI·PPI가 firm하면 9월 인상을 likely로 봐야 한다는 입장. Core PCE가 3% 근방을 유지하고 실업률이 안정적이면 긴축이 온다는 시각 강화.</li>
+        <li>금리 전망(기간 말): Fed funds 상단 3.75%(3Q26) → <b>4.00%(4Q26~4Q27)</b>. 10yr Treasury 4.72%(8/28) → 4.80%(3Q26) → 4.85%(4Q26 이후).</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">3</span>이익의 힘 — 5년 내 최고 분기, 후기 사이클 마진 압박 부재</h3>
+      <ul class="pts">
+        <li>2Q 세전 기업이익 <b>+41% q/q saar, +23% 전년비</b>. 5년 내 최고 분기이며, 경기침체 직후 반등기를 제외하면 20년 이상 만에 최고의 4분기 변화율. 이미 높던 마진이 역사적 고점 수준으로 재상승.</li>
+        <li>확장기 이익-고용 연결은 다소 느슨하지만, <b>완만한 인건비와 동반된 강한 수익성은 향후 분기 고용 확대 여력</b>을 제공. 최소한 임금 상승으로 인한 후기 사이클 마진 압박과는 정반대 경로.</li>
+        <li>단서: 이익 증가의 최대 원천은 <b>테크 섹터인데, 이 섹터는 여전히 고용을 줄이는 중</b>. AI 투자가 인력 절감에 쓰일 가능성도 있으나 AI로 인한 총실업의 유의미한 단기 상승은 예상하지 않음.</li>
+        <li>단위노동비용은 2Q까지 1년간 <b>+1.4% 전년비</b>에 불과 — 기업이 인플레이션 압력 없이 임금을 올릴 여지 존재.</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">4</span>활동 지표 — 소비·설비투자 견조, 주택만 부진</h3>
+      <ul class="pts">
+        <li>7월 PCE: 실질 소비지출 보합(예상 부합). 자동차 판매 감소와 온라인 세일 이벤트의 7월→6월 이동이 영향. 그러나 <b>8월 카드 지출 데이터가 강해</b> 3Q 실질 PCE 전망을 기존 1.75%에서 <b>2.75%로 1%p 상향</b>.</li>
+        <li>3Q GDP tracking <b>2.50%→2.75%</b> 상향 — 7월 PMI가 시사하는 3%에 근접. 민간 국내 최종수요는 또 한 번 견조한 분기 예상.</li>
+        <li>설비투자: 7월 core capital goods 주문 증가세는 둔화했으나 앞선 대폭 증가 이후이며 <b>출하는 계속 랠리</b>. 테크 투자는 주로 순수출에 반영되는데 자본재 무역적자가 크게 확대 — 긍정적 신호. 설비투자 다시 <b>10% 이상 증가</b> 예상, 지난 분기 나타난 투자 확산(broadening)이 지속되는지 주목.</li>
+        <li>주택: 7월 신규 단독주택 판매 <b>-10% m/m</b>, 6m/6m 기준 <b>-13% saar</b>. 고금리와 높은 신규주택 재고가 건설을 계속 억제. 주택거래 부진이 개보수 지출 감소로 이어져 내구재 소비의 pre-COVID 비중 회귀에 일조 (→ rpt3 참조).</li>
+        <li>낮은 실업수당 청구 수준은 <b>내년 실업률이 전망치 4.0% 아래로 내려갈 가능성</b>을 시사.</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">5</span>기타 점검 사항 — 미·캐나다 무역협상 결렬, 고용 벤치마크 예비치</h3>
+      <ul class="pts">
+        <li>지난 금요일 <b>미·캐나다 무역협상 결렬</b> → 캐나다산 대미 수입의 약 5%에 <b>50% 관세</b> 발효. 글로벌 관세율은 약 0.2%p 상승에 그쳐 미국 경제에 대한 직접 영향은 작음.</li>
+        <li>그러나 행정부가 <b>새 법적 권한(Section 338)</b>을 시험하고 USMCA 준수 품목에도 관세를 부과하기 시작했다는 점이 중요 — 둘 다 법적 도전 가능성. 신규 협상 일정 없음, 관세 지속 기간 불투명. <b>캐나다 보복관세 9/8 발효</b> 예정, 미국은 추가 확전 위협.</li>
+        <li>BLS <b>2026 고용 벤치마크 예비치</b>: 2026년 3월 고용 수준 <b>-79k(민간 -178k)</b> 하향. 내년 초 확정 전 기초 데이터 상향 조정 가능성이 높아 소폭 플러스 수정 예상. 요지는 2년간의 대규모 하향 이후 올해 벤치마크는 <b>어느 방향으로도 큰 수정을 낳지 않을 것</b>.</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">!</span>리스크 &amp; 모니터링 포인트</h3>
+      <div class="risk-box">
+        <h4>Fed 경로 관련 핵심 변수</h4>
+        <ul>
+          <li><b>8월 CPI (9/11)·PPI (9/10):</b> 헤드라인 0.2% m/m 초반이면 동결 유지 가능, firm하면 9월 인상 likely. 이번 사이클에서 가장 중요한 단일 데이터.</li>
+          <li><b>8월 고용 (9/4):</b> +50k·4.1% 기본 시나리오. 여름 계절성·TPS 종료·지방정부 교육 고용 등으로 하방 서프라이즈 여지가 있으나, 실업률만 안정적이면 Fed 판단에는 큰 영향 없음.</li>
+          <li><b>Inflation breadth:</b> Warsh가 새로 채택한 기저 인플레이션 지표. 12개월 3% 초과 PCE 항목 비중이 GFC 이전 수준으로 내려오는지가 긴축 강도의 잣대.</li>
+          <li><b>미·캐나다 관세 확전:</b> 9/8 캐나다 보복관세, Section 338 법적 도전, USMCA 준수 품목 관세 확대 여부. 자동차 업계 비용 ~1% 상승 추정.</li>
+          <li><b>이익→고용 전이:</b> 이익 급증이 실제 고용 회복으로 이어지는지 (테크 고용 감소 지속 여부, 고용의도 서베이).</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== RPT2 ============================== -->
+  <section class="report" id="rpt2">
+    <div class="report-head">
+      <div class="tag">US Focus · Corporate Profits &amp; Labor</div>
+      <h2>이익 급증의 효과 — 마진 주도의 2000년대 중반 이후 최강 이익 사이클, 고용 회복의 발판이 될까</h2>
+      <p class="lede">NIPA 세전 기업이익은 2Q +41% 연율, 1년간 +23%. 후기 사이클의 전형적 마진 압박이 나타나지 않아 고용·임금 확대 여력이 있으나, 이익 증가의 절반 이상이 고용을 줄이는 테크에서 나온다는 점이 전이의 걸림돌.</p>
+    </div>
+    <div class="report-body">
+
+      <div class="chips">
+        <div class="chip"><div class="k">2Q NIPA 세전 이익</div><div class="v">+41%</div><div class="s">연율 · 1년 +23%</div></div>
+        <div class="chip"><div class="k">기업 부가가치 증가</div><div class="v">+8%</div><div class="s">전년비 — 이익 증가율의 1/3</div></div>
+        <div class="chip"><div class="k">마진 변화 (1년)</div><div class="v">+250bp</div><div class="s">세전이익/부가가치, 사상 최고 근접</div></div>
+        <div class="chip"><div class="k">S&amp;P 500 순이익 중 테크 비중</div><div class="v">58%</div><div class="s">2Q26 vs 2Q25 증가분 기준</div></div>
+        <div class="chip"><div class="k">실업률 전망 하한</div><div class="v">4.0%</div><div class="s">하회 리스크 확대</div></div>
+      </div>
+
+      <h3 class="sec"><span class="n">1</span>이익 증가의 원천 — 마진</h3>
+      <ul class="pts">
+        <li>기업이익은 ① GDP 성장 가속, ② 경제 내 기업 부문 비중 확대, ③ 마진 상승으로 늘어남. 이번엔 <b>마진이 핵심 동인</b>: 국내 이익 +23% 전년비는 기업 부가가치 증가 +8%를 크게 상회.</li>
+        <li>세전이익/부가가치 마진은 지난 1년 <b>약 250bp 상승</b>해 사상 최고에 근접, 반면 <b>노동소득분배율은 신저점</b> 경신.</li>
+        <li>경기침체 직후 반등기를 제외하면 <b>2000년대 중반 이후 가장 강한 1년</b>. 1980년대 중반 이후 확장기의 이익-고용 관계는 느슨하고, 약한 인구 증가가 과거 사이클 대비 절대 고용 증가를 계속 억제할 수 있음.</li>
+        <li>핵심 포인트: 이미 낮은 실업률에도 <b>임금 상승에 따른 전형적 후기 사이클 이익 압박이 나타나지 않고 있음</b> → 기업의 고용·임금 확대 runway → 실업률 저수준 유지 전망을 지지. 연속 실업수당 청구 등 최근 추세를 감안하면 <b>실업률이 4.0% 하한 아래로 내려갈 리스크 증가</b>.</li>
+        <li>2Q 이익 개선은 IEEPA 관세 환급과 무관 (NIPA 이익에 영향 없음). IEEPA 이후 낮아진 관세의 기여도 미미: 연율 이익 <b>+$400bn q/q</b> 대비 세전이익에서 차감되는 관세(IEEPA 환급 제외)는 <b>-$20bn</b>에 불과.</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">2</span>이익과 고용 사이의 슬리피지 — 테크 집중</h3>
+      <ul class="pts">
+        <li>2Q 산업별 NIPA 분해는 미공개이므로 <b>S&amp;P 500 순이익</b>으로 대체 관찰. 지난 1년 이익 증가의 <b>절반 이상이 테크·커뮤니케이션 서비스</b>에서 발생.</li>
+        <li>테크는 2022년 말 이후 <b>꾸준히 고용을 감소</b>시켜 왔고 pre-COVID 추세를 크게 하회 — 실적은 지속적으로 높은데도. AI발 고용 붕괴를 크게 우려하진 않지만, 이 부문 이익 증가의 일부는 <b>타 부문 노동 절감을 전제</b>로 한 측면.</li>
+      </ul>
+
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>S&amp;P 500 순이익 변화 ($bn)</th><th class="num">2Q26 - 1Q26</th><th class="num">2Q26 - 2Q25</th><th class="num">2Q26 (12m) - 2Q25 (12m)</th></tr></thead>
+        <tbody>
+          <tr><td>Energy</td><td class="num">34</td><td class="num">35</td><td class="num">35</td></tr>
+          <tr><td>Materials</td><td class="num">4</td><td class="num">5</td><td class="num">12</td></tr>
+          <tr><td>Industrials</td><td class="num">10</td><td class="num">8</td><td class="num">22</td></tr>
+          <tr><td>Discretionary</td><td class="num">39</td><td class="num">47</td><td class="num">69</td></tr>
+          <tr><td>Staples</td><td class="num">5</td><td class="num">4</td><td class="num">9</td></tr>
+          <tr><td>Health Care</td><td class="num">-4</td><td class="num">-5</td><td class="num">-3</td></tr>
+          <tr><td>Financials</td><td class="num">27</td><td class="num">38</td><td class="num">115</td></tr>
+          <tr><td><b>Technology &amp; Comm Svcs</b></td><td class="num hi">85</td><td class="num hi">184</td><td class="num hi">363</td></tr>
+          <tr><td>Utilities</td><td class="num">-1</td><td class="num">1</td><td class="num">3</td></tr>
+          <tr><td>Real Estate</td><td class="num">-1</td><td class="num">0</td><td class="num">5</td></tr>
+          <tr class="grp"><td>Total</td><td class="num">196</td><td class="num">316</td><td class="num">629</td></tr>
+          <tr><td class="sub">Memo: Tech &amp; Comm Svcs / Total (%)</td><td class="num">43</td><td class="num">58</td><td class="num">58</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="tbl-note">Source: FactSet, I/B/E/S</div>
+
+      <div class="chart-card">
+        <div class="ct">S&amp;P 500 섹터별 순이익 변화 — 2Q26 vs 2Q25 ($bn)</div>
+        <svg viewBox="0 0 880 370" width="100%" role="img" aria-label="S&amp;P 500 sector net income change bar chart">
+          <line x1="242" y1="10" x2="242" y2="345" stroke="#9aa3b2" stroke-width="1"/>
+          <line x1="402" y1="10" x2="402" y2="345" stroke="#eef1f5" stroke-dasharray="3 3"/>
+          <line x1="562" y1="10" x2="562" y2="345" stroke="#eef1f5" stroke-dasharray="3 3"/>
+          <line x1="722" y1="10" x2="722" y2="345" stroke="#eef1f5" stroke-dasharray="3 3"/>
+          <text x="242" y="362" font-size="11" fill="#9aa3b2" text-anchor="middle">0</text>
+          <text x="402" y="362" font-size="11" fill="#9aa3b2" text-anchor="middle">50</text>
+          <text x="562" y="362" font-size="11" fill="#9aa3b2" text-anchor="middle">100</text>
+          <text x="722" y="362" font-size="11" fill="#9aa3b2" text-anchor="middle">150</text>
+          <text x="10" y="34" font-size="12.5" fill="#1b1e24">Tech &amp; Comm Svcs</text>
+          <rect x="242" y="20" width="588.8" height="20" fill="#5c1a26"/>
+          <text x="838" y="34" font-size="12" font-weight="700" fill="#5c1a26">184</text>
+          <text x="10" y="66" font-size="12.5" fill="#1b1e24">Discretionary</text>
+          <rect x="242" y="52" width="150.4" height="20" fill="#0a2240"/>
+          <text x="398" y="66" font-size="12" fill="#1b1e24">47</text>
+          <text x="10" y="98" font-size="12.5" fill="#1b1e24">Financials</text>
+          <rect x="242" y="84" width="121.6" height="20" fill="#0a2240"/>
+          <text x="369" y="98" font-size="12" fill="#1b1e24">38</text>
+          <text x="10" y="130" font-size="12.5" fill="#1b1e24">Energy</text>
+          <rect x="242" y="116" width="112" height="20" fill="#0a2240"/>
+          <text x="360" y="130" font-size="12" fill="#1b1e24">35</text>
+          <text x="10" y="162" font-size="12.5" fill="#1b1e24">Industrials</text>
+          <rect x="242" y="148" width="25.6" height="20" fill="#0a2240"/>
+          <text x="273" y="162" font-size="12" fill="#1b1e24">8</text>
+          <text x="10" y="194" font-size="12.5" fill="#1b1e24">Materials</text>
+          <rect x="242" y="180" width="16" height="20" fill="#0a2240"/>
+          <text x="264" y="194" font-size="12" fill="#1b1e24">5</text>
+          <text x="10" y="226" font-size="12.5" fill="#1b1e24">Staples</text>
+          <rect x="242" y="212" width="12.8" height="20" fill="#0a2240"/>
+          <text x="261" y="226" font-size="12" fill="#1b1e24">4</text>
+          <text x="10" y="258" font-size="12.5" fill="#1b1e24">Utilities</text>
+          <rect x="242" y="244" width="3.2" height="20" fill="#0a2240"/>
+          <text x="251" y="258" font-size="12" fill="#1b1e24">1</text>
+          <text x="10" y="290" font-size="12.5" fill="#1b1e24">Real Estate</text>
+          <rect x="242" y="276" width="1" height="20" fill="#0a2240"/>
+          <text x="249" y="290" font-size="12" fill="#1b1e24">0</text>
+          <text x="10" y="322" font-size="12.5" fill="#1b1e24">Health Care</text>
+          <rect x="226" y="308" width="16" height="20" fill="#c0392b"/>
+          <text x="204" y="322" font-size="12" fill="#c0392b">-5</text>
+        </svg>
+        <div class="chart-src">Source: FactSet, I/B/E/S</div>
+      </div>
+
+      <h3 class="sec"><span class="n">3</span>주의점 — 높은 마진이 고용으로 이어지지 않았던 최근 경험</h3>
+      <ul class="pts">
+        <li>마진은 지난 1년 급등했지만 <b>COVID 이후 줄곧 역사적 고점</b>이었고, 그 기간 실업률은 낮았으나 고용 증가는 크지 않았음.</li>
+        <li>노동시장의 경기민감 부문(<b>민간 부문 - 의료·교육·유틸리티</b>)의 고용은 산출 증가에도 <b>2022년 이후 사실상 횡보</b>. 실질 부가가치는 4Q22=100 대비 상승하는 반면 고용은 정체.</li>
+      </ul>
+      <div class="callout"><span class="t">결론</span>이익 급증은 고용 회복의 필요조건에 가깝지만 충분조건은 아님. 리포트는 이익→고용 전이를 기대하되, 그 시차와 테크 집중이라는 구조적 제약을 동시에 강조. 실업률 하한(4.0%) 하회 리스크가 커지는 만큼 Fed의 긴축 판단에서 노동시장은 "제약이 아닌 허용 요인"으로 작용.</div>
+    </div>
+  </section>
+
+  <!-- ============================== RPT3 ============================== -->
+  <section class="report" id="rpt3">
+    <div class="report-head">
+      <div class="tag">US Focus · Housing &amp; Durable Goods</div>
+      <h2>주택 개보수 지출, 개선 여지가 작다 — 낮은 주택 회전율·고금리·관세가 누르는 내구재 수요</h2>
+      <p class="lede">가계 순자산 증가에도 실질 개보수 지출은 1년간 -4.4%. 주거투자의 약 40%를 차지하는 이 항목의 부진은 pandemic 이후 내구재 소비의 구조적 정상화를 상징하며, 향후 수 분기 지속될 성장 drag.</p>
+    </div>
+    <div class="report-body">
+
+      <div class="chips">
+        <div class="chip"><div class="k">실질 개보수 지출</div><div class="v sell">-4.4%</div><div class="s">전년비, 2Q26 · 4분기 연속 감소</div></div>
+        <div class="chip"><div class="k">주거투자 내 개보수 비중</div><div class="v">~40%</div><div class="s">2015-19 ~30%, GFC 前 &lt;25%</div></div>
+        <div class="chip"><div class="k">LIRA 전망 (4Q avg)</div><div class="v">0.5%</div><div class="s">2Q26 2.0% → 2Q27 (명목)</div></div>
+        <div class="chip"><div class="k">개보수 수입품 실효관세</div><div class="v">15.4%</div><div class="s">6월 · 전체 수입 6.8%의 2배+</div></div>
+        <div class="chip"><div class="k">모기지 금리</div><div class="v">6%+</div><div class="s">6개월간 +55bp 추가 상승</div></div>
+      </div>
+
+      <h3 class="sec"><span class="n">1</span>배경 — 정체된 주택시장과 후행하는 개보수</h3>
+      <ul class="pts">
+        <li>실업률 저수준·상위소득층 순자산 증가에도 <b>주택시장은 수년째 정체</b>: 주택가격·모기지 금리가 높아 재고와 이동성이 모두 낮고, 많은 보유자가 현 주택에 묶여 있음(stuck in place).</li>
+        <li>신규 구조물 투자는 <b>8분기 연속 감소</b> 후 2Q26에야 소폭 연율 증가. 실질 구조물 투자는 1년간 <b>-5.5%</b>.</li>
+        <li>개보수 지출은 <b>최근 4분기 연속 전기비 감소</b>, 전년비 증가율은 마이너스 전환. 개보수는 주거투자의 <b>약 40%</b>로 pandemic 이후 비중 확대 (2015-19 ~30%, GFC 이전 20년 평균 25% 미만).</li>
+        <li>개보수 지출은 <b>주택 판매에 3~6분기 후행</b>하는 경기순응적 항목 — 신규 매수자가 구입 직후 수리·개선을 집중 실행. 판매 감소와 낮은 이동성이 건축자재·설비·가전 등 내구재 수요를 억제.</li>
+        <li>상위소득 가구가 개보수 지출의 불균형적으로 큰 비중을 차지하나(2023년 지출: 최상위 5분위가 최하위의 4배 이상), 고금리로 이사를 미룬 이들이 <b>대신 개보수를 택하지도 않음</b>. 실질 리모델링 지출은 올해 급감, 2Q26 전년비 -4.4%.</li>
+        <li>Harvard JCHS <b>LIRA</b>: 명목 개보수 지출의 4분기 평균 증가율이 2Q26 2.0% → <b>2Q27 0.5%</b>로 둔화 전망. 실질은 명목(보합)을 크게 밑도는 만큼 실질 전망은 더 약함. 기존주택 판매는 LIRA 모델에 5분기 선행 변수로 들어감.</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">2</span>고급 주택 희소성도 개보수를 밀어올리지 못함</h3>
+      <ul class="pts">
+        <li>Active listing(2019=100): 스타터(5~35th percentile)는 pre-pandemic 수준을 회복했으나 <b>Luxury(≥95th percentile)는 여전히 70 근방</b>으로 공급 희소.</li>
+        <li>고소득 보유자가 옮겨갈 집을 찾지 못해 리모델링으로 돌아설 것이라는 기대가 있었으나, <b>다른 drag를 상쇄할 만큼의 개보수는 나타나지 않음</b>.</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">3</span>금융 제약 — 두 가지 채널</h3>
+      <ul class="pts">
+        <li><b>채널 1 · 회전율</b>: 모기지 금리는 Fed 인상 사이클 이후 6% 위에서 유지, 최근 6개월간 <b>+55bp 추가 상승</b>. 기존 대출 금리를 크게 웃돌아 이사 유인 부재.</li>
+        <li><b>채널 2 · 자본조달 비용</b>: HELOC 금리도 고점 부근(8~9%대)에 머물러 주택자산을 담보로 한 개보수 자금 조달이 비쌈. 사상 최고 집값이 상당한 지분(equity)을 만들었지만 동시에 더 큰 집 구입 비용과 리모델링 프로젝트 규모도 키움.</li>
+        <li>결과는 <b>one-two punch</b>: 이사는 엄두가 안 나고, 현 주택 개선을 위한 차입도 비쌈.</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">4</span>관세 — 개보수 비용 상승</h3>
+      <ul class="pts">
+        <li>수입 개보수 제품 바스켓의 실효관세율은 6월 <b>15.4%</b> — 전체 수입 평균 6.8%의 2배 이상. <b>금속 제품 36.5%</b>가 두드러진 outlier, 목재·마감재·설비/가전·기타 자재는 11.5~13.7%.</li>
+        <li>수입 자재는 프로젝트 비용의 일부이지만 건축 제품·가전·설비 관세가 한계 비용을 상승시킴. 관세 영향은 없으나 <b>이민 단속 강화로 노동비용도 (일부 시장에서) 상방 압력</b>.</li>
+        <li>비용 상승 → 개보수 <b>지연·연기</b>, 일부는 저비용 수리로 대체.</li>
+      </ul>
+
+      <div class="chart-card">
+        <div class="ct">수입 주택개보수 제품의 실효관세율 — 2025년 2월 vs 2026년 6월 (%, 관세액/수입액)</div>
+        <div class="legend">
+          <span><i style="background:var(--brand)"></i>Feb 25</span>
+          <span><i style="background:var(--accent)"></i>Jun 26</span>
+        </div>
+        <svg viewBox="0 0 880 300" width="100%" role="img" aria-label="Realized tariff rate on home improvement imports">
+          <line x1="70" y1="260" x2="850" y2="260" stroke="#9aa3b2"/>
+          <line x1="70" y1="202.5" x2="850" y2="202.5" stroke="#eef1f5"/>
+          <line x1="70" y1="145" x2="850" y2="145" stroke="#eef1f5"/>
+          <line x1="70" y1="87.5" x2="850" y2="87.5" stroke="#eef1f5"/>
+          <line x1="70" y1="30" x2="850" y2="30" stroke="#eef1f5"/>
+          <text x="62" y="264" font-size="11" fill="#9aa3b2" text-anchor="end">0</text>
+          <text x="62" y="206" font-size="11" fill="#9aa3b2" text-anchor="end">10</text>
+          <text x="62" y="149" font-size="11" fill="#9aa3b2" text-anchor="end">20</text>
+          <text x="62" y="91" font-size="11" fill="#9aa3b2" text-anchor="end">30</text>
+          <text x="62" y="34" font-size="11" fill="#9aa3b2" text-anchor="end">40</text>
+          <!-- Metal products: 6.0 / 36.5 -->
+          <rect x="93" y="225.5" width="40" height="34.5" fill="#0a2240"/>
+          <rect x="137" y="50.1" width="40" height="209.9" fill="#5c1a26"/>
+          <text x="157" y="44" font-size="11.5" font-weight="700" fill="#5c1a26" text-anchor="middle">36.5</text>
+          <text x="135" y="282" font-size="11.5" fill="#1b1e24" text-anchor="middle">Metal products</text>
+          <!-- Wood products: 2.0 / 13.7 -->
+          <rect x="223" y="248.5" width="40" height="11.5" fill="#0a2240"/>
+          <rect x="267" y="181.2" width="40" height="78.8" fill="#5c1a26"/>
+          <text x="287" y="175" font-size="11.5" font-weight="700" fill="#5c1a26" text-anchor="middle">13.7</text>
+          <text x="265" y="282" font-size="11.5" fill="#1b1e24" text-anchor="middle">Wood products</text>
+          <!-- Finishes: 9.0 / 13.0 -->
+          <rect x="353" y="208.3" width="40" height="51.7" fill="#0a2240"/>
+          <rect x="397" y="185.3" width="40" height="74.7" fill="#5c1a26"/>
+          <text x="417" y="179" font-size="11.5" font-weight="700" fill="#5c1a26" text-anchor="middle">13.0</text>
+          <text x="395" y="282" font-size="11.5" fill="#1b1e24" text-anchor="middle">Finishes</text>
+          <!-- Fixtures & appliances: 4.0 / 12.0 -->
+          <rect x="483" y="237" width="40" height="23" fill="#0a2240"/>
+          <rect x="527" y="191" width="40" height="69" fill="#5c1a26"/>
+          <text x="547" y="185" font-size="11.5" font-weight="700" fill="#5c1a26" text-anchor="middle">12.0</text>
+          <text x="525" y="282" font-size="11.5" fill="#1b1e24" text-anchor="middle">Fixtures &amp; appliances</text>
+          <!-- Other materials: 5.0 / 11.5 -->
+          <rect x="613" y="231.3" width="40" height="28.7" fill="#0a2240"/>
+          <rect x="657" y="193.9" width="40" height="66.1" fill="#5c1a26"/>
+          <text x="677" y="188" font-size="11.5" font-weight="700" fill="#5c1a26" text-anchor="middle">11.5</text>
+          <text x="655" y="282" font-size="11.5" fill="#1b1e24" text-anchor="middle">Other materials</text>
+          <!-- All imports: 2.0 / 6.8 -->
+          <rect x="743" y="248.5" width="40" height="11.5" fill="#0a2240"/>
+          <rect x="787" y="220.9" width="40" height="39.1" fill="#5c1a26"/>
+          <text x="807" y="215" font-size="11.5" font-weight="700" fill="#5c1a26" text-anchor="middle">6.8</text>
+          <text x="785" y="282" font-size="11.5" fill="#1b1e24" text-anchor="middle">All imports</text>
+        </svg>
+        <div class="chart-src">Source: USITC; Harmonized Tariff Schedule 관세율 기준 산출</div>
+      </div>
+
+      <h3 class="sec"><span class="n">5</span>내구재 선호의 퇴조 — 개보수 부진은 더 큰 그림의 일부</h3>
+      <ul class="pts">
+        <li>pandemic 초기 가계는 주택 관련 제품을 포함한 <b>내구재 구매를 급격히 늘렸고</b>, 그 붐은 소비가 서비스로 회귀하며 소멸.</li>
+        <li>실질 내구재 소비는 <b>pre-pandemic 추세(2015-19 추정)를 하회하며 계속 약화</b>, 반면 서비스·비내구재 소비는 추세 상회. 리모델링 부진은 정체된 주택시장만이 아니라 <b>가계 지출의 광범위한 정상화</b>를 반영.</li>
+        <li>젊은 가구 다수가 affordability 문제로 자가 보유에서 배제됐다고 느끼며, 이는 내구재 축적에서 <b>경험(서비스) 소비로의 이동</b>을 가속.</li>
+        <li>산업 측면 함의: 주택건설이라는 전통적 재화 수요 채널이 <b>산업생산을 약하게 유지</b>. AI 외 capex는 테크 인접(발전·데이터센터 장비)과 고유가 속 석유·가스 탐사 정도에 국한되며, <b>광범위한 capex 회복의 직접 증거는 여전히 희소</b> — 신규 주택건설과 개보수 모두의 약세가 그 배경.</li>
+      </ul>
+      <div class="callout"><span class="t">Implication</span>개보수 부진은 "주택시장 회복 → 내구재 반등"이라는 전통 경로가 당분간 작동하기 어렵다는 신호. 금리 인하가 아닌 인상 국면에서 주택 회전율·HELOC 비용·관세라는 세 제약이 동시에 유지되는 만큼, 주택 관련 내구재·건자재·가전 수요에 대한 기대는 보수적으로 가져갈 필요.</div>
+    </div>
+  </section>
+
+  <!-- ============================== RPT4 ============================== -->
+  <section class="report" id="rpt4">
+    <div class="report-head">
+      <div class="tag">Global Data Watch · Cross-Region</div>
+      <h2>수요는 재조정되고 있지만 기대했던 고용 반등은 아직 — 서비스·비테크 주도 성장, 이익 급증, 중앙은행 분화</h2>
+      <p class="lede">글로벌 성장 가속의 엔진이 테크에서 서비스와 비테크 기업 지출로 확산. 2Q 글로벌 이익 +35%에도 고용은 1H26 +0.5% 연율에 그쳐 소득 재조정은 미완. Fed·BoJ·ECB는 9월 인상 기류, EM Asia 긴축·EMEA 완화·LatAm 분화.</p>
+    </div>
+    <div class="report-body">
+
+      <div class="chips">
+        <div class="chip"><div class="k">글로벌 2Q 이익</div><div class="v">+35%</div><div class="s">전년비 · 28개국 중 24개국 가속</div></div>
+        <div class="chip"><div class="k">글로벌 고용 (1H26)</div><div class="v">+0.5%</div><div class="s">연율 · GDP 정합 속도의 절반 미만</div></div>
+        <div class="chip"><div class="k">글로벌 CPI tracking</div><div class="v">2.5%</div><div class="s">연율 · 전분기 5% 스파이크에서 둔화</div></div>
+        <div class="chip"><div class="k">US 실질 서비스 소비</div><div class="v">+4.4%</div><div class="s">3m ar to Jul · 재화 +0.9%</div></div>
+        <div class="chip"><div class="k">8월 글로벌 composite PMI</div><div class="v">3년+ 최고</div><div class="s">서비스 반등 &gt; 제조업 둔화</div></div>
+      </div>
+
+      <h3 class="sec"><span class="n">1</span>수요 재조정 — 테크 밖에서 오는 가속</h3>
+      <ul class="pts">
+        <li>테크 지출은 계속 성장을 떠받치지만, 이번 분기 글로벌 GDP 가속의 동력은 <b>다른 곳</b>: 아시아·미국 지표는 재고순환 전환과 함께 <b>비테크 활동의 반등</b>이 탄력을 얻고 있음을 시사.</li>
+        <li>재화 소비는 연중 둔화했으나 <b>서비스 지출 회복</b>이 전체 소비를 지탱. 미국 실질 서비스 소비는 7월까지 3개월 <b>+4.4% 연율</b>, 재화는 +0.9%. 이 서비스 강세가 미국 3Q 소비·GDP 2.75% 상향의 근거.</li>
+        <li>8월 글로벌 PMI(다음주): 서비스 반등이 제조업 둔화를 상쇄하고도 남아 <b>composite PMI가 3년여 만의 최고</b> 전망.</li>
+        <li>연초 시작된 기업심리 정상화는 지난 분기 중동 분쟁으로 중단됐으나, <b>8월 서베이의 기업 기대지수가 그 하락을 완전히 되돌리며</b> 비테크 기업 지출 회복과 정합.</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">2</span>이익은 폭발, 소득은 편중 — 노동시장 재결합(recoupling)의 근거</h3>
+      <ul class="pts">
+        <li>2Q 글로벌 이익 <b>+35% 전년비</b>, MSCI 기준 추적 28개 경제 중 <b>24개국에서 이익 성장 가속</b>. 미국 기업이익은 전분기비 +9.1%(비연율), 전년비 +23%. 한국(+72%/+440%)·대만(+28%/+90%)·폴란드는 4분기/8분기 기준 모두 극단적 상승.</li>
+        <li>그러나 인플레이션 상승과 약한 고용이 <b>가계 실질 구매력을 전 세계적으로 압박</b>. 글로벌 CPI는 전분기 5% 연율 스파이크에서 <b>2.5% 연율로 둔화 tracking</b> 중이나, 기대하는 소득 재조정은 더 강한 노동수요를 요구.</li>
+        <li>글로벌 고용은 1H26 <b>+0.5% 연율</b> — 현 GDP 성장률에 부합하는 속도의 절반 미만. 미국은 3Q GDP 2.75% 전망에도 다음주 8월 고용은 +50k에 그칠 전망, 수정 없다면 3개월 평균 16k.</li>
+        <li>핵심 질문: 수요 재조정이 고용을 끌어올릴 것인가, 아니면 신기술·약한 노동공급이 <b>생산성 주도 성장으로의 구조 전환</b>을 만들고 있는가. 리포트는 경기적 반등과 구조 변화의 균형을 전제로 <b>글로벌 고용 증가 1% 연율, 미국 세 자릿수 회복</b>을 전망.</li>
+        <li>근거 ①: <b>이익→고용 체인</b>. 약한 고용·강한 이익·완화적 신용여건의 조합은 새롭지 않으며, 견조한 성장과 결합될 때 고용 가속의 신뢰할 만한 선행 신호였음.</li>
+        <li>근거 ②: <b>고용의도 서베이 개선</b>. DM flash PMI 고용지수는 8월 3년 내 최고.</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">3</span>중앙은행 — 선진국 9월 인상 기류, EM은 지역별 분화</h3>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>중앙은행</th><th>최근 움직임 / 배경</th><th>리포트 전망</th></tr></thead>
+        <tbody>
+          <tr><td><b>Fed</b></td><td>Warsh 잭슨홀에서 인상 옹호 리스크 시사. 금융여건 "제약적이지 않음", 인플레이션 "우려"</td><td class="hi">12월 인상 기본, 8월 CPI·PPI firm 시 9월 인상 likely</td></tr>
+          <tr><td><b>BoJ</b></td><td>8월 도쿄 CPI 2% 상회 확인. 7월 기계수주 호조 → 7월 IP 테크·비테크 동반 견조 예상. FX 개입에도 USD/JPY 약세 제한적. Himino 부총재 "매 회의에서 인상 논의"</td><td class="hi">9월·12월 인상, 내년 2% 상회</td></tr>
+          <tr><td><b>ECB</b></td><td>Euro area 8월 composite PMI가 추세 상회 1.4% 연율 성장 시사, 신용·이익 증가 → 리스크 상방. 에너지 drag 예상보다 작음</td><td class="hi">9월 인상 사실상 확정. 12월은 임금·물가 둔화(다음주 flash core 2.4%) 기대로 유보</td></tr>
+          <tr><td><b>BoK / BSP</b></td><td>이번주 예상대로 인상. 한국은 성장 전망 대폭 상향, BSP는 지표 둔화에도 매파 톤</td><td>추가 긴축. BSP 연내 +50bp 추가. 인도·대만도 인상 대열 합류 리스크. 태국은 장기 동결</td></tr>
+          <tr><td><b>CBRT (Türkiye)</b></td><td>강한 자금 유입으로 인터뱅크 금리 실질 300bp 인하하며 정상화 개시</td><td>10월·12월 각 100bp 인하</td></tr>
+          <tr><td><b>NBH (Hungary)</b></td><td>목표 하회 인플레이션</td><td>9월 25bp 인하</td></tr>
+          <tr><td><b>BoI (Israel)</b></td><td>저인플레이션 체제 전환, 리스크는 하회 쪽</td><td class="hi">다음주 out-of-consensus 25bp 인하</td></tr>
+          <tr><td><b>SARB</b></td><td>매파 outlier였으나 인플레이션 둔화·랜드 강세로 긴축 시급성 감소, 시장은 추가 인상 price-in</td><td>9월 마지막 25bp 인상 유지하나 장기 동결로 리스크 이동</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3 class="sec"><span class="n">4</span>지역별 — 아시아 내수 분화, 유로존 1.5%, LatAm 분화</h3>
+      <ul class="pts">
+        <li><b>Asia ex-China</b>: 테크 붐에 더해 타 지역 수요 확산의 수혜. 급증한 이익이 capex 상승을 유도하고, 세수 증가로 정부가 현금 이전 등 가계 지원 여력 확보.</li>
+        <li><b>China</b>: 내수 약세가 비테크 생산을 압박, 2~3Q GDP는 <b>약 3% 연율</b>로 둔화 추정. 재정 부양이 갭을 메워 향후 2분기 5% 연율 회복을 기대하나 <b>국채 발행 뉴스는 실망스러움</b>. 프로젝트 승인·정책금융 가속 노력은 있으나 투자 회복 시점 불투명.</li>
+        <li><b>Euro area</b>: 당초 무역 리스크 완화·독일 재정 집행으로 1.75% 연율 예상 → 중동 분쟁으로 하향했으나, 에너지 drag가 작아 8월 PMI는 1.4% 연율. 2Q26 GDP 세부는 순수출과 가계 저축률 하락이 복원력의 원천. 향후 민간투자·독일 재정이 잠재 상회 성장을 지탱, <b>에너지 가격이 주요 하방 리스크</b>.</li>
+        <li><b>Mexico</b>: 2026 GDP 전망 1.5%로 상향 — 견조한 2Q, 외수, 산업정책 traction. <b>Brazil</b>: 반대 방향 — 2Q GDP 1Q 4.5% → 2%, 3Q 초반 1%로 추가 둔화 tracking. 높은 부채상환 부담·소득 둔화·기업 수익성 약화. 신용 조치는 일시적 지지에 그치고, 재정 부양 소멸·긴축적 통화정책이 잠재 이하 성장을 유도.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============================== RPT5 ============================== -->
+  <section class="report" id="rpt5">
+    <div class="report-head">
+      <div class="tag">US Data Preview · Week of Aug 31 – Sep 4</div>
+      <h2>다음주 미국 지표 — ISM 제조업 55.0·서비스 54.0, 무역적자 확대, 8월 고용 +50k·실업률 4.1%</h2>
+      <p class="lede">고용은 컨센서스(58k) 소폭 하회 전망. 민간 40~55k 기조가 이어지지만 여름 계절성·TPS 종료·지방정부 교육 고용이 8월 헤드라인을 누를 수 있는 요인. 실업률은 unrounded 4.09%로 3개월 연속 하락 중.</p>
+    </div>
+    <div class="report-body">
+
+      <h3 class="sec"><span class="n">1</span>주요 지표 추정치 vs 컨센서스</h3>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>발표일 / 지표</th><th class="num">추정치</th><th class="num">컨센서스 중앙값</th><th class="num">컨센서스 범위</th></tr></thead>
+        <tbody>
+          <tr class="grp"><td colspan="4">Tue, Sep 01</td></tr>
+          <tr><td>Manufacturing PMI (Aug final)</td><td class="num">53.5</td><td class="num">53.3</td><td class="num">53.2 to 53.7</td></tr>
+          <tr><td>ISM manufacturing (Aug)</td><td class="num">55.0</td><td class="num">55.2</td><td class="num">54.5 to 57.3</td></tr>
+          <tr><td>Construction spending (Jul)</td><td class="num">-0.2%</td><td class="num">0.0%</td><td class="num">-0.4% to 0.6%</td></tr>
+          <tr><td>JOLTS (Jul)</td><td class="num">7200k</td><td class="num">7300k</td><td class="num">7150k to 7690k</td></tr>
+          <tr><td>Light vehicle sales (Aug)</td><td class="num">16.4 mn</td><td class="num">16.3 mn</td><td class="num">16.1 to 16.5 mn</td></tr>
+          <tr class="grp"><td colspan="4">Thu, Sep 03</td></tr>
+          <tr><td>Initial claims (w/e Aug 29)</td><td class="num">205k</td><td class="num">205k</td><td class="num">200k to 210k</td></tr>
+          <tr><td>International trade (Jul)</td><td class="num">-$90.3bn</td><td class="num">-$89.9bn</td><td class="num">-$91.3 to -$60.6bn</td></tr>
+          <tr><td>Productivity (2Q rev)</td><td class="num">1.4%</td><td class="num">1.4%</td><td class="num">1.2% to 1.5%</td></tr>
+          <tr><td class="sub">Unit labor costs</td><td class="num">1.2%</td><td class="num">1.3%</td><td class="num">1.0% to 2.6%</td></tr>
+          <tr><td>Services PMI (Aug final)</td><td class="num">56.5</td><td class="num">56.8</td><td class="num">53.4 to 57.0</td></tr>
+          <tr><td>ISM services (Aug)</td><td class="num">54.0</td><td class="num">54.1</td><td class="num">52.8 to 56.2</td></tr>
+          <tr class="grp"><td colspan="4">Fri, Sep 04</td></tr>
+          <tr><td><b>Employment (Aug)</b></td><td class="num hi">50k</td><td class="num">58k</td><td class="num">16k to 102k</td></tr>
+          <tr><td class="sub">Unemployment rate</td><td class="num">4.1%</td><td class="num">4.1%</td><td class="num">4.0% to 4.2%</td></tr>
+          <tr><td class="sub">Average hourly earnings</td><td class="num">0.3%</td><td class="num">0.3%</td><td class="num">0.0% to 0.5%</td></tr>
+          <tr><td class="sub">Average weekly hours</td><td class="num">34.3</td><td class="num">34.3</td><td class="num">34.3 to 34.4</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="tbl-note">Source: 컨센서스 — Bloomberg Finance L.P.</div>
+
+      <h3 class="sec"><span class="n">2</span>ISM·PMI·JOLTS·건설·무역 — 포인트</h3>
+      <ul class="pts">
+        <li><b>ISM 제조업</b> 55.6→55.0 소폭 하락 예상, 제조업 PMI final은 53.5(flash 53.2, 7월 53.9). ISM은 하반기 사이클 최고 수준으로 견조하지만, flash PMI 하락은 <b>8월 제조업 성장이 plateau</b>에 도달했을 가능성 시사. 지역 Fed 서베이 ISM-가중 합성은 56.1→55.7.</li>
+        <li>PMI 약세 원인: 중동 분쟁 당시 가격·물류 우려로 주문을 앞당겼던 <b>예방적 수요의 소멸</b> — 8월 재고·구매량이 분쟁 전 수준으로 복귀. 다만 7월 ISM에서 고객재고지수가 "too low" 영역에서 더 빠르게 수축 → 큰 폭 둔화 리스크 제한.</li>
+        <li>가격: ISM 제조업 가격지수 73.0→71.1로 완화됐으나 여전히 고수준. 공급망·관세 관련 가격 우려는 정성 코멘트에서 계속 확인.</li>
+        <li><b>ISM 서비스</b> 54.1→54.0 보합, 서비스 PMI final 56.5(flash 56.8, 7월 54.6). 월드컵 효과 소멸 우려에도 초기 PMI는 사이클 최고권. 8월 PMI 서비스 가격은 완화(투입 63.0→59.3, 산출 58.5→55.4), 고용지수는 50.8→<b>53.2</b>로 눈에 띄게 상승.</li>
+        <li><b>JOLTS</b> 구인율 4.4%→4.3% 하락 예상(구인 7,200k). Indeed 일별 구인은 소폭 상승했으나 JOLTS가 민간 지표를 앞질러 왔던 만큼 하방 여지. 6월 채용은 둔화(민간 +30k, 총고용 -23k)로 hires 감소 가능. 해고·이직 모두 낮은 수준, 정보·광업만 해고 지속 상승.</li>
+        <li><b>건설지출</b> 7월 -0.2% m/m (6월 -0.1%). 단독주택 착공 -10%, 다가구 -21%가 배경. 비주거는 4Q25 이후 CHIPS 관련 제조업 건설 unwind와 상업건설 약세로 부진하나, <b>데이터센터 건설은 6월 +7% m/m</b>로 계속 증가.</li>
+        <li><b>자동차 판매</b> 8월 16.4mn(7월 16.3mn) — 주가 상승과 affordability 우려가 상쇄. 캐나다 관세로 자동차 업계 비용 <b>~1% 상승</b> 가능(자동차 담당 애널리스트 추정).</li>
+        <li><b>무역수지</b> 7월 -$73.3bn → <b>-$90.3bn</b>으로 적자 확대 — 선행 재화무역에서 수출 -2.9%, 수입 +3.7%. 서비스 수출은 월드컵(여행·관광·중계권 IP)이 지지.</li>
+        <li><b>생산성</b> 2Q 수정치 1.4% q/q saar 유지(전년비 2.2%), 단위노동비용 1.3%→1.2%로 소폭 하향(전년비 1.4% 유지).</li>
+        <li><b>신규 실업수당 청구</b> 205k(전주 203k) — 전년 대비 낮은 수준 유지, 4주 평균 207k. 연속 청구는 7월 중순 이후 좁은 범위, 잔여 계절성으로 9월 초 소폭 하락 가능. 청구 추이는 실업률의 점진적 하락을 시사.</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">3</span>8월 고용 — 기본 시나리오와 하방 요인</h3>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Labor-market report (Fri, Sep 4)</th><th class="num">May</th><th class="num">Jun</th><th class="num">Jul</th><th class="num">Aug 추정</th></tr></thead>
+        <tbody>
+          <tr><td><b>Payroll employment (m/m, 000s)</b></td><td class="num">63</td><td class="num">20</td><td class="num">-23</td><td class="num hi">50</td></tr>
+          <tr><td class="sub">Private payrolls</td><td class="num">61</td><td class="num">30</td><td class="num">30</td><td class="num hi">40</td></tr>
+          <tr><td class="sub">Goods-producing</td><td class="num">3</td><td class="num">14</td><td class="num">25</td><td class="num">0</td></tr>
+          <tr><td class="sub">Private service-providing</td><td class="num">58</td><td class="num">16</td><td class="num">5</td><td class="num">40</td></tr>
+          <tr><td class="sub">Government</td><td class="num">2</td><td class="num">-10</td><td class="num">-53</td><td class="num">10</td></tr>
+          <tr><td>Average weekly hours</td><td class="num">34.3</td><td class="num">34.3</td><td class="num">34.3</td><td class="num">34.3</td></tr>
+          <tr><td>Hourly earnings (%m/m)</td><td class="num">0.2</td><td class="num">0.3</td><td class="num">0.1</td><td class="num">0.25</td></tr>
+          <tr><td class="sub">(%oya)</td><td class="num">3.3</td><td class="num">3.4</td><td class="num">3.2</td><td class="num">3.0</td></tr>
+          <tr><td><b>Unemployment rate (%)</b></td><td class="num">4.3</td><td class="num">4.2</td><td class="num">4.1</td><td class="num hi">4.1</td></tr>
+          <tr><td>Participation rate (%)</td><td class="num">61.8</td><td class="num">61.5</td><td class="num">61.4</td><td class="num">61.5</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="tbl-note">Source: BLS</div>
+
+      <ul class="pts" style="margin-top:14px;">
+        <li><b>기조</b>: 민간 고용은 3·6·12개월 평균 40~55k 범위(총고용 20/44/26k, 연방정부 -21k/12m). 역사 기준으론 약하지만 <b>낮은 breakeven</b>을 감안하면 실업률 하락이 보여주듯 노동시장은 양호.</li>
+        <li><b>ADP</b> 주간 데이터: 8월 서베이 주간 직전 4주 누적 민간 +47k (7월 43k) → 안정적 고용 증가 시사. 서베이 주간 사이 신규 청구는 18k 상승했으나 7월이 비정상적으로 낮았고 여전히 전년 대비 낮음.</li>
+        <li><b>서베이 개선</b>: PMI 고용지수 8월 2pt+ 상승(2025년 초 이후 최고), Conference Board 노동시장 차이지수 7월 사이클 저점(2.7)→8월 7.5, NFIB 고용계획 7월 20으로 상승. Homebase는 다소 약세 — 7월엔 2025년을 상회했으나 8월 서베이 주간엔 2025년에 수렴.</li>
+        <li><b>하방 요인 ① 여름 계절성</b>: 최근 2년 8월 민간 고용은 감소. 2010년 이후 8월 first print는 직전 3개월 평균 대비 <b>평균 40k 하회</b>.</li>
+        <li><b>하방 요인 ② TPS 종료</b>: 7/27 약 35만 아이티인 임시보호지위 종료 → 근로허가 상실. 다만 고용주 인지 지연·EAD 대체 취득·미등록 고용 등으로 효과는 분산, 강제 추방은 8/20 첫 항공편으로 아직 소규모.</li>
+        <li><b>하방 요인 ③ 지방정부 교육</b>: 7월 -50k. 6~7월 서베이 주간 간격 5주가 원인이지만, 과거 25년(COVID 제외) 4차례 유사 사례 중 8월 반등은 2004년 한 번(9k)뿐. 4월 이후 감소 추세에 pandemic 연방 지원 종료 관련 감원 보도. 회계연도 예산 7/1 채택이 감원 시점을 결정했다면 8월엔 종료 또는 완화 가능.</li>
+        <li><b>월드컵</b> 관련 고용은 8월 초 종료 — 고용 부양 증거가 적었던 만큼 drag도 제한적, 소폭 감소 가능.</li>
+        <li><b>수정치</b>: 7월 보고서에서 대규모 하향 수정 재개됐으나 12개월 패턴은 균형. 6월 2차 수정은 추가 하향, 7월 1차 수정은 소폭 하향 경향(2차에서 반전 가능). 8월 first print 수정은 방향성 불명확, 2차 수정은 플러스 경향.</li>
+        <li><b>시간·임금</b>: 주당 근로시간 4개월 연속 34.3 유지(개선 신호). AHE는 7월 +0.05%에 그쳤으나 8월 평일 수가 21일(21~23일 범위 최소)로 적어 <b>+0.25% m/m</b> 회복 예상.</li>
+        <li><b>가계조사</b>: unrounded 실업률 3개월 연속 하락, 7월 4.09%(6월 대비 -10bp). 8월 4.1% 유지 전망이나 연속 청구는 추가 하락 압력 시사. 선행지표(연속 청구·Manpower·NFIB 채용계획·CB 차이지수) 모두 개선 전환. 대졸 22~27세의 여름 실업률은 2023년 대비 높은 패턴 지속 — 상방 압력이나 전체 실업률 하락을 막지는 못함.</li>
+        <li><b>참가율</b>: 5월 61.8% → 6월 61.5% → 7월 61.4%, 8월 61.5%로 반등 예상. 16~24세 잔여 계절성은 하방이나, 6월 급락한 25~34세(16~24세 노동력의 약 2배 규모)는 부분 반등에 그쳐 8월 상승 여지.</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">!</span>모니터링 캘린더 — 9월 주요 이벤트</h3>
+      <div class="risk-box">
+        <h4>Key Dates</h4>
+        <ul>
+          <li><b>9/1 (Tue):</b> JOLTS(7월, 7.2mm), ISM 제조업(55.0), 건설지출(-0.2%), 자동차 판매(16.4mm), Barr 이사 연설</li>
+          <li><b>9/2 (Wed):</b> ADP 고용(8월), 공장주문(7월), Beige Book</li>
+          <li><b>9/3 (Thu):</b> 생산성 확정(1.4%)·단위노동비용(1.2%), 무역수지(-$90.3bn), 신규 청구(205k), 서비스 PMI final(56.5), ISM 서비스(54.0), Waller 이사·Hammack 클리블랜드 연은 총재 연설</li>
+          <li><b>9/4 (Fri):</b> 8월 고용 — NFP +50k, 실업률 4.1%, 주당 34.3h, AHE +0.25% m/m</li>
+          <li><b>9/7 (Mon):</b> Labor Day 휴장 · <b>9/8:</b> 캐나다 보복관세 발효, NFIB, 소비자신용</li>
+          <li><b>9/10 (Thu):</b> PPI(8월), 기존주택판매 · <b>9/11 (Fri):</b> <b>CPI(8월)</b> — 9월 인상 여부의 결정 변수, 미시간 소비자심리 예비</li>
+          <li><b>9/16 (Wed):</b> <b>FOMC</b>, 소매판매(8월), 수입물가, NAHB · <b>9/17:</b> 주택착공, 필라델피아 Fed</li>
+          <li><b>9/25 (Fri):</b> 내구재 주문(8월), 미시간 소비자심리 확정</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== RPT6 ============================== -->
+  <section class="report" id="rpt6">
+    <div class="report-head">
+      <div class="tag">US Forecast Table · Macro &amp; Rates</div>
+      <h2>미국 경제 전망 요약 — 2026 성장 2.0%(q4/q4), Core PCE 3.5%, 실업률 4.1%, Fed funds 4.00%</h2>
+      <p class="lede">3Q26 GDP 2.8%로 반등 후 4Q 1.8% 둔화. 인플레이션은 2026년 급등(CPI q4/q4 3.7%) 후 2027년 2.0%로 정상화 전제. 정책금리는 4Q26 인상 후 2027년 말까지 4.00% 유지.</p>
+    </div>
+    <div class="report-body">
+
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>%q/q saar (별도 표기 제외)</th><th class="num">2Q26</th><th class="num">3Q26</th><th class="num">4Q26</th><th class="num">1Q27</th><th class="num">2Q27</th><th class="num">2026 q4/q4</th><th class="num">2027 q4/q4</th></tr></thead>
+        <tbody>
+          <tr class="grp"><td colspan="8">Gross domestic product</td></tr>
+          <tr><td><b>Real GDP</b></td><td class="num">1.5</td><td class="num hi">2.8</td><td class="num">1.8</td><td class="num">2.3</td><td class="num">2.3</td><td class="num">2.0</td><td class="num">2.0</td></tr>
+          <tr><td class="sub">Final sales</td><td class="num">2.2</td><td class="num">1.4</td><td class="num">1.2</td><td class="num">2.2</td><td class="num">2.2</td><td class="num">1.7</td><td class="num">2.0</td></tr>
+          <tr><td class="sub">Domestic final sales</td><td class="num">3.3</td><td class="num">3.1</td><td class="num">2.2</td><td class="num">2.4</td><td class="num">2.4</td><td class="num">2.7</td><td class="num">2.2</td></tr>
+          <tr><td class="sub">Consumer spending</td><td class="num">3.4</td><td class="num hi">2.8</td><td class="num">1.5</td><td class="num">2.0</td><td class="num">2.0</td><td class="num">2.1</td><td class="num">1.7</td></tr>
+          <tr><td class="sub">Business investment</td><td class="num">8.5</td><td class="num">7.3</td><td class="num">6.4</td><td class="num">4.6</td><td class="num">4.6</td><td class="num">8.2</td><td class="num">4.1</td></tr>
+          <tr><td class="sub">— Equipment</td><td class="num">13.6</td><td class="num hi">12.0</td><td class="num">10.0</td><td class="num">5.0</td><td class="num">5.0</td><td class="num">12.8</td><td class="num">4.5</td></tr>
+          <tr><td class="sub">— Structures</td><td class="num">-1.8</td><td class="num">-3.0</td><td class="num">-4.0</td><td class="num">2.0</td><td class="num">2.0</td><td class="num">-3.4</td><td class="num">2.0</td></tr>
+          <tr><td class="sub">— Intellectual property</td><td class="num">8.8</td><td class="num">7.0</td><td class="num">7.0</td><td class="num">5.0</td><td class="num">5.0</td><td class="num">9.1</td><td class="num">4.5</td></tr>
+          <tr><td class="sub">Residential investment</td><td class="num">1.3</td><td class="num">-2.0</td><td class="num">0.0</td><td class="num">4.0</td><td class="num">6.0</td><td class="num">-2.2</td><td class="num">4.0</td></tr>
+          <tr><td class="sub">Government</td><td class="num">-1.0</td><td class="num">1.2</td><td class="num">1.4</td><td class="num">1.5</td><td class="num">1.5</td><td class="num">1.5</td><td class="num">1.5</td></tr>
+          <tr><td class="sub">Net exports 기여 (%pt)</td><td class="num">-1.1</td><td class="num">-1.7</td><td class="num">-1.1</td><td class="num">-0.3</td><td class="num">-0.3</td><td class="num">-1.0</td><td class="num">-0.2</td></tr>
+          <tr><td class="sub">Inventories 기여 (%pt)</td><td class="num">-0.7</td><td class="num">1.3</td><td class="num">0.6</td><td class="num">0.1</td><td class="num">0.0</td><td class="num">0.3</td><td class="num">0.0</td></tr>
+          <tr class="grp"><td colspan="8">Income &amp; profits (NIPA)</td></tr>
+          <tr><td>Adjusted corp profits</td><td class="num hi">41.5</td><td class="num">9.2</td><td class="num">10.1</td><td class="num">7.2</td><td class="num">6.3</td><td class="num">16.2</td><td class="num">6.3</td></tr>
+          <tr><td>Real disposable income</td><td class="num">-1.5</td><td class="num">0.8</td><td class="num">0.2</td><td class="num">1.5</td><td class="num">1.8</td><td class="num">0.1</td><td class="num">1.5</td></tr>
+          <tr><td>Saving rate (%, avg)</td><td class="num">2.8</td><td class="num">2.3</td><td class="num">2.0</td><td class="num">1.9</td><td class="num">1.9</td><td class="num">—</td><td class="num">—</td></tr>
+          <tr class="grp"><td colspan="8">Prices &amp; labor cost</td></tr>
+          <tr><td>CPI</td><td class="num">6.1</td><td class="num">1.4</td><td class="num">3.7</td><td class="num">1.1</td><td class="num">1.6</td><td class="num">3.7</td><td class="num">2.0</td></tr>
+          <tr><td class="sub">Core CPI</td><td class="num">2.9</td><td class="num">2.0</td><td class="num">2.8</td><td class="num">2.6</td><td class="num">2.5</td><td class="num">2.6</td><td class="num">2.6</td></tr>
+          <tr><td>PCE deflator</td><td class="num">5.3</td><td class="num">2.5</td><td class="num">3.5</td><td class="num">1.9</td><td class="num">2.1</td><td class="num">4.0</td><td class="num">2.3</td></tr>
+          <tr><td class="sub"><b>Core PCE</b></td><td class="num">3.6</td><td class="num">2.9</td><td class="num">3.1</td><td class="num">2.8</td><td class="num">2.6</td><td class="num hi">3.5</td><td class="num">2.7</td></tr>
+          <tr><td>Employment Cost Index</td><td class="num">3.6</td><td class="num">3.0</td><td class="num">3.1</td><td class="num">3.2</td><td class="num">3.3</td><td class="num">3.3</td><td class="num">3.3</td></tr>
+          <tr><td>Productivity</td><td class="num">1.4</td><td class="num">2.9</td><td class="num">1.3</td><td class="num">2.4</td><td class="num">2.0</td><td class="num">1.6</td><td class="num">1.7</td></tr>
+          <tr class="grp"><td colspan="8">Other indicators (기간 평균)</td></tr>
+          <tr><td><b>Unemployment rate (%)</b></td><td class="num">4.3</td><td class="num">4.1</td><td class="num">4.1</td><td class="num">4.0</td><td class="num">4.0</td><td class="num">—</td><td class="num">—</td></tr>
+          <tr><td>Payroll employment (ch, 000s/m)</td><td class="num">96</td><td class="num">50</td><td class="num">100</td><td class="num">100</td><td class="num">50</td><td class="num">—</td><td class="num">—</td></tr>
+          <tr><td>Housing starts (mn, saar)</td><td class="num">1.337</td><td class="num">1.313</td><td class="num">1.350</td><td class="num">1.350</td><td class="num">1.400</td><td class="num">—</td><td class="num">—</td></tr>
+          <tr><td>Light vehicle sales (mn, saar)</td><td class="num">16.4</td><td class="num">15.5</td><td class="num">15.5</td><td class="num">15.8</td><td class="num">15.8</td><td class="num">—</td><td class="num">—</td></tr>
+          <tr><td>Nominal GDP</td><td class="num">8.0</td><td class="num">5.3</td><td class="num">5.3</td><td class="num">4.2</td><td class="num">4.4</td><td class="num">6.1</td><td class="num">4.4</td></tr>
+          <tr><td>Current account (% of GDP)</td><td class="num">-3.2</td><td class="num">-3.3</td><td class="num">-3.3</td><td class="num">-3.4</td><td class="num">-3.4</td><td class="num">—</td><td class="num">—</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="tbl-note">연간(%y/y): Real GDP 2025 2.1 / 2026 2.1 / 2027 2.1 · Core PCE 2.8 / 3.4 / 2.8 · 실업률 4.6 / 4.7 / 4.0 · 연방재정수지 -$1,775bn(-5.8% GDP) / -$2,020bn(-6.3%) / -$1,960bn(-5.8%)</div>
+
+      <h3 class="sec"><span class="n">2</span>금리 전망 (기간 말)</h3>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>%</th><th class="num">Aug 28</th><th class="num">3Q26</th><th class="num">4Q26</th><th class="num">1Q27</th><th class="num">2Q27</th><th class="num">3Q27</th><th class="num">4Q27</th></tr></thead>
+        <tbody>
+          <tr><td><b>Fed funds target (top)</b></td><td class="num">3.75</td><td class="num">3.75</td><td class="num hi">4.00</td><td class="num">4.00</td><td class="num">4.00</td><td class="num">4.00</td><td class="num">4.00</td></tr>
+          <tr><td>2-yr Treasury</td><td class="num">4.35</td><td class="num">4.25</td><td class="num">4.30</td><td class="num">4.30</td><td class="num">4.30</td><td class="num">—</td><td class="num">—</td></tr>
+          <tr><td>5-yr Treasury</td><td class="num">4.48</td><td class="num">4.45</td><td class="num">4.45</td><td class="num">4.45</td><td class="num">4.45</td><td class="num">—</td><td class="num">—</td></tr>
+          <tr><td>10-yr Treasury</td><td class="num">4.72</td><td class="num">4.80</td><td class="num">4.85</td><td class="num">4.85</td><td class="num">4.85</td><td class="num">—</td><td class="num">—</td></tr>
+          <tr><td>30-yr Treasury</td><td class="num">5.21</td><td class="num">5.35</td><td class="num">5.40</td><td class="num">5.40</td><td class="num">5.40</td><td class="num">—</td><td class="num">—</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="callout"><span class="t">읽는 법</span>기본 경로는 12월 25bp 인상 1회 후 4.00% 장기 유지. 9월 인상이 실현되면 4Q26 4.00% 도달 시점만 앞당겨지며, 2027년 2%대 인플레이션 정상화 전제하에 추가 인상은 상정하지 않음. 장기금리는 10yr 4.85%, 30yr 5.40%로 완만한 상승을 전제.</div>
+    </div>
+  </section>
+
+  <footer>
+    <div>본 문서는 투자 권유를 목적으로 하지 않습니다.</div>
+  </footer>
+
+</div>
+</body>
+</html>
