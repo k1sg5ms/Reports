@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dell Technologies F2Q27 실적 리뷰</title>
+<style>
+  :root{
+    --brand:#0a2756;
+    --brand-deep:#06182e;
+    --accent:#d62027;
+    --accent2:#1f4e8c;
+    --paper:#f4f6f9;
+    --card:#ffffff;
+    --ink:#1b1e24;
+    --ink-soft:#525866;
+    --line:#dde3ec;
+    --buy:#1f7a4d;
+    --bear:#c0392b;
+    --bull:#1f6fb2;
+    --warn:#8a4b15;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Helvetica Neue','Pretendard','Noto Sans KR',Arial,sans-serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  .topbar{
+    background:var(--brand-deep);
+    color:#fff;padding:14px 6vw;
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;
+    border-bottom:3px solid var(--accent);
+    position:sticky;top:0;z-index:50;
+  }
+  .topbar .logo{font-weight:700;font-size:18px;letter-spacing:0.5px;}
+  .topbar .logo span{color:var(--accent);}
+  .topbar nav{display:flex;gap:8px;flex-wrap:wrap;}
+  .topbar nav a{
+    color:#cfd8e6;text-decoration:none;font-size:12.5px;
+    padding:6px 12px;border:1px solid rgba(255,255,255,0.2);border-radius:20px;
+    transition:all .15s;
+  }
+  .topbar nav a:hover{background:var(--accent);color:#fff;border-color:var(--accent);}
+
+  .wrap{max-width:960px;margin:0 auto;padding:40px 6vw 90px;}
+
+  .intro{border-left:4px solid var(--accent);padding:8px 0 8px 20px;margin-bottom:48px;}
+  .intro .eyebrow{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent2);font-weight:700;}
+  .intro h1{font-size:26px;margin:8px 0 6px;color:var(--brand);}
+
+  .report{margin-bottom:64px;scroll-margin-top:70px;}
+  .report-head{
+    background:linear-gradient(135deg,var(--brand) 0%, var(--brand-deep) 100%);
+    color:#fff;border-radius:10px 10px 0 0;padding:28px 30px;
+  }
+  .report-head .tag{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#9fb4d4;font-weight:700;}
+  .report-head h2{margin:8px 0 14px;font-size:23px;line-height:1.35;}
+  .report-head .lede{
+    font-family:'Georgia',serif;font-size:15.5px;color:#e3ebf6;
+    border-top:1px solid rgba(255,255,255,0.16);padding-top:14px;margin:0;
+  }
+  .report-body{
+    background:var(--card);border:1px solid var(--line);border-top:none;
+    border-radius:0 0 10px 10px;padding:30px;
+  }
+
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px;}
+  .chip{border:1px solid var(--line);border-radius:8px;padding:10px 16px;background:#fafbfd;flex:1;min-width:130px;}
+  .chip .k{font-size:10.5px;letter-spacing:0.5px;text-transform:uppercase;color:var(--ink-soft);}
+  .chip .v{font-size:19px;font-weight:700;color:var(--brand);margin-top:2px;}
+  .chip .v.buy{color:var(--buy);}
+  .chip .v.sell{color:var(--bear);}
+  .chip .v.hold{color:var(--ink-soft);}
+  .chip .s{font-size:11px;color:var(--ink-soft);}
+
+  h3.sec{
+    font-size:17px;color:var(--brand);margin:30px 0 12px;
+    padding-bottom:8px;border-bottom:1.5px solid var(--line);
+    display:flex;align-items:center;gap:10px;
+  }
+  h3.sec .n{
+    background:var(--brand);color:#fff;font-size:12px;font-weight:700;
+    width:24px;height:24px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  ul.pts{margin:0;padding:0;list-style:none;}
+  ul.pts li{position:relative;padding:7px 0 7px 20px;font-size:14.5px;border-bottom:1px dashed var(--line);}
+  ul.pts li:last-child{border-bottom:none;}
+  ul.pts li::before{content:"—";position:absolute;left:0;color:var(--accent2);font-weight:700;}
+  ul.pts b{color:var(--brand);}
+
+  table.tbl{width:100%;border-collapse:collapse;font-size:13px;margin:6px 0 4px;}
+  table.tbl th{background:var(--brand);color:#fff;text-align:left;padding:8px 10px;font-weight:600;white-space:nowrap;}
+  table.tbl th.num{text-align:right;}
+  table.tbl td{padding:7px 10px;border-bottom:1px solid var(--line);}
+  table.tbl tr:nth-child(even) td{background:#f7f9fc;}
+  table.tbl td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;}
+  table.tbl td.up{color:var(--buy);font-weight:700;}
+  table.tbl td.dn{color:var(--bear);font-weight:700;}
+  table.tbl td.sub{padding-left:24px;color:var(--ink-soft);}
+  table.tbl tr.hl td{background:#eef3fa;font-weight:700;}
+  .tbl-wrap{overflow-x:auto;}
+
+  .chart-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:22px 22px 14px;margin:14px 0;}
+  .chart-card .ct{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:12px;}
+  .chart-src{font-size:10.5px;color:#9aa3b2;margin-top:8px;}
+  .legend{display:flex;gap:18px;font-size:11.5px;color:var(--ink-soft);margin-bottom:4px;flex-wrap:wrap;}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .legend i{width:11px;height:11px;border-radius:2px;display:inline-block;}
+
+  .callout{background:#fbf6ec;border:1px solid #e8dcc3;border-radius:8px;padding:14px 18px;font-size:13px;color:var(--ink-soft);margin-top:14px;}
+  .callout .t{font-size:10.5px;font-weight:700;letter-spacing:0.6px;color:var(--warn);text-transform:uppercase;display:block;margin-bottom:5px;}
+
+  .risk-box{background:var(--brand);color:#dde6f3;border-radius:8px;padding:22px 24px;margin-top:14px;}
+  .risk-box h4{margin:0 0 10px;color:#fff;font-size:14.5px;}
+  .risk-box ul{margin:0;padding-left:18px;}
+  .risk-box li{margin-bottom:8px;font-size:13px;}
+  .risk-box li b{color:#fff;}
+
+  footer{border-top:1px solid var(--line);margin-top:50px;padding-top:20px;font-size:11px;color:#9aa3b2;line-height:1.6;}
+
+  @media(max-width:560px){
+    .intro h1{font-size:21px;}
+    .report-head h2{font-size:19px;}
+    .report-body{padding:20px 16px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">Research<span>·</span>Digest</div>
+  <nav>
+    <a href="#rpt1">① 실적 리뷰 · Neutral</a>
+    <a href="#rpt2">② 실적 리뷰 · Buy</a>
+  </nav>
+</div>
+
+<div class="wrap">
+
+  <div class="intro">
+    <div class="eyebrow">1 September 2026</div>
+    <h1>Dell Technologies F2Q27(7월 분기) 실적: 컨센서스 상회 &amp; FY27 가이던스 대폭 상향</h1>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- Report 1 -->
+  <!-- ============================================================ -->
+  <section class="report" id="rpt1">
+    <div class="report-head">
+      <div class="tag">US Computers / IT Hardware</div>
+      <h2>Dell F2Q27 실적 First Look: 서버 가격 강세와 AI 서버 수요로 전 항목 상회, 가이던스 상향폭이 투자자 기대치를 넘어섰다</h2>
+      <p class="lede">매출·마진·EPS 모두 추정치와 컨센서스를 크게 상회했고, FY27 EPS 가이던스 $25.50는 투자자들이 기대하던 $20~24 구간을 넘어섰다. NTM P/E ~22x로 실적 발표 전 대비 1 turn 높은 수준에 불과해 안도 랠리를 예상한다.</p>
+    </div>
+
+    <div class="report-body">
+
+      <div class="chips">
+        <div class="chip"><div class="k">12-month Rating</div><div class="v hold">Neutral</div><div class="s">유지 (5/10 Buy→Neutral 하향 이후)</div></div>
+        <div class="chip"><div class="k">Price Target</div><div class="v">$455</div><div class="s">8/25 $440 → $455 상향 후 유지</div></div>
+        <div class="chip"><div class="k">Price (1 Sep 2026)</div><div class="v">$429.86</div><div class="s">상승여력 +5.8% / 예상 총수익률 +6.4%</div></div>
+        <div class="chip"><div class="k">P/E (FY27E)</div><div class="v">23.5x</div><div class="s">NTM 컨센서스 P/E ~22x</div></div>
+        <div class="chip"><div class="k">Market Cap</div><div class="v">$279B</div><div class="s">52주 $111.07–494.51 / Free float 21%</div></div>
+      </div>
+
+      <h3 class="sec"><span class="n">1</span>실적 vs 기대치: 매출·마진·EPS 전 항목 상회</h3>
+      <ul class="pts">
+        <li>F2Q27(7월 분기) 매출 <b>$47.0B</b> — 추정치 $46.0B, 회사 가이던스 $44~45B, Visible Alpha 컨센서스 $45.1B 모두 상회. 강한 서버 가격(pricing)과 AI 서버 수요가 견인</li>
+        <li>ISG 매출 <b>$31.8B</b>(추정치 $30.5B, 컨센서스 $29.8B 상회), CSG 매출 <b>$15.0B</b>(추정치 $15.0B 부합, 컨센서스 $15.1B)</li>
+        <li>매출총이익률 <b>21.1%</b>, 영업이익률 <b>12.6%</b> — 추정치 17.1% / 9.3% 대비 각각 +403bp / +327bp로 큰 폭 상회</li>
+        <li>희석 EPS <b>$7.04</b> — 추정치 $4.97 및 가이던스 상단($4.70~4.90)을 크게 상회 (+41.8% vs 추정치)</li>
+      </ul>
+
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Key Metrics ($M, EPS 제외)</th><th class="num">컨센서스</th><th class="num">추정치</th><th class="num">실적</th><th class="num">vs 추정치</th></tr></thead>
+        <tbody>
+          <tr><td><b>Revenue</b></td><td class="num">$45,061</td><td class="num">$46,012</td><td class="num"><b>$46,971</b></td><td class="num up">+2.1%</td></tr>
+          <tr><td>ISG revenue</td><td class="num">$29,781</td><td class="num">$30,524</td><td class="num"><b>$31,782</b></td><td class="num up">+4.1%</td></tr>
+          <tr><td>CSG revenue</td><td class="num">$15,075</td><td class="num">$15,015</td><td class="num"><b>$15,034</b></td><td class="num up">+0.1%</td></tr>
+          <tr><td>GM %</td><td class="num">17.1%</td><td class="num">17.1%</td><td class="num"><b>21.1%</b></td><td class="num up">+403bp</td></tr>
+          <tr><td>OpM %</td><td class="num">9.3%</td><td class="num">9.3%</td><td class="num"><b>12.6%</b></td><td class="num up">+327bp</td></tr>
+          <tr><td><b>Diluted EPS</b></td><td class="num">$4.91</td><td class="num">$4.97</td><td class="num"><b>$7.04</b></td><td class="num up">+41.8%</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-src">Source: Company data, Visible Alpha</div>
+
+      <h3 class="sec"><span class="n">2</span>주목 포인트: AI 서버 수주·백로그와 마진 레버리지</h3>
+      <ul class="pts">
+        <li>AI 서버 매출 <b>$16.4B</b> — 추정치 $16.0B, 가이던스 $15.5B, 컨센서스 $16.0B 모두 상회</li>
+        <li>AI 서버 신규 수주 <b>$60.9B</b>로 투자자 기대치를 넘어섰고, 분기말 AI 백로그 <b>$95B</b></li>
+        <li>AI 제외 ISG 매출 <b>$15.4B</b>(추정치 $14.5B 상회) — 강한 가격 환경 속 범용 컴퓨트(general purpose compute)와 스토리지 upside. 전통 서버 매출 <b>+122% y/y</b></li>
+        <li>매출총이익률 21.1%(추정치 17.1%)의 상회는 물량 레버리지(volume leverage)에 더해 가격 효과가 작용한 것으로 판단</li>
+        <li>ISG 세그먼트 마진 <b>15.0%</b>(추정치 11.1%), CSG 세그먼트 마진 <b>7.6%</b>(QoQ -40bp에 그쳐 추정치 6.0% 상회)</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">3</span>가이던스: F3Q27과 FY27 모두 대폭 상향</h3>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>항목</th><th class="num">신규 가이던스</th><th class="num">기존 가이던스</th><th class="num">추정치</th><th class="num">컨센서스 (Visible Alpha)</th></tr></thead>
+        <tbody>
+          <tr><td><b>F3Q27 매출</b></td><td class="num"><b>$49.0B</b></td><td class="num">–</td><td class="num">$40.7B</td><td class="num">$42.6B</td></tr>
+          <tr><td><b>F3Q27 non-GAAP EPS</b></td><td class="num"><b>$6.50</b></td><td class="num">–</td><td class="num">$4.30</td><td class="num">$4.52</td></tr>
+          <tr><td><b>FY27 매출</b></td><td class="num"><b>$192B ± $2B</b></td><td class="num">$165~169B</td><td class="num">$178B</td><td class="num">$176B</td></tr>
+          <tr><td><b>FY27 AI 서버 매출</b></td><td class="num"><b>$74B</b></td><td class="num">$60B</td><td class="num" colspan="2">투자자 기대 범위 $70~75B (리포트 시각)</td></tr>
+          <tr><td><b>FY27 non-GAAP EPS</b></td><td class="num"><b>$25.50 ± $0.25</b></td><td class="num">$17.65~18.15</td><td class="num">$19.41</td><td class="num">$19.18</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="chart-card">
+        <div class="ct">신규 가이던스 vs 추정치 vs 컨센서스</div>
+        <div class="legend">
+          <span><i style="background:var(--accent)"></i>신규 가이던스</span>
+          <span><i style="background:var(--brand)"></i>추정치</span>
+          <span><i style="background:#9fb4d4"></i>컨센서스 (Visible Alpha)</span>
+        </div>
+        <svg viewBox="0 0 880 260" width="100%" role="img" aria-label="Guidance vs estimate vs consensus">
+          <!-- panel 1: F3Q27 Revenue ($B), ymax 55 -->
+          <line x1="30" y1="210" x2="220" y2="210" stroke="#cfd6e0"/>
+          <text x="125" y="232" font-size="12" fill="#1b1e24" text-anchor="middle" font-weight="700">F3Q27 매출 ($B)</text>
+          <rect x="53" y="58.5" width="40" height="151.5" fill="#d62027"/>
+          <rect x="105" y="84.2" width="40" height="125.8" fill="#0a2756"/>
+          <rect x="157" y="78.3" width="40" height="131.7" fill="#9fb4d4"/>
+          <text x="73" y="52" font-size="11.5" text-anchor="middle" fill="#1b1e24" font-weight="700">49.0</text>
+          <text x="125" y="78" font-size="11.5" text-anchor="middle" fill="#1b1e24">40.7</text>
+          <text x="177" y="72" font-size="11.5" text-anchor="middle" fill="#1b1e24">42.6</text>
+
+          <!-- panel 2: FY27 Revenue ($B), ymax 210 -->
+          <line x1="245" y1="210" x2="435" y2="210" stroke="#cfd6e0"/>
+          <text x="340" y="232" font-size="12" fill="#1b1e24" text-anchor="middle" font-weight="700">FY27 매출 ($B)</text>
+          <rect x="268" y="54.6" width="40" height="155.4" fill="#d62027"/>
+          <rect x="320" y="65.9" width="40" height="144.1" fill="#0a2756"/>
+          <rect x="372" y="67.5" width="40" height="142.5" fill="#9fb4d4"/>
+          <text x="288" y="48" font-size="11.5" text-anchor="middle" fill="#1b1e24" font-weight="700">192</text>
+          <text x="340" y="60" font-size="11.5" text-anchor="middle" fill="#1b1e24">178</text>
+          <text x="392" y="62" font-size="11.5" text-anchor="middle" fill="#1b1e24">176</text>
+
+          <!-- panel 3: F3Q27 EPS ($), ymax 7.5 -->
+          <line x1="460" y1="210" x2="650" y2="210" stroke="#cfd6e0"/>
+          <text x="555" y="232" font-size="12" fill="#1b1e24" text-anchor="middle" font-weight="700">F3Q27 EPS ($)</text>
+          <rect x="483" y="62.7" width="40" height="147.3" fill="#d62027"/>
+          <rect x="535" y="112.5" width="40" height="97.5" fill="#0a2756"/>
+          <rect x="587" y="107.6" width="40" height="102.4" fill="#9fb4d4"/>
+          <text x="503" y="56" font-size="11.5" text-anchor="middle" fill="#1b1e24" font-weight="700">6.50</text>
+          <text x="555" y="106" font-size="11.5" text-anchor="middle" fill="#1b1e24">4.30</text>
+          <text x="607" y="101" font-size="11.5" text-anchor="middle" fill="#1b1e24">4.52</text>
+
+          <!-- panel 4: FY27 EPS ($), ymax 28 -->
+          <line x1="675" y1="210" x2="865" y2="210" stroke="#cfd6e0"/>
+          <text x="770" y="232" font-size="12" fill="#1b1e24" text-anchor="middle" font-weight="700">FY27 EPS ($)</text>
+          <rect x="698" y="55.2" width="40" height="154.8" fill="#d62027"/>
+          <rect x="750" y="92.2" width="40" height="117.8" fill="#0a2756"/>
+          <rect x="802" y="93.6" width="40" height="116.4" fill="#9fb4d4"/>
+          <text x="718" y="49" font-size="11.5" text-anchor="middle" fill="#1b1e24" font-weight="700">25.50</text>
+          <text x="770" y="86" font-size="11.5" text-anchor="middle" fill="#1b1e24">19.41</text>
+          <text x="822" y="87" font-size="11.5" text-anchor="middle" fill="#1b1e24">19.18</text>
+        </svg>
+        <div class="chart-src">Source: Company data, Visible Alpha</div>
+      </div>
+
+      <h3 class="sec"><span class="n">4</span>투자자 반응 전망: 안도 랠리 예상</h3>
+      <ul class="pts">
+        <li>5월 호실적 이후 T+1 급등 구간을 제외하면 주가는 S&amp;P 500과 대체로 동행(in-line)</li>
+        <li>NTM 컨센서스 P/E <b>~22x</b>는 실적 발표 전 ~21x 대비 1 turn 높은 수준에 불과</li>
+        <li>FY27 EPS 가이던스 $25.50는 투자자 기대치 <b>$20~24</b>를 상회 — 강한 실적·가이던스에 힘입은 <b>안도 랠리(relief rally)</b> 예상</li>
+        <li>단, 12개월 관점의 예상 주가 상승률 5.8% + 배당수익률 0.6% = 예상 총수익률 <b>6.4%</b>로, 시장수익률 가정 9.3% 대비 초과수익률 <b>-2.9%</b> → Neutral 유지</li>
+      </ul>
+      <div class="callout"><span class="t">등급 밴드 참고</span>Dell은 평균 대비 높은 변동성으로 등급 밴드 예외(Core Banding Exception)가 적용된 종목이다. 일반 종목의 ±6% 대신 Buy는 시장수익률 가정 대비 +15% 초과, Sell은 -15% 미만일 때 부여되며, 그 사이 구간은 Neutral로 분류된다.</div>
+
+      <h3 class="sec"><span class="n">5</span>분기 실적 상세 (non-GAAP, $M)</h3>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>FY 1월 결산</th><th class="num">Jul-25 실적</th><th class="num">Jul-26 추정치</th><th class="num">Jul-26 컨센서스</th><th class="num">Jul-26 실적</th><th class="num">vs 추정치 ($)</th><th class="num">vs 추정치 (%)</th></tr></thead>
+        <tbody>
+          <tr><td><b>ISG</b></td><td class="num">16,800</td><td class="num">30,524</td><td class="num">29,781</td><td class="num"><b>31,782</b></td><td class="num up">1,258</td><td class="num up">+4.1%</td></tr>
+          <tr><td class="sub">Servers &amp; Networking</td><td class="num">12,944</td><td class="num">26,437</td><td class="num">25,448</td><td class="num">26,932</td><td class="num up">495</td><td class="num up">+1.9%</td></tr>
+          <tr><td class="sub">Storage</td><td class="num">3,856</td><td class="num">4,087</td><td class="num">4,346</td><td class="num">4,850</td><td class="num up">763</td><td class="num up">+18.7%</td></tr>
+          <tr><td><b>CSG</b></td><td class="num">12,503</td><td class="num">15,015</td><td class="num">15,075</td><td class="num"><b>15,034</b></td><td class="num up">19</td><td class="num up">+0.1%</td></tr>
+          <tr><td class="sub">Commercial</td><td class="num">10,781</td><td class="num">13,207</td><td class="num">13,308</td><td class="num">13,192</td><td class="num dn">(15)</td><td class="num dn">-0.1%</td></tr>
+          <tr><td class="sub">Consumer</td><td class="num">1,722</td><td class="num">1,808</td><td class="num">1,767</td><td class="num">1,842</td><td class="num up">34</td><td class="num up">+1.9%</td></tr>
+          <tr><td>Other</td><td class="num">473</td><td class="num">473</td><td class="num">279</td><td class="num">155</td><td class="num dn">(318)</td><td class="num dn">-67.2%</td></tr>
+          <tr class="hl"><td>Total non-GAAP revenue</td><td class="num">29,776</td><td class="num">46,012</td><td class="num">45,061</td><td class="num">46,971</td><td class="num up">959</td><td class="num up">+2.1%</td></tr>
+          <tr><td><b>Gross margin</b></td><td class="num">5,572</td><td class="num">7,874</td><td class="num">7,719</td><td class="num"><b>9,929</b></td><td class="num up">2,055</td><td class="num up">+26.1%</td></tr>
+          <tr><td class="sub">GM %</td><td class="num">18.7%</td><td class="num">17.1%</td><td class="num">17.1%</td><td class="num">21.1%</td><td class="num up">+4.0%p</td><td class="num"></td></tr>
+          <tr><td>SG&amp;A</td><td class="num">2,580</td><td class="num">2,851</td><td class="num">2,766</td><td class="num">3,088</td><td class="num">237</td><td class="num">+8.3%</td></tr>
+          <tr><td class="sub">% of revenue</td><td class="num">8.7%</td><td class="num">6.2%</td><td class="num">6.1%</td><td class="num">6.6%</td><td class="num">+0.4%p</td><td class="num"></td></tr>
+          <tr><td>R&amp;D</td><td class="num">708</td><td class="num">722</td><td class="num">874</td><td class="num">912</td><td class="num">190</td><td class="num">+26.3%</td></tr>
+          <tr><td class="sub">% of revenue</td><td class="num">2.4%</td><td class="num">1.6%</td><td class="num">1.9%</td><td class="num">1.9%</td><td class="num">+0.4%p</td><td class="num"></td></tr>
+          <tr><td>Operating expenses</td><td class="num">3,288</td><td class="num">3,573</td><td class="num">3,639</td><td class="num">4,000</td><td class="num">427</td><td class="num">+12.0%</td></tr>
+          <tr><td class="sub">% of revenue</td><td class="num">11.0%</td><td class="num">7.8%</td><td class="num">8.1%</td><td class="num">8.5%</td><td class="num">+0.8%p</td><td class="num"></td></tr>
+          <tr><td><b>Operating income</b></td><td class="num">2,284</td><td class="num">4,301</td><td class="num">4,199</td><td class="num"><b>5,929</b></td><td class="num up">1,628</td><td class="num up">+37.8%</td></tr>
+          <tr><td class="sub">OpM %</td><td class="num">7.7%</td><td class="num">9.3%</td><td class="num">9.3%</td><td class="num">12.6%</td><td class="num up">+3.3%p</td><td class="num"></td></tr>
+          <tr><td>Adjusted net income</td><td class="num">1,591</td><td class="num">3,239</td><td class="num">3,202</td><td class="num">4,591</td><td class="num up">1,352</td><td class="num up">+41.8%</td></tr>
+          <tr class="hl"><td>Diluted non-GAAP EPS ($)</td><td class="num">2.32</td><td class="num">4.97</td><td class="num">4.91</td><td class="num">7.04</td><td class="num up">2.08</td><td class="num up">+41.8%</td></tr>
+          <tr><td class="sub">Diluted shares (M)</td><td class="num">686</td><td class="num">652</td><td class="num">652</td><td class="num">652</td><td class="num">(0)</td><td class="num">0.0%</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-src">Source: Company data, Visible Alpha. 반올림으로 합계가 일치하지 않을 수 있음.</div>
+
+      <h3 class="sec"><span class="n">6</span>연간 실적 추정 및 밸류에이션 지표 (실적 발표 전 기준)</h3>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>($M)</th><th class="num">FY24</th><th class="num">FY25</th><th class="num">FY26</th><th class="num">FY27E</th><th class="num">FY28E</th><th class="num">FY29E</th><th class="num">FY30E</th><th class="num">FY31E</th></tr></thead>
+        <tbody>
+          <tr><td><b>Revenues</b></td><td class="num">88,425</td><td class="num">95,567</td><td class="num">113,538</td><td class="num">177,801</td><td class="num">202,100</td><td class="num">217,248</td><td class="num">228,387</td><td class="num">237,940</td></tr>
+          <tr><td>EBIT (조정)</td><td class="num">7,678</td><td class="num">8,381</td><td class="num">9,991</td><td class="num">16,853</td><td class="num">18,710</td><td class="num">20,247</td><td class="num">21,288</td><td class="num">22,276</td></tr>
+          <tr><td class="sub">EBIT margin %</td><td class="num">8.7</td><td class="num">8.8</td><td class="num">8.8</td><td class="num">9.5</td><td class="num">9.3</td><td class="num">9.3</td><td class="num">9.3</td><td class="num">9.4</td></tr>
+          <tr><td>Net earnings (조정)</td><td class="num">5,245</td><td class="num">5,745</td><td class="num">7,046</td><td class="num">12,651</td><td class="num">14,159</td><td class="num">15,458</td><td class="num">16,343</td><td class="num">17,179</td></tr>
+          <tr class="hl"><td>EPS (diluted, $)</td><td class="num">7.12</td><td class="num">7.97</td><td class="num">10.29</td><td class="num">19.41</td><td class="num">21.90</td><td class="num">24.14</td><td class="num">25.80</td><td class="num">27.46</td></tr>
+          <tr><td>DPS ($)</td><td class="num">1.46</td><td class="num">1.77</td><td class="num">2.13</td><td class="num">2.44</td><td class="num">2.54</td><td class="num">2.80</td><td class="num">3.07</td><td class="num">3.38</td></tr>
+          <tr><td>Net (debt) / cash</td><td class="num">(18,628)</td><td class="num">(20,934)</td><td class="num">(19,975)</td><td class="num">(18,607)</td><td class="num">(15,788)</td><td class="num">(11,695)</td><td class="num">(7,250)</td><td class="num">(2,778)</td></tr>
+          <tr><td>ROIC (EBIT) %</td><td class="num">77.1</td><td class="num">78.9</td><td class="num">90.5</td><td class="num">174.2</td><td class="num">195.2</td><td class="num">212.5</td><td class="num">241.2</td><td class="num">286.9</td></tr>
+          <tr><td>EV/EBITDA (x)</td><td class="num">6.0</td><td class="num">9.7</td><td class="num">8.3</td><td class="num">17.0</td><td class="num">16.0</td><td class="num">15.6</td><td class="num">15.7</td><td class="num">16.0</td></tr>
+          <tr><td>P/E (diluted, x)</td><td class="num">8.1</td><td class="num">15.1</td><td class="num">11.7</td><td class="num">23.5</td><td class="num">20.8</td><td class="num">18.9</td><td class="num">17.7</td><td class="num">16.6</td></tr>
+          <tr><td>Equity FCF yield %</td><td class="num">14.3</td><td class="num">2.2</td><td class="num">10.3</td><td class="num">4.2</td><td class="num">5.2</td><td class="num">6.1</td><td class="num">6.6</td><td class="num">7.0</td></tr>
+          <tr><td>Dividend yield %</td><td class="num">2.5</td><td class="num">1.5</td><td class="num">1.8</td><td class="num">0.6</td><td class="num">0.6</td><td class="num">0.7</td><td class="num">0.7</td><td class="num">0.8</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-src">Source: Company accounts, LSEG Eikon. 과거 연도 밸류에이션은 해당 연도 평균 주가, 추정 연도(E)는 2026년 9월 1일 주가 $429.86 기준.</div>
+
+      <div class="tbl-wrap">
+      <table class="tbl" style="margin-top:14px;">
+        <thead><tr><th>분기별 EPS ($, diluted)</th><th class="num">추정치</th><th class="num">컨센서스</th></tr></thead>
+        <tbody>
+          <tr><td>FY27 Q1 (실적)</td><td class="num">4.86</td><td class="num">4.86</td></tr>
+          <tr><td>FY27 Q2E</td><td class="num">4.97</td><td class="num">4.92</td></tr>
+          <tr><td>FY27 Q3E</td><td class="num">4.30</td><td class="num">4.49</td></tr>
+          <tr><td>FY27 Q4E</td><td class="num">5.28</td><td class="num">4.75</td></tr>
+          <tr class="hl"><td>FY27E</td><td class="num">19.41</td><td class="num">18.92</td></tr>
+          <tr><td>FY28E</td><td class="num">21.90</td><td class="num">22.91</td></tr>
+          <tr><td>FY29E</td><td class="num">24.14</td><td class="num">26.46</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="callout"><span class="t">주목</span>위 연간·분기 추정치는 실적 발표 전 기준이다. Q2 실제 EPS $7.04는 추정치 $4.97을 41.8% 상회했고, 새 Q3 가이던스 $6.50와 FY27 가이던스 $25.50는 각각 기존 추정치 $4.30, $19.41을 크게 웃돌아 전 기간 추정치의 대폭 상향이 불가피하다. FY28E 이후 추정치가 컨센서스를 하회하던 구도도 재점검 대상이다.</div>
+
+      <h3 class="sec"><span class="n">7</span>목표가·등급 히스토리</h3>
+      <div class="chart-card">
+        <div class="ct">Dell 주가 vs 목표가 (등급·목표가 변경 시점 기준, $)</div>
+        <div class="legend">
+          <span><i style="background:#0a2756"></i>주가 (변경일 종가)</span>
+          <span><i style="background:#d62027"></i>목표가</span>
+          <span><i style="background:#f3e3c4"></i>Neutral 구간 (2026-05-10~)</span>
+        </div>
+        <svg viewBox="0 0 880 290" width="100%" role="img" aria-label="Price target history">
+          <rect x="769.4" y="30" width="70.6" height="220" fill="#f3e3c4" opacity="0.6"/>
+          <line x1="60" y1="250" x2="840" y2="250" stroke="#cfd6e0"/>
+          <line x1="60" y1="206" x2="840" y2="206" stroke="#eef1f5"/>
+          <line x1="60" y1="162" x2="840" y2="162" stroke="#eef1f5"/>
+          <line x1="60" y1="118" x2="840" y2="118" stroke="#eef1f5"/>
+          <line x1="60" y1="74" x2="840" y2="74" stroke="#eef1f5"/>
+          <line x1="60" y1="30" x2="840" y2="30" stroke="#eef1f5"/>
+          <text x="52" y="254" font-size="10.5" fill="#9aa3b2" text-anchor="end">0</text>
+          <text x="52" y="210" font-size="10.5" fill="#9aa3b2" text-anchor="end">100</text>
+          <text x="52" y="166" font-size="10.5" fill="#9aa3b2" text-anchor="end">200</text>
+          <text x="52" y="122" font-size="10.5" fill="#9aa3b2" text-anchor="end">300</text>
+          <text x="52" y="78" font-size="10.5" fill="#9aa3b2" text-anchor="end">400</text>
+          <text x="52" y="34" font-size="10.5" fill="#9aa3b2" text-anchor="end">500</text>
+          <line x1="201.9" y1="250" x2="201.9" y2="255" stroke="#9aa3b2"/>
+          <line x1="443.4" y1="250" x2="443.4" y2="255" stroke="#9aa3b2"/>
+          <line x1="684.3" y1="250" x2="684.3" y2="255" stroke="#9aa3b2"/>
+          <text x="60" y="270" font-size="10.5" fill="#9aa3b2">2023-05</text>
+          <text x="201.9" y="270" font-size="10.5" fill="#9aa3b2" text-anchor="middle">2024-01</text>
+          <text x="443.4" y="270" font-size="10.5" fill="#9aa3b2" text-anchor="middle">2025-01</text>
+          <text x="684.3" y="270" font-size="10.5" fill="#9aa3b2" text-anchor="middle">2026-01</text>
+          <text x="840" y="270" font-size="10.5" fill="#9aa3b2" text-anchor="end">2026-08</text>
+          <!-- price target (step) -->
+          <polyline fill="none" stroke="#d62027" stroke-width="2"
+            points="60,225.8 60.7,225.8 60.7,224.9 120.7,224.9 120.7,219.6 138.5,219.6 138.5,214.8 231.6,214.8 231.6,206.4 240.8,206.4 240.8,200.3 273.1,200.3 273.1,188.0 300.9,188.0 300.9,177.8 360.9,177.8 360.9,180.5 481.0,180.5 481.0,184.0 541.7,184.0 541.7,186.2 601.1,186.2 601.1,181.8 627.5,181.8 627.5,168.2 659.8,168.2 659.8,176.5 769.4,176.5 769.4,143.1 781.3,143.1 781.3,56.4 840,56.4 840,49.8"/>
+          <!-- stock price at each change date -->
+          <polyline fill="none" stroke="#0a2756" stroke-width="2"
+            points="60,230.3 60.7,230.0 120.7,225.3 138.5,220.1 231.6,213.6 240.8,208.3 273.1,197.9 300.9,175.2 360.9,201.3 481.0,202.6 541.7,201.0 601.1,191.0 627.5,183.6 659.8,194.6 769.4,135.4 781.3,110.5 840,51.3"/>
+          <g fill="#0a2756">
+            <circle cx="60" cy="230.3" r="3"/><circle cx="120.7" cy="225.3" r="3"/><circle cx="138.5" cy="220.1" r="3"/><circle cx="231.6" cy="213.6" r="3"/><circle cx="240.8" cy="208.3" r="3"/><circle cx="273.1" cy="197.9" r="3"/><circle cx="300.9" cy="175.2" r="3"/><circle cx="360.9" cy="201.3" r="3"/><circle cx="481.0" cy="202.6" r="3"/><circle cx="541.7" cy="201.0" r="3"/><circle cx="601.1" cy="191.0" r="3"/><circle cx="627.5" cy="183.6" r="3"/><circle cx="659.8" cy="194.6" r="3"/><circle cx="769.4" cy="135.4" r="3"/><circle cx="781.3" cy="110.5" r="3"/><circle cx="840" cy="51.3" r="3"/>
+          </g>
+          <text x="765" y="140" font-size="10.5" fill="#8a4b15" text-anchor="end">Buy→Neutral (PT $243)</text>
+          <text x="776" y="52" font-size="10.5" fill="#d62027" text-anchor="end">PT $440 → $455</text>
+        </svg>
+        <div class="chart-src">Source: LSEG Eikon (2026-08-31 기준)</div>
+      </div>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>날짜</th><th class="num">주가 ($)</th><th class="num">목표가 ($)</th><th>등급</th></tr></thead>
+        <tbody>
+          <tr><td>2025-08-28</td><td class="num">134.05</td><td class="num">155.00</td><td>Buy</td></tr>
+          <tr><td>2025-10-07</td><td class="num">150.87</td><td class="num">186.00</td><td>Buy</td></tr>
+          <tr><td>2025-11-25</td><td class="num">125.92</td><td class="num">167.00</td><td>Buy</td></tr>
+          <tr><td>2026-05-10</td><td class="num">260.46</td><td class="num">243.00</td><td>Neutral (하향)</td></tr>
+          <tr><td>2026-05-28</td><td class="num">317.05</td><td class="num">440.00</td><td>Neutral</td></tr>
+          <tr class="hl"><td>2026-08-25</td><td class="num">451.50</td><td class="num">455.00</td><td>Neutral</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3 class="sec"><span class="n">!</span>리스크 &amp; 모니터링 포인트</h3>
+      <div class="risk-box">
+        <h4>밸류에이션 방법론 &amp; 주요 리스크</h4>
+        <ul>
+          <li><b>밸류에이션:</b> P/E 기반으로 목표가 산출</li>
+          <li><b>매크로 의존도:</b> 글로벌 매크로가 약화될 경우 실적의 유의미한 하방 리스크</li>
+          <li><b>부채 상환 능력:</b> 부채 부담(FY27E net debt $18.6B, Net debt/EBITDA 1.0x)의 상환 리스크</li>
+          <li><b>운영 실행력:</b> 성장을 위해서는 점유율 확대가 필요하며, 특히 스토리지 세그먼트에서의 실행 리스크</li>
+        </ul>
+        <h4 style="margin-top:14px;">모니터링 포인트</h4>
+        <ul>
+          <li>AI 백로그 $95B의 매출 전환 속도와 AI 서버 마진 추이 (F3Q27 매출 가이던스 $49.0B 달성 여부)</li>
+          <li>매출총이익률 21.1%의 지속성 — 물량 레버리지와 가격 효과 중 어느 쪽이 구조적인지</li>
+          <li>향후 6개월 산업 구조·규제 환경은 '변화 없음(3/5)', 최근 3~6개월 업황 및 차기 EPS 서프라이즈 가능성은 '긍정(4/5)'으로 평가</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- Report 2 -->
+  <!-- ============================================================ -->
+  <section class="report" id="rpt2">
+    <div class="report-head">
+      <div class="tag">US IT Hardware</div>
+      <h2>Dell 7월 분기 Quick Look: 예상을 상회한 실적과 상향된 가이던스, Buy 및 목표가 $515 유지</h2>
+      <p class="lede">매출 $47.0B(+58% y/y), EPS $7.04로 가이던스와 Street를 모두 상회했고, FY27 매출 가이던스 $192B·EPS $25.50·AI 서버 매출 $74B로 상향. N24M EPS에 20x P/E를 적용한 목표가 $515, 예상 총수익률 21.7%.</p>
+    </div>
+
+    <div class="report-body">
+
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Buy</div><div class="s">단기 Catalyst Watch: Upside (10/22 만료)</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$515</div><div class="s">유지 (7/24 $475 → $515 상향)</div></div>
+        <div class="chip"><div class="k">Price (1 Sep 2026)</div><div class="v">$425.00</div><div class="s">예상 주가수익률 +21.2% / 배당 0.5%</div></div>
+        <div class="chip"><div class="k">Expected Total Return</div><div class="v buy">+21.7%</div><div class="s">목표가 = 20x N24M EPS</div></div>
+        <div class="chip"><div class="k">Market Cap</div><div class="v">$274.6B</div><div class="s">분기 배당 $0.63/주 선언</div></div>
+      </div>
+
+      <h3 class="sec"><span class="n">1</span>F2Q27(7월 분기) 실적: 예상 상회 &amp; 상향 가이던스</h3>
+      <ul class="pts">
+        <li>매출 <b>$47.0B (+58% y/y)</b> — 기존 가이던스 $44~45B, Street(FactSet) 기대치 $44.93B 상회</li>
+        <li>매출총이익률 <b>21.1%</b>(추정치 17.5%), 영업이익률 <b>12.6%</b></li>
+        <li>EPS <b>$7.04</b> — 기존 가이던스 $4.70~4.90, Street $4.91 대비 큰 폭 상회</li>
+        <li>9월 1일 이사회에서 분기 현금배당 <b>주당 $0.63</b> 선언 — 10월 20일 기준 주주 대상, 10월 30일 지급</li>
+      </ul>
+
+      <div class="chart-card">
+        <div class="ct">F2Q27 부문별 매출 성장률 (y/y, %)</div>
+        <svg viewBox="0 0 880 270" width="100%" role="img" aria-label="Segment revenue growth y/y">
+          <line x1="190" y1="10" x2="190" y2="255" stroke="#cfd6e0"/>
+          <text x="182" y="34" font-size="12" fill="#1b1e24" text-anchor="end" font-weight="700">총매출</text>
+          <rect x="190" y="20" width="281" height="20" fill="#0a2756"/>
+          <text x="477" y="34" font-size="11.5" fill="#1b1e24" font-weight="700">+58%</text>
+
+          <text x="182" y="64" font-size="12" fill="#1b1e24" text-anchor="end" font-weight="700">ISG</text>
+          <rect x="190" y="50" width="431" height="20" fill="#0a2756"/>
+          <text x="627" y="64" font-size="11.5" fill="#1b1e24" font-weight="700">+89%</text>
+
+          <text x="182" y="94" font-size="12" fill="#525866" text-anchor="end">전통 서버·네트워킹</text>
+          <rect x="190" y="80" width="591" height="20" fill="#d62027"/>
+          <text x="787" y="94" font-size="11.5" fill="#1b1e24" font-weight="700">+122%</text>
+
+          <text x="182" y="124" font-size="12" fill="#525866" text-anchor="end">AI 서버</text>
+          <rect x="190" y="110" width="485" height="20" fill="#d62027"/>
+          <text x="681" y="124" font-size="11.5" fill="#1b1e24" font-weight="700">+100%</text>
+
+          <text x="182" y="154" font-size="12" fill="#525866" text-anchor="end">스토리지</text>
+          <rect x="190" y="140" width="126" height="20" fill="#9fb4d4"/>
+          <text x="322" y="154" font-size="11.5" fill="#1b1e24">+26%</text>
+
+          <text x="182" y="184" font-size="12" fill="#1b1e24" text-anchor="end" font-weight="700">CSG</text>
+          <rect x="190" y="170" width="97" height="20" fill="#0a2756"/>
+          <text x="293" y="184" font-size="11.5" fill="#1b1e24" font-weight="700">+20%</text>
+
+          <text x="182" y="214" font-size="12" fill="#525866" text-anchor="end">Commercial</text>
+          <rect x="190" y="200" width="107" height="20" fill="#9fb4d4"/>
+          <text x="303" y="214" font-size="11.5" fill="#1b1e24">+22%</text>
+
+          <text x="182" y="244" font-size="12" fill="#525866" text-anchor="end">Consumer</text>
+          <rect x="190" y="230" width="34" height="20" fill="#9fb4d4"/>
+          <text x="230" y="244" font-size="11.5" fill="#1b1e24">+7%</text>
+        </svg>
+      </div>
+
+      <h3 class="sec"><span class="n">2</span>세그먼트 상세</h3>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>세그먼트</th><th class="num">매출</th><th class="num">y/y</th><th class="num">Street / 가이던스</th><th class="num">영업이익률</th></tr></thead>
+        <tbody>
+          <tr class="hl"><td>ISG</td><td class="num">$31.78B</td><td class="num up">+89%</td><td class="num">Street $29.61B</td><td class="num">15.0%</td></tr>
+          <tr><td class="sub">전통 서버 &amp; 네트워킹</td><td class="num">$10.53B</td><td class="num up">+122%</td><td class="num">–</td><td class="num">–</td></tr>
+          <tr><td class="sub">AI 서버</td><td class="num">$16.40B</td><td class="num up">+100%</td><td class="num">가이던스 ~$15.5B</td><td class="num">–</td></tr>
+          <tr><td class="sub">스토리지</td><td class="num">$4.85B</td><td class="num up">+26%</td><td class="num">–</td><td class="num">–</td></tr>
+          <tr class="hl"><td>CSG</td><td class="num">$15.03B</td><td class="num up">+20%</td><td class="num">Street $15.08B</td><td class="num">7.6%</td></tr>
+          <tr><td class="sub">Commercial</td><td class="num">$13.2B</td><td class="num up">+22%</td><td class="num">–</td><td class="num">–</td></tr>
+          <tr><td class="sub">Consumer</td><td class="num">$1.8B</td><td class="num up">+7%</td><td class="num">–</td><td class="num">–</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <ul class="pts" style="margin-top:12px;">
+        <li>ISG는 AI 서버(+100%)뿐 아니라 전통 서버·네트워킹(+122%)과 스토리지(+26%)까지 전 부문 고성장 — Street 대비 $2.2B 상회</li>
+        <li>CSG는 Street에 소폭 미달(-$0.05B)했으나 Commercial +22%로 기업용 PC 수요 견조, Consumer는 +7%</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">3</span>가이던스: F3Q27(10월 분기) 및 FY27(1월 결산)</h3>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>항목</th><th class="num">신규 가이던스</th><th class="num">y/y</th><th class="num">기존 가이던스</th><th class="num">Street</th></tr></thead>
+        <tbody>
+          <tr><td><b>F3Q27 매출</b></td><td class="num"><b>$49B</b></td><td class="num up">+81%</td><td class="num">–</td><td class="num">$41.36B</td></tr>
+          <tr><td><b>F3Q27 non-GAAP EPS</b></td><td class="num"><b>$6.50</b></td><td class="num up">+151%</td><td class="num">–</td><td class="num">$4.47</td></tr>
+          <tr><td><b>FY27 매출</b></td><td class="num"><b>$192.0B</b></td><td class="num up">+69%</td><td class="num">$165~169B</td><td class="num">$174.13B</td></tr>
+          <tr><td><b>FY27 non-GAAP EPS</b></td><td class="num"><b>$25.50</b></td><td class="num up">+148%</td><td class="num">$17.90 ± $0.25</td><td class="num">$18.95</td></tr>
+          <tr><td><b>FY27 AI 서버 매출</b></td><td class="num"><b>~$74B</b></td><td class="num">–</td><td class="num">~$60B</td><td class="num">–</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <ul class="pts" style="margin-top:12px;">
+        <li>F3Q27 매출 가이던스 $49B는 Street $41.36B 대비 <b>+18%</b>, EPS 가이던스 $6.50는 Street $4.47 대비 <b>+45%</b> 높은 수준</li>
+        <li>FY27 매출 가이던스는 기존 상단($169B) 대비 <b>+$23B</b>, EPS는 기존 중간값($17.90) 대비 <b>+$7.60</b> 상향 — AI 서버 매출 전망 $60B → $74B 상향이 핵심</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">4</span>밸류에이션: 목표가 $515 산출 근거</h3>
+      <ul class="pts">
+        <li>목표가 $515(반올림)는 <b>N24M EPS 추정치에 20x P/E</b>를 적용해 산출</li>
+        <li>Peer group(대형 엔터프라이즈 하드웨어 기업)은 P/E <b>11x~32x</b> 범위, 중간값 <b>18x</b>에서 거래</li>
+        <li>예상보다 강한 이익 성장과 AI 포트폴리오 모멘텀을 감안하면 Peer 대비 프리미엄이 정당화된다는 판단</li>
+        <li>현재가 $425 기준 예상 주가수익률 21.2% + 배당수익률 0.5% = 예상 총수익률 <b>21.7%</b> (Buy 기준 ETR 15% 이상 충족)</li>
+      </ul>
+      <div class="callout"><span class="t">참고</span>두 리포트가 인용하는 컨센서스 출처가 다르다. 리포트 ①은 Visible Alpha(F2Q 매출 $45.06B, EPS $4.91, FY27 EPS $19.18), 리포트 ②는 FactSet Street(F2Q 매출 $44.93B, EPS $4.91, FY27 EPS $18.95) 기준이며, 기준 주가도 각각 $429.86(장중)과 $425.00(16:00)으로 차이가 있다.</div>
+
+      <h3 class="sec"><span class="n">5</span>목표가 히스토리 (최근 1년)</h3>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>날짜</th><th class="num">목표가 ($)</th><th class="num">종가 ($)</th><th>등급</th></tr></thead>
+        <tbody>
+          <tr><td>2025-08-11</td><td class="num">160.00</td><td class="num">138.32</td><td>Buy</td></tr>
+          <tr><td>2025-10-07</td><td class="num">175.00</td><td class="num">150.87</td><td>Buy</td></tr>
+          <tr><td>2026-01-19</td><td class="num">165.00</td><td class="num">120.53</td><td>Buy</td></tr>
+          <tr><td>2026-02-17</td><td class="num">160.00</td><td class="num">116.09</td><td>Buy</td></tr>
+          <tr><td>2026-02-27</td><td class="num">180.00</td><td class="num">148.08</td><td>Buy</td></tr>
+          <tr><td>2026-04-20</td><td class="num">235.00</td><td class="num">204.24</td><td>Buy</td></tr>
+          <tr><td>2026-05-14</td><td class="num">290.00</td><td class="num">247.89</td><td>Buy</td></tr>
+          <tr><td>2026-05-29</td><td class="num">475.00</td><td class="num">420.91</td><td>Buy</td></tr>
+          <tr class="hl"><td>2026-07-24</td><td class="num">515.00</td><td class="num">437.50</td><td>Buy</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-src">2026년 5월 이후 목표가 $290 → $475 → $515로 3개월 새 두 차례 대폭 상향. 2026-07-24 Catalyst Watch(Upside, 90일) 재부여.</div>
+
+      <h3 class="sec"><span class="n">!</span>리스크 &amp; 모니터링 포인트</h3>
+      <div class="risk-box">
+        <h4>목표가 달성 리스크</h4>
+        <ul>
+          <li><b>경쟁 심화:</b> 하이퍼스케일러와 클라우드 옵션이 전통 엔터프라이즈 서버·스토리지 하드웨어 수요를 잠식. 하이퍼스케일러는 ODM의 저마진 컴퓨트·스토리지에 의존하고, 기업은 프라이빗·하이브리드 클라우드 인프라로 효율화 추구 → 공격적 가격 환경, 스토리지 점유율 상실, 마진 침식</li>
+          <li><b>PC &amp; 데이터센터 수요 둔화:</b> 하드웨어 수요 회복이 예상보다 더디거나 PC 교체 주기(refresh cycle)가 지연될 경우 부정적</li>
+          <li><b>AI 백로그 매출 전환 지연:</b> AI 백로그가 CY2026 내 매출로 실현되지 않고 이연될 가능성</li>
+          <li><b>복잡한 지배구조:</b> 지분·거버넌스 구조가 상당히 복잡</li>
+        </ul>
+        <h4 style="margin-top:14px;">모니터링 포인트</h4>
+        <ul>
+          <li>10월 22일 만료되는 단기 Upside 시각 — 이 기간 주가가 목표 방향 반대로 15% 이상 움직이면 자동 해제</li>
+          <li>F3Q27 실적(10월 분기)에서 AI 서버 매출 $74B 연간 목표 대비 진행률과 마진 방어 여부</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div>본 문서는 투자 권유를 목적으로 하지 않습니다.</div>
+  </footer>
+
+</div>
+</body>
+</html>
