@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Snowflake F2Q27 실적 리뷰</title>
+<style>
+  :root{
+    --brand:#0f2a4a;
+    --brand-deep:#081a30;
+    --accent:#1f6fb2;
+    --accent2:#2c5f8f;
+    --paper:#f4f6f9;
+    --card:#ffffff;
+    --ink:#1b1e24;
+    --ink-soft:#525866;
+    --line:#dde3ec;
+    --buy:#1f7a4d;
+    --bear:#c0392b;
+    --bull:#1f6fb2;
+    --warn:#8a4b15;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);font-family:'Helvetica Neue','Pretendard','Noto Sans KR',Arial,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+  .topbar{background:var(--brand-deep);color:#fff;padding:14px 6vw;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-bottom:3px solid var(--accent);position:sticky;top:0;z-index:50;}
+  .topbar .logo{font-weight:700;font-size:18px;letter-spacing:0.5px;}
+  .topbar .logo span{color:var(--accent);}
+  .topbar nav{display:flex;gap:8px;flex-wrap:wrap;}
+  .topbar nav a{color:#cfd8e6;text-decoration:none;font-size:12.5px;padding:6px 12px;border:1px solid rgba(255,255,255,0.2);border-radius:20px;transition:all .15s;}
+  .topbar nav a:hover{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .wrap{max-width:960px;margin:0 auto;padding:40px 6vw 90px;}
+  .intro{border-left:4px solid var(--accent);padding:8px 0 8px 20px;margin-bottom:40px;}
+  .intro .eyebrow{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent2);font-weight:700;}
+  .intro h1{font-size:26px;margin:8px 0 6px;color:var(--brand);}
+  .report{margin-bottom:64px;scroll-margin-top:70px;}
+  .report-head{background:linear-gradient(135deg,var(--brand) 0%, var(--brand-deep) 100%);color:#fff;border-radius:10px 10px 0 0;padding:28px 30px;}
+  .report-head .tag{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#9fb4d4;font-weight:700;}
+  .report-head h2{margin:8px 0 14px;font-size:23px;line-height:1.35;}
+  .report-head .lede{font-family:'Georgia',serif;font-size:15.5px;color:#e3ebf6;border-top:1px solid rgba(255,255,255,0.16);padding-top:14px;margin:0;}
+  .report-body{background:var(--card);border:1px solid var(--line);border-top:none;border-radius:0 0 10px 10px;padding:30px;}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px;}
+  .chip{border:1px solid var(--line);border-radius:8px;padding:10px 16px;background:#fafbfd;flex:1;min-width:130px;}
+  .chip .k{font-size:10.5px;letter-spacing:0.5px;text-transform:uppercase;color:var(--ink-soft);}
+  .chip .v{font-size:19px;font-weight:700;color:var(--brand);margin-top:2px;}
+  .chip .v.buy{color:var(--buy);}
+  .chip .s{font-size:11px;color:var(--ink-soft);}
+  h3.sec{font-size:17px;color:var(--brand);margin:30px 0 12px;padding-bottom:8px;border-bottom:1.5px solid var(--line);display:flex;align-items:center;gap:10px;}
+  h3.sec .n{background:var(--brand);color:#fff;font-size:12px;font-weight:700;width:24px;height:24px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}
+  ul.pts{margin:0;padding:0;list-style:none;}
+  ul.pts li{position:relative;padding:7px 0 7px 20px;font-size:14.5px;border-bottom:1px dashed var(--line);}
+  ul.pts li:last-child{border-bottom:none;}
+  ul.pts li::before{content:"—";position:absolute;left:0;color:var(--accent2);font-weight:700;}
+  ul.pts b{color:var(--brand);}
+  table.tbl{width:100%;border-collapse:collapse;font-size:13px;margin:6px 0 4px;}
+  table.tbl th{background:var(--brand);color:#fff;text-align:left;padding:8px 10px;font-weight:600;}
+  table.tbl th.num{text-align:right;}
+  table.tbl td{padding:7px 10px;border-bottom:1px solid var(--line);}
+  table.tbl tr:nth-child(even) td{background:#f7f9fc;}
+  table.tbl td.num{text-align:right;font-variant-numeric:tabular-nums;}
+  table.tbl td.up{color:var(--buy);font-weight:700;}
+  table.tbl td.dn{color:var(--bear);font-weight:700;}
+  .tbl-wrap{overflow-x:auto;}
+  .chart-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:22px 22px 14px;margin:14px 0;}
+  .chart-card .ct{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:12px;}
+  .chart-src{font-size:10.5px;color:#9aa3b2;margin-top:8px;}
+  .legend{display:flex;gap:18px;font-size:11.5px;color:var(--ink-soft);margin-bottom:4px;flex-wrap:wrap;}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .legend i{width:11px;height:11px;border-radius:2px;display:inline-block;}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media(max-width:680px){.two{grid-template-columns:1fr;}}
+  .bbgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0;}
+  @media(max-width:680px){.bbgrid{grid-template-columns:1fr;}}
+  .bb{border-radius:8px;padding:16px;border:1px solid var(--line);background:#fafbfd;}
+  .bb.bull{border-top:3px solid var(--bull);}
+  .bb.base{border-top:3px solid var(--ink-soft);}
+  .bb.bear{border-top:3px solid var(--bear);}
+  .bb .lbl{font-size:11px;letter-spacing:0.6px;text-transform:uppercase;font-weight:700;color:var(--ink-soft);}
+  .bb .px{font-size:22px;font-weight:700;color:var(--brand);margin:4px 0;}
+  .bb .ret{font-size:13px;font-weight:600;}
+  .bb.bull .ret{color:var(--bull);}
+  .bb.bear .ret{color:var(--bear);}
+  .bb ul{margin:8px 0 0;padding-left:16px;font-size:12px;color:var(--ink-soft);}
+  .bb li{margin-bottom:4px;}
+  .callout{background:#fbf6ec;border:1px solid #e8dcc3;border-radius:8px;padding:14px 18px;font-size:13px;color:var(--ink-soft);margin-top:14px;}
+  .callout .t{font-size:10.5px;font-weight:700;letter-spacing:0.6px;color:var(--warn);text-transform:uppercase;display:block;margin-bottom:5px;}
+  .risk-box{background:var(--brand);color:#dde6f3;border-radius:8px;padding:22px 24px;margin-top:14px;}
+  .risk-box h4{margin:0 0 10px;color:#fff;font-size:14.5px;}
+  .risk-box ul{margin:0;padding-left:18px;}
+  .risk-box li{margin-bottom:8px;font-size:13px;}
+  .risk-box li b{color:#fff;}
+  footer{border-top:1px solid var(--line);margin-top:50px;padding-top:20px;font-size:11px;color:#9aa3b2;line-height:1.6;}
+  @media(max-width:560px){.intro h1{font-size:21px;}.report-head h2{font-size:19px;}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">Research<span>·</span>Digest</div>
+  <nav>
+    <a href="#overview">종합</a>
+    <a href="#rpt1">리포트 1 · Buy $400</a>
+    <a href="#rpt2">리포트 2 · OW $470</a>
+    <a href="#rpt3">리포트 3 · Buy $436</a>
+    <a href="#rpt4">리포트 4 · OW $426</a>
+  </nav>
+</div>
+
+<div class="wrap">
+
+  <div class="intro">
+    <div class="eyebrow">3 September 2026</div>
+    <h1>Snowflake F2Q27 실적 리뷰 — AI 플라이휠이 이끄는 3분기 연속 성장 가속</h1>
+  </div>
+
+  <!-- ===================== OVERVIEW ===================== -->
+  <section class="report" id="overview">
+    <div class="report-head">
+      <div class="tag">Software · North America · 4개 리포트 종합</div>
+      <h2>4개 리포트 모두 매수 의견 유지, 목표주가 일제히 상향</h2>
+      <p class="lede">제품매출 $1,492M(+37% y/y)로 3분기 연속 가속, 가이던스 중간값 5.2% 상회. 가속의 절반은 AI 제품(CoCo·CoWork), 절반은 코어 플랫폼. FY27 제품매출 가이던스 +36%로 상향, 3Q 가이던스 +37~38%로 하반기 40% 성장 가시권. 목표주가 $400~$470(현재가 $305.84).</p>
+    </div>
+    <div class="report-body">
+      <div class="chips">
+        <div class="chip"><div class="k">Product Revenue</div><div class="v">$1,492M</div><div class="s">+36.8% y/y, 가이던스 중간값 +5.2%</div></div>
+        <div class="chip"><div class="k">Non-GAAP OPM</div><div class="v">15.3%</div><div class="s">가이던스 12.5%, +4.2pt y/y</div></div>
+        <div class="chip"><div class="k">FY27 Product Guide</div><div class="v">$6,070M</div><div class="s">+36% y/y (이전 +31%)</div></div>
+        <div class="chip"><div class="k">Adj. FCF</div><div class="v">$92M</div><div class="s">6.0% 마진, 컨센서스 하회</div></div>
+        <div class="chip"><div class="k">Price (2 Sep)</div><div class="v">$305.84</div><div class="s">실적 발표 후 +21%</div></div>
+      </div>
+
+      <h3 class="sec"><span class="n">1</span>목표주가 비교</h3>
+      <div class="chart-card">
+        <div class="ct">리포트별 목표주가 vs 현재가</div>
+        <div class="legend"><span><i style="background:#0f2a4a"></i>신규 목표주가</span><span><i style="background:#9db9d9"></i>이전 목표주가</span></div>
+        <svg viewBox="0 0 880 230" width="100%" role="img">
+<text x="158" y="42" font-size="12.5" font-weight="700" text-anchor="end" fill="#0f2a4a">리포트 1</text>
+<rect x="170" y="28" width="453.8" height="22" fill="#0f2a4a" rx="3" opacity="0.92"/>
+<line x1="567.1" y1="24" x2="567.1" y2="54" stroke="#9db9d9" stroke-width="3"/>
+<text x="631.8" y="43" font-size="12" font-weight="700" fill="#0f2a4a">$400</text>
+<text x="683.8" y="43" font-size="10.5" fill="#8a94a6">(이전 $350, +31%)</text>
+<text x="158" y="84" font-size="12.5" font-weight="700" text-anchor="end" fill="#0f2a4a">리포트 2</text>
+<rect x="170" y="70" width="533.3" height="22" fill="#0f2a4a" rx="3" opacity="0.92"/>
+<line x1="510.4" y1="66" x2="510.4" y2="96" stroke="#9db9d9" stroke-width="3"/>
+<text x="711.3" y="85" font-size="12" font-weight="700" fill="#0f2a4a">$470</text>
+<text x="763.3" y="85" font-size="10.5" fill="#8a94a6">(이전 $300, +54%)</text>
+<text x="158" y="126" font-size="12.5" font-weight="700" text-anchor="end" fill="#0f2a4a">리포트 3</text>
+<rect x="170" y="112" width="494.7" height="22" fill="#0f2a4a" rx="3" opacity="0.92"/>
+<line x1="510.4" y1="108" x2="510.4" y2="138" stroke="#9db9d9" stroke-width="3"/>
+<text x="672.7" y="127" font-size="12" font-weight="700" fill="#0f2a4a">$436</text>
+<text x="724.7" y="127" font-size="10.5" fill="#8a94a6">(이전 $300, +43%)</text>
+<text x="158" y="168" font-size="12.5" font-weight="700" text-anchor="end" fill="#0f2a4a">리포트 4</text>
+<rect x="170" y="154" width="483.3" height="22" fill="#0f2a4a" rx="3" opacity="0.92"/>
+<line x1="493.4" y1="150" x2="493.4" y2="180" stroke="#9db9d9" stroke-width="3"/>
+<text x="661.3" y="169" font-size="12" font-weight="700" fill="#0f2a4a">$426</text>
+<text x="713.3" y="169" font-size="10.5" fill="#8a94a6">(이전 $285, +39%)</text>
+<line x1="517.0" y1="20" x2="517.0" y2="194" stroke="#c0392b" stroke-width="1.6" stroke-dasharray="5 4"/>
+<text x="517.0" y="210" font-size="11" font-weight="700" text-anchor="middle" fill="#c0392b">현재가 $305.84 (9/2)</text>
+</svg>
+      </div>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>리포트</th><th>등급</th><th class="num">목표주가</th><th class="num">이전</th><th class="num">업사이드</th><th>밸류에이션 근거</th></tr></thead>
+        <tbody>
+          <tr><td><b>리포트 1</b></td><td class="up">Buy</td><td class="num">$400</td><td class="num">$350</td><td class="num">+31%</td><td>DCF (WACC 9.3%, 터미널 성장 3.5%) — FY28E 매출 18x / Adj. FCF 84x, EV/매출 ~12x</td></tr>
+          <tr><td><b>리포트 2</b></td><td class="up">Overweight</td><td class="num">$470</td><td class="num">$300</td><td class="num">+54%</td><td>CY30E FCF ~$4.4B에 ~60x(이전 ~39x), WACC 11.1%로 CY27 할인 — EV/CY27 매출 ~22x</td></tr>
+          <tr><td><b>리포트 3</b></td><td class="up">Buy</td><td class="num">$436</td><td class="num">$300</td><td class="num">+43%</td><td>SNTM(Q5~Q8) uFCF에 82x(이전 60x) EV/FCF — EV/FCF/Growth 1.9x</td></tr>
+          <tr><td><b>리포트 4</b></td><td class="up">Overweight</td><td class="num">$426</td><td class="num">$285</td><td class="num">+39%</td><td>CY28E uFCF에 ~60x EV/FCF (Dec-27 기준) — EV/매출 15.4x, P/E 104x</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3 class="sec"><span class="n">2</span>실적 추정치 비교 (FY27E / FY28E)</h3>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>$M</th><th class="num">총매출 FY27E</th><th class="num">총매출 FY28E</th><th class="num">Non-GAAP OI FY27E</th><th class="num">Non-GAAP OI FY28E</th><th class="num">EPS FY27E</th><th class="num">EPS FY28E</th><th class="num">Adj. FCF FY27E</th><th class="num">Adj. FCF FY28E</th></tr></thead>
+        <tbody>
+          <tr><td><b>리포트 1</b></td><td class="num">6,304</td><td class="num">8,268</td><td class="num">914</td><td class="num">1,450</td><td class="num">$2.14</td><td class="num">$3.07</td><td class="num">1,445</td><td class="num">2,028</td></tr>
+          <tr><td><b>리포트 2</b></td><td class="num">6,311</td><td class="num">8,086</td><td class="num">916</td><td class="num">1,296</td><td class="num">$2.16</td><td class="num">$2.96</td><td class="num">1,452</td><td class="num">1,984</td></tr>
+          <tr><td><b>리포트 3</b></td><td class="num">6,314</td><td class="num">8,360</td><td class="num">916</td><td class="num">1,425</td><td class="num">$2.16</td><td class="num">$3.10</td><td class="num">1,393</td><td class="num">1,897</td></tr>
+          <tr><td><b>리포트 4</b></td><td class="num">6,313</td><td class="num">8,187</td><td class="num">917</td><td class="num">1,424</td><td class="num">$2.15</td><td class="num">$3.03</td><td class="num">1,391</td><td class="num">1,973</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="callout"><span class="t">공통 관찰</span>FY27E 매출·영업이익·EPS는 4개 리포트가 거의 일치(매출 $6.30~6.31B, EPS $2.14~2.16)하나 FY28E부터 격차 확대(매출 $8.09~8.36B, EPS $2.96~3.10). 공통 긍정 요인은 (1) 3분기 연속 제품매출 가속, (2) AI 제품과 코어 플랫폼의 동반 기여, (3) 헤드카운트 증가(+7% y/y)와 분리된 영업 레버리지. 공통 모니터링 포인트는 (1) AI 워크로드 믹스에 따른 FY27 제품 GM 가이던스 74%로 하향(-1pt), (2) 2Q Adj. FCF $92M의 컨센서스 하회와 FY27 FCF 마진 23% 유지에 필요한 하반기 전환, (3) 4Q 갱신 집중에 따른 RPO 2분기 연속 q/q 감소($9.0B, +30% y/y).</div>
+    </div>
+  </section>
+
+  <!-- ===================== REPORT 1 ===================== -->
+  <section class="report" id="rpt1">
+    <div class="report-head">
+      <div class="tag">리포트 1 · TMT / Software · United States</div>
+      <h2>F2Q — 플라이휠에 가속이 붙다: Buy 유지, 목표주가 $400으로 상향</h2>
+      <p class="lede">CoCo 모멘텀이 누적되며 매출 성장 가속과 마진 확대가 동시에 진행. 제품매출 가이던스 5.2% 상회는 2개 분기 연속 5%+ beat로, 소비 트렌드의 추가 변곡 신호. 3Q 가이던스가 컨센서스 대비 ~5.5% 높게 제시돼 y/y 성장률의 추가 상승(40%+ 가능)을 시사.</p>
+    </div>
+    <div class="report-body">
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Buy</div><div class="s">유지</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$400</div><div class="s">↑ from $350 (+14%)</div></div>
+        <div class="chip"><div class="k">Price (2 Sep 26)</div><div class="v">$305.84</div><div class="s">52주 $121.11–337.38</div></div>
+        <div class="chip"><div class="k">Valuation</div><div class="v">18x / 84x</div><div class="s">FY28E 매출 / Adj. FCF</div></div>
+      </div>
+
+      <h3 class="sec"><span class="n">1</span>실적 하이라이트 (F2Q27, 7월 결산)</h3>
+      <ul class="pts">
+        <li>제품매출 <b>$1,492M, +36.8% y/y</b> — 3분기 연속 가속(전분기 대비 +3pt). 가이던스 중간값 대비 <b>+5.2%</b> 상회로 과거 평균(3~4%)과 3년 평균(3.9%)을 초과. 2개 분기 연속 5%+ beat는 처음.</li>
+        <li>분기 순증 소비 매출 <b>~$158M q/q</b>, +68% y/y(전년 1회성 마이그레이션 효과 조정 시 ~+100%) — 회사 역사상 최대 기록. 다만 최대 CSP(순증 +148% y/y)와 소비형 ISV(순증 +98% y/y)의 흐름과 크게 다르지 않아, IT 현대화·AI 준비 수요라는 업계 공통 순풍이 절반의 배경.</li>
+        <li>NRR <b>126%</b> 유지 — 분기 단위 확장 패턴이 바닥을 찍고 기반 확대에도 점진 개선 중.</li>
+        <li>순증 고객 <b>692개</b> (계절적 최고치, +32% y/y) — 이 코호트가 램프업하며 FY27 후반~FY28 소비 성장의 순풍으로 작용 예상.</li>
+        <li>TTM 제품매출 $1M+ 고객 순증 <b>+48</b> (전년 동기 +50, 계절적 강세 비교 대상), G2K 순증 +14(전분기 +11), $10M+ 고객 65개(전분기 64개).</li>
+        <li>CoCo 사용 계정 <b>9.1k+ (전체 고객의 ~63%, 전분기 51%)</b>, 분기 중 2k+ 계정 추가. CoWork 5.8k 계정(+11% q/q). AI 서비스 소비가 토큰 매출을 직접 창출하며 경영진은 가속의 <b>약 절반</b>을 이에 귀속, 나머지는 코어 사업 2차 효과 및 기타 제품 진전.</li>
+        <li>안정적 데이터 공유 엣지(stable edge) 보유 고객 비중 <b>43%</b> (+1pt q/q). 고객당 배포 유즈케이스 +89% y/y, AE당 유즈케이스 +43% y/y.</li>
+        <li>총 RPO <b>$9.0B (+30% y/y)</b>, 컨센서스 $9.5B 소폭 하회. cRPO 성장률 ~40%로 재가속(직전 2개 분기 ~38%/~36%). 고객의 4Q 갱신 선호가 강해져 수주·FCF 계절성 확대.</li>
+        <li>Non-GAAP 영업이익률 <b>15.3% (+4.2pt y/y)</b>, 가이던스 12.5% 대폭 상회. 3.4pt q/q 개선은 3년래 최대. YTD 헤드카운트 순증 334명(Observe 173명 포함) vs 전년 935명.</li>
+        <li>Adj. FCF <b>$92M (6.0%)</b>, y/y 플랫. 컨센서스 $97M 소폭 하회.</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">2</span>F2Q27 실적 요약 vs 추정치·컨센서스</h3>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>$M (EPS 제외)</th><th class="num">실적</th><th class="num">추정치</th><th class="num">vs 추정</th><th class="num">컨센서스</th><th class="num">vs 컨센</th><th class="num">회사 가이던스</th></tr></thead>
+        <tbody>
+          <tr><td><b>제품매출</b></td><td class="num">1,492</td><td class="num">1,418</td><td class="num up">+5.2%</td><td class="num">1,418</td><td class="num up">+5.2%</td><td class="num">1,415–1,420</td></tr>
+          <tr><td>&nbsp;&nbsp;y/y 성장</td><td class="num">+36.8%</td><td class="num">+30.0%</td><td class="num"></td><td class="num">+30.0%</td><td class="num"></td><td class="num"></td></tr>
+          <tr><td>서비스/기타 매출</td><td class="num">55</td><td class="num">60</td><td class="num dn">-8.3%</td><td class="num">61</td><td class="num dn">-10.6%</td><td class="num"></td></tr>
+          <tr><td><b>총매출</b></td><td class="num">1,547</td><td class="num">1,478</td><td class="num up">+4.7%</td><td class="num">1,480</td><td class="num up">+4.5%</td><td class="num"></td></tr>
+          <tr><td>Non-GAAP 매출총이익 (GM)</td><td class="num">1,110 (71.8%)</td><td class="num">1,067 (72.2%)</td><td class="num up">+4.1%</td><td class="num">1,066 (72.0%)</td><td class="num">+4.1% / -29bp</td><td class="num"></td></tr>
+          <tr><td><b>Non-GAAP 영업이익 (OPM)</b></td><td class="num">237 (15.3%)</td><td class="num">185 (12.5%)</td><td class="num up">+28.4%</td><td class="num">186 (12.6%)</td><td class="num up">+27.4%</td><td class="num">12.5%</td></tr>
+          <tr><td>Non-GAAP 순이익 / EPS</td><td class="num">235 / $0.62</td><td class="num">155 / $0.41</td><td class="num"></td><td class="num">165 / $0.44</td><td class="num"></td><td class="num"></td></tr>
+          <tr><td>영업현금흐름</td><td class="num">91 (5.9%)</td><td class="num">94 (6.4%)</td><td class="num dn">-2.7%</td><td class="num">116 (7.9%)</td><td class="num dn">-21.4%</td><td class="num"></td></tr>
+          <tr><td>Adj. FCF</td><td class="num">92 (6.0%)</td><td class="num">99 (6.7%)</td><td class="num dn">-6.6%</td><td class="num">97 (6.5%)</td><td class="num dn">-4.4%</td><td class="num"></td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-src">Source: Company Reports, Bloomberg Finance LP</div>
+
+      <h3 class="sec"><span class="n">3</span>가이던스 — 3Q 및 FY27</h3>
+      <ul class="pts">
+        <li>F3Q 제품매출 가이던스 중간값 <b>$1,590.5M</b> — 추정치/컨센서스($1,505M/$1,504M) 대폭 상회. <b>+37.3% y/y</b>로 0.5pt 추가 가속을 시사하며, q/q 순증 소비 $99M(전년 ~$68M). 경영진은 가이던스 철학 불변을 재확인(통상적 보수성 내재).</li>
+        <li>FY27 제품매출 가이던스 <b>$6,070M (+36% y/y)</b>, 4% 상향 — F1Q beat($74M)를 크게 초과하는 상향폭. 코어 데이터 플랫폼·CoCo·기타 AI 제품 전반의 강세 반영. Observe의 ~1pt 무기적 기여 재확인.</li>
+        <li>FY27 제품 GM 가이던스 <b>74%</b>로 1pt 하향(이전 ~75%) — y/y ~2pt 축소 의미. 마진이 낮은 AI 워크로드 매출 믹스 확대 반영.</li>
+        <li>FY27 Non-GAAP 영업이익률 가이던스 <b>14.5%</b> (이전 13.5%, +4.0pt y/y) — 제품 GM 축소를 OpEx 레버리지가 상쇄. AI를 전사 운영에 활용하며 채용 절제·인력 효율 개선.</li>
+        <li>Adj. FCF 마진 가이던스 <b>23%</b> 유지 — Observe 인수에 따른 ~150bp 역풍 포함.</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">4</span>추정치 변경</h3>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>$M (EPS 제외)</th><th class="num">3Q27E 신규</th><th class="num">3Q27E 이전</th><th class="num">3Q 컨센</th><th class="num">FY27E 신규</th><th class="num">FY27E 이전</th><th class="num">FY27 컨센</th><th class="num">FY28E 신규</th><th class="num">FY28E 이전</th><th class="num">FY28 컨센</th></tr></thead>
+        <tbody>
+          <tr><td><b>제품매출</b></td><td class="num">1,590 (+37.3%)</td><td class="num">1,505 (+29.9%)</td><td class="num">1,504</td><td class="num">6,070 (+35.7%)</td><td class="num">5,841 (+30.6%)</td><td class="num">5,840</td><td class="num">8,010 (+32.0%)</td><td class="num">7,386 (+26.5%)</td><td class="num">7,365</td></tr>
+          <tr><td><b>총매출</b></td><td class="num">1,650 (+36.1%)</td><td class="num">1,565 (+29.0%)</td><td class="num">1,568</td><td class="num">6,304 (+34.6%)</td><td class="num">6,081 (+29.8%)</td><td class="num">6,093</td><td class="num">8,268 (+31.1%)</td><td class="num">7,650 (+25.8%)</td><td class="num">7,653</td></tr>
+          <tr><td>Non-GAAP GM</td><td class="num">71.7%</td><td class="num">72.3%</td><td class="num">72.1%</td><td class="num">71.6%</td><td class="num">72.1%</td><td class="num">72.0%</td><td class="num">70.7%</td><td class="num">72.0%</td><td class="num">72.1%</td></tr>
+          <tr><td><b>Non-GAAP 영업이익 (OPM)</b></td><td class="num">255 (15.5%)</td><td class="num">217 (13.9%)</td><td class="num">222 (14.2%)</td><td class="num">914 (14.5%)</td><td class="num">818 (13.5%)</td><td class="num">822 (13.5%)</td><td class="num">1,450 (17.5%)</td><td class="num">1,148 (15.0%)</td><td class="num">1,207 (15.8%)</td></tr>
+          <tr><td>Non-GAAP EPS</td><td class="num">$0.56</td><td class="num">$0.48</td><td class="num">$0.51</td><td class="num">$2.14</td><td class="num">$1.83</td><td class="num">$1.92</td><td class="num">$3.07</td><td class="num">$2.50</td><td class="num">$2.75</td></tr>
+          <tr><td>Adj. FCF (마진)</td><td class="num">207 (12.6%)</td><td class="num">223 (14.3%)</td><td class="num">188 (12.0%)</td><td class="num">1,445 (22.9%)</td><td class="num">1,407 (23.1%)</td><td class="num">1,402 (23.0%)</td><td class="num">2,028 (24.5%)</td><td class="num">1,878 (24.5%)</td><td class="num">1,885 (24.6%)</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-src">Source: Company Reports, Bloomberg Finance LP</div>
+      <div class="callout"><span class="t">밸류에이션</span>DCF 기반 목표주가 $400 (이전 $350). WACC 9.3%, 터미널 무위험이자율 4%, ERP 5.3%, 터미널 성장률 3.5%(GDP 성장 기준). 목표주가는 FY28E EV/매출 ~12x 함의.</div>
+
+      <h3 class="sec"><span class="n">5</span>핵심 KPI 추이</h3>
+      <div class="chart-card">
+        <div class="ct">분기별 제품매출($M) 및 y/y 성장률</div>
+        <div class="legend"><span><i style="background:#c9d8ea"></i>Product Revenue ($M)</span><span><i style="background:#0f2a4a"></i>Y/Y Growth %</span></div>
+        <svg viewBox="0 0 880 320" width="100%" role="img" aria-label="Product Revenue ($mn), Y/Y Growth %">
+<line x1="50" y1="270.0" x2="850" y2="270.0" stroke="#e6ebf2"/>
+<line x1="50" y1="212.5" x2="850" y2="212.5" stroke="#e6ebf2"/>
+<line x1="50" y1="155.0" x2="850" y2="155.0" stroke="#e6ebf2"/>
+<line x1="50" y1="97.5" x2="850" y2="97.5" stroke="#e6ebf2"/>
+<line x1="50" y1="40.0" x2="850" y2="40.0" stroke="#e6ebf2"/>
+<line x1="50" y1="270" x2="850" y2="270" stroke="#b9c3d2" stroke-width="1.2"/>
+<rect x="62.0" y="190.2" width="33.1" height="79.8" fill="#c9d8ea" rx="2"/>
+<text x="78.6" y="264.0" font-size="9.5" text-anchor="middle" fill="#2c3e57">$590</text>
+<text x="78.6" y="286" font-size="10" text-anchor="middle" fill="#525866">1Q24</text>
+<rect x="119.1" y="183.4" width="33.1" height="86.6" fill="#c9d8ea" rx="2"/>
+<text x="135.7" y="264.0" font-size="9.5" text-anchor="middle" fill="#2c3e57">$640</text>
+<text x="135.7" y="286" font-size="10" text-anchor="middle" fill="#525866">2Q24</text>
+<rect x="176.3" y="175.6" width="33.1" height="94.4" fill="#c9d8ea" rx="2"/>
+<text x="192.9" y="264.0" font-size="9.5" text-anchor="middle" fill="#2c3e57">$698</text>
+<text x="192.9" y="286" font-size="10" text-anchor="middle" fill="#525866">3Q24</text>
+<rect x="233.4" y="170.2" width="33.1" height="99.8" fill="#c9d8ea" rx="2"/>
+<text x="250.0" y="264.0" font-size="9.5" text-anchor="middle" fill="#2c3e57">$738</text>
+<text x="250.0" y="286" font-size="10" text-anchor="middle" fill="#525866">4Q24</text>
+<rect x="290.6" y="163.1" width="33.1" height="106.9" fill="#c9d8ea" rx="2"/>
+<text x="307.1" y="264.0" font-size="9.5" text-anchor="middle" fill="#2c3e57">$790</text>
+<text x="307.1" y="286" font-size="10" text-anchor="middle" fill="#525866">1Q25</text>
+<rect x="347.7" y="157.8" width="33.1" height="112.2" fill="#c9d8ea" rx="2"/>
+<text x="364.3" y="264.0" font-size="9.5" text-anchor="middle" fill="#2c3e57">$829</text>
+<text x="364.3" y="286" font-size="10" text-anchor="middle" fill="#525866">2Q25</text>
+<rect x="404.9" y="148.2" width="33.1" height="121.8" fill="#c9d8ea" rx="2"/>
+<text x="421.4" y="264.0" font-size="9.5" text-anchor="middle" fill="#2c3e57">$900</text>
+<text x="421.4" y="286" font-size="10" text-anchor="middle" fill="#525866">3Q25</text>
+<rect x="462.0" y="142.4" width="33.1" height="127.6" fill="#c9d8ea" rx="2"/>
+<text x="478.6" y="264.0" font-size="9.5" text-anchor="middle" fill="#2c3e57">$943</text>
+<text x="478.6" y="286" font-size="10" text-anchor="middle" fill="#525866">4Q25</text>
+<rect x="519.1" y="135.1" width="33.1" height="134.9" fill="#c9d8ea" rx="2"/>
+<text x="535.7" y="264.0" font-size="9.5" text-anchor="middle" fill="#2c3e57">$997</text>
+<text x="535.7" y="286" font-size="10" text-anchor="middle" fill="#525866">1Q26</text>
+<rect x="576.3" y="122.5" width="33.1" height="147.5" fill="#c9d8ea" rx="2"/>
+<text x="592.9" y="264.0" font-size="9.5" text-anchor="middle" fill="#2c3e57">$1,090</text>
+<text x="592.9" y="286" font-size="10" text-anchor="middle" fill="#525866">2Q26</text>
+<rect x="633.4" y="113.3" width="33.1" height="156.7" fill="#c9d8ea" rx="2"/>
+<text x="650.0" y="264.0" font-size="9.5" text-anchor="middle" fill="#2c3e57">$1,158</text>
+<text x="650.0" y="286" font-size="10" text-anchor="middle" fill="#525866">3Q26</text>
+<rect x="690.6" y="104.0" width="33.1" height="166.0" fill="#c9d8ea" rx="2"/>
+<text x="707.1" y="264.0" font-size="9.5" text-anchor="middle" fill="#2c3e57">$1,227</text>
+<text x="707.1" y="286" font-size="10" text-anchor="middle" fill="#525866">4Q26</text>
+<rect x="747.7" y="89.5" width="33.1" height="180.5" fill="#c9d8ea" rx="2"/>
+<text x="764.3" y="264.0" font-size="9.5" text-anchor="middle" fill="#2c3e57">$1,334</text>
+<text x="764.3" y="286" font-size="10" text-anchor="middle" fill="#525866">1Q27</text>
+<rect x="804.9" y="68.1" width="33.1" height="201.9" fill="#c9d8ea" rx="2"/>
+<text x="821.4" y="264.0" font-size="9.5" text-anchor="middle" fill="#2c3e57">$1,492</text>
+<text x="821.4" y="286" font-size="10" text-anchor="middle" fill="#525866">2Q27</text>
+<path d="M 78.6 78.3 L 135.7 128.2 L 192.9 139.7 L 250.0 143.5 L 307.1 139.7 L 364.3 155.0 L 421.4 158.8 L 478.6 162.7 L 535.7 170.3 L 592.9 147.3 L 650.0 158.8 L 707.1 155.0 L 764.3 139.7 L 821.4 128.2" fill="none" stroke="#0f2a4a" stroke-width="2.2"/>
+<circle cx="78.6" cy="78.3" r="3.2" fill="#0f2a4a"/>
+<text x="78.6" y="70.3" font-size="10" font-weight="700" text-anchor="middle" fill="#0f2a4a">50%</text>
+<circle cx="135.7" cy="128.2" r="3.2" fill="#0f2a4a"/>
+<text x="135.7" y="120.2" font-size="10" font-weight="700" text-anchor="middle" fill="#0f2a4a">37%</text>
+<circle cx="192.9" cy="139.7" r="3.2" fill="#0f2a4a"/>
+<text x="192.9" y="131.7" font-size="10" font-weight="700" text-anchor="middle" fill="#0f2a4a">34%</text>
+<circle cx="250.0" cy="143.5" r="3.2" fill="#0f2a4a"/>
+<text x="250.0" y="135.5" font-size="10" font-weight="700" text-anchor="middle" fill="#0f2a4a">33%</text>
+<circle cx="307.1" cy="139.7" r="3.2" fill="#0f2a4a"/>
+<text x="307.1" y="131.7" font-size="10" font-weight="700" text-anchor="middle" fill="#0f2a4a">34%</text>
+<circle cx="364.3" cy="155.0" r="3.2" fill="#0f2a4a"/>
+<text x="364.3" y="147.0" font-size="10" font-weight="700" text-anchor="middle" fill="#0f2a4a">30%</text>
+<circle cx="421.4" cy="158.8" r="3.2" fill="#0f2a4a"/>
+<text x="421.4" y="150.8" font-size="10" font-weight="700" text-anchor="middle" fill="#0f2a4a">29%</text>
+<circle cx="478.6" cy="162.7" r="3.2" fill="#0f2a4a"/>
+<text x="478.6" y="154.7" font-size="10" font-weight="700" text-anchor="middle" fill="#0f2a4a">28%</text>
+<circle cx="535.7" cy="170.3" r="3.2" fill="#0f2a4a"/>
+<text x="535.7" y="162.3" font-size="10" font-weight="700" text-anchor="middle" fill="#0f2a4a">26%</text>
+<circle cx="592.9" cy="147.3" r="3.2" fill="#0f2a4a"/>
+<text x="592.9" y="139.3" font-size="10" font-weight="700" text-anchor="middle" fill="#0f2a4a">32%</text>
+<circle cx="650.0" cy="158.8" r="3.2" fill="#0f2a4a"/>
+<text x="650.0" y="150.8" font-size="10" font-weight="700" text-anchor="middle" fill="#0f2a4a">29%</text>
+<circle cx="707.1" cy="155.0" r="3.2" fill="#0f2a4a"/>
+<text x="707.1" y="147.0" font-size="10" font-weight="700" text-anchor="middle" fill="#0f2a4a">30%</text>
+<circle cx="764.3" cy="139.7" r="3.2" fill="#0f2a4a"/>
+<text x="764.3" y="131.7" font-size="10" font-weight="700" text-anchor="middle" fill="#0f2a4a">34%</text>
+<circle cx="821.4" cy="128.2" r="3.2" fill="#0f2a4a"/>
+<text x="821.4" y="120.2" font-size="10" font-weight="700" text-anchor="middle" fill="#0f2a4a">37%</text>
+</svg>
+        <div class="chart-src">Source: Company Reports</div>
+      </div>
+      <div class="two">
+        <div class="chart-card">
+          <div class="ct">Net Revenue Retention</div>
+          <svg viewBox="0 0 880 260" width="100%" role="img">
+<line x1="50" y1="215.0" x2="850" y2="215.0" stroke="#e6ebf2"/>
+<line x1="50" y1="155.0" x2="850" y2="155.0" stroke="#e6ebf2"/>
+<line x1="50" y1="95.0" x2="850" y2="95.0" stroke="#e6ebf2"/>
+<line x1="50" y1="35.0" x2="850" y2="35.0" stroke="#e6ebf2"/>
+<line x1="50" y1="215" x2="850" y2="215" stroke="#b9c3d2" stroke-width="1.2"/>
+<text x="78.6" y="231" font-size="10" text-anchor="middle" fill="#525866">1Q24</text>
+<text x="135.7" y="231" font-size="10" text-anchor="middle" fill="#525866">2Q24</text>
+<text x="192.9" y="231" font-size="10" text-anchor="middle" fill="#525866">3Q24</text>
+<text x="250.0" y="231" font-size="10" text-anchor="middle" fill="#525866">4Q24</text>
+<text x="307.1" y="231" font-size="10" text-anchor="middle" fill="#525866">1Q25</text>
+<text x="364.3" y="231" font-size="10" text-anchor="middle" fill="#525866">2Q25</text>
+<text x="421.4" y="231" font-size="10" text-anchor="middle" fill="#525866">3Q25</text>
+<text x="478.6" y="231" font-size="10" text-anchor="middle" fill="#525866">4Q25</text>
+<text x="535.7" y="231" font-size="10" text-anchor="middle" fill="#525866">1Q26</text>
+<text x="592.9" y="231" font-size="10" text-anchor="middle" fill="#525866">2Q26</text>
+<text x="650.0" y="231" font-size="10" text-anchor="middle" fill="#525866">3Q26</text>
+<text x="707.1" y="231" font-size="10" text-anchor="middle" fill="#525866">4Q26</text>
+<text x="764.3" y="231" font-size="10" text-anchor="middle" fill="#525866">1Q27</text>
+<text x="821.4" y="231" font-size="10" text-anchor="middle" fill="#525866">2Q27</text>
+<path d="M 78.6 71.0 L 135.7 107.0 L 192.9 135.0 L 250.0 151.0 L 307.1 163.0 L 364.3 163.0 L 421.4 167.0 L 478.6 171.0 L 535.7 179.0 L 592.9 175.0 L 650.0 175.0 L 707.1 175.0 L 764.3 171.0 L 821.4 171.0" fill="none" stroke="#0f2a4a" stroke-width="2.2"/>
+<circle cx="78.6" cy="71.0" r="3.2" fill="#0f2a4a"/>
+<text x="78.6" y="63.0" font-size="10" font-weight="700" text-anchor="middle" fill="#0f2a4a">151%</text>
+<circle cx="135.7" cy="107.0" r="3.2" fill="#0f2a4a"/>
+<text x="135.7" y="99.0" font-size="10" font-weight="700" text-anchor="middle" fill="#0f2a4a">142%</text>
+<circle cx="192.9" cy="135.0" r="3.2" fill="#0f2a4a"/>
+<text x="192.9" y="127.0" font-size="10" font-weight="700" text-anchor="middle" fill="#0f2a4a">135%</text>
+<circle cx="250.0" cy="151.0" r="3.2" fill="#0f2a4a"/>
+<text x="250.0" y="143.0" font-size="10" font-weight="700" text-anchor="middle" fill="#0f2a4a">131%</text>
+<circle cx="307.1" cy="163.0" r="3.2" fill="#0f2a4a"/>
+<text x="307.1" y="155.0" font-size="10" font-weight="700" text-anchor="middle" fill="#0f2a4a">128%</text>
+<circle cx="364.3" cy="163.0" r="3.2" fill="#0f2a4a"/>
+<text x="364.3" y="155.0" font-size="10" font-weight="700" text-anchor="middle" fill="#0f2a4a">128%</text>
+<circle cx="421.4" cy="167.0" r="3.2" fill="#0f2a4a"/>
+<text x="421.4" y="159.0" font-size="10" font-weight="700" text-anchor="middle" fill="#0f2a4a">127%</text>
+<circle cx="478.6" cy="171.0" r="3.2" fill="#0f2a4a"/>
+<text x="478.6" y="163.0" font-size="10" font-weight="700" text-anchor="middle" fill="#0f2a4a">126%</text>
+<circle cx="535.7" cy="179.0" r="3.2" fill="#0f2a4a"/>
+<text x="535.7" y="171.0" font-size="10" font-weight="700" text-anchor="middle" fill="#0f2a4a">124%</text>
+<circle cx="592.9" cy="175.0" r="3.2" fill="#0f2a4a"/>
+<text x="592.9" y="167.0" font-size="10" font-weight="700" text-anchor="middle" fill="#0f2a4a">125%</text>
+<circle cx="650.0" cy="175.0" r="3.2" fill="#0f2a4a"/>
+<text x="650.0" y="167.0" font-size="10" font-weight="700" text-anchor="middle" fill="#0f2a4a">125%</text>
+<circle cx="707.1" cy="175.0" r="3.2" fill="#0f2a4a"/>
+<text x="707.1" y="167.0" font-size="10" font-weight="700" text-anchor="middle" fill="#0f2a4a">125%</text>
+<circle cx="764.3" cy="171.0" r="3.2" fill="#0f2a4a"/>
+<text x="764.3" y="163.0" font-size="10" font-weight="700" text-anchor="middle" fill="#0f2a4a">126%</text>
+<circle cx="821.4" cy="171.0" r="3.2" fill="#0f2a4a"/>
+<text x="821.4" y="163.0" font-size="10" font-weight="700" text-anchor="middle" fill="#0f2a4a">126%</text>
+</svg>
+          <div class="chart-src">Source: Company Reports</div>
+        </div>
+        <div class="chart-card">
+          <div class="ct">Stable Edge 보유 고객 비중</div>
+          <svg viewBox="0 0 880 260" width="100%" role="img">
+<line x1="50" y1="215.0" x2="850" y2="215.0" stroke="#e6ebf2"/>
+<line x1="50" y1="155.0" x2="850" y2="155.0" stroke="#e6ebf2"/>
+<line x1="50" y1="95.0" x2="850" y2="95.0" stroke="#e6ebf2"/>
+<line x1="50" y1="35.0" x2="850" y2="35.0" stroke="#e6ebf2"/>
+<line x1="50" y1="215" x2="850" y2="215" stroke="#b9c3d2" stroke-width="1.2"/>
+<text x="78.6" y="231" font-size="10" text-anchor="middle" fill="#525866">1Q24</text>
+<text x="135.7" y="231" font-size="10" text-anchor="middle" fill="#525866">2Q24</text>
+<text x="192.9" y="231" font-size="10" text-anchor="middle" fill="#525866">3Q24</text>
+<text x="250.0" y="231" font-size="10" text-anchor="middle" fill="#525866">4Q24</text>
+<text x="307.1" y="231" font-size="10" text-anchor="middle" fill="#525866">1Q25</text>
+<text x="364.3" y="231" font-size="10" text-anchor="middle" fill="#525866">2Q25</text>
+<text x="421.4" y="231" font-size="10" text-anchor="middle" fill="#525866">3Q25</text>
+<text x="478.6" y="231" font-size="10" text-anchor="middle" fill="#525866">4Q25</text>
+<text x="535.7" y="231" font-size="10" text-anchor="middle" fill="#525866">1Q26</text>
+<text x="592.9" y="231" font-size="10" text-anchor="middle" fill="#525866">2Q26</text>
+<text x="650.0" y="231" font-size="10" text-anchor="middle" fill="#525866">3Q26</text>
+<text x="707.1" y="231" font-size="10" text-anchor="middle" fill="#525866">4Q26</text>
+<text x="764.3" y="231" font-size="10" text-anchor="middle" fill="#525866">1Q27</text>
+<text x="821.4" y="231" font-size="10" text-anchor="middle" fill="#525866">2Q27</text>
+<path d="M 78.6 185.0 L 135.7 179.0 L 192.9 167.0 L 250.0 173.0 L 307.1 143.0 L 364.3 131.0 L 421.4 119.0 L 478.6 119.0 L 535.7 101.0 L 592.9 95.0 L 650.0 89.0 L 707.1 95.0 L 764.3 83.0 L 821.4 77.0" fill="none" stroke="#2c5f8f" stroke-width="2.2"/>
+<circle cx="78.6" cy="185.0" r="3.2" fill="#2c5f8f"/>
+<text x="78.6" y="177.0" font-size="10" font-weight="700" text-anchor="middle" fill="#2c5f8f">25%</text>
+<circle cx="135.7" cy="179.0" r="3.2" fill="#2c5f8f"/>
+<text x="135.7" y="171.0" font-size="10" font-weight="700" text-anchor="middle" fill="#2c5f8f">26%</text>
+<circle cx="192.9" cy="167.0" r="3.2" fill="#2c5f8f"/>
+<text x="192.9" y="159.0" font-size="10" font-weight="700" text-anchor="middle" fill="#2c5f8f">28%</text>
+<circle cx="250.0" cy="173.0" r="3.2" fill="#2c5f8f"/>
+<text x="250.0" y="165.0" font-size="10" font-weight="700" text-anchor="middle" fill="#2c5f8f">27%</text>
+<circle cx="307.1" cy="143.0" r="3.2" fill="#2c5f8f"/>
+<text x="307.1" y="135.0" font-size="10" font-weight="700" text-anchor="middle" fill="#2c5f8f">32%</text>
+<circle cx="364.3" cy="131.0" r="3.2" fill="#2c5f8f"/>
+<text x="364.3" y="123.0" font-size="10" font-weight="700" text-anchor="middle" fill="#2c5f8f">34%</text>
+<circle cx="421.4" cy="119.0" r="3.2" fill="#2c5f8f"/>
+<text x="421.4" y="111.0" font-size="10" font-weight="700" text-anchor="middle" fill="#2c5f8f">36%</text>
+<circle cx="478.6" cy="119.0" r="3.2" fill="#2c5f8f"/>
+<text x="478.6" y="111.0" font-size="10" font-weight="700" text-anchor="middle" fill="#2c5f8f">36%</text>
+<circle cx="535.7" cy="101.0" r="3.2" fill="#2c5f8f"/>
+<text x="535.7" y="93.0" font-size="10" font-weight="700" text-anchor="middle" fill="#2c5f8f">39%</text>
+<circle cx="592.9" cy="95.0" r="3.2" fill="#2c5f8f"/>
+<text x="592.9" y="87.0" font-size="10" font-weight="700" text-anchor="middle" fill="#2c5f8f">40%</text>
+<circle cx="650.0" cy="89.0" r="3.2" fill="#2c5f8f"/>
+<text x="650.0" y="81.0" font-size="10" font-weight="700" text-anchor="middle" fill="#2c5f8f">41%</text>
+<circle cx="707.1" cy="95.0" r="3.2" fill="#2c5f8f"/>
+<text x="707.1" y="87.0" font-size="10" font-weight="700" text-anchor="middle" fill="#2c5f8f">40%</text>
+<circle cx="764.3" cy="83.0" r="3.2" fill="#2c5f8f"/>
+<text x="764.3" y="75.0" font-size="10" font-weight="700" text-anchor="middle" fill="#2c5f8f">42%</text>
+<circle cx="821.4" cy="77.0" r="3.2" fill="#2c5f8f"/>
+<text x="821.4" y="69.0" font-size="10" font-weight="700" text-anchor="middle" fill="#2c5f8f">43%</text>
+</svg>
+          <div class="chart-src">Source: Company Reports</div>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="ct">$1M+ TTM 고객 순증 및 G2K 고객 순증</div>
+        <div class="legend"><span><i style="background:#0f2a4a"></i>$1M+ TTM 제품매출 고객 순증</span><span><i style="background:#9db9d9"></i>G2K 고객 순증</span></div>
+        <svg viewBox="0 0 880 300" width="100%" role="img">
+<line x1="50" y1="250.0" x2="850" y2="250.0" stroke="#e6ebf2"/>
+<line x1="50" y1="196.2" x2="850" y2="196.2" stroke="#e6ebf2"/>
+<line x1="50" y1="142.5" x2="850" y2="142.5" stroke="#e6ebf2"/>
+<line x1="50" y1="88.8" x2="850" y2="88.8" stroke="#e6ebf2"/>
+<line x1="50" y1="35.0" x2="850" y2="35.0" stroke="#e6ebf2"/>
+<line x1="50" y1="250" x2="850" y2="250" stroke="#b9c3d2" stroke-width="1.2"/>
+<rect x="61.4" y="103.1" width="15.1" height="146.9" fill="#0f2a4a" rx="2"/>
+<text x="69.0" y="99.1" font-size="9.5" text-anchor="middle" fill="#525866">41</text>
+<rect x="78.6" y="196.2" width="15.1" height="53.8" fill="#9db9d9" rx="2"/>
+<text x="86.1" y="192.2" font-size="9.5" text-anchor="middle" fill="#525866">15</text>
+<text x="78.6" y="266" font-size="10" text-anchor="middle" fill="#525866">1Q24</text>
+<rect x="118.6" y="149.7" width="15.1" height="100.3" fill="#0f2a4a" rx="2"/>
+<text x="126.1" y="145.7" font-size="9.5" text-anchor="middle" fill="#525866">28</text>
+<rect x="135.7" y="103.1" width="15.1" height="146.9" fill="#9db9d9" rx="2"/>
+<text x="143.3" y="99.1" font-size="9.5" text-anchor="middle" fill="#525866">41</text>
+<text x="135.7" y="266" font-size="10" text-anchor="middle" fill="#525866">2Q24</text>
+<rect x="175.7" y="138.9" width="15.1" height="111.1" fill="#0f2a4a" rx="2"/>
+<text x="183.3" y="134.9" font-size="9.5" text-anchor="middle" fill="#525866">31</text>
+<rect x="192.9" y="246.4" width="15.1" height="3.6" fill="#9db9d9" rx="2"/>
+<text x="200.4" y="242.4" font-size="9.5" text-anchor="middle" fill="#525866">1</text>
+<text x="192.9" y="266" font-size="10" text-anchor="middle" fill="#525866">3Q24</text>
+<rect x="232.9" y="167.6" width="15.1" height="82.4" fill="#0f2a4a" rx="2"/>
+<text x="240.4" y="163.6" font-size="9.5" text-anchor="middle" fill="#525866">23</text>
+<rect x="250.0" y="210.6" width="15.1" height="39.4" fill="#9db9d9" rx="2"/>
+<text x="257.6" y="206.6" font-size="9.5" text-anchor="middle" fill="#525866">11</text>
+<text x="250.0" y="266" font-size="10" text-anchor="middle" fill="#525866">4Q24</text>
+<rect x="290.0" y="164.0" width="15.1" height="86.0" fill="#0f2a4a" rx="2"/>
+<text x="297.6" y="160.0" font-size="9.5" text-anchor="middle" fill="#525866">24</text>
+<rect x="307.1" y="250.0" width="15.1" height="0.0" fill="#9db9d9" rx="2"/>
+<text x="314.7" y="246.0" font-size="9.5" text-anchor="middle" fill="#525866">0</text>
+<text x="307.1" y="266" font-size="10" text-anchor="middle" fill="#525866">1Q25</text>
+<rect x="347.1" y="160.4" width="15.1" height="89.6" fill="#0f2a4a" rx="2"/>
+<text x="354.7" y="156.4" font-size="9.5" text-anchor="middle" fill="#525866">25</text>
+<rect x="364.3" y="221.3" width="15.1" height="28.7" fill="#9db9d9" rx="2"/>
+<text x="371.9" y="217.3" font-size="9.5" text-anchor="middle" fill="#525866">8</text>
+<text x="364.3" y="266" font-size="10" text-anchor="middle" fill="#525866">2Q25</text>
+<rect x="404.3" y="142.5" width="15.1" height="107.5" fill="#0f2a4a" rx="2"/>
+<text x="411.9" y="138.5" font-size="9.5" text-anchor="middle" fill="#525866">30</text>
+<rect x="421.4" y="178.3" width="15.1" height="71.7" fill="#9db9d9" rx="2"/>
+<text x="429.0" y="174.3" font-size="9.5" text-anchor="middle" fill="#525866">20</text>
+<text x="421.4" y="266" font-size="10" text-anchor="middle" fill="#525866">3Q25</text>
+<rect x="461.4" y="99.5" width="15.1" height="150.5" fill="#0f2a4a" rx="2"/>
+<text x="469.0" y="95.5" font-size="9.5" text-anchor="middle" fill="#525866">42</text>
+<rect x="478.6" y="207.0" width="15.1" height="43.0" fill="#9db9d9" rx="2"/>
+<text x="486.1" y="203.0" font-size="9.5" text-anchor="middle" fill="#525866">12</text>
+<text x="478.6" y="266" font-size="10" text-anchor="middle" fill="#525866">4Q25</text>
+<rect x="518.6" y="149.7" width="15.1" height="100.3" fill="#0f2a4a" rx="2"/>
+<text x="526.1" y="145.7" font-size="9.5" text-anchor="middle" fill="#525866">28</text>
+<rect x="535.7" y="189.1" width="15.1" height="60.9" fill="#9db9d9" rx="2"/>
+<text x="543.3" y="185.1" font-size="9.5" text-anchor="middle" fill="#525866">17</text>
+<text x="535.7" y="266" font-size="10" text-anchor="middle" fill="#525866">1Q26</text>
+<rect x="575.7" y="70.8" width="15.1" height="179.2" fill="#0f2a4a" rx="2"/>
+<text x="583.3" y="66.8" font-size="9.5" text-anchor="middle" fill="#525866">50</text>
+<rect x="592.9" y="181.9" width="15.1" height="68.1" fill="#9db9d9" rx="2"/>
+<text x="600.4" y="177.9" font-size="9.5" text-anchor="middle" fill="#525866">19</text>
+<text x="592.9" y="266" font-size="10" text-anchor="middle" fill="#525866">2Q26</text>
+<rect x="632.9" y="128.2" width="15.1" height="121.8" fill="#0f2a4a" rx="2"/>
+<text x="640.4" y="124.2" font-size="9.5" text-anchor="middle" fill="#525866">34</text>
+<rect x="650.0" y="232.1" width="15.1" height="17.9" fill="#9db9d9" rx="2"/>
+<text x="657.6" y="228.1" font-size="9.5" text-anchor="middle" fill="#525866">5</text>
+<text x="650.0" y="266" font-size="10" text-anchor="middle" fill="#525866">3Q26</text>
+<rect x="690.0" y="88.8" width="15.1" height="161.2" fill="#0f2a4a" rx="2"/>
+<text x="697.6" y="84.8" font-size="9.5" text-anchor="middle" fill="#525866">45</text>
+<rect x="707.1" y="203.4" width="15.1" height="46.6" fill="#9db9d9" rx="2"/>
+<text x="714.7" y="199.4" font-size="9.5" text-anchor="middle" fill="#525866">13</text>
+<text x="707.1" y="266" font-size="10" text-anchor="middle" fill="#525866">4Q26</text>
+<rect x="747.1" y="81.6" width="15.1" height="168.4" fill="#0f2a4a" rx="2"/>
+<text x="754.7" y="77.6" font-size="9.5" text-anchor="middle" fill="#525866">47</text>
+<rect x="764.3" y="210.6" width="15.1" height="39.4" fill="#9db9d9" rx="2"/>
+<text x="771.9" y="206.6" font-size="9.5" text-anchor="middle" fill="#525866">11</text>
+<text x="764.3" y="266" font-size="10" text-anchor="middle" fill="#525866">1Q27</text>
+<rect x="804.3" y="78.0" width="15.1" height="172.0" fill="#0f2a4a" rx="2"/>
+<text x="811.9" y="74.0" font-size="9.5" text-anchor="middle" fill="#525866">48</text>
+<rect x="821.4" y="199.8" width="15.1" height="50.2" fill="#9db9d9" rx="2"/>
+<text x="829.0" y="195.8" font-size="9.5" text-anchor="middle" fill="#525866">14</text>
+<text x="821.4" y="266" font-size="10" text-anchor="middle" fill="#525866">2Q27</text>
+</svg>
+        <div class="chart-src">Source: Company Reports</div>
+      </div>
+
+      <h3 class="sec"><span class="n">!</span>리스크 &amp; 모니터링 포인트</h3>
+      <div class="risk-box">
+        <h4>Key Risks to Rating &amp; Price Target</h4>
+        <ul>
+          <li><b>TAM 성장 지연:</b> 데이터 현대화·AI 관련 TAM 확대가 기대만큼 빠르게 현실화되지 않을 가능성.</li>
+          <li><b>실행 리스크:</b> 제품 출시·GTM 실행의 차질.</li>
+          <li><b>클라우드 사업자 경쟁:</b> CSP의 가격 압박이 심화될 가능성.</li>
+        </ul>
+        <h4 style="margin-top:14px;">모니터링 포인트</h4>
+        <ul>
+          <li>AI 매출 믹스 확대에 따른 제품 GM 추이(FY27 74% 가이던스)와 OpEx 레버리지의 상쇄 지속 여부.</li>
+          <li>4Q 갱신 집중에 따른 RPO·FCF 계절성 — 하반기 FCF 전환이 23% 연간 마진 달성의 관건.</li>
+          <li>692개 신규 고객 코호트의 램프업이 FY27 후반 소비 성장에 반영되는 속도.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== REPORT 2 ===================== -->
+  <section class="report" id="rpt2">
+    <div class="report-head">
+      <div class="tag">리포트 2 · Software · North America</div>
+      <h2>2Q27 실적: 아직 초기 단계인 AI 기반 성장 플라이휠 — OW 유지, 목표주가 $470으로 상향</h2>
+      <p class="lede">높아진 기대치와 어려운 비교 기준(~530bp 더 높은 전년 성장률)에도 3분기 연속 가속. AI 수익화가 코어 플랫폼 소비를 끌어올리고 있음을 입증. 하반기 40% 성장 경로가 가시화되며 목표주가 $300 → $470.</p>
+    </div>
+    <div class="report-body">
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Overweight</div><div class="s">유지 · Industry View: Attractive</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$470</div><div class="s">↑ from $300 (+57%)</div></div>
+        <div class="chip"><div class="k">Price (2 Sep 26)</div><div class="v">$305.84</div><div class="s">시가총액 $113.7B</div></div>
+        <div class="chip"><div class="k">Valuation</div><div class="v">~60x</div><div class="s">CY30E FCF, EV/CY27 매출 ~22x</div></div>
+      </div>
+
+      <h3 class="sec"><span class="n">1</span>핵심 요약</h3>
+      <ul class="pts">
+        <li>제품매출 <b>$1,492M, +37% y/y</b> — 1Q27 +34%에서 가속, 가이던스 중간값 대비 +5.2%, 컨센서스 대비 +5.0%. 전년 비교 기준이 ~530bp 더 높아졌음에도 ~300bp 순차 가속으로 <b>2년 누적 성장률(2-year stack) ~68%</b> (전분기 60%).</li>
+        <li>FY27 제품매출 가이던스 <b>+36% y/y</b>(이전 +31%) — $230M 상향은 2Q beat(~$74M)를 훨씬 초과. 3Q 가이던스 <b>+37~38%</b>(컨센서스 +29%, 중간값이 컨센서스 대비 $85M 상회).</li>
+        <li>가속의 <b>~50%는 AI 제품</b>, 나머지는 코어 플랫폼 — 광범위한 고객층에서 발생, 특정 산업 집중도 낮음. AI 네이티브 기업은 매출의 작은 비중.</li>
+        <li>NRR <b>126%</b> 유지, cRPO 성장률 <b>+42% y/y</b> (1Q +38%), 순증 고객 692개(+32% y/y)로 고객 기반 <b>14,554개 (+22% y/y)</b>, $1M+ 고객 <b>828개 (+27% y/y)</b>.</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">2</span>하반기 40% 성장 경로</h3>
+      <ul class="pts">
+        <li>3Q 가이던스 중간값에 3% beat 적용 시 제품매출 성장률 <b>~+41%</b>.</li>
+        <li>3Q/FY27 가이던스가 함의하는 4Q 성장률은 ~35%. 그러나 (1) 3Q 중간값 대비 +3% beat, (2) 전년과 동일한 4Q q/q 가이던스(+3.4%), (3) 4Q 가이던스 대비 3% beat를 가정하면 <b>4Q +42%</b>.</li>
+        <li>결론: <b>2H27 40%+ 성장 경로가 명확</b>. 3Q 중간값은 컨센서스 대비 5.6%, FY27은 3.8% 상회하며 FY27 유기적 성장 ~35%(Observe 제외).</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">3</span>2Q에서 확인된 5가지 테마</h3>
+      <ul class="pts">
+        <li><b>AI 채택이 가속을 견인</b> — CoCo(구 Cortex Code) 채택 계정 9,100+ (1Q 대비 2,000+ 증가), CoWork 5,800 계정. AI 포트폴리오의 직접 수익화와 코어 데이터 플랫폼 소비 플라이휠이 동시 작동.</li>
+        <li><b>광범위한 가속</b> — 산업 집중도 제한적, AI 네이티브 기업 비중 낮음.</li>
+        <li><b>신규 유즈케이스 진입</b> — 재무·공급망 최적화 등 이전에는 접근하지 못했던 영역.</li>
+        <li><b>구매 의사결정자 확대</b> — CoCo·CoWork를 통해 CEO·CRO·CFO·CMO 등 새로운 페르소나가 구매 결정에 참여.</li>
+        <li><b>성장과 헤드카운트의 디커플링</b> — 채용은 완만한 반면 매출은 큰 폭 가속.</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">4</span>모니터링 요소</h3>
+      <ul class="pts">
+        <li><b>FCF 기대 하회</b> — Adj. FCF $92M(6.0% 마진) vs 추정치/컨센서스 $125M/$119M(8.4%/8.0%). 경영진은 구체적 브릿지를 제시하지 않았으나 FY27 23.0% 마진 가이던스는 재확인.</li>
+        <li><b>AI 믹스의 제품 GM 압박</b> — Non-GAAP 제품 GM ~170bp y/y 하락한 74.7%, FY27 가이던스 74.0%. 현재 기여 마진이 낮은 AI 워크로드 성장이 원인. 장기적으로 모델 라우팅, 오픈소스 모델, 프론티어 모델 가격 하락이 상쇄 요인.</li>
+      </ul>
+      <div class="chart-card">
+        <div class="ct">Non-GAAP 영업이익률과 제품매출 y/y 성장률 추이</div>
+        <div class="legend"><span><i style="background:#c9d8ea"></i>Non-GAAP Op Margin</span><span><i style="background:#0f2a4a"></i>Product Revenue Y/Y</span></div>
+        <svg viewBox="0 0 880 320" width="100%" role="img" aria-label="Non-GAAP Op Margin, Product Revenue Y/Y">
+<line x1="50" y1="270.0" x2="850" y2="270.0" stroke="#e6ebf2"/>
+<line x1="50" y1="212.5" x2="850" y2="212.5" stroke="#e6ebf2"/>
+<line x1="50" y1="155.0" x2="850" y2="155.0" stroke="#e6ebf2"/>
+<line x1="50" y1="97.5" x2="850" y2="97.5" stroke="#e6ebf2"/>
+<line x1="50" y1="40.0" x2="850" y2="40.0" stroke="#e6ebf2"/>
+<line x1="50" y1="270" x2="850" y2="270" stroke="#b9c3d2" stroke-width="1.2"/>
+<rect x="68.7" y="212.5" width="51.6" height="57.5" fill="#c9d8ea" rx="2"/>
+<text x="94.4" y="264.0" font-size="9.5" text-anchor="middle" fill="#2c3e57">5.0%</text>
+<text x="94.4" y="286" font-size="10" text-anchor="middle" fill="#525866">2Q25</text>
+<rect x="157.6" y="197.6" width="51.6" height="72.5" fill="#c9d8ea" rx="2"/>
+<text x="183.3" y="264.0" font-size="9.5" text-anchor="middle" fill="#2c3e57">6.3%</text>
+<text x="183.3" y="286" font-size="10" text-anchor="middle" fill="#525866">3Q25</text>
+<rect x="246.4" y="161.9" width="51.6" height="108.1" fill="#c9d8ea" rx="2"/>
+<text x="272.2" y="264.0" font-size="9.5" text-anchor="middle" fill="#2c3e57">9.4%</text>
+<text x="272.2" y="286" font-size="10" text-anchor="middle" fill="#525866">4Q25</text>
+<rect x="335.3" y="168.8" width="51.6" height="101.2" fill="#c9d8ea" rx="2"/>
+<text x="361.1" y="264.0" font-size="9.5" text-anchor="middle" fill="#2c3e57">8.8%</text>
+<text x="361.1" y="286" font-size="10" text-anchor="middle" fill="#525866">1Q26</text>
+<rect x="424.2" y="142.4" width="51.6" height="127.6" fill="#c9d8ea" rx="2"/>
+<text x="450.0" y="264.0" font-size="9.5" text-anchor="middle" fill="#2c3e57">11.1%</text>
+<text x="450.0" y="286" font-size="10" text-anchor="middle" fill="#525866">2Q26</text>
+<rect x="513.1" y="145.8" width="51.6" height="124.2" fill="#c9d8ea" rx="2"/>
+<text x="538.9" y="264.0" font-size="9.5" text-anchor="middle" fill="#2c3e57">10.8%</text>
+<text x="538.9" y="286" font-size="10" text-anchor="middle" fill="#525866">3Q26</text>
+<rect x="602.0" y="145.8" width="51.6" height="124.2" fill="#c9d8ea" rx="2"/>
+<text x="627.8" y="264.0" font-size="9.5" text-anchor="middle" fill="#2c3e57">10.8%</text>
+<text x="627.8" y="286" font-size="10" text-anchor="middle" fill="#525866">4Q26</text>
+<rect x="690.9" y="133.2" width="51.6" height="136.8" fill="#c9d8ea" rx="2"/>
+<text x="716.7" y="264.0" font-size="9.5" text-anchor="middle" fill="#2c3e57">11.9%</text>
+<text x="716.7" y="286" font-size="10" text-anchor="middle" fill="#525866">1Q27</text>
+<rect x="779.8" y="94.0" width="51.6" height="176.0" fill="#c9d8ea" rx="2"/>
+<text x="805.6" y="264.0" font-size="9.5" text-anchor="middle" fill="#2c3e57">15.3%</text>
+<text x="805.6" y="286" font-size="10" text-anchor="middle" fill="#525866">2Q27</text>
+<path d="M 94.4 119.2 L 183.3 122.3 L 272.2 127.9 L 361.1 136.1 L 450.0 109.0 L 538.9 123.3 L 627.8 116.7 L 716.7 96.7 L 805.6 81.9" fill="none" stroke="#0f2a4a" stroke-width="2.2"/>
+<circle cx="94.4" cy="119.2" r="3.2" fill="#0f2a4a"/>
+<text x="94.4" y="111.2" font-size="10" font-weight="700" text-anchor="middle" fill="#0f2a4a">29.5%</text>
+<circle cx="183.3" cy="122.3" r="3.2" fill="#0f2a4a"/>
+<text x="183.3" y="114.3" font-size="10" font-weight="700" text-anchor="middle" fill="#0f2a4a">28.9%</text>
+<circle cx="272.2" cy="127.9" r="3.2" fill="#0f2a4a"/>
+<text x="272.2" y="119.9" font-size="10" font-weight="700" text-anchor="middle" fill="#0f2a4a">27.8%</text>
+<circle cx="361.1" cy="136.1" r="3.2" fill="#0f2a4a"/>
+<text x="361.1" y="128.1" font-size="10" font-weight="700" text-anchor="middle" fill="#0f2a4a">26.2%</text>
+<circle cx="450.0" cy="109.0" r="3.2" fill="#0f2a4a"/>
+<text x="450.0" y="101.0" font-size="10" font-weight="700" text-anchor="middle" fill="#0f2a4a">31.5%</text>
+<circle cx="538.9" cy="123.3" r="3.2" fill="#0f2a4a"/>
+<text x="538.9" y="115.3" font-size="10" font-weight="700" text-anchor="middle" fill="#0f2a4a">28.7%</text>
+<circle cx="627.8" cy="116.7" r="3.2" fill="#0f2a4a"/>
+<text x="627.8" y="108.7" font-size="10" font-weight="700" text-anchor="middle" fill="#0f2a4a">30.0%</text>
+<circle cx="716.7" cy="96.7" r="3.2" fill="#0f2a4a"/>
+<text x="716.7" y="88.7" font-size="10" font-weight="700" text-anchor="middle" fill="#0f2a4a">33.9%</text>
+<circle cx="805.6" cy="81.9" r="3.2" fill="#0f2a4a"/>
+<text x="805.6" y="73.9" font-size="10" font-weight="700" text-anchor="middle" fill="#0f2a4a">36.8%</text>
+</svg>
+        <div class="chart-src">Source: Company data</div>
+      </div>
+
+      <h3 class="sec"><span class="n">5</span>모델 변경 및 핵심 추정치</h3>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>$M</th><th class="num">3Q27E</th><th class="num">4Q27E</th><th class="num">FY27E</th><th class="num">FY28E</th><th class="num">FY29E</th></tr></thead>
+        <tbody>
+          <tr><td><b>제품매출 신규</b></td><td class="num">1,598.7 (+38%)</td><td class="num">1,658.6 (+35%)</td><td class="num">6,083.6 (+36%)</td><td class="num">7,817.0 (+28%)</td><td class="num">9,773.2 (+25%)</td></tr>
+          <tr><td>제품매출 이전</td><td class="num">1,509.0</td><td class="num">1,579.9</td><td class="num">5,840.6 (+31%)</td><td class="num">7,359.9 (+26%)</td><td class="num">9,195.8 (+25%)</td></tr>
+          <tr><td>변경률</td><td class="num up">+5.9%</td><td class="num up">+5.0%</td><td class="num up">+4.2%</td><td class="num up">+6.2%</td><td class="num up">+6.3%</td></tr>
+          <tr><td><b>총매출 신규</b></td><td class="num">1,654.8</td><td class="num">1,718.0</td><td class="num">6,310.5 (+35%)</td><td class="num">8,085.5 (+28%)</td><td class="num">10,079.7 (+25%)</td></tr>
+          <tr><td>매출총이익률 신규 / 이전</td><td class="num">70.7% / 72.0%</td><td class="num">70.1% / 72.0%</td><td class="num">71.0% / 72.0%</td><td class="num">70.8% / 72.2%</td><td class="num">70.5% / 72.4%</td></tr>
+          <tr><td><b>영업이익률 신규 / 이전</b></td><td class="num">15.5% / 14.1%</td><td class="num">15.0% / 15.1%</td><td class="num">14.5% / 13.5%</td><td class="num">16.0% / 15.0%</td><td class="num">18.1% / 17.0%</td></tr>
+          <tr><td>영업이익 신규</td><td class="num">256.2</td><td class="num">257.0</td><td class="num">915.9</td><td class="num">1,296.4</td><td class="num">1,821.2</td></tr>
+          <tr><td>Adj. FCF 신규 (마진)</td><td class="num">175.7 (11%)</td><td class="num">918.0 (53%)</td><td class="num">1,451.5 (23.0%)</td><td class="num">1,983.8 (24.5%)</td><td class="num">2,677.2 (26.6%)</td></tr>
+          <tr><td><b>EPS 신규 / 이전</b></td><td class="num">$0.58 / $0.55</td><td class="num">$0.55 / $0.57</td><td class="num">$2.16 / $1.99</td><td class="num">$2.96 / $2.86</td><td class="num">$4.19 / $4.01</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-src">Source: Company data</div>
+      <div class="tbl-wrap" style="margin-top:14px;">
+      <table class="tbl">
+        <thead><tr><th>Key Earnings Inputs</th><th class="num">Jan 2026</th><th class="num">Jan 2027E</th><th class="num">Jan 2028E</th><th class="num">Jan 2029E</th></tr></thead>
+        <tbody>
+          <tr><td>제품매출 성장률</td><td class="num">29.2%</td><td class="num">36.0%</td><td class="num">28.5%</td><td class="num">25.0%</td></tr>
+          <tr><td>총매출 성장률</td><td class="num">29.2%</td><td class="num">34.7%</td><td class="num">28.1%</td><td class="num">24.7%</td></tr>
+          <tr><td>총 RPO 성장률</td><td class="num">42.3%</td><td class="num">11.6%</td><td class="num">24.5%</td><td class="num">21.5%</td></tr>
+          <tr><td>영업이익률</td><td class="num">10.5%</td><td class="num">14.5%</td><td class="num">16.0%</td><td class="num">18.1%</td></tr>
+          <tr><td>FCF 마진</td><td class="num">23.9%</td><td class="num">21.7%</td><td class="num">23.5%</td><td class="num">25.8%</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3 class="sec"><span class="n">6</span>밸류에이션 &amp; Bull/Base/Bear 시나리오</h3>
+      <div class="callout" style="margin-top:0;"><span class="t">목표주가 근거</span>CY30E Base case FCF ~$4.4B에 <b>~60x EV/FCF</b>(이전 ~39x)를 적용해 WACC 11.1%로 CY27 시점으로 할인. 성장 조정 FCF 배수 ~2.0x(CY28~30 CAGR 기준). EV/CY27 매출 ~22x(성장 조정 0.69x)로 CRWD·NET·PLTR 등 고성장 AI 수혜 소프트웨어 대비 할인이나 그 수준에 근접. 컨센서스 목표주가 분포 $110~$500(평균 $335.08), 컨센서스 등급 OW 88% / EW 10% / UW 2%. 옵션 내재 확률(12M): $650 초과 ~0%, $470 초과 ~7.8%, $200 미만 ~28.7%.</div>
+      <div class="bbgrid">
+        <div class="bb bull"><div class="lbl">🐂 Bull</div><div class="px">$650</div><div class="ret">+112.5% Upside</div>
+          <ul><li>Data Cloud 비전이 코어 시장을 확장하고 인접 시장 진출 성공</li><li>매출 CAGR ~30% (CY25~30) → CY30 ~$17.2B</li><li>영업이익률 CY24 6% → CY30 ~24.5%</li><li>CY30 FCF 마진 ~32%, FCF ~$5.5B</li><li>~65x × CY28~30 CAGR ~34% = EV/FCF/G ~1.94x, EV/CY27 매출 ~29x</li></ul></div>
+        <div class="bb base"><div class="lbl">⊕ Base</div><div class="px">$470</div><div class="ret">+53.7%</div>
+          <ul><li>코어 데이터 분석에서 리더십 지속 및 점유율 확대</li><li>매출 CAGR ~26% → CY30 ~$15.1B</li><li>영업이익률 CY30 ~21.1%</li><li>CY30 FCF 마진 ~28.8%, FCF ~$4.4B</li><li>~60x × CAGR ~29% = EV/FCF/G ~2.0x, EV/CY27 매출 ~22x</li></ul></div>
+        <div class="bb bear"><div class="lbl">🐻 Bear</div><div class="px">$200</div><div class="ret">-34.6% Downside</div>
+          <ul><li>퍼블릭 클라우드 경쟁이 성장을 압박</li><li>매출 CAGR ~23% → CY30 ~$13B</li><li>영업이익률 CY30 ~19.0%</li><li>CY30 FCF 마진 ~27%, FCF ~$3.5B</li><li>~32x × CAGR 24% = EV/FCF/G ~1.32x, EV/CY27 매출 ~10x</li></ul></div>
+      </div>
+
+      <h3 class="sec"><span class="n">!</span>리스크 &amp; 모니터링 포인트</h3>
+      <div class="risk-box">
+        <h4>Risks to Price Target / Rating</h4>
+        <ul>
+          <li><b>상방:</b> 파괴적 모델이 코어 데이터 웨어하우징 기회를 확장하고 점유율 확대 / 데이터 공유의 네트워크 효과로 사용량 급증 / 트랜잭션 워크로드 침투 성공.</li>
+          <li><b>하방:</b> 경쟁 벤더의 가격 압박이 성장·마진에 부담 / 인접 데이터 관리(OLTP 등) 유즈케이스 진입 난항.</li>
+        </ul>
+        <h4 style="margin-top:14px;">Investment Drivers &amp; Positioning</h4>
+        <ul>
+          <li>NRR, $1M+ TTM 제품매출 고객 성장, 레거시 온프레미스 데이터 웨어하우징 벤더로부터의 점유율 이동, 영업이익·FCF 성과.</li>
+          <li>기관 액티브 보유 비중 61.9%, 헤지펀드 섹터 Long/Short 비율 2.1x, 섹터 net exposure 33.6%.</li>
+          <li>매출 지역 노출: 북미 80~90%, 나머지 지역 각 0~10%.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== REPORT 3 ===================== -->
+  <section class="report" id="rpt3">
+    <div class="report-head">
+      <div class="tag">리포트 3 · Americas Software</div>
+      <h2>AI 주도 변곡점이 구조적으로 높은 중기 성장을 뒷받침 — Buy 유지, 목표주가 $436</h2>
+      <p class="lede">실적 발표 후 주가 +21%. 1Q 발표 이후 +37%, NTM EV/Sales 17x라는 높은 진입 장벽에도 주가 반응은 향후 18개월간 추정치 상향 가능성을 반영. AI 기반 클라우드 마이그레이션과 Snowflake Intelligence·CoCo가 여는 신규 AI 유즈케이스의 핵심 수혜주.</p>
+    </div>
+    <div class="report-body">
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Buy</div><div class="s">유지 (2021년 5월 이후)</div></div>
+        <div class="chip"><div class="k">12m Target Price</div><div class="v">$436</div><div class="s">↑ from $300 (+45%)</div></div>
+        <div class="chip"><div class="k">Price (2 Sep 26)</div><div class="v">$305.84</div><div class="s">Upside 42.6%</div></div>
+        <div class="chip"><div class="k">Valuation</div><div class="v">82x</div><div class="s">EV/FCF on SNTM uFCF (이전 60x)</div></div>
+        <div class="chip"><div class="k">Market Cap / EV</div><div class="v">$119.1B</div><div class="s">EV $118.0B, 3m ADTV $1.5B</div></div>
+      </div>
+
+      <h3 class="sec"><span class="n">1</span>핵심 요약</h3>
+      <ul class="pts">
+        <li>2Q 제품매출 컨센서스 대비 <b>+5%</b>, EBIT 마진 <b>+270bp</b> 상회. FY27 제품매출 가이던스 컨센서스 대비 +4%, EBIT 마진 +100bp 상회(FactSet 기준).</li>
+        <li>가이던스는 FY27 성장률 <b>36%</b>(이전 31%, FY26 29%)로의 가속과 4Q 출구 성장률 <b>35%</b>(컨센서스 29%)를 함의.</li>
+        <li>경영진은 가속의 절반을 신흥 AI 제품, 절반을 코어 플랫폼에 귀속 — (1) CoCo가 견인력을 확보하며 증분 수익화 기회 창출, 고객 기반 침투율 <b>60%</b>(전분기 50%), (2) AI가 마이그레이션을 가속해 코어 플랫폼 채택 촉진.</li>
+        <li>AI 네이티브 고객은 전체 매출의 작은 비중 → 광범위한 엔터프라이즈 채택에 기반한 <b>지속 가능한 가속</b>.</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">2</span>실적 리캡 — AI 제품과 마이그레이션</h3>
+      <ul class="pts">
+        <li><b>Cortex Code(CoCo)가 소비를 견인:</b> 채택 계정 <b>9.1k+</b>(전분기 7k+), 고객 기반의 ~60% 침투. CoCo 채택 고객은 코어 플랫폼 소비도 증가. 파이프라인 구축, 에이전트 배포, 워크로드 최적화, 마이그레이션 가속을 지원하며 어드레서블 워크로드 확대. CoCo의 <b>gross retention이 안정적</b>으로 유지 — 매출 지속성의 긍정 신호.</li>
+        <li><b>CoWork 5.8k 계정(+11% q/q)</b> — 문서 처리, 머신러닝, 노트북 전반으로 사용 확장. 신규 개발자·비즈니스 페르소나로 도달 범위 확대, 기존 계정 내 사용자 수의 단계적 증가. CoCo·CoWork가 광범위한 엔터프라이즈 워크플로의 control plane으로 자리매김.</li>
+        <li><b>AI 주도 마이그레이션 가속이 코어 플랫폼 성장에 기여:</b> AI가 데이터 현대화 프로젝트의 시간·비용·복잡도를 낮춰 수년 걸리던 프로젝트가 분기 단위로 완료. 한 네트워크 장비 제조사는 Teradata 마이그레이션을 <b>3분기 미만</b>에 완료(기존 추정 2~3년). 호주 대형 은행은 금융범죄 플랫폼을 이전해 <b>170억 건 트랜잭션에서 10배 빠른 쿼리 성능</b> 달성, AI 에이전트로 잔여 데이터 자산 마이그레이션과 레거시 데이터 탐색·매핑 자동화 진행.</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">3</span>2Q27 실적 vs 추정치·컨센서스</h3>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>$M</th><th class="num">실적</th><th class="num">추정치</th><th class="num">컨센서스</th><th class="num">vs 추정</th><th class="num">vs 컨센</th></tr></thead>
+        <tbody>
+          <tr><td><b>제품매출</b> (y/y)</td><td class="num">1,492 (37%)</td><td class="num">1,419 (30%)</td><td class="num">1,419 (30%)</td><td class="num up">+5.2%</td><td class="num up">+5.1%</td></tr>
+          <tr><td>프로페셔널 서비스 (y/y)</td><td class="num">55 (1%)</td><td class="num">65 (20%)</td><td class="num">61 (12%)</td><td class="num dn">-15.9%</td><td class="num dn">-9.8%</td></tr>
+          <tr><td><b>총매출</b> (y/y)</td><td class="num">1,547 (35%)</td><td class="num">1,484 (30%)</td><td class="num">1,483 (30%)</td><td class="num up">+4.2%</td><td class="num up">+4.3%</td></tr>
+          <tr><td>매출총이익 (마진)</td><td class="num">1,110 (72%)</td><td class="num">1,061 (71%)</td><td class="num">1,067 (72%)</td><td class="num up">+5%</td><td class="num up">+4%</td></tr>
+          <tr><td><b>영업이익</b> (마진)</td><td class="num">237 (15%)</td><td class="num">186 (13%)</td><td class="num">188 (13%)</td><td class="num up">+27% / +279bp</td><td class="num up">+27% / +267bp</td></tr>
+          <tr><td>EPS (y/y)</td><td class="num">$0.62 (80%)</td><td class="num">$0.43 (25%)</td><td class="num">$0.45 (29%)</td><td class="num up">+44%</td><td class="num up">+39%</td></tr>
+          <tr><td>Adj. FCF (마진)</td><td class="num">92 (6%)</td><td class="num">87 (6%)</td><td class="num">101 (7%)</td><td class="num up">+6.7% / +14bp</td><td class="num dn">-8.5% / -83bp</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-src">Source: FactSet, Company data</div>
+
+      <h3 class="sec"><span class="n">4</span>추정치 및 밸류에이션 지표</h3>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>$M (EPS 제외)</th><th class="num">FY1/26</th><th class="num">FY1/27E</th><th class="num">FY1/28E</th><th class="num">FY1/29E</th></tr></thead>
+        <tbody>
+          <tr><td><b>매출 신규</b></td><td class="num">4,683.9</td><td class="num">6,313.9</td><td class="num">8,359.9</td><td class="num">10,860.8</td></tr>
+          <tr><td>매출 이전</td><td class="num">4,683.9</td><td class="num">6,094.5</td><td class="num">7,550.9</td><td class="num">9,202.3</td></tr>
+          <tr><td>총매출 성장률</td><td class="num">29.2%</td><td class="num">34.8%</td><td class="num">32.4%</td><td class="num">29.9%</td></tr>
+          <tr><td>EBITDA</td><td class="num">710.2</td><td class="num">1,189.9</td><td class="num">1,703.4</td><td class="num">2,348.8</td></tr>
+          <tr><td>EBIT (마진)</td><td class="num">489.7 (10.5%)</td><td class="num">916.0 (14.5%)</td><td class="num">1,424.5 (17.0%)</td><td class="num">2,071.1 (19.1%)</td></tr>
+          <tr><td>매출총이익률</td><td class="num">72.3%</td><td class="num">70.8%</td><td class="num">69.9%</td><td class="num">70.2%</td></tr>
+          <tr><td><b>EPS 신규 / 이전</b></td><td class="num">$1.25 / $1.25</td><td class="num">$2.16 / $1.90</td><td class="num">$3.10 / $2.68</td><td class="num">$4.17 / $3.49</td></tr>
+          <tr><td>FCF</td><td class="num">1,117.2</td><td class="num">1,392.8</td><td class="num">1,897.1</td><td class="num">2,547.7</td></tr>
+          <tr><td>P/E</td><td class="num">165.2x</td><td class="num">141.9x</td><td class="num">98.6x</td><td class="num">73.4x</td></tr>
+          <tr><td>EV/Sales</td><td class="num">14.5x</td><td class="num">16.8x</td><td class="num">13.1x</td><td class="num">10.3x</td></tr>
+          <tr><td>EV/EBITDA</td><td class="num">95.7x</td><td class="num">89.3x</td><td class="num">64.2x</td><td class="num">47.5x</td></tr>
+          <tr><td>FCF yield</td><td class="num">1.6%</td><td class="num">1.3%</td><td class="num">1.7%</td><td class="num">2.2%</td></tr>
+          <tr><td>CROCI</td><td class="num">28.6%</td><td class="num">47.6%</td><td class="num">54.8%</td><td class="num">73.0%</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-src">Source: Company data</div>
+      <div class="callout"><span class="t">밸류에이션</span>12개월 목표주가 $436 (이전 $300). SNTM(Q5~Q8) uFCF에 <b>82x EV/FCF</b>(성장률 상향으로 이전 60x에서 상향) 적용, EV/FCF/Growth 1.9x로 매출 성장 20%+·FCF 마진 코호트와 동일 수준. 주가 성과: 3M +17.1%, 6M +79.6%, 12M +30.9% (S&amp;P 500 대비 +16.2% / +61.2% / +9.6%).</div>
+
+      <h3 class="sec"><span class="n">!</span>리스크 &amp; 모니터링 포인트</h3>
+      <div class="risk-box">
+        <h4>Key Downside Risks</h4>
+        <ul>
+          <li><b>Iceberg의 스토리지 매출 잠식:</b> 오픈 테이블 포맷 채택이 스토리지 매출을 잠식할 가능성.</li>
+          <li><b>CSP 및 Databricks 경쟁 심화.</b></li>
+          <li><b>IT 지출 환경 악화 또는 클라우드 지출 최적화 사이클 재개.</b></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== REPORT 4 ===================== -->
+  <section class="report" id="rpt4">
+    <div class="report-head">
+      <div class="tag">리포트 4 · Software – Large Cap / Mid &amp; Small Cap</div>
+      <h2>F2Q27 리뷰: 3분기 연속 제품매출 가속이 AI와 코어 양쪽의 업사이드를 입증 — OW 유지, Dec-27 목표주가 $426 신규 제시</h2>
+      <p class="lede">분기 flow-through를 크게 초과하는 FY27 가이던스 상향. AI 제품(Cortex Code·CoWork·AI Functions·문서 처리)이 가속의 절반, AI 지원 마이그레이션이 다년 프로젝트를 분기 단위로 압축하며 코어 플랫폼 모멘텀 지속. 4Q 가이던스에 내재된 보수성은 추가 상향 여지.</p>
+    </div>
+    <div class="report-body">
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Overweight</div><div class="s">유지</div></div>
+        <div class="chip"><div class="k">Target Price (Dec-27)</div><div class="v">$426</div><div class="s">↑ from $285 (Dec-26 기준)</div></div>
+        <div class="chip"><div class="k">Price (2 Sep 26)</div><div class="v">$305.84</div><div class="s">Implied +39%</div></div>
+        <div class="chip"><div class="k">Valuation</div><div class="v">~60x</div><div class="s">EV/CY28E uFCF</div></div>
+        <div class="chip"><div class="k">Adj. EPS FY27E / 28E</div><div class="v">$2.15 / $3.03</div><div class="s">이전 $1.88 / $2.43 (+14% / +25%)</div></div>
+      </div>
+
+      <h3 class="sec"><span class="n">1</span>F2Q27 실적 (7월 결산)</h3>
+      <ul class="pts">
+        <li>제품매출 <b>$1.492B</b> vs 추정치 $1.418B / 컨센서스 $1.424B — <b>+37% y/y</b>, 3분기 연속 가속. 순차 증가분 <b>~$158M</b>(F1Q27 ~$108M).</li>
+        <li>NRR <b>126%</b>, q/q 안정. RPO <b>$9.004B, +30% y/y</b>이나 <b>~2% q/q 감소</b> — 2분기 연속 q/q 감소. 경영진은 고객의 Q4 갱신 선호 지속을 이유로 제시하며 수주가 F4Q27에 더 집중될 것으로 예상.</li>
+        <li>PF 매출총이익률 <b>71.8%</b> vs 추정 72.0%. 헤드카운트 증가 <b>+7% y/y</b>에 그치며 PF 영업이익 <b>$237M (15.3%)</b> vs 추정 $184M(12.5%) / 컨센서스 $188M(12.7%).</li>
+        <li>PF EPS <b>$0.62</b> vs 추정 $0.43 / 컨센서스 $0.45 — 이 중 <b>~$0.09는 영업외 항목</b>(전략적 투자 세전 이익 $35M 포함)에서 발생, EPS beat는 투자 이익으로 부풀려진 측면.</li>
+        <li>Adj. FCF <b>$92M</b> vs 추정 $32M / 컨센서스 $149M.</li>
+        <li>순증 고객 <b>692개</b>, $1M+ TTM 고객 순증 <b>+48개</b>로 고객 기반 확대.</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">2</span>가이던스 분석 — F3Q 및 FY27</h3>
+      <ul class="pts">
+        <li><b>F3Q27 제품매출 $1.588~1.593B</b> (중간값 $1.591B vs 추정 $1.506B / 컨센서스 $1.511B), <b>+37~38% y/y</b>. PF 영업이익률 <b>15.5%</b> vs 추정 14.5% / 컨센서스 14.2%. 순차 증가분 ~$99M으로 직전 $158M보다 낮으나 y/y 성장률은 완만히 가속 — 관측된 소비 행태만을 기반으로 가이던스를 제시하는 회사 관행과 일치.</li>
+        <li><b>FY27 제품매출 $6.070B (+36% y/y)</b>, 이전 $5.840B, 컨센서스 $5.857B. F2Q beat와 F3Q 가이던스가 설명하는 부분은 컨센서스 대비 ~$213M 상향분 중 <b>~$147M</b>에 불과 → <b>F4Q27에 대한 ~$66M의 증분 확신</b>이 반영.</li>
+        <li>PF 영업이익률 <b>14.5%</b>(이전 13.5%), Adj. FCF 마진 <b>23.0%</b> 유지(컨센서스 22.6%) — 하반기 대규모 현금 전환이 전제.</li>
+        <li>PF 제품 GM <b>74.0%</b>로 하향(이전 75.0%, 컨센서스 대비 ~100bp 하회) — 현재 기여 마진이 낮은 고성장 AI 워크로드 믹스 확대.</li>
+        <li>가이던스가 함의하는 F4Q27 제품매출 <b>~$1.653B (~+35% y/y)</b> — 강한 F3Q 이후 완만한 감속을 가정, 회계연도 중 추가 상향 여지를 남긴 보수성.</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">3</span>AI 제품 채택</h3>
+      <ul class="pts">
+        <li>Cortex Code(CoCo) <b>9,100+ 계정</b>, 분기 중 2,000+ 추가. CoWork <b>5,800 계정</b>, +11% q/q.</li>
+        <li>1H FY27 중 <b>330개+ 제품 기능</b> GA(+35% y/y), Cortex Sense 및 Cortex AI Gateway 출시.</li>
+        <li>경영진은 가속의 약 절반을 AI 제품(CoCo·CoWork·AI Functions·문서 처리)에, 나머지를 마이그레이션과 코어 플랫폼 성장에 귀속. AI 제품 채택 고객의 코어 플랫폼 소비 상승 효과는 이전 분기부터 언급되었으나 정량화는 보류.</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">4</span>핵심 추정치 및 목표주가 산정</h3>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>$M (EPS 제외)</th><th class="num">FY26A</th><th class="num">FY27E</th><th class="num">FY28E</th><th class="num">FY29E</th></tr></thead>
+        <tbody>
+          <tr><td><b>매출</b> (y/y)</td><td class="num">4,684 (29.2%)</td><td class="num">6,313 (34.8%)</td><td class="num">8,187 (29.7%)</td><td class="num">10,476 (28.0%)</td></tr>
+          <tr><td>Adj. EBIT (마진)</td><td class="num">490 (10.5%)</td><td class="num">917 (14.5%)</td><td class="num">1,424 (17.4%)</td><td class="num">1,960 (18.7%)</td></tr>
+          <tr><td>Adj. EBITDA (마진)</td><td class="num">917 (19.6%)</td><td class="num">1,528 (24.2%)</td><td class="num">2,120 (25.9%)</td><td class="num">2,681 (25.6%)</td></tr>
+          <tr><td><b>Adj. EPS</b> (y/y)</td><td class="num">$1.25 (51.7%)</td><td class="num">$2.15 (72.0%)</td><td class="num">$3.03 (41.0%)</td><td class="num">$4.10 (35.1%)</td></tr>
+          <tr><td>영업현금흐름</td><td class="num">1,222</td><td class="num">1,443</td><td class="num">2,111</td><td class="num">2,835</td></tr>
+          <tr><td>Adj. FCFF</td><td class="num">1,120</td><td class="num">1,391</td><td class="num">1,973</td><td class="num">—</td></tr>
+          <tr><td>EV/Revenue</td><td class="num">25.1x</td><td class="num">18.6x</td><td class="num">14.2x</td><td class="num">11.5x</td></tr>
+          <tr><td>EV/EBITDA</td><td class="num">128.4x</td><td class="num">76.9x</td><td class="num">54.8x</td><td class="num">44.8x</td></tr>
+          <tr><td>Adj. P/E</td><td class="num">244.6x</td><td class="num">142.2x</td><td class="num">100.9x</td><td class="num">74.6x</td></tr>
+          <tr><td>ROE</td><td class="num">18.9%</td><td class="num">37.8%</td><td class="num">38.6%</td><td class="num">34.5%</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-src">Source: Company data, Bloomberg Finance L.P.</div>
+      <div class="tbl-wrap" style="margin-top:14px;">
+      <table class="tbl">
+        <thead><tr><th>Price Target Math ($M)</th><th class="num">2027E</th><th class="num">2028E</th></tr></thead>
+        <tbody>
+          <tr><td>Unlevered FCF</td><td class="num">1,973</td><td class="num">2,689</td></tr>
+          <tr><td>Implied / Target EV/FCF 배수</td><td class="num">58x</td><td class="num"><b>60x</b></td></tr>
+          <tr><td>총 기업가치</td><td class="num">114,121</td><td class="num">161,347</td></tr>
+          <tr><td>순부채 / (순현금)</td><td class="num">(4,093)</td><td class="num">(6,282)</td></tr>
+          <tr><td>총 지분가치</td><td class="num">118,214</td><td class="num">167,628</td></tr>
+          <tr><td>발행주식수 (M)</td><td class="num">387</td><td class="num">393</td></tr>
+          <tr><td><b>목표주가 / 현재가 / 상승여력</b></td><td class="num"></td><td class="num"><b>$426 / $305.84 / +39%</b></td></tr>
+          <tr><td>Implied EV/Revenue / P/E</td><td class="num"></td><td class="num">15.4x / 104.0x</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-src">Source: Bloomberg Finance L.P.</div>
+      <div class="callout"><span class="t">밸류에이션 논리</span>Dec-27 목표주가 $426은 CY28E uFCF에 ~60x EV/FCF 적용. 고성장 인프라 소프트웨어 비교군(CRWD·NET·ZS·DDOG·MDB) 평균 74x 대비 할인 — 상대적으로 열위인 GAAP 영업이익률과 동등 수준의 FCF 마진을 반영하되, 우월한 FTM 매출 성장이 이를 일부 상쇄. 현재 TAM $67~87B, Fortune 10부터 1인 기업까지 폭넓은 채택, 클라우드 애그노스틱 멀티리전 구조와 데이터 공유 기반의 Data Cloud 비전이 네트워크 효과를 수반한 개방형 시장 기회로 이어질 수 있다는 판단.</div>
+
+      <h3 class="sec"><span class="n">!</span>리스크 &amp; 모니터링 포인트</h3>
+      <div class="risk-box">
+        <h4>Risks to Rating &amp; Price Target</h4>
+        <ul>
+          <li><b>매크로·경기침체:</b> 인플레이션, 긴축, 소비자·기업 심리 변화, 지정학적 이벤트로 인한 경기 둔화가 성장과 밸류에이션에 부정적.</li>
+          <li><b>퍼블릭 클라우드 벤더 경쟁:</b> 자체 오퍼링을 보유한 CSP가 기술 격차를 해소할 경우 성장 궤적 훼손 가능.</li>
+          <li><b>투자 효율 저하:</b> 국제 확장에 집중한 S&amp;M 투자가 고객 확보·매출로 이어지지 않으면 손실 확대.</li>
+          <li><b>보안 침해·장애:</b> 100% 인터넷 기반 서비스로 고객 데이터 전송·제3자 데이터센터 호스팅에 따른 무단 접근·가동 중단 리스크.</li>
+        </ul>
+        <h4 style="margin-top:14px;">모니터링 포인트</h4>
+        <ul>
+          <li>F4Q27 수주 프로파일 — 4Q 갱신 집중으로 초기 FY28 가이던스의 핵심 변수.</li>
+          <li>FY27 FCF 마진 23% 달성을 위한 하반기 현금 전환 규모.</li>
+          <li>AI 워크로드 믹스에 따른 제품 GM 74% 궤적.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div>본 문서는 투자 권유를 목적으로 하지 않습니다.</div>
+  </footer>
+
+</div>
+</body>
+</html>
