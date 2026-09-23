@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Memory Market Update — Bull vs. Bear</title>
+<style>
+  :root{
+    --brand:#0a2240;
+    --brand-deep:#06182e;
+    --accent:#5c1a26;
+    --accent2:#7a2f3c;
+    --paper:#f4f6f9;
+    --card:#ffffff;
+    --ink:#1b1e24;
+    --ink-soft:#525866;
+    --line:#dde3ec;
+    --buy:#1f7a4d;
+    --bear:#c0392b;
+    --bull:#1f6fb2;
+    --warn:#8a4b15;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);font-family:'Helvetica Neue','Pretendard','Noto Sans KR',Arial,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+  .topbar{background:var(--brand-deep);color:#fff;padding:12px 6vw;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-bottom:3px solid var(--accent);position:sticky;top:0;z-index:50;}
+  .topbar .logo{font-weight:700;font-size:17px;letter-spacing:0.5px;}
+  .topbar .logo span{color:#c9a0a8;}
+  .topbar nav{display:flex;gap:6px;flex-wrap:wrap;}
+  .topbar nav a{color:#cfd8e6;text-decoration:none;font-size:12px;padding:5px 10px;border:1px solid rgba(255,255,255,0.2);border-radius:20px;transition:all .15s;}
+  .topbar nav a:hover{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .wrap{max-width:960px;margin:0 auto;padding:40px 6vw 90px;}
+  .intro{border-left:4px solid var(--accent);padding:8px 0 8px 20px;margin-bottom:40px;}
+  .intro .eyebrow{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent2);font-weight:700;}
+  .intro h1{font-size:26px;margin:8px 0 6px;color:var(--brand);}
+  .report{margin-bottom:64px;scroll-margin-top:70px;}
+  .report-head{background:linear-gradient(135deg,var(--brand) 0%, var(--brand-deep) 100%);color:#fff;border-radius:10px 10px 0 0;padding:28px 30px;}
+  .report-head .tag{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#9fb4d4;font-weight:700;}
+  .report-head h2{margin:8px 0 14px;font-size:23px;line-height:1.35;}
+  .report-head .lede{font-family:'Georgia',serif;font-size:15.5px;color:#e3ebf6;border-top:1px solid rgba(255,255,255,0.16);padding-top:14px;margin:0;}
+  .report-body{background:var(--card);border:1px solid var(--line);border-top:none;border-radius:0 0 10px 10px;padding:30px;}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px;}
+  .chip{border:1px solid var(--line);border-radius:8px;padding:10px 16px;background:#fafbfd;flex:1;min-width:130px;}
+  .chip .k{font-size:10.5px;letter-spacing:0.5px;text-transform:uppercase;color:var(--ink-soft);}
+  .chip .v{font-size:19px;font-weight:700;color:var(--brand);margin-top:2px;}
+  .chip .v.buy{color:var(--buy);}
+  .chip .s{font-size:11px;color:var(--ink-soft);}
+  h3.sec{font-size:17px;color:var(--brand);margin:30px 0 12px;padding-bottom:8px;border-bottom:1.5px solid var(--line);display:flex;align-items:center;gap:10px;scroll-margin-top:70px;}
+  h3.sec .n{background:var(--brand);color:#fff;font-size:12px;font-weight:700;width:24px;height:24px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}
+  h4.sub{font-size:13.5px;color:var(--accent2);margin:18px 0 6px;}
+  ul.pts{margin:0;padding:0;list-style:none;}
+  ul.pts li{position:relative;padding:7px 0 7px 20px;font-size:14.5px;border-bottom:1px dashed var(--line);}
+  ul.pts li:last-child{border-bottom:none;}
+  ul.pts li::before{content:"—";position:absolute;left:0;color:var(--accent2);font-weight:700;}
+  ul.pts b{color:var(--brand);}
+  table.tbl{width:100%;border-collapse:collapse;font-size:13px;margin:6px 0 4px;}
+  table.tbl th{background:var(--brand);color:#fff;text-align:left;padding:8px 10px;font-weight:600;white-space:nowrap;}
+  table.tbl td{padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top;}
+  table.tbl tr:nth-child(even) td{background:#f7f9fc;}
+  table.tbl td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;}
+  table.tbl td.up{color:var(--buy);font-weight:700;}
+  table.tbl td.dn{color:var(--bear);font-weight:700;}
+  .tbl-wrap{overflow-x:auto;}
+  .tbl.small{font-size:12px;}
+  .chart-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:22px 22px 14px;margin:14px 0;}
+  .chart-card .ct{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:12px;}
+  .chart-src{font-size:10.5px;color:#9aa3b2;margin-top:8px;}
+  .legend{display:flex;gap:18px;font-size:11.5px;color:var(--ink-soft);margin-bottom:4px;flex-wrap:wrap;}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .legend i{width:11px;height:11px;border-radius:2px;display:inline-block;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media(max-width:680px){.grid2{grid-template-columns:1fr;}}
+  .bbgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:14px 0;}
+  @media(max-width:760px){.bbgrid{grid-template-columns:1fr 1fr;}}
+  @media(max-width:460px){.bbgrid{grid-template-columns:1fr;}}
+  .bb{border-radius:8px;padding:16px;border:1px solid var(--line);background:#fafbfd;}
+  .bb.bull{border-top:3px solid var(--bull);}
+  .bb.base{border-top:3px solid var(--ink-soft);}
+  .bb.bear{border-top:3px solid var(--warn);}
+  .bb.xbear{border-top:3px solid var(--bear);}
+  .bb .lbl{font-size:11px;letter-spacing:0.6px;text-transform:uppercase;font-weight:700;color:var(--ink-soft);}
+  .bb .px{font-size:19px;font-weight:700;color:var(--brand);margin:4px 0 0;}
+  .bb .px small{font-size:11px;color:var(--ink-soft);font-weight:600;}
+  .bb .ret{font-size:12.5px;font-weight:600;}
+  .bb.bull .ret{color:var(--bull);}
+  .bb.xbear .ret{color:var(--bear);}
+  .bb ul{margin:8px 0 0;padding-left:16px;font-size:12px;color:var(--ink-soft);}
+  .bb li{margin-bottom:4px;}
+  .debate{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0 6px;}
+  @media(max-width:680px){.debate{grid-template-columns:1fr;}}
+  .side{border-radius:8px;padding:14px 16px;font-size:13.5px;border:1px solid var(--line);background:#fafbfd;}
+  .side .h{font-size:11px;font-weight:700;letter-spacing:0.6px;text-transform:uppercase;margin-bottom:6px;}
+  .side.bull{border-top:3px solid var(--bull);} .side.bull .h{color:var(--bull);}
+  .side.bear{border-top:3px solid var(--bear);} .side.bear .h{color:var(--bear);}
+  .view{background:#eef2f8;border-left:4px solid var(--brand);border-radius:0 8px 8px 0;padding:12px 16px;font-size:13.5px;margin:8px 0 4px;}
+  .view .h{font-size:11px;font-weight:700;letter-spacing:0.6px;text-transform:uppercase;color:var(--brand);display:block;margin-bottom:4px;}
+  .callout{background:#fbf6ec;border:1px solid #e8dcc3;border-radius:8px;padding:14px 18px;font-size:13px;color:var(--ink-soft);margin-top:14px;}
+  .callout .t{font-size:10.5px;font-weight:700;letter-spacing:0.6px;color:var(--warn);text-transform:uppercase;display:block;margin-bottom:5px;}
+  .risk-box{background:var(--brand);color:#dde6f3;border-radius:8px;padding:22px 24px;margin-top:14px;}
+  .risk-box h4{margin:0 0 10px;color:#fff;font-size:14.5px;}
+  .risk-box ul{margin:0;padding-left:18px;}
+  .risk-box li{margin-bottom:8px;font-size:13px;}
+  .risk-box li b{color:#fff;}
+  footer{border-top:1px solid var(--line);margin-top:50px;padding-top:20px;font-size:11px;color:#9aa3b2;line-height:1.6;}
+  @media(max-width:560px){.intro h1{font-size:21px;}.report-head h2{font-size:19px;}.report-body{padding:20px 16px;}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">Research<span>·</span>Digest</div>
+  <nav>
+    <a href="#s1">DCF 시나리오</a>
+    <a href="#s2">AI Capex</a>
+    <a href="#s4">HBM</a>
+    <a href="#s5">NAND</a>
+    <a href="#s6">LTA</a>
+    <a href="#s8">China</a>
+    <a href="#s9">주주환원</a>
+    <a href="#s11">Catalyst</a>
+  </nav>
+</div>
+
+<div class="wrap">
+
+  <div class="intro">
+    <div class="eyebrow">22 September 2026</div>
+    <h1>메모리 시장 업데이트 — Bull vs. Bear 논쟁</h1>
+  </div>
+
+  <section class="report" id="rpt1">
+    <div class="report-head">
+      <div class="tag">Technology - Semiconductors / Korea Memory</div>
+      <h2>Bull vs. Bear 논쟁: 시장은 Extreme Bear를 반영 중, 향후 12개월 risk/reward 매력적 — SEC·SKH Overweight</h2>
+      <p class="lede">9개 핵심 논쟁 주제와 DCF 스트레스 테스트 결과, 현 주가는 Bear~Extreme Bear 시나리오 사이를 반영하고 있어 12개월 내 의미 있는 upside가 존재. 내재가치 대비 upside는 SEC이 더 크지만, 단기 선호는 주주환원 정책과 TSR yield가 우위인 SKH. 아시아 내 Kioxia·Nanya도 선호.</p>
+    </div>
+
+    <div class="report-body">
+
+      <div class="chips">
+        <div class="chip"><div class="k">SEC Rating</div><div class="v buy">Overweight</div><div class="s">현재가 278,000원 (22 Sep)</div></div>
+        <div class="chip"><div class="k">SEC Base FV</div><div class="v">630,000원</div><div class="s">+128% / 확률가중 기대수익 +113%</div></div>
+        <div class="chip"><div class="k">SKH Rating</div><div class="v buy">Overweight</div><div class="s">현재가 1,842,000원 (22 Sep)</div></div>
+        <div class="chip"><div class="k">SKH Base FV</div><div class="v">3,040,000원</div><div class="s">+65% / 확률가중 기대수익 +57%</div></div>
+        <div class="chip"><div class="k">18M Upside (리포트 시각)</div><div class="v">60~130%</div><div class="s">Bull 110~200% / Extreme Bear -5~-20%</div></div>
+        <div class="chip"><div class="k">Base P/E (27E / 28E)</div><div class="v">SEC 9.1x / 7.0x</div><div class="s">SKH 6.6x / 4.7x</div></div>
+      </div>
+
+      <!-- ===================== 1. DCF ===================== -->
+      <h3 class="sec" id="s1"><span class="n">1</span>DCF 기반 적정가치(FVPS) — Bull / Base / Bear / Extreme Bear</h3>
+      <ul class="pts">
+        <li><b>결론:</b> 두 종목 모두 현 주가는 Bear와 Extreme Bear 사이의 극단적 비관 시나리오를 반영. Base case(확률 65%) 기준 SEC +128%, SKH +65% upside.</li>
+        <li><b>Bull (현 주가 대비 +110~200%):</b> AI H/W capex가 2028E 이후에도 지속 성장(2030E US$4trn)하고, Frontier AI 모델 랩·미국 하이퍼스케일러·neo cloud의 AI economics 개선이 이를 뒷받침. 공급제약 지속 시 20% 이상의 bit 수요 성장이 2029E/2030E 가격 안정을 지지, 2028E 이후 매년 FCF mid-teens % 개선. 2030E 터미널 ASP/OPM 가정은 2028E 공식 추정치와 유사하거나 소폭 하회.</li>
+        <li><b>Extreme Bear (현 주가 대비 -5~20%):</b> Bear 진영도 1H28E까지는 가격 안정에 동의하나, 신규 wafer start 증가가 가속되는 2H28E 이후 방향성에서 이견. "장비/클린룸 제약 없음" 시나리오(SPE 섹터엔 긍정)를 전제로 2029E 공급과잉 우려. 가격 하락폭은 LTA 계약 파기로 산업 전반 확산 시 <b>28E→30E -60~70%</b>, 소비자향 고객 중심의 선별적 하락 시 <b>-35~40%</b>.</li>
+        <li><b>리포트 시각 (18개월 내 +60~130%):</b> 2H28E 이후 AI 연산 시스템의 메모리 content 성장은 초·중기 도입기 대비 둔화되겠으나, 공급제약 요인과 시스템 unit 증가 지속이 타이트한 S/D를 유지시켜 가격 침식은 제한적. 업계가 수년간 재고를 축적하는 동안 안정적 FCF 창출 지속. 메모리 가격 하락과 저렴해진 AI 서비스가 신규 edge AI 수요를 촉발할 가능성. 2030E 터미널 OPM은 SEC 53% / SKH 64%로 pre-AI 피크 마진 수준.</li>
+        <li><b>핵심 가정:</b> WACC SEC 16.2% / SKH 17.4% (cost of equity 16.6~18.0%, beta 1.2~1.3x, risk-free 5.0%, cost of debt 5.0%). WACC는 시나리오 간 동일, 터미널 성장률만 Bull +3.0% → Extreme Bear -2.0%로 차등. 공식 추정치는 2028E까지이며 2029E/2030E S/D·가격 가정은 DCF 연습용.</li>
+      </ul>
+
+      <div class="bbgrid">
+        <div class="bb bull"><div class="lbl">🐂 Bull · 확률 10%</div><div class="px">SEC 810,000 <small>+193%</small></div><div class="px">SKH 3,900,000 <small>+112%</small></div>
+          <ul><li>AI 자금조달·전력 병목 해소, AI H/W capex 2030년 $4trn 초과</li><li>AI capex 내 메모리 value share 40% 이상 유지, edge AI 개화</li><li>World AI 신규 수요, 학습 수요 견조</li><li>타이트한 S/D, 가격 higher-for-longer, 중국 경쟁 제한적</li></ul></div>
+        <div class="bb base"><div class="lbl">⊕ Base · 확률 65%</div><div class="px">SEC 630,000 <small>+128%</small></div><div class="px">SKH 3,040,000 <small>+65%</small></div>
+          <ul><li>일부 노이즈 있으나 AI 자금조달 순조, capex 2030년 $3trn 이상</li><li>메모리 value share 50% 이상, 집중도 리스크 우려 지속</li><li>Open-weight 모델의 de-spec 서사 vs. Jevons paradox 유효</li><li>전반적 타이트하나 일부 non-LTA 물량 가격 하락</li></ul></div>
+        <div class="bb bear"><div class="lbl">🐻 Bear · 확률 20%</div><div class="px">SEC 430,000 <small>+56%</small></div><div class="px">SKH 2,290,000 <small>+24%</small></div>
+          <ul><li>AI 자금조달 위축, capex 2030년 $2trn 수준</li><li>CSP의 적극적 메모리 비용 절감</li><li>연산당 메모리 사용량이 gross token 증가보다 빠르게 감소</li><li>완만한 공급과잉, LTA 범위 내 가격 하락</li></ul></div>
+        <div class="bb xbear"><div class="lbl">⚠ Extreme Bear · 확률 5%</div><div class="px">SEC 260,000 <small>-6%</small></div><div class="px">SKH 1,470,000 <small>-20%</small></div>
+          <ul><li>AI capex pre-AI 수준으로 급감, 2030년 $1~1.5trn</li><li>value share 40% 이상이나 피크 대비 하락, edge AI 지연</li><li>학습 수요 소멸, 모델 경쟁 중단·통합</li><li>재고 destocking 속 공급과잉, 고객이 페널티를 감수하고 LTA 이탈</li></ul></div>
+      </div>
+
+      <div class="grid2">
+        <div class="chart-card">
+          <div class="ct">SEC — 시나리오별 적정가치 vs. 현재가 (원)</div>
+          <svg viewBox="0 0 440 300" width="100%">
+            <line x1="60" y1="30" x2="420" y2="30" stroke="#eef1f5"/>
+            <line x1="60" y1="106.7" x2="420" y2="106.7" stroke="#eef1f5"/>
+            <line x1="60" y1="183.3" x2="420" y2="183.3" stroke="#eef1f5"/>
+            <line x1="60" y1="260" x2="420" y2="260" stroke="#cfd6e0"/>
+            <text x="54" y="34" font-size="10" fill="#9aa3b2" text-anchor="end">900k</text>
+            <text x="54" y="110" font-size="10" fill="#9aa3b2" text-anchor="end">600k</text>
+            <text x="54" y="187" font-size="10" fill="#9aa3b2" text-anchor="end">300k</text>
+            <text x="54" y="264" font-size="10" fill="#9aa3b2" text-anchor="end">0</text>
+            <rect x="80" y="193.6" width="60" height="66.4" fill="#c0392b"/>
+            <rect x="165" y="150.1" width="60" height="109.9" fill="#8a4b15"/>
+            <rect x="250" y="99" width="60" height="161" fill="#525866"/>
+            <rect x="335" y="53" width="60" height="207" fill="#1f6fb2"/>
+            <text x="110" y="187" font-size="11" font-weight="700" fill="#1b1e24" text-anchor="middle">260,000</text>
+            <text x="195" y="144" font-size="11" font-weight="700" fill="#1b1e24" text-anchor="middle">430,000</text>
+            <text x="280" y="93" font-size="11" font-weight="700" fill="#1b1e24" text-anchor="middle">630,000</text>
+            <text x="365" y="47" font-size="11" font-weight="700" fill="#1b1e24" text-anchor="middle">810,000</text>
+            <line x1="60" y1="189" x2="420" y2="189" stroke="#5c1a26" stroke-width="2" stroke-dasharray="6 4"/>
+            <text x="418" y="185" font-size="10.5" font-weight="700" fill="#5c1a26" text-anchor="end">현재가 278,000</text>
+            <text x="110" y="280" font-size="11" fill="#525866" text-anchor="middle">Ext. Bear</text>
+            <text x="195" y="280" font-size="11" fill="#525866" text-anchor="middle">Bear</text>
+            <text x="280" y="280" font-size="11" fill="#525866" text-anchor="middle">Base</text>
+            <text x="365" y="280" font-size="11" fill="#525866" text-anchor="middle">Bull</text>
+          </svg>
+          <div class="chart-src">Source: Bloomberg Finance L.P.</div>
+        </div>
+        <div class="chart-card">
+          <div class="ct">SKH — 시나리오별 적정가치 vs. 현재가 (원)</div>
+          <svg viewBox="0 0 440 300" width="100%">
+            <line x1="60" y1="30" x2="420" y2="30" stroke="#eef1f5"/>
+            <line x1="60" y1="106.7" x2="420" y2="106.7" stroke="#eef1f5"/>
+            <line x1="60" y1="183.3" x2="420" y2="183.3" stroke="#eef1f5"/>
+            <line x1="60" y1="260" x2="420" y2="260" stroke="#cfd6e0"/>
+            <text x="54" y="34" font-size="10" fill="#9aa3b2" text-anchor="end">4.5M</text>
+            <text x="54" y="110" font-size="10" fill="#9aa3b2" text-anchor="end">3.0M</text>
+            <text x="54" y="187" font-size="10" fill="#9aa3b2" text-anchor="end">1.5M</text>
+            <text x="54" y="264" font-size="10" fill="#9aa3b2" text-anchor="end">0</text>
+            <rect x="80" y="184.9" width="60" height="75.1" fill="#c0392b"/>
+            <rect x="165" y="143" width="60" height="117" fill="#8a4b15"/>
+            <rect x="250" y="104.6" width="60" height="155.4" fill="#525866"/>
+            <rect x="335" y="60.7" width="60" height="199.3" fill="#1f6fb2"/>
+            <text x="110" y="179" font-size="11" font-weight="700" fill="#1b1e24" text-anchor="middle">1,470,000</text>
+            <text x="195" y="137" font-size="11" font-weight="700" fill="#1b1e24" text-anchor="middle">2,290,000</text>
+            <text x="280" y="98.6" font-size="11" font-weight="700" fill="#1b1e24" text-anchor="middle">3,040,000</text>
+            <text x="365" y="54.7" font-size="11" font-weight="700" fill="#1b1e24" text-anchor="middle">3,900,000</text>
+            <line x1="60" y1="165.9" x2="420" y2="165.9" stroke="#5c1a26" stroke-width="2" stroke-dasharray="6 4"/>
+            <text x="418" y="161.9" font-size="10.5" font-weight="700" fill="#5c1a26" text-anchor="end">현재가 1,842,000</text>
+            <text x="110" y="280" font-size="11" fill="#525866" text-anchor="middle">Ext. Bear</text>
+            <text x="195" y="280" font-size="11" fill="#525866" text-anchor="middle">Bear</text>
+            <text x="280" y="280" font-size="11" fill="#525866" text-anchor="middle">Base</text>
+            <text x="365" y="280" font-size="11" fill="#525866" text-anchor="middle">Bull</text>
+          </svg>
+          <div class="chart-src">Source: Bloomberg Finance L.P.</div>
+        </div>
+      </div>
+
+      <h4 class="sub">시나리오별 밸류에이션 스냅샷</h4>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>시나리오</th><th>확률</th><th>SEC FV (원)</th><th>Up/Down</th><th>P/E 27E/28E</th><th>P/B 27E/28E</th><th>SKH FV (원)</th><th>Up/Down</th><th>P/E 27E/28E</th><th>P/B 27E/28E</th></tr></thead>
+        <tbody>
+          <tr><td><b>Bull</b></td><td class="num">10%</td><td class="num">810,000</td><td class="num up">+193%</td><td class="num">11.7x / 9.1x</td><td class="num">4.6x / 3.3x</td><td class="num">3,900,000</td><td class="num up">+112%</td><td class="num">8.5x / 6.0x</td><td class="num">4.7x / 3.1x</td></tr>
+          <tr><td><b>Base</b></td><td class="num">65%</td><td class="num">630,000</td><td class="num up">+128%</td><td class="num">9.1x / 7.0x</td><td class="num">3.6x / 2.5x</td><td class="num">3,040,000</td><td class="num up">+65%</td><td class="num">6.6x / 4.7x</td><td class="num">3.7x / 2.4x</td></tr>
+          <tr><td><b>Bear</b> (LTA로 하락폭 제한)</td><td class="num">20%</td><td class="num">430,000</td><td class="num up">+56%</td><td class="num">6.2x / 4.8x</td><td class="num">2.4x / 1.7x</td><td class="num">2,290,000</td><td class="num up">+24%</td><td class="num">5.0x / 3.5x</td><td class="num">2.7x / 1.8x</td></tr>
+          <tr><td><b>Extreme Bear</b> (LTA 파기)</td><td class="num">5%</td><td class="num">260,000</td><td class="num dn">-6%</td><td class="num">3.8x / 2.9x</td><td class="num">1.5x / 1.0x</td><td class="num">1,470,000</td><td class="num dn">-20%</td><td class="num">3.2x / 2.3x</td><td class="num">1.8x / 1.2x</td></tr>
+          <tr><td><b>확률가중 기대수익</b></td><td></td><td></td><td class="num up">+113%</td><td></td><td></td><td></td><td class="num up">+57%</td><td></td><td></td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4 class="sub">시나리오별 핵심 가정 (2029E / 2030E)</h4>
+      <div class="tbl-wrap">
+      <table class="tbl small">
+        <thead><tr><th>항목</th><th>Bull</th><th>Base</th><th>Bear</th><th>Extreme Bear</th></tr></thead>
+        <tbody>
+          <tr><td><b>DRAM bit 출하 y/y</b></td><td class="num">+25% / +25%</td><td class="num">+22.5% / +22.5%</td><td class="num">+20% / +15%</td><td class="num">+15% / +10%</td></tr>
+          <tr><td><b>NAND bit 출하 y/y</b></td><td class="num">+17% / +17%</td><td class="num">+15% / +15%</td><td class="num">+10% / +10%</td><td class="num">+5% / +5%</td></tr>
+          <tr><td><b>DRAM ASP y/y (SEC)</b></td><td class="num">flat / flat</td><td class="num">-5% / -10%</td><td class="num">-15% / -25%</td><td class="num">-25% / -50%</td></tr>
+          <tr><td><b>DRAM ASP y/y (SKH)</b></td><td class="num">flat / flat</td><td class="num">-5% / -10%</td><td class="num">-10% / -20%</td><td class="num">-20% / -40%</td></tr>
+          <tr><td><b>NAND ASP y/y (SEC)</b></td><td class="num">flat / flat</td><td class="num">-10% / -15%</td><td class="num">-15% / -30%</td><td class="num">-30% / -50%</td></tr>
+          <tr><td><b>NAND ASP y/y (SKH)</b></td><td class="num">flat / flat</td><td class="num">-10% / -15%</td><td class="num">-15% / -30%</td><td class="num">-30% / -50%</td></tr>
+          <tr><td><b>DRAM OPM (SEC / SKH)</b></td><td class="num">75/71% · 75/71%</td><td class="num">74/67% · 74/66%</td><td class="num">71/55% · 72/60%</td><td class="num">67/24% · 69/40%</td></tr>
+          <tr><td><b>NAND OPM (SEC / SKH)</b></td><td class="num">66/65% · 67/66%</td><td class="num">62/54% · 62/54%</td><td class="num">60/41% · 61/43%</td><td class="num">52/0% · 53/3%</td></tr>
+          <tr><td><b>FCF (SEC, 조원)</b></td><td class="num">570 / 673</td><td class="num">510 / 490</td><td class="num">424 / 262</td><td class="num">321 / 28</td></tr>
+          <tr><td><b>FCF (SKH, 조원)</b></td><td class="num">370 / 432</td><td class="num">330 / 311</td><td class="num">295 / 202</td><td class="num">226 / 56</td></tr>
+          <tr><td><b>매출 y/y (SEC)</b></td><td class="num">+19% / +20%</td><td class="num">+11% / +6%</td><td class="num">0% / -13%</td><td class="num">-13% / -35%</td></tr>
+          <tr><td><b>매출 y/y (SKH)</b></td><td class="num">+23% / +24%</td><td class="num">+14% / +8%</td><td class="num">+5% / -11%</td><td class="num">-12% / -36%</td></tr>
+          <tr><td><b>터미널 성장률</b></td><td class="num">+3.0%</td><td class="num">+2.0%</td><td class="num">0.0%</td><td class="num">-2.0%</td></tr>
+          <tr><td><b>EV (SEC / SKH, 십억원)</b></td><td class="num">4,431,288 / 2,615,317</td><td class="num">3,390,764 / 2,008,247</td><td class="num">2,212,281 / 1,475,091</td><td class="num">1,219,009 / 891,838</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="callout"><span class="t">참고</span>공식 추정치(2026~2028E): SEC 매출 695.4조 → 907.3조 → 1,098.8조원, EBIT 마진 51.4% → 57.6% → 60.5%, FCF 247.8조 → 364.0조 → 478.5조원 / SKH 매출 338.8조 → 511.2조 → 666.7조원, EBIT 마진 75.4% → 77.3% → 76.2%, FCF 137.5조 → 242.0조 → 313.5조원. 2026E DRAM ASP y/y는 SEC +283%, SKH +176%. DCF 표의 현재가는 SEC 276,500원 / SKH 1,840,000원 기준.</div>
+
+      <!-- ===================== 2. AI capex ===================== -->
+      <h3 class="sec" id="s2"><span class="n">2</span>AI Capex 지속성</h3>
+      <div class="debate">
+        <div class="side bull"><div class="h">Bull — AI capex는 지속 가능</div>AI 사업(compute 구매·판매 모두)은 여전히 수익성 높은 사업으로 capex를 지탱. Frontier 모델 벤더의 ARR은 기대치를 계속 상회(최근 보도 기준 OpenAI/Anthropic ARR 각각 US$40bn/US$100bn 전망 — 2026년 2월의 US$25bn/US$14bn에서 큰 폭 상향). 하이퍼스케일러 capex는 FY26/27E US$1.2trn/1.4trn(+56%/+22% y/y). FCF가 (-)임에도 net debt/equity ~13%의 관리 가능한 레버리지와 public cloud 매출 가속으로 조달에 어려움 없음.</div>
+        <div class="side bear"><div class="h">Bear — 수요·자금조달 스트레스로 capex 위축</div>AI 사업(특히 compute 판매)이 둔화되고 금리 상승·리스크 프리미엄 확대로 자본시장이 덜 우호적으로 전환, 투자 속도 둔화. 2026E~2027E OCF가 (-)로 전환되며 하이퍼스케일러가 AI capex를 늦춤. AI 안전·규제 이슈가 배포·수익화를 지연시키며 ROI 서사와 차기 투자 의지를 약화.</div>
+      </div>
+      <div class="view"><span class="h">리포트 시각</span>하이퍼스케일러가 채권·주식·대체자본을 혼합해 2030E까지 누적 $5.5trn의 capex를 조달할 것이라는 시각 유지. 메모리 관점에서 AI capex는 HBM·서버 DRAM·eSSD NAND 전반의 부족을 지탱하는 단일 최대 수요 지표. Bottom-up으로 보면 메모리 fulfillment ratio가 타이트(DRAM 60~70% vs. NAND 80~85%, 수요가 공급 초과)하며 최소 2028E까지 메모리 수요 둔화 징후 없음.</div>
+      <ul class="pts">
+        <li>시스템/GPU 벤더의 GW당 매출: 서버/ODM EMS와 GPU 벤더 모두 GW당 매출 규모는 유사하나, 매출총이익은 GPU 벤더에 압도적으로 집중 (GPU 벤더가 full rack scale 매출을 인식한다는 가정).</li>
+      </ul>
+
+      <!-- ===================== 3. 메모리 비용 ===================== -->
+      <h3 class="sec" id="s3"><span class="n">3</span>메모리는 중요하지만 비용은? — AI Capex 내 지속 가능한 메모리 예산</h3>
+      <div class="debate">
+        <div class="side bull"><div class="h">Bull — 메모리는 필수, 예산 증가 정당화</div>메모리는 AI compute 성능·스케일링의 gating input. 높아진 메모리 부담은 compute·token 생성을 위해 경제적으로 정당화 가능. 향후 수년간 극심한 부족이 지속되나 ASP 상승은 LTA로 완화되고, 증분 비용은 외부 조달로 흡수되어 CSP는 AI capex 내 메모리 비중 50%+를 감내. 고처리량·저지연 추론·학습에서 메모리를 대체할 기술 돌파구는 제한적이라는 전제. gross token 생성량은 견조하게 유지되어 수요 지속.</div>
+        <div class="side bear"><div class="h">Bear — 메모리 집중도 리스크에 대한 고객 저항</div>메모리 value share가 pre-AI &lt;10%에서 26E/27E ~31%/49%로 이동하면서 "memory bill"을 방어하기 어려워짐. CSP는 S/W 업그레이드(KV cache condensation), SRAM/non-HBM 솔루션, optics(CPO/NPO) 등 대체 옵션을 모색. 이는 대규모 메모리 value share 축소 리스크로 연결. 양자화가 강화된 Open Weights 모델 증가는 compute당 메모리 소비를 더 빠르게 축소.</div>
+      </div>
+      <div class="view"><span class="h">리포트 시각</span>Bull에 기울지만 ~50% 비중은 강한 심리적 경계선임을 인정. AI capex는 증가하되 27E 메모리 ASP 상승은 완만해질 전망(DRAM/NAND ASP: +29%/+23% y/y). LTA 비중 확대로 28E ASP 커브는 더 완만(DRAM/NAND: +7%/-4% y/y). 추론 환경에서 computation bound보다 bandwidth 중심으로 무게가 이동하며 compute당 메모리는 축소되겠으나, gross token 소비량은 지속 성장을 견인하기에 충분한 규모.</div>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>CSP capex 내 메모리 TAM 비중</th><th>2022</th><th>2023</th><th>2024</th><th>2025</th><th>2026E</th><th>2027E</th><th>2028E</th><th>2030E</th></tr></thead>
+        <tbody>
+          <tr><td><b>CSP-grade 메모리 TAM / CSP H/W capex</b></td><td class="num">7%</td><td class="num">4%</td><td class="num">8%</td><td class="num">8%</td><td class="num">31%</td><td class="num">49%</td><td class="num">60%</td><td class="num">47%</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>ASP y/y (추정치)</th><th>2027E</th><th>2028E</th></tr></thead>
+        <tbody>
+          <tr><td><b>DRAM ASP</b></td><td class="num up">+29%</td><td class="num up">+7%</td></tr>
+          <tr><td><b>NAND ASP</b></td><td class="num up">+23%</td><td class="num dn">-4%</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="callout"><span class="t">주목</span>메모리 TAM(주로 ASP 주도)은 CSP H/W capex 추정치보다 빠르게 상승. pre-AI 시기 메모리 value share가 10% 미만이었던 데 반해 26E에는 ~30%까지 확대. 향후 적정 수준이 어디인지, 투자자들이 50% 이상에서 불편함을 느끼는지가 핵심 질문.</div>
+
+      <!-- ===================== 4. HBM ===================== -->
+      <h3 class="sec" id="s4"><span class="n">4</span>HBM De-spec이 메모리 시장 전반에 주는 함의</h3>
+      <div class="debate">
+        <div class="side bull"><div class="h">Bull — 균형 메커니즘</div>HBM content 다운그레이드(16-Hi → 8-Hi/12-Hi)는 메모리 부족으로 제약된 시스템 설치 성장을 뒷받침하기 위한 것. 총 HBM bit output이 불변인 상태에서 HBM S/D glut ratio 완화는 타이트한 부족 환경 하의 균형 장치. DRAM 내 HBM capacity mix는 계속 증가하며 3~4x die penalty로 DRAM 공급의 gating factor 역할. Wafer-to-die penalty 기반 공급제약이 다년간 공급 타이트를 지지.</div>
+        <div class="side bear"><div class="h">Bear — HBM intensity 피크아웃</div>HBM de-spec은 HBM 성능이 정점에 이르고 conventional DRAM 대비 HBM 경제성이 퇴색하는 증거. 메모리 업체들이 wafer를 conventional DRAM으로 되돌리려는 유인이 생기며, 이는 conventional DRAM이 누리는 가격/마진 프리미엄을 잠식. conventional DRAM 마진이 HBM보다 높다는 점도 같은 맥락. 고객은 더 저렴한 등급의 HBM(8Hi/4Hi)으로 이동.</div>
+      </div>
+      <div class="view"><span class="h">리포트 시각</span>HBM content 최적화는 총 HBM 수요에 부정적이며 content 성장 둔화 신호이나, 투자 논리를 깨는 수준은 아님. HBM bit 수요 성장이 conventional DRAM을 상회(25A~28E CAGR: HBM +61% vs. conventional DRAM +26%)하며, 강한 수요 성장은 메모리 업체가 HBM을 우선하기에 충분히 매력적. 28E HBM capacity가 총 DRAM wafer 공급의 31%에 도달하며, headline wafer start capacity가 mid-teens % CAGR로 늘어도 DRAM B/G를 계속 제약. 향후 12~24개월 학습 수요도 견조(모델 크기 확대에 따라 HBM density가 AI 학습 성능의 핵심 변수).</div>
+      <div class="chart-card">
+        <div class="ct">Conventional DRAM vs. HBM — capacity mix와 OPM 추이</div>
+        <div class="legend">
+          <span><i style="background:var(--brand)"></i>HBM / 총 DRAM capacity (좌축)</span>
+          <span><i style="background:#1f7a4d"></i>Conventional DRAM OPM (우축)</span>
+          <span><i style="background:#d4a017"></i>HBM OPM (우축)</span>
+        </div>
+        <svg viewBox="0 0 880 320" width="100%">
+          <line x1="70" y1="30" x2="850" y2="30" stroke="#eef1f5"/>
+          <line x1="70" y1="92.5" x2="850" y2="92.5" stroke="#eef1f5"/>
+          <line x1="70" y1="155" x2="850" y2="155" stroke="#eef1f5"/>
+          <line x1="70" y1="217.5" x2="850" y2="217.5" stroke="#eef1f5"/>
+          <line x1="70" y1="280" x2="850" y2="280" stroke="#cfd6e0"/>
+          <text x="64" y="34" font-size="10" fill="#9aa3b2" text-anchor="end">35%</text>
+          <text x="64" y="96" font-size="10" fill="#9aa3b2" text-anchor="end">26%</text>
+          <text x="64" y="159" font-size="10" fill="#9aa3b2" text-anchor="end">18%</text>
+          <text x="64" y="221" font-size="10" fill="#9aa3b2" text-anchor="end">9%</text>
+          <text x="64" y="284" font-size="10" fill="#9aa3b2" text-anchor="end">0%</text>
+          <text x="856" y="34" font-size="10" fill="#9aa3b2">90%</text>
+          <text x="856" y="96" font-size="10" fill="#9aa3b2">78%</text>
+          <text x="856" y="159" font-size="10" fill="#9aa3b2">65%</text>
+          <text x="856" y="221" font-size="10" fill="#9aa3b2">53%</text>
+          <text x="856" y="284" font-size="10" fill="#9aa3b2">40%</text>
+          <rect x="110" y="230" width="50" height="50" fill="#0a2240"/>
+          <rect x="240" y="187.1" width="50" height="92.9" fill="#0a2240"/>
+          <rect x="370" y="144.3" width="50" height="135.7" fill="#0a2240"/>
+          <rect x="500" y="115.7" width="50" height="164.3" fill="#0a2240"/>
+          <rect x="630" y="80" width="50" height="200" fill="#0a2240"/>
+          <rect x="760" y="58.6" width="50" height="221.4" fill="#0a2240"/>
+          <text x="135" y="224" font-size="11" font-weight="700" fill="#0a2240" text-anchor="middle">7%</text>
+          <text x="265" y="181" font-size="11" font-weight="700" fill="#0a2240" text-anchor="middle">13%</text>
+          <text x="395" y="138" font-size="11" font-weight="700" fill="#0a2240" text-anchor="middle">19%</text>
+          <text x="525" y="110" font-size="11" font-weight="700" fill="#0a2240" text-anchor="middle">23%</text>
+          <text x="655" y="74" font-size="11" font-weight="700" fill="#0a2240" text-anchor="middle">28%</text>
+          <text x="785" y="53" font-size="11" font-weight="700" fill="#0a2240" text-anchor="middle">31%</text>
+          <polyline points="395,235 525,70 655,70 785,75" fill="none" stroke="#1f7a4d" stroke-width="3"/>
+          <polyline points="395,210 525,205 655,145 785,130" fill="none" stroke="#d4a017" stroke-width="3"/>
+          <circle cx="395" cy="235" r="4" fill="#1f7a4d"/><circle cx="525" cy="70" r="4" fill="#1f7a4d"/><circle cx="655" cy="70" r="4" fill="#1f7a4d"/><circle cx="785" cy="75" r="4" fill="#1f7a4d"/>
+          <circle cx="395" cy="210" r="4" fill="#d4a017"/><circle cx="525" cy="205" r="4" fill="#d4a017"/><circle cx="655" cy="145" r="4" fill="#d4a017"/><circle cx="785" cy="130" r="4" fill="#d4a017"/>
+          <text x="420" y="250" font-size="11" fill="#1f7a4d" font-weight="700">49%</text>
+          <text x="525" y="60" font-size="11" fill="#1f7a4d" font-weight="700" text-anchor="middle">82%</text>
+          <text x="655" y="60" font-size="11" fill="#1f7a4d" font-weight="700" text-anchor="middle">82%</text>
+          <text x="815" y="72" font-size="11" fill="#1f7a4d" font-weight="700">81%</text>
+          <text x="370" y="205" font-size="11" fill="#b8860b" font-weight="700" text-anchor="end">54%</text>
+          <text x="525" y="225" font-size="11" fill="#b8860b" font-weight="700" text-anchor="middle">55%</text>
+          <text x="655" y="165" font-size="11" fill="#b8860b" font-weight="700" text-anchor="middle">67%</text>
+          <text x="815" y="134" font-size="11" fill="#b8860b" font-weight="700">70%</text>
+          <text x="135" y="300" font-size="11" fill="#525866" text-anchor="middle">2023</text>
+          <text x="265" y="300" font-size="11" fill="#525866" text-anchor="middle">2024</text>
+          <text x="395" y="300" font-size="11" fill="#525866" text-anchor="middle">2025</text>
+          <text x="525" y="300" font-size="11" fill="#525866" text-anchor="middle">2026E</text>
+          <text x="655" y="300" font-size="11" fill="#525866" text-anchor="middle">2027E</text>
+          <text x="785" y="300" font-size="11" fill="#525866" text-anchor="middle">2028E</text>
+        </svg>
+        <div class="chart-src">Source: Company data</div>
+      </div>
+
+      <!-- ===================== 5. NAND ===================== -->
+      <h3 class="sec" id="s5"><span class="n">5</span>양분화된 NAND 시장 전망</h3>
+      <div class="debate">
+        <div class="side bull"><div class="h">Bull — 메모리 tiering 이론에 따른 HBM spillover 수요</div>NAND는 AI compute 병목의 구조적 수혜자. 1) KV cache offloading·추론 offload에 연동된 eSSD 수요의 강한 상향 조정 2) DRAM 대비 비용 효율적 스케일링 수단 3) GPU-direct-to-eSSD, NVDA CMX 플랫폼 등 신규 아키텍처가 form-factor 제약에서 메모리를 해방시키고 TLC/QLC SSD의 addressable market 확대 4) HBF 등 신규 NAND 솔루션은 (DRAM의 HBM처럼) 공급 crunch와 강한 가격 랠리를 부를 수 있는 option value.</div>
+        <div class="side bear"><div class="h">Bear — 수요 가시성 부족과 경쟁 리스크</div>NAND가 AI compute 수혜자라는 점엔 동의하나 구조적 수혜라는 주장엔 반대. 1) NAND는 DRAM 병목의 2차 파생 수혜자(value share가 DRAM보다 현저히 낮음) 2) rack/GPU당 NAND 스펙이 불투명해 수요 추정이 어렵고 고객의 즉흥적 조달 코멘트에 좌우 3) 중국 경쟁사와의 기술 격차가 작아 공급과잉 리스크가 구조적으로 높음.</div>
+      </div>
+      <div class="view"><span class="h">리포트 시각</span>Bull에 기움. 1) DRAM과 NAND는 차별화된 솔루션이며 NAND의 "cheaper-to-scale" 가치는 추론에 더 적합 2) 이르면 4Q26E 가격 하락을 점치는 Bear 진영보다 양호한 단기 가격 추세와 견조한 NAND 수요 3) 기존 업체들의 제한적 capacity 증설로 NAND S/D 통제. 소비자향 NAND 수요 침식과 중국 공급 리스크보다 enterprise SSD 수요 upside가 더 크다는 시각 유지.</div>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>eSSD bit 수요 내 AI 서버 SSD 비중</th><th>2023</th><th>2024</th><th>2025</th><th>2026E</th><th>2027E</th><th>2028E</th></tr></thead>
+        <tbody>
+          <tr><td><b>AI server SSD / 총 eSSD bit 수요</b></td><td class="num">13%</td><td class="num">23%</td><td class="num">30%</td><td class="num">39%</td><td class="num">48%</td><td class="num">50%</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-src">Source: IDC</div>
+      <div class="callout"><span class="t">HBF (High Bandwidth Flash)</span>SNDK가 제시한 잠재 아키텍처: 16-die HBF core die 스택(TSV·micro bump 연결) + logic die + PHY를 interposer 위에서 GPU/CPU/TPU/SoC die와 결합하는 구조. HBM과 유사한 패키징으로 NAND의 대역폭 제약을 완화하는 방향.</div>
+
+      <!-- ===================== 6. LTA ===================== -->
+      <h3 class="sec" id="s6"><span class="n">6</span>메모리 산업에서 LTA의 중요성</h3>
+      <div class="debate">
+        <div class="side bull"><div class="h">Bull — 구조적으로 건전한 고객-공급자 관계 구축</div>LTA는 가격 커브를 완만하게 하고 가시성을 높이며, 수요를 고정해 공급과잉 리스크를 줄이고 신중한 capex를 가능케 함. 선지급금 + 가격 프레임워크는 메모리 업체의 강한 협상력을 의미하며 사이클 리스크를 낮춤. 공급자와 고객이 함께 수요 전망을 준비해 향후 3~5년 운영에 대한 가시성을 양측에 제공.</div>
+        <div class="side bear"><div class="h">Bear — 다운사이클이 오면 LTA는 무너진다</div>LTA는 시장이 타이트해지는 시점에 ASP 증분 upside를 제한(ceiling 효과). 다운사이클에서 고객이 반발·불이행·재협상에 나서며 가장 중요한 순간에 변동성이 재도입. 본질적으로 LTA는 단기 EPS 상향의 제약 요인. 다운사이클로 검증되기 전까지 LTA는 메모리 업체들이 말하는 하방 보호 조건(가격 하락폭 제한, 최소 구매 물량 등)을 보장하지 못함.</div>
+      </div>
+      <div class="view"><span class="h">리포트 시각</span>LTA가 메모리 비즈니스 모델을 재편한다는 Bull 논리에 기움. 메모리 업체들이 제시한 3~5년 계약 기간과 capacity mix 70% 이상의 LTA 비중은 CSP가 수년치 물량 확보에 절박하다는 암묵적 증거. 다만 70% capacity 배분이 실제 최종 수요를 온전히 반영하진 않음 — 메모리 업체들은 여전히 낮은 fulfillment(DRAM 조달 수요의 60~70%, NAND의 80~85%만 LTA로 lock)를 강조. y/y 모멘텀 둔화에 따른 EPS 상향 속도 둔화(2차 델타)보다는 메모리 산업의 사이클성 축소에 주목 — higher-for-longer 업사이클 논리의 핵심 근간.</div>
+      <h4 class="sub">주요 메모리 업체 LTA 공시 내용 (2QCY26 실적 컨퍼런스 기준)</h4>
+      <div class="tbl-wrap">
+      <table class="tbl small">
+        <thead><tr><th>항목</th><th>MU</th><th>SEC</th><th>SKH</th><th>미국 NAND 업체</th><th>Kioxia</th></tr></thead>
+        <tbody>
+          <tr><td><b>계약 건수</b></td><td>16건 SCA (대형 4 + 중형 3 고객 + 소형 auto)</td><td>글로벌 상위 5개 DC 고객과 체결 완료, 추가 5개 주요 고객과 최종 협의 중</td><td>핵심 고객과 ~10건</td><td>8건 NBM</td><td>~10건 LTA 체결</td></tr>
+          <tr><td><b>물량 커버리지</b></td><td>DRAM 물량의 ~20%, NAND 물량의 ~1/3</td><td>총 plant capacity의 60~70%</td><td>n.a.</td><td>FY2027 bit의 50% 이상, FY2028 bit의 ~2/3</td><td>CY2028 LTA 물량 커버리지 50% 목표</td></tr>
+          <tr><td><b>매출 커버리지</b></td><td>총 매출의 ~50%</td><td>n.a.</td><td>시장 상황에 따라 적정 수준 유지 (미계량)</td><td>floor 가격 기준 총 NBM 매출 최소 US$93.9bn</td><td>n.a.</td></tr>
+          <tr><td><b>계약 기간</b></td><td>5년 (DC/Consumer), 3년 (Auto)</td><td>5년, 연간 협상 대상 (rolling 방식, 추가 연장 가능)</td><td>평균 5년 (고객/제품별 상이)</td><td>최대 5년, 가중평균 4년 이상</td><td>n.a.</td></tr>
+          <tr><td><b>계약 구조</b></td><td>Take-or-pay, 구속력 있는 물량 약정</td><td>상호 구속력 있는 계약 조건, 수요 보증 약정, rolling 계약 기반</td><td>물량 공급을 넘어선 전략적 파트너십, 장기 물량 약정 + 예치금</td><td>연도·분기별 S/D 약정, 계약 종료 시점에 재무 보증 해제</td><td>다년 공급 계약, 상호 구속력 있는 계약 조건</td></tr>
+          <tr><td><b>가격 밴드 — Ceiling</b></td><td>현재 CQ2 2026 시장가 (기존 제품)</td><td>고객·제품별 차별화된 가격 모델</td><td>가격 구조 비획일적</td><td>변동 부분에 ceiling 적용 (고정 + 변동 혼합)</td><td>n.a.</td></tr>
+          <tr><td><b>가격 밴드 — Floor</b></td><td>직전 사이클 피크 이상의 GM 보장</td><td>주력 제품 최저가 floor 설정 (미래 투자 리스크 완화)</td><td>가격 변동성 대응을 위한 다양한 가격 메커니즘</td><td>변동 부분에 floor 적용, floor 가격에서도 매력적(~80%) 마진</td><td>n.a.</td></tr>
+          <tr><td><b>현금 예치 &amp; 약정</b></td><td>총 US$22bn (현금 US$18bn)</td><td>다년에 걸친 상당 규모의 선지급</td><td>계약 이행 지원을 위한 예치금 반영</td><td>재무 보증 US$16.5bn (현금 예치 + 금융상품), 대부분 제3자 기관 경유</td><td>예치금 등 재무 메커니즘 반영</td></tr>
+          <tr><td><b>RPO / 선수금</b></td><td>3QFY26 US$400mn, 4QFY26 US$5~10bn 예상</td><td>이미 상당 부분 수령 (총액의 ~1/4), 잔여분 증가 예상</td><td>n.a.</td><td>분기 말 US$59.8bn, 분기 이후 체결 건 포함 US$91.1bn</td><td>n.a.</td></tr>
+          <tr><td><b>End market</b></td><td>DRAM, Consumer, Automotive</td><td>DRAM &amp; NAND (AI/서버 중심)</td><td>서버 DRAM, HBM, 엔터프라이즈 SSD (AI 중심)</td><td>데이터센터 &amp; Edge (하이퍼스케일/AI 인프라)</td><td>데이터센터/엔터프라이즈 &amp; 하이퍼스케일 고객</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-src">Source: Company data</div>
+
+      <!-- ===================== 7. Capex ===================== -->
+      <h3 class="sec" id="s7"><span class="n">7</span>Capex 확대와 Capacity Pull-in 해석 — 부족 해소(Debottleneck) vs. 공급과잉 리스크 확대</h3>
+      <div class="debate">
+        <div class="side bull"><div class="h">Bull — 공급 성장은 수년간 제한적</div>Capex 증가는 합리적이며 주로 debottlenecking(공급 범람이 아님)이 목적 — 달러당 증분 bit output이 구조적으로 어려워졌기 때문. LTA와 타이트한 시장이 증설을 정당화하고 실적을 지지. 장비·소재/부품 병목은 간과되고 있으며, 가장 강세적인 시나리오에서도 월 wafer start mid-teens % 증가가 B/G 20% ± 수준으로 전환.</div>
+        <div class="side bear"><div class="h">Bear — 역사는 반복, 부풀려진 가격이 자본집약도를 가림</div>Capex 확대는 통상 사이클 피크와 맞물렸음. AI 수요가 기대에 못 미치면 뒤늦게(특히 2028E+) 도착하는 신규 capacity가 타이트한 시장을 공급과잉으로 뒤집고 마진을 압박. 자본집약도는 역사적 저점이나, 이는 4x 가격 상승 이후 부풀려진 매출 때문.</div>
+      </div>
+      <div class="view"><span class="h">리포트 시각</span>부족이 지속되는 한 이번 capex 확대는 과거 사이클보다 "neutral-to-positive"로 해석 — 지출 증가가 비례적 bit 성장으로 이어지지 않음. (제한적 ASP 성장 가정 하에) capex·공급 성장은 메모리 TAM 성장의 함수. 과거 사이클이 갑작스러운 수요 급락으로 붕괴했던 만큼 capex 확대는 리스크 프로파일을 높이지만, AI 수요 둔화 증거는 제한적(하이퍼스케일러의 AI 수익화 재가속)이어서 건설적 시각 유지. 28E S/D 균형을 위해선 최소 DRAM 300K / NAND 45K wfpm의 추가 capacity가 필요 — 낮은 확률의 시나리오.</div>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>28E S/D 균형에 필요한 Capacity/Capex</th><th>DRAM</th><th>NAND</th></tr></thead>
+        <tbody>
+          <tr><td><b>28E S/D 부족분 (EB)</b></td><td class="num">5.0</td><td class="num">63</td></tr>
+          <tr><td><b>28E S/D 균형에 필요한 물량 (EB)</b></td><td class="num">5.5</td><td class="num">76</td></tr>
+          <tr><td><b>S/D 균형에 필요한 capex (US$bn)</b></td><td class="num">58</td><td class="num">7</td></tr>
+          <tr><td><b>FY27E 추정 대비 필요 증분 capex</b></td><td class="num">+41%</td><td class="num">+27%</td></tr>
+          <tr><td><b>capex 요구량의 WSPM 환산 (K)</b></td><td class="num">299</td><td class="num">44</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-src">Source: Company data, WSTS</div>
+      <div class="callout"><span class="t">증분 capex당 bit 추이</span>DRAM 증분 capex당 bit(TB/US$bn)은 2012~2016 모바일 사이클, 2017~2022 pre-AI DC 사이클의 평균 대비 2023~2028E post-AI 구간에서 구조적으로 낮은 수준. NAND(EB/US$bn)는 2026E~2027E 반등 후 2028E 평균 회귀 — 두 지표 모두 2027E~2028E 구간에서 "자본 투입 대비 bit 산출 저하"가 관찰됨.</div>
+
+      <!-- ===================== 8. China ===================== -->
+      <h3 class="sec" id="s8"><span class="n">8</span>중국 경쟁: 선도 업체와의 격차는 여전히 크나, 공급 유입은 과잉 리스크를 높임</h3>
+      <div class="debate">
+        <div class="side bull"><div class="h">Bull — 공급의 상수일 뿐, 현 업사이클의 리스크 아님</div>중국 capacity 증설은 실재(28E DRAM/NAND 모두 중국 capacity 비중 16% 도달 추정)하나 글로벌 가격에 중요한 유효 output은 기술 격차·수율·qualification에 제약. 선단 서버 DRAM/HBM은 절연 상태. 중국이 점유율을 늘리더라도 로컬·저사양 세그먼트에 편중되어 하이퍼스케일러급 수요와 기존 업체의 mix 주도 수익성에 미치는 영향 제한적. AI capex 주도 업사이클에서 낮은 리스크.</div>
+        <div class="side bear"><div class="h">Bear — 성공적 국산화와 점유율 확대는 장기 리스크</div>중국 공급 증가는 전통적 방식으로 사이클을 제약 — LPDDR/commodity DRAM(잠재적으로 NAND) 증분 물량이 공급 스택 전반으로 누출되어 spot/계약 협상을 압박하고 높은 마진 유지 능력을 약화. 현 S/D엔 영향 제한적이나 지속적 투자·정책이 기술 격차를 좁히며 "저사양 HBM/서버 DRAM"이 천장이 아닌 디딤돌이 될 가능성.</div>
+      </div>
+      <div class="view"><span class="h">리포트 시각</span>중국 경쟁은 구조적 위협이며 장기 관점에서 지속 모니터링 대상. 다만 단기 리스크는 지속되는 기술 격차(DRAM 2세대·2.5년, NAND는 소폭)로 제한적. 첨단 장비 규제가 핵심 병목(EUV 접근 불가, 신규 규제 도입 시 DUV 접근 제한 가능성). 중국 업체의 HBM 생산은 오히려 conventional DRAM S/D에 긍정 신호. 시각 변경 트리거: 예상보다 빠른 기술 추격·수율 개선 증거, 고밀도 서버 DRAM/HBM 생태계로의 신뢰성 있는 qualification, "로컬 공급"이 대규모로 해외 청산되기 시작하는 징후.</div>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>중국 비중 (%)</th><th>2022</th><th>2023</th><th>2024</th><th>2025</th><th>2026E</th><th>2027E</th><th>2028E</th></tr></thead>
+        <tbody>
+          <tr><td><b>DRAM capacity share</b></td><td class="num">5%</td><td class="num">6%</td><td class="num">10%</td><td class="num">13%</td><td class="num">15%</td><td class="num">16%</td><td class="num">16%</td></tr>
+          <tr><td><b>DRAM bit share</b></td><td class="num">2%</td><td class="num">3%</td><td class="num">4%</td><td class="num">6%</td><td class="num">8%</td><td class="num">10%</td><td class="num">11%</td></tr>
+          <tr><td><b>NAND capacity share</b></td><td class="num">5%</td><td class="num">5%</td><td class="num">9%</td><td class="num">12%</td><td class="num">13%</td><td class="num">14%</td><td class="num">16%</td></tr>
+          <tr><td><b>NAND bit share</b></td><td class="num">4%</td><td class="num">4%</td><td class="num">8%</td><td class="num">12%</td><td class="num">13%</td><td class="num">15%</td><td class="num">16%</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-src">Source: Company data</div>
+
+      <!-- ===================== 9. 주주환원 ===================== -->
+      <h3 class="sec" id="s9"><span class="n">9</span>주주환원 업데이트: 서프라이즈인가, 실망인가</h3>
+      <div class="debate">
+        <div class="side bull"><div class="h">Bull — 높은 FCF payout과 자본배분은 양립 가능</div>가시적인 자사주 매입/특별배당은 높아진 현금창출을 주주 성과로 전환해 "피크 사이클 = 함정" 서사를 깨고, 거버넌스/지역 디스카운트를 좁히며 실적 지속성에 대한 신뢰를 높임. 명확한 자본환원 프레임워크는 시장이 메모리를 실적 상향이나 ASP y/y 추세가 아닌 earnings power/FCF로 평가하도록 촉진.</div>
+        <div class="side bear"><div class="h">Bear — 주주환원과 무관하게 사이클 지속성에 대한 확신 부족</div>주주환원 발표가 늦거나, 높아진 시장 기대에 못 미치거나, 발표된 정책과 일관되지 않아 투자자 심리를 바꾸는 데 실패. 주주환원 발표는 오히려 LTA에 대한 메모리 업체의 확신을 반증하며, 시장은 결국 섹터가 구조적으로 overshoot하기 쉽고 미래 추정치가 부풀려져 있다고 결론지어 낮은 멀티플에 거래.</div>
+      </div>
+      <div class="view"><span class="h">리포트 시각</span>주주환원은 메모리 주식 re-rating의 전제조건이자 higher-for-longer 업사이클의 간접 증거. 3Q26 말 이전 발표될 것으로 보이는 특별 주주환원에 더해, 투자자들이 긍정적으로 받아들일 조건은 1) 명시적·다년의 자본배분 프레임워크 2) 자본집약도와 capacity 확장 계획에 대한 신뢰성 있는 가드레일 3) 입증된 실행. LTA와 양립 가능한 주주환원 정책은 기회주의적 피크 사이클 payout이 아닌 연장된 수요 가시성·안정적 실적과 부합하므로 긍정적으로 평가.</div>
+      <div class="grid2">
+        <div>
+          <h4 class="sub">SEC — 장기 TSR yield (FCF payout 50% 가정, 조원)</h4>
+          <div class="tbl-wrap">
+          <table class="tbl small">
+            <thead><tr><th>26E~30E</th><th>Gross TSR</th><th>TSR %</th><th>현재가치</th><th>Implied TSR %</th></tr></thead>
+            <tbody>
+              <tr><td><b>Bull</b></td><td class="num">174.1</td><td class="num">63%</td><td class="num">122.6</td><td class="num">44%</td></tr>
+              <tr><td><b>Base</b></td><td class="num">155.7</td><td class="num">56%</td><td class="num">112.1</td><td class="num">41%</td></tr>
+              <tr><td><b>Bear</b></td><td class="num">132.1</td><td class="num">48%</td><td class="num">98.6</td><td class="num">36%</td></tr>
+              <tr><td><b>Extreme Bear</b></td><td class="num">106.7</td><td class="num">39%</td><td class="num">84.0</td><td class="num">30%</td></tr>
+            </tbody>
+          </table>
+          </div>
+        </div>
+        <div>
+          <h4 class="sub">SKH — 장기 TSR yield (FCF payout 67% 가정, 조원)</h4>
+          <div class="tbl-wrap">
+          <table class="tbl small">
+            <thead><tr><th>26E~30E</th><th>Gross TSR</th><th>TSR %</th><th>현재가치</th><th>Implied TSR %</th></tr></thead>
+            <tbody>
+              <tr><td><b>Bull</b></td><td class="num">1,722.1</td><td class="num">94%</td><td class="num">1,196.0</td><td class="num">65%</td></tr>
+              <tr><td><b>Base</b></td><td class="num">1,530.2</td><td class="num">83%</td><td class="num">1,086.6</td><td class="num">59%</td></tr>
+              <tr><td><b>Bear</b></td><td class="num">1,358.5</td><td class="num">74%</td><td class="num">988.9</td><td class="num">54%</td></tr>
+              <tr><td><b>Extreme Bear</b></td><td class="num">1,102.0</td><td class="num">60%</td><td class="num">841.2</td><td class="num">46%</td></tr>
+            </tbody>
+          </table>
+          </div>
+        </div>
+      </div>
+      <h4 class="sub">연도별 TSR yield (Base case 기준 payout)</h4>
+      <div class="tbl-wrap">
+      <table class="tbl small">
+        <thead><tr><th>TSR yield</th><th>2024</th><th>2025</th><th>2026E</th><th>2027E</th><th>2028E</th><th>29E Bull</th><th>30E Bull</th><th>29E Base</th><th>30E Base</th><th>29E Bear</th><th>30E Bear</th><th>29E Ext.</th><th>30E Ext.</th></tr></thead>
+        <tbody>
+          <tr><td><b>SEC (payout 50%)</b></td><td class="num">3%</td><td class="num">4%</td><td class="num">6%</td><td class="num">10%</td><td class="num">13%</td><td class="num">16%</td><td class="num">18%</td><td class="num">14%</td><td class="num">13%</td><td class="num">12%</td><td class="num">7%</td><td class="num">9%</td><td class="num">1%</td></tr>
+          <tr><td><b>SEC 주당 TSR (원)</b></td><td class="num">1,799</td><td class="num">2,648</td><td class="num">17,881</td><td class="num">27,346</td><td class="num">35,138</td><td class="num">42,954</td><td class="num">50,781</td><td class="num">38,454</td><td class="num">36,927</td><td class="num">31,998</td><td class="num">19,762</td><td class="num">24,214</td><td class="num">2,114</td></tr>
+          <tr><td><b>SKH (payout 67%)</b></td><td class="num">1%</td><td class="num">7%</td><td class="num">7%</td><td class="num">14%</td><td class="num">20%</td><td class="num">24%</td><td class="num">28%</td><td class="num">21%</td><td class="num">20%</td><td class="num">19%</td><td class="num">13%</td><td class="num">15%</td><td class="num">4%</td></tr>
+          <tr><td><b>SKH 주당 TSR (원)</b></td><td class="num">2,124</td><td class="num">20,128</td><td class="num">136,275</td><td class="num">256,412</td><td class="num">373,555</td><td class="num">440,779</td><td class="num">515,078</td><td class="num">392,937</td><td class="num">370,983</td><td class="num">351,083</td><td class="num">241,184</td><td class="num">269,584</td><td class="num">66,183</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-src">Source: Bloomberg Finance L.P.</div>
+      <div class="callout"><span class="t">Payout 민감도</span>SEC는 payout 60%/70% 시 2028E TSR yield 16%/18%, Base 29E 17%/19% · SKH는 payout 50%/80% 시 2028E 15%/25%, Base 29E 16%/26%. 단기 선호도 SKH &gt; SEC의 근거는 SKH의 우월한 주주환원 정책과 높은 TSR yield.</div>
+
+      <!-- ===================== 10. Agentic AI CPU ===================== -->
+      <h3 class="sec" id="s10"><span class="n">10</span>Agentic AI CPU 수요: 신규 TAM 동인 vs. GPU와의 잠식</h3>
+      <div class="debate">
+        <div class="side bull"><div class="h">Bull — 메모리 수요의 저변 확대</div>Agentic 워크로드와 AI CPU 플랫폼은 "GPU-only" 사고를 넘어 메모리 TAM을 확장. 대규모 추론은 총 시스템 capacity(KV cache, 긴 context window, 달러당 처리량)에 부하를 주어 더 많은 DRAM attach와 프리미엄 구성을 스택으로 끌어들임. 구조적으로 새로운 수요이며 LTA를 뒷받침(고객이 확실성을 원함)하고, GPU 측 content 가정이 일부 최적화되더라도 시장을 타이트하게 유지.</div>
+        <div class="side bear"><div class="h">Bear — 효율 개선 vs. 워크로드 성장 논쟁 지속</div>"Content cut"과 아키텍처 변화(pooling/offload, NAND/SSD 중심 접근, 워크로드 분산)가 unit당 고사양 DRAM/HBM content를 줄여 투자자가 기대하는 증분 수요를 무디게 함. 총 compute 성장이 둔화되거나 효율 개선이 워크로드 성장을 앞지르면 agentic 서사는 순수요 가속이 아닌 mix shift에 그침.</div>
+      </div>
+      <div class="view"><span class="h">리포트 시각</span>Agentic/AI CPU 메모리는 실질적인 증분 벡터이나, 투자 결론은 병목이 어디에 자리잡는지(HBM vs. conventional DRAM vs. NAND/SSD tier)와 생태계(소프트웨어 + 플랫폼 qualification) 성숙 속도에 달림. 최적화를 감안해도 핵심은 메모리 수요가 학습 중심에서 추론/시스템 중심으로 확장되고 있다는 점 — 총량 S/D 타이트와 더 견고한 가격에 우호적이나 제품·공급사별 분산은 확대. Agentic AI CPU급 메모리 요구 content는 범용 CPU급 대비 30~100% 높다는 실증 확인.</div>
+      <div class="tbl-wrap">
+      <table class="tbl small">
+        <thead><tr><th>AI headnode 수요 가정 (천 unit)</th><th>2023</th><th>2024</th><th>2025</th><th>2026E</th><th>2027E</th><th>2028E</th></tr></thead>
+        <tbody>
+          <tr><td><b>GPU/ASIC 합계</b></td><td class="num">4,117</td><td class="num">8,720</td><td class="num">11,216</td><td class="num">16,885</td><td class="num">25,885</td><td class="num">31,825</td></tr>
+          <tr><td>&nbsp;&nbsp;NVDA</td><td class="num">1,736</td><td class="num">4,500</td><td class="num">6,200</td><td class="num">8,920</td><td class="num">9,975</td><td class="num">11,640</td></tr>
+          <tr><td>&nbsp;&nbsp;AMD</td><td class="num">210</td><td class="num">500</td><td class="num">675</td><td class="num">650</td><td class="num">1,500</td><td class="num">2,265</td></tr>
+          <tr><td>&nbsp;&nbsp;ASIC/기타</td><td class="num">2,171</td><td class="num">3,720</td><td class="num">4,341</td><td class="num">7,315</td><td class="num">14,410</td><td class="num">17,920</td></tr>
+          <tr><td><b>AI headnode CPU 합계</b></td><td class="num">1,029</td><td class="num">2,174</td><td class="num">3,794</td><td class="num">6,646</td><td class="num">11,117</td><td class="num">16,852</td></tr>
+          <tr><td>&nbsp;&nbsp;NVDA</td><td class="num">434</td><td class="num">1,175</td><td class="num">2,785</td><td class="num">3,774</td><td class="num">4,239</td><td class="num">5,110</td></tr>
+          <tr><td>&nbsp;&nbsp;AMD</td><td class="num">53</td><td class="num">125</td><td class="num">169</td><td class="num">163</td><td class="num">375</td><td class="num">566</td></tr>
+          <tr><td>&nbsp;&nbsp;ASIC/기타</td><td class="num">543</td><td class="num">874</td><td class="num">840</td><td class="num">2,710</td><td class="num">6,503</td><td class="num">11,176</td></tr>
+          <tr><td><b>GPU to CPU 비율 (x)</b></td><td class="num">4.0</td><td class="num">4.0</td><td class="num">3.0</td><td class="num">2.5</td><td class="num">2.3</td><td class="num">1.9</td></tr>
+          <tr><td>&nbsp;&nbsp;NVDA</td><td class="num">4.0</td><td class="num">3.8</td><td class="num">2.2</td><td class="num">2.4</td><td class="num">2.4</td><td class="num">2.3</td></tr>
+          <tr><td>&nbsp;&nbsp;AMD</td><td class="num">4.0</td><td class="num">4.0</td><td class="num">4.0</td><td class="num">4.0</td><td class="num">4.0</td><td class="num">4.0</td></tr>
+          <tr><td>&nbsp;&nbsp;ASIC/기타</td><td class="num">4.0</td><td class="num">4.3</td><td class="num">5.2</td><td class="num">2.7</td><td class="num">2.2</td><td class="num">1.6</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-card">
+        <div class="ct">GPU to CPU 비율 가정 (x)</div>
+        <svg viewBox="0 0 880 240" width="100%">
+          <line x1="70" y1="30" x2="850" y2="30" stroke="#eef1f5"/>
+          <line x1="70" y1="86.7" x2="850" y2="86.7" stroke="#eef1f5"/>
+          <line x1="70" y1="143.3" x2="850" y2="143.3" stroke="#eef1f5"/>
+          <line x1="70" y1="200" x2="850" y2="200" stroke="#cfd6e0"/>
+          <text x="64" y="34" font-size="10" fill="#9aa3b2" text-anchor="end">4.5x</text>
+          <text x="64" y="90" font-size="10" fill="#9aa3b2" text-anchor="end">3.0x</text>
+          <text x="64" y="147" font-size="10" fill="#9aa3b2" text-anchor="end">1.5x</text>
+          <text x="64" y="204" font-size="10" fill="#9aa3b2" text-anchor="end">0</text>
+          <polyline points="120,48.9 290,86.7 460,105.6 630,113.1 800,128.2" fill="none" stroke="#0a2240" stroke-width="3"/>
+          <circle cx="120" cy="48.9" r="5" fill="#0a2240"/><circle cx="290" cy="86.7" r="5" fill="#0a2240"/><circle cx="460" cy="105.6" r="5" fill="#0a2240"/><circle cx="630" cy="113.1" r="5" fill="#0a2240"/><circle cx="800" cy="128.2" r="5" fill="#0a2240"/>
+          <text x="120" y="40" font-size="12" font-weight="700" fill="#0a2240" text-anchor="middle">4.0</text>
+          <text x="290" y="78" font-size="12" font-weight="700" fill="#0a2240" text-anchor="middle">3.0</text>
+          <text x="460" y="97" font-size="12" font-weight="700" fill="#0a2240" text-anchor="middle">2.5</text>
+          <text x="630" y="104" font-size="12" font-weight="700" fill="#0a2240" text-anchor="middle">2.3</text>
+          <text x="800" y="119" font-size="12" font-weight="700" fill="#0a2240" text-anchor="middle">1.9</text>
+          <text x="120" y="222" font-size="11" fill="#525866" text-anchor="middle">2024</text>
+          <text x="290" y="222" font-size="11" fill="#525866" text-anchor="middle">2025</text>
+          <text x="460" y="222" font-size="11" fill="#525866" text-anchor="middle">2026E</text>
+          <text x="630" y="222" font-size="11" fill="#525866" text-anchor="middle">2027E</text>
+          <text x="800" y="222" font-size="11" fill="#525866" text-anchor="middle">2028E</text>
+        </svg>
+      </div>
+
+      <!-- ===================== 11. Catalysts ===================== -->
+      <h3 class="sec" id="s11"><span class="n">11</span>향후 핵심 Catalyst</h3>
+      <ul class="pts">
+        <li><b>3~6개월 (센티먼트):</b> 1) HBM 가격·협상 진행 상황(핵심은 27E HBM ASP) 2) 구체적인 LTA 공시(물량 커버리지, 가격 범위) 3) 주주환원 업데이트(Hynix 추가 자사주 매입 가능성, SEC 업데이트) 4) content 최적화 논쟁의 해소</li>
+        <li><b>6~18개월 (펀더멘털):</b> 1) capex 확대/capacity 증설 추세 대비 메모리 S&amp;D 충족도(증가한 capex가 더 적은 증분 bit output으로 이어지는지) 2) AI 수요 지속성과 CSP capex의 지속적 상향 3) 중국 공급 궤적과 그 귀결(commodity vs. 고사양 메모리 제조 진전)</li>
+      </ul>
+
+      <!-- ===================== Risk ===================== -->
+      <h3 class="sec"><span class="n">!</span>리스크 &amp; 모니터링 포인트</h3>
+      <div class="risk-box">
+        <h4>Key Risks to Rating &amp; Price Target</h4>
+        <ul>
+          <li><b>AI capex 자금조달 스트레스:</b> 금리 상승·리스크 프리미엄 확대로 하이퍼스케일러 OCF가 (-) 전환 시 capex 감속 → 메모리 수요 둔화의 최대 리스크.</li>
+          <li><b>2H28E 이후 공급과잉:</b> 신규 wafer start 가속과 "장비/클린룸 제약 없음" 시나리오 현실화 시 LTA 파기 → 28E→30E DRAM 가격 -60~70% (Extreme Bear).</li>
+          <li><b>메모리 value share 저항선:</b> AI capex 내 메모리 비중 ~50%에서 CSP의 비용 절감(KV cache condensation, SRAM/non-HBM, CPO/NPO)이 본격화될 경우 value share 급축소.</li>
+          <li><b>LTA 하방 보호의 미검증:</b> 다운사이클에서 고객의 재협상·불이행 가능성 — LTA의 가격 floor·최소 물량 조건은 아직 실제 사이클로 검증되지 않음.</li>
+          <li><b>중국 기술 추격:</b> 예상보다 빠른 수율 개선, 고밀도 서버 DRAM/HBM qualification, 로컬 공급의 대규모 해외 유출은 시각 변경 트리거.</li>
+          <li><b>주주환원 실망:</b> 발표 지연·기대 미달·정책 비일관성 시 re-rating 지연 및 "피크 사이클 = 함정" 서사 강화.</li>
+        </ul>
+        <h4 style="margin-top:14px;">모니터링 포인트</h4>
+        <ul>
+          <li>27E HBM ASP 협상 결과 및 DRAM/NAND ASP y/y (27E +29%/+23%, 28E +7%/-4% 추정치 대비)</li>
+          <li>메모리 fulfillment ratio (DRAM 60~70%, NAND 80~85%) 및 LTA 커버리지 확대 여부</li>
+          <li>3Q26 말 이전 특별 주주환원 발표 및 다년 자본배분 프레임워크 제시 여부</li>
+          <li>28E S/D 균형 요구 capacity (DRAM 300K / NAND 45K wfpm) 대비 실제 증설 속도</li>
+          <li>중국 DRAM/NAND capacity share 16% (28E) 경로와 EUV/DUV 규제 변화</li>
+          <li>Agentic AI CPU 메모리 content (범용 CPU 대비 +30~100%) 및 GPU-to-CPU 비율 하락(1.9x by 28E) 실현 여부</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div>본 문서는 투자 권유를 목적으로 하지 않습니다.</div>
+  </footer>
+
+</div>
+</body>
+</html>
