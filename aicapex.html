@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Capex · Required Revenues · What's Priced In</title>
+<style>
+  :root{
+    --brand:#1a2b4a;
+    --brand-deep:#0e1729;
+    --accent:#6b8cae;
+    --accent2:#3d5a80;
+    --paper:#f4f6f9;
+    --card:#ffffff;
+    --ink:#1b1e24;
+    --ink-soft:#525866;
+    --line:#dde3ec;
+    --buy:#1f7a4d;
+    --bear:#c0392b;
+    --bull:#1f6fb2;
+    --warn:#8a4b15;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);font-family:'Helvetica Neue','Pretendard','Noto Sans KR',Arial,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:960px;margin:0 auto;padding:40px 6vw 90px;}
+  .intro{border-left:4px solid var(--accent);padding:8px 0 8px 20px;margin-bottom:48px;}
+  .intro .eyebrow{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent2);font-weight:700;}
+  .intro h1{font-size:26px;margin:8px 0 6px;color:var(--brand);}
+  .report{margin-bottom:64px;scroll-margin-top:70px;}
+  .report-head{background:linear-gradient(135deg,var(--brand) 0%, var(--brand-deep) 100%);color:#fff;border-radius:10px 10px 0 0;padding:28px 30px;}
+  .report-head .tag{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#9fb4d4;font-weight:700;}
+  .report-head h2{margin:8px 0 14px;font-size:23px;line-height:1.35;}
+  .report-head .lede{font-family:'Georgia',serif;font-size:15.5px;color:#e3ebf6;border-top:1px solid rgba(255,255,255,0.16);padding-top:14px;margin:0;}
+  .report-body{background:var(--card);border:1px solid var(--line);border-top:none;border-radius:0 0 10px 10px;padding:30px;}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px;}
+  .chip{border:1px solid var(--line);border-radius:8px;padding:10px 16px;background:#fafbfd;flex:1;min-width:130px;}
+  .chip .k{font-size:10.5px;letter-spacing:0.5px;text-transform:uppercase;color:var(--ink-soft);}
+  .chip .v{font-size:19px;font-weight:700;color:var(--brand);margin-top:2px;}
+  .chip .s{font-size:11px;color:var(--ink-soft);}
+  h3.sec{font-size:17px;color:var(--brand);margin:30px 0 12px;padding-bottom:8px;border-bottom:1.5px solid var(--line);display:flex;align-items:center;gap:10px;}
+  h3.sec .n{background:var(--brand);color:#fff;font-size:12px;font-weight:700;width:24px;height:24px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}
+  ul.pts{margin:0;padding:0;list-style:none;}
+  ul.pts li{position:relative;padding:7px 0 7px 20px;font-size:14.5px;border-bottom:1px dashed var(--line);}
+  ul.pts li:last-child{border-bottom:none;}
+  ul.pts li::before{content:"—";position:absolute;left:0;color:var(--accent2);font-weight:700;}
+  ul.pts b{color:var(--brand);}
+  table.tbl{width:100%;border-collapse:collapse;font-size:13px;margin:6px 0 4px;}
+  table.tbl th{background:var(--brand);color:#fff;text-align:left;padding:8px 10px;font-weight:600;}
+  table.tbl td{padding:7px 10px;border-bottom:1px solid var(--line);}
+  table.tbl tr:nth-child(even) td{background:#f7f9fc;}
+  table.tbl td.num{text-align:right;font-variant-numeric:tabular-nums;}
+  table.tbl td.buy{color:var(--buy);font-weight:700;}
+  .tbl-wrap{overflow-x:auto;}
+  .chart-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:22px 22px 14px;margin:14px 0;}
+  .chart-card .ct{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:12px;}
+  .chart-src{font-size:10.5px;color:#9aa3b2;margin-top:8px;}
+  .legend{display:flex;gap:18px;font-size:11.5px;color:var(--ink-soft);margin-bottom:4px;}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .legend i{width:11px;height:11px;border-radius:2px;display:inline-block;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0;}
+  @media(max-width:680px){.grid2{grid-template-columns:1fr;}}
+  .bb{border-radius:8px;padding:16px;border:1px solid var(--line);background:#fafbfd;}
+  .bb.bull{border-top:3px solid var(--bull);}
+  .bb.bear{border-top:3px solid var(--bear);}
+  .bb.base{border-top:3px solid var(--ink-soft);}
+  .bb .lbl{font-size:11px;letter-spacing:0.6px;text-transform:uppercase;font-weight:700;color:var(--ink-soft);}
+  .bb .px{font-size:22px;font-weight:700;color:var(--brand);margin:4px 0;}
+  .bb .ret{font-size:13px;font-weight:600;}
+  .bb.bull .ret{color:var(--bull);}
+  .bb.bear .ret{color:var(--bear);}
+  .bb ul{margin:8px 0 0;padding-left:16px;font-size:12px;color:var(--ink-soft);}
+  .bb li{margin-bottom:4px;}
+  .callout{background:#fbf6ec;border:1px solid #e8dcc3;border-radius:8px;padding:14px 18px;font-size:13px;color:var(--ink-soft);margin-top:14px;}
+  .callout .t{font-size:10.5px;font-weight:700;letter-spacing:0.6px;color:var(--warn);text-transform:uppercase;display:block;margin-bottom:5px;}
+  .risk-box{background:var(--brand);color:#dde6f3;border-radius:8px;padding:22px 24px;margin-top:14px;}
+  .risk-box h4{margin:0 0 10px;color:#fff;font-size:14.5px;}
+  .risk-box ul{margin:0;padding-left:18px;}
+  .risk-box li{margin-bottom:8px;font-size:13px;}
+  .risk-box li b{color:#fff;}
+  footer{border-top:1px solid var(--line);margin-top:50px;padding-top:20px;font-size:11px;color:#9aa3b2;line-height:1.6;}
+  @media(max-width:560px){.intro h1{font-size:21px;}.report-head h2{font-size:19px;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="intro">
+    <div class="eyebrow">24 September 2026</div>
+    <h1>AI Capex, 필요 매출, 그리고 AI 트레이드에 반영된 기대치</h1>
+  </div>
+
+  <section class="report" id="rpt1">
+    <div class="report-head">
+      <div class="tag">US Equity Views · Portfolio Strategy</div>
+      <h2>AI Capex는 2027년에도 증가하나 성장률·서프라이즈는 둔화 — 하이퍼스케일러 손익분기 위해 연 $3,000억 AI 매출 필요, 인프라 밸류에이션에는 회의론이 이미 상당 부분 반영</h2>
+      <p class="lede">2026년 $8,000억 → 2027년 $1.2조로 Capex 확대는 지속되지만 증가율은 ~100%에서 54%로 둔화. 반도체(특히 메모리)는 이익 급감을 이미 가격에 반영 중이며, Capex 증가율 둔화 + ROI 가시화는 하이퍼스케일러에 우호적.</p>
+    </div>
+
+    <div class="report-body">
+
+      <div class="chips">
+        <div class="chip"><div class="k">2026E Hyperscaler Capex</div><div class="v">$8,060억</div><div class="s">YoY +96% (컨센서스)</div></div>
+        <div class="chip"><div class="k">2027E Capex</div><div class="v">$1.2조</div><div class="s">컨센서스 $1.1조 대비 +$1,300억</div></div>
+        <div class="chip"><div class="k">손익분기 필요 AI 매출</div><div class="v">~$3,000억/년</div><div class="s">ROIC 0% 기준 $3,080억</div></div>
+        <div class="chip"><div class="k">App Layer 필요 매출</div><div class="v">~$1조/년</div><div class="s">ROIC 10~20%·EBIT 마진 30%</div></div>
+        <div class="chip"><div class="k">AI 인프라 Median P/E</div><div class="v">22x</div><div class="s">4월 32x에서 De-rating</div></div>
+        <div class="chip"><div class="k">Cloud Backlog</div><div class="v">$1.7조</div><div class="s">AMZN·GOOGL·MSFT 합산</div></div>
+      </div>
+
+      <div class="callout"><span class="t">배경</span>최근 수개월간 AI 트레이드 관련 주가·투자자 시각의 변동성이 극심. 변동성 대부분은 AI 인프라 복합군에 집중됐으나, 최근 실적시즌에는 하이퍼스케일러·소프트웨어까지 급등락. 리포트는 고객 문의가 가장 많은 3가지 질문 — ① AI Capex 전망 ② 투자 회수에 필요한 매출 규모 ③ 시장이 가격에 반영 중인 AI 전망 — 에 답한다.</div>
+
+      <!-- ================= 1. Capex 전망 ================= -->
+      <h3 class="sec"><span class="n">1</span>AI Capex 전망 — 2027년에도 증가하나 증가율·서프라이즈 둔화</h3>
+      <ul class="pts">
+        <li>미국 대형 하이퍼스케일러 2026년 Capex <b>$8,000억</b>, 컨센서스 2027년 <b>$1.1조</b>. 2027년 컨센서스는 2Q 실적시즌 시작 이후 <b>+$1,750억</b> 상향.</li>
+        <li>실적시즌 코멘트: 공급 제약 환경 + 대규모 매출 Backlog → 추가 투자 자금 조달 위해 <b>부채·주식 시장 동시 활용</b>.</li>
+        <li>컨센서스 기준 2027년 Capex의 GDP 대비 비중은 <b>1800년대 후반 철도 건설 이후 최대</b>의 기술 투자 사이클.</li>
+        <li>애널리스트 추정 Capex: 2027년 <b>$1.2조</b>, 2028년 <b>$1.4조</b> — 컨센서스 대비 각각 +$1,300억, +$1,000억 상회. 단, 증가율은 2026년 ~100% → 2027년 <b>54%</b> → 2028년 <b>12%</b>로 감속.</li>
+        <li>Capex가 영업현금흐름(CFO)을 초과 — 추가 성장은 부채·주식 발행 의존도 상승. 레버리지 확대에도 <b>이자보상배율은 역사적으로 매우 건전</b>, 대차대조표 자체는 구속 조건 아님.</li>
+        <li>크레딧 전략팀은 <b>IG 시장 내 집중도</b>를 더 실질적인 병목으로 지목 → 사모 크레딧·주식 발행을 통한 추가 조달 필요.</li>
+        <li>기타 잠재 제약: 데이터센터 건설 정부 규제, 프론티어 모델 롤아웃 의도적 지연, 노동력·전력·메모리 등 투입 요소 부족. Capex 제약은 인프라 수혜주 단기 이익 리스크이나, <b>과잉 투자 우려 완화</b> 효과도.</li>
+        <li>향후 <b>토큰 수요 증가율이 토큰 가격 하락을 상회</b>해야 투자 확대 지속 가능. 경쟁력 있는 오픈소스 모델 부상으로 평균 토큰 가격 하락 중. 프론티어 토큰 수요는 7월 둔화(AI 인프라주 매도와 동시) 후 8월 재가속.</li>
+        <li>대부분의 AI 인프라 기업(특히 반도체)에게 AI 투자 감속 = <b>EPS 성장 감속</b>. 2027년 Capex 컨센서스 상향은 2027년 EPS 상향으로 이어지겠으나, 상향 폭은 2026년 상반기 대비 축소 전망.</li>
+      </ul>
+
+      <div class="chart-card">
+        <div class="ct">하이퍼스케일러 Capex 추이 및 컨센서스 ($ billions, AMZN·META·GOOGL·MSFT·ORCL)</div>
+        <svg viewBox="0 0 880 320" width="100%">
+          <line x1="70" y1="280" x2="850" y2="280" stroke="#cfd6e0"/>
+          <line x1="70" y1="211.4" x2="850" y2="211.4" stroke="#eef1f5"/>
+          <line x1="70" y1="142.9" x2="850" y2="142.9" stroke="#eef1f5"/>
+          <line x1="70" y1="74.3" x2="850" y2="74.3" stroke="#eef1f5"/>
+          <text x="60" y="284" font-size="11" fill="#9aa3b2" text-anchor="end">$0</text>
+          <text x="60" y="215" font-size="11" fill="#9aa3b2" text-anchor="end">$400</text>
+          <text x="60" y="147" font-size="11" fill="#9aa3b2" text-anchor="end">$800</text>
+          <text x="60" y="78" font-size="11" fill="#9aa3b2" text-anchor="end">$1,200</text>
+          <rect x="105" y="253.6" width="70" height="26.4" fill="#1a2b4a"/>
+          <rect x="235" y="239.4" width="70" height="40.6" fill="#1a2b4a"/>
+          <rect x="365" y="209.4" width="70" height="70.6" fill="#1a2b4a"/>
+          <rect x="495" y="141.8" width="70" height="138.2" fill="#6b8cae"/>
+          <rect x="625" y="90.7" width="70" height="189.3" fill="#6b8cae"/>
+          <rect x="755" y="60.4" width="70" height="219.6" fill="#6b8cae"/>
+          <text x="140" y="245" font-size="12" font-weight="700" fill="#1a2b4a" text-anchor="middle">$154</text>
+          <text x="140" y="258" font-size="10" fill="#525866" text-anchor="middle">(-2%)</text>
+          <text x="270" y="231" font-size="12" font-weight="700" fill="#1a2b4a" text-anchor="middle">$237</text>
+          <text x="270" y="244" font-size="10" fill="#525866" text-anchor="middle">(+54%)</text>
+          <text x="400" y="201" font-size="12" font-weight="700" fill="#1a2b4a" text-anchor="middle">$412</text>
+          <text x="400" y="214" font-size="10" fill="#525866" text-anchor="middle">(+73%)</text>
+          <text x="530" y="133" font-size="12" font-weight="700" fill="#1a2b4a" text-anchor="middle">$806</text>
+          <text x="530" y="146" font-size="10" fill="#525866" text-anchor="middle">(+96%)</text>
+          <text x="660" y="82" font-size="12" font-weight="700" fill="#1a2b4a" text-anchor="middle">$1,104</text>
+          <text x="660" y="95" font-size="10" fill="#525866" text-anchor="middle">(+37%)</text>
+          <text x="790" y="52" font-size="12" font-weight="700" fill="#1a2b4a" text-anchor="middle">$1,281</text>
+          <text x="790" y="65" font-size="10" fill="#525866" text-anchor="middle">(+16%)</text>
+          <text x="140" y="300" font-size="11.5" fill="#525866" text-anchor="middle">2023</text>
+          <text x="270" y="300" font-size="11.5" fill="#525866" text-anchor="middle">2024</text>
+          <text x="400" y="300" font-size="11.5" fill="#525866" text-anchor="middle">2025</text>
+          <text x="530" y="300" font-size="11.5" fill="#525866" text-anchor="middle">Cons 2026</text>
+          <text x="660" y="300" font-size="11.5" fill="#525866" text-anchor="middle">Cons 2027</text>
+          <text x="790" y="300" font-size="11.5" fill="#525866" text-anchor="middle">Cons 2028</text>
+        </svg>
+        <div class="chart-src">Source: FactSet</div>
+      </div>
+
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>컨센서스 Capex 추정 ($bn)</th><th>2026 시작 시점</th><th>2Q 실적시즌 시작</th><th>현재</th></tr></thead>
+        <tbody>
+          <tr><td><b>2026E</b></td><td class="num">$546 (+36%)</td><td class="num">$758 (+84%)</td><td class="num">$806 (+96%)</td></tr>
+          <tr><td><b>2027E</b></td><td class="num">$630 (+15%)</td><td class="num">$929 (+23%)</td><td class="num">$1,104 (+37%)</td></tr>
+          <tr><td><b>2027E (애널리스트 추정)</b></td><td class="num">—</td><td class="num">—</td><td class="num">$1,200 (+54%)</td></tr>
+          <tr><td><b>2028E (애널리스트 추정)</b></td><td class="num">—</td><td class="num">—</td><td class="num">$1,400 (+12%)</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="callout"><span class="t">주목</span>2026년 초 $5,460억이던 2026년 Capex 컨센서스는 9개월 만에 $8,060억으로 <b>+48%</b> 상향. 하이퍼스케일러 Capex/CFO 비율은 2026년 <b>100% 초과</b> 전망 — 1990년대 말 통신업종(S&P 500 Telecom) 당시 수준에 근접.</div>
+
+      <!-- ================= 2. 필요 매출 ================= -->
+      <h3 class="sec"><span class="n">2</span>투자 회수에 필요한 AI 매출 — 하이퍼스케일러 ~$3,000억, App Layer ~$1조</h3>
+      <ul class="pts">
+        <li>2026~2027년 평균 연간 AI Capex(AMZN·GOOGL·META·MSFT·ORCL·SPCX) 기준, 하이퍼스케일러가 손익분기(ROIC 0%)에 도달하려면 연간 AI 매출 <b>~$3,000억</b> 필요. 손익분기 매출 = 연간 감가상각 + 영업비용.</li>
+        <li>누적 Capex 기준으로 산정하면 필요 매출은 더 커짐. 하이퍼스케일러 실현 ROIC는 <b>40% → 25%</b>로 하락.</li>
+        <li>현재 추정 AI 매출은 손익분기에 미달하나 <b>빠르게 성장 중이며 Backlog 규모가 큼</b>. AMZN·GOOGL·MSFT·ORCL 클라우드 매출 YoY 성장률: 2024년 <b>25% → 2Q26 48%</b>.</li>
+        <li>2024년 성장률(pre-AI 트렌드) 초과분 연환산 클라우드 매출: 1Q26 $390억 → 2Q26 <b>~$670억</b>, 최근 분기마다 약 2배씩 증가.</li>
+        <li>미국 3대 퍼블릭 클라우드(AMZN·GOOGL·MSFT) 합산 매출 Backlog <b>$1.7조</b> → 필요 매출 달성 가시성 제공.</li>
+        <li>App Layer(컴퓨트 구매 기업)의 필요 매출은 하이퍼스케일러 필요 매출 위에 App 기업의 추가 비용·마진이 얹혀 더 큼. 대형 소프트웨어 EBIT 마진 5년 평균 <b>40%</b> 적용(훈련·추론 비용 모두 포함하기 위해 GM 대신 EBIT 마진 사용).</li>
+        <li>App Layer EBIT 마진 30% + 하이퍼스케일러 ROIC 10~20% 가정 시 App Layer 연 매출 <b>$1조 초과</b> 필요.</li>
+        <li>비교 지표: 2026년 글로벌 광고·소프트웨어 지출 각 <b>~$1.5조</b>, 이코노미스트 추정 자본에 귀속될 미국 AI 노동생산성 향상 연 <b>~$1.8조</b>. 단, 이 이득 전부가 인프라·App Layer로 귀속되진 않음.</li>
+        <li>2028년에도 Capex 고성장 시 허들 추가 상승. Physical AI·AGI 출현을 반영하면 필요 AI 매출과 Capex는 <b>훨씬 더 커짐</b>.</li>
+      </ul>
+
+      <div class="chart-card">
+        <div class="ct">ROIC 목표별 하이퍼스케일러 연간 "필요" AI 매출 ($ billions, 2026~27 평균 연간 Capex 기준)</div>
+        <svg viewBox="0 0 880 320" width="100%">
+          <line x1="70" y1="280" x2="850" y2="280" stroke="#cfd6e0"/>
+          <line x1="70" y1="220" x2="850" y2="220" stroke="#eef1f5"/>
+          <line x1="70" y1="160" x2="850" y2="160" stroke="#eef1f5"/>
+          <line x1="70" y1="100" x2="850" y2="100" stroke="#eef1f5"/>
+          <line x1="70" y1="40" x2="850" y2="40" stroke="#eef1f5"/>
+          <text x="60" y="284" font-size="11" fill="#9aa3b2" text-anchor="end">$0</text>
+          <text x="60" y="224" font-size="11" fill="#9aa3b2" text-anchor="end">$200</text>
+          <text x="60" y="164" font-size="11" fill="#9aa3b2" text-anchor="end">$400</text>
+          <text x="60" y="104" font-size="11" fill="#9aa3b2" text-anchor="end">$600</text>
+          <text x="60" y="44" font-size="11" fill="#9aa3b2" text-anchor="end">$800</text>
+          <rect x="140" y="187.6" width="110" height="92.4" fill="#1a2b4a"/>
+          <rect x="320" y="154.9" width="110" height="125.1" fill="#3d5a80"/>
+          <rect x="500" y="122.2" width="110" height="157.8" fill="#6b8cae"/>
+          <rect x="680" y="89.2" width="110" height="190.8" fill="#9fb4d4"/>
+          <text x="195" y="179" font-size="13" font-weight="700" fill="#1a2b4a" text-anchor="middle">$308</text>
+          <text x="375" y="146" font-size="13" font-weight="700" fill="#1a2b4a" text-anchor="middle">$417</text>
+          <text x="555" y="113" font-size="13" font-weight="700" fill="#1a2b4a" text-anchor="middle">$526</text>
+          <text x="735" y="80" font-size="13" font-weight="700" fill="#1a2b4a" text-anchor="middle">$636</text>
+          <text x="195" y="300" font-size="11.5" fill="#525866" text-anchor="middle">ROIC 0% (손익분기)</text>
+          <text x="375" y="300" font-size="11.5" fill="#525866" text-anchor="middle">ROIC 10%</text>
+          <text x="555" y="300" font-size="11.5" fill="#525866" text-anchor="middle">ROIC 20%</text>
+          <text x="735" y="300" font-size="11.5" fill="#525866" text-anchor="middle">ROIC 30%</text>
+        </svg>
+      </div>
+
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>App Layer 연간 "필요" 매출 ($bn)</th><th>EBIT 마진 10%</th><th>20%</th><th>30%</th><th>40%</th></tr></thead>
+        <tbody>
+          <tr><td><b>하이퍼스케일러 ROIC 0%</b></td><td class="num">$425</td><td class="num">$475</td><td class="num">$525</td><td class="num">$625</td></tr>
+          <tr><td><b>ROIC 10%</b></td><td class="num">$725</td><td class="num">$825</td><td class="num">$925</td><td class="num">$1,050</td></tr>
+          <tr><td><b>ROIC 20%</b></td><td class="num">$1,050</td><td class="num">$1,150</td><td class="num">$1,300</td><td class="num">$1,500</td></tr>
+          <tr><td><b>ROIC 30%</b></td><td class="num">$1,350</td><td class="num">$1,500</td><td class="num">$1,675</td><td class="num">$1,925</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="callout"><span class="t">가정</span>2026~27년 누적 AI Capex 기준. 컴퓨트가 App Layer 영업비용의 <b>75%</b>를 차지한다고 가정. META 필요 매출에는 EBIT 마진 미적용. App Layer 구성 기업과 비용 구조에 따라 필요 매출 범위는 넓음.</div>
+
+      <!-- ================= 3. 시장 가격 ================= -->
+      <h3 class="sec"><span class="n">3</span>시장은 어떤 AI 전망을 가격에 반영 중인가 — 인프라 회의론은 이미 상당 부분 Priced In</h3>
+      <ul class="pts">
+        <li>AI 인프라 이익 지속성에 대한 회의론은 최소한 부분적으로 가격 반영. AI 인프라 Median 종목 12M Fwd P/E: 2026년 4월 <b>32x → 현재 22x</b>로 De-rating.</li>
+        <li>시가총액 증분 / EBITDA 증분(2023년 이후) 비율로 본 "이익 지속 기대치"는 <b>광 네트워킹·전력망·액체냉각</b>에서 가장 높고, <b>반도체·유틸리티</b>에서 가장 보수적.</li>
+        <li>반도체 밸류에이션은 현재 이익 강도의 지속성에 특히 회의적 — 단기 성장 강하나 중기 불확실한 시클리컬의 전형. 투자 기회는 <b>메모리보다 Fabless</b>가 더 매력적: NVDA·AVGO <b>Buy</b>, MU <b>Neutral</b>.</li>
+        <li><b>메모리(MU·SK하이닉스·삼성전자 달러가중)</b>: 2년 Fwd P/E <b>4x</b> — 15년 평균 8x의 절반. 그러나 GM <b>~80%</b>로 역사 평균의 2배 이상. P/E를 15년 평균으로 되돌리려면 향후 EPS가 <b>~50% 감소</b>해야 함.</li>
+        <li>50% 감소는 절대 규모로 크지만, 메모리는 과거 사이클에서 더 큰 EPS 감소(적자 전환 포함)를 경험. 2028년 전망이 실현되면 현재 가격은 지나치게 비관적이나, 많은 투자자는 Capex 증가율 정상화 국면에서 <b>고beta 인프라 영역으로의 재진입에 회의적</b>.</li>
+        <li><b>Fabless(NVDA·AVGO·AMD 달러가중)</b>: 2년 Fwd P/E <b>13x</b> vs 중앙값 18x. 마진 확대는 역사 평균 대비 완만. P/E 정상화에 필요한 EPS 감소는 <b>~10%</b> — 과거 실현된 시클리컬 이익 감소 폭과 유사.</li>
+        <li><b>하이퍼스케일러</b>: Fwd P/E 10년 이상 최저 수준으로 De-rating. S&P 500 Median 종목 대비 <b>단 4 turns 프리미엄</b> — 역대 최소.</li>
+        <li>하이퍼스케일러 주도권 회복의 3가지 조건 — ① 거시 성장 감속(이코노미스트: 미국 성장 더 이상 가속하지 않음) ② AI 투자 수익화 입증(이미 신호 시작) ③ Capex 증가율 둔화(2027년 예상) — <b>모두 충족 방향</b>.</li>
+        <li>투자자 관심은 이익보다 <b>마이너스 FCF</b>에 집중돼 있으나, 매출 가속 + Capex 감속에 따른 FCF 개선 가시성이 주가에 우호적.</li>
+      </ul>
+
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>그룹</th><th>현재 P/E (2Y Fwd)</th><th>장기 중앙값/평균</th><th>P/E 정상화에 필요한 EPS 변화</th><th>마진 상황</th></tr></thead>
+        <tbody>
+          <tr><td><b>메모리 (MU·SK하이닉스·삼성)</b></td><td class="num">4x</td><td class="num">8x (15Y)</td><td class="num">약 -50%</td><td>GM ~80%, 역사 평균의 2배 이상</td></tr>
+          <tr><td><b>Fabless (NVDA·AVGO·AMD)</b></td><td class="num">13x</td><td class="num">18x</td><td class="num">약 -10%</td><td>역사 평균 소폭 상회</td></tr>
+          <tr><td><b>AI 인프라 Median</b></td><td class="num">22x (12M Fwd)</td><td class="num">32x (2026.4월)</td><td class="num">—</td><td>4월 이후 De-rating</td></tr>
+          <tr><td><b>하이퍼스케일러</b></td><td class="num">10년 내 최저</td><td class="num">S&P Median +4 turns</td><td class="num">—</td><td>프리미엄 역대 최소</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="grid2">
+        <div class="bb bear"><div class="lbl">메모리 — 가격에 반영된 시나리오</div><div class="px">P/E 4x</div><div class="ret">EPS -50% 이미 반영</div>
+          <ul><li>15년 평균 P/E 8x 회귀 가정 시</li><li>GM 80%의 정상화가 핵심 변수</li><li>과거 사이클에서는 더 큰 폭 감소도 경험</li><li>2028년 전망 실현 시 현재 가격은 과도한 비관</li></ul></div>
+        <div class="bb bull"><div class="lbl">Fabless — 가격에 반영된 시나리오</div><div class="px">P/E 13x</div><div class="ret">EPS -10% 반영 (상대적 매력)</div>
+          <ul><li>중앙값 18x 회귀 가정 시</li><li>마진 확대 폭이 완만 → 정상화 리스크 제한적</li><li>과거 실현 시클리컬 감소 폭과 유사 수준</li><li>NVDA·AVGO Buy 등급</li></ul></div>
+      </div>
+
+      <!-- ================= 4. 인프라 외 ================= -->
+      <h3 class="sec"><span class="n">4</span>인프라 밖의 AI 트레이드 — App Layer는 수익률 분산의 원천</h3>
+      <ul class="pts">
+        <li>AI 트레이드가 애플리케이션 롤아웃 단계로 진행되며 <b>수익률 분산(Return Dispersion)</b>이 지속될 전망. App Layer의 승자·패자 판별에는 수 분기 소요.</li>
+        <li><b>소프트웨어</b>: 연초 AI 디스럽션 우려로 주가 압박 → 최근 수주간 급반등. 소프트웨어 그룹 <b>+45% 랠리</b>, 2025년 말 고점 대비 <b>-8%</b> 이내 복귀.</li>
+        <li>펀더멘털상 AI 디스럽션 징후 미미 — 커버리지 Median 종목 ARR 성장률은 최근 분기 소폭 <b>재가속</b>(1Q26 22% → 2Q26 23%).</li>
+        <li>소프트웨어 내 <b>IT 인프라·사이버보안</b>이 최강 수익률, 설계·엔지니어링 소프트웨어 그 다음, <b>엔터프라이즈 관리 소프트웨어</b>는 전고점 하회.</li>
+        <li><b>"Consumer Inertia"</b>(전환비용 높은 소비자 대상 사업)가 새로운 디스럽션 후보로 부상 — Muse 등 소비자용 에이전트 확산이 일부 소비자 기업 사업모델 위협. 바스켓(보험·통신·여행·구독·마켓플레이스·핀테크 — 제품 차별화보다 '전환 귀찮음'에 의존)은 9월 중순 이후 섹터중립 헤지 대비 <b>-5pp</b> 언더퍼폼.</li>
+        <li><b>기업 AI 도입</b>은 초기 단계나 지출 가속 중: Census Bureau 서베이 기준 미국 대기업 <b>40%</b>가 생산에 AI 활용, 2Q 실적 코멘트 분석 기준 S&P 500 기업 <b>~50%</b>가 생산성 맥락에서 AI 언급 — 단, 생산성 향상을 정량화한 기업은 극소수.</li>
+        <li>모델 제공사 매출 Run-rate 및 기업 AI 지출 대체 지표는 <b>에이전틱 하네스</b> 사용 증가와 함께 최근 수개월 가속 → AI의 기업 이익 기여가 향후 분기에 점차 가시화될 전망.</li>
+        <li>과거 과열기와 달리 시장은 <b>광범위한 생산성 이득을 가격에 반영하지 않음</b>. AI 생산성 수혜 바스켓은 YTD 상대수익률 보합 — 단기 Fwd EPS 추정 궤적과 일치.</li>
+        <li>시장 내재 S&P 500 장기 성장 기대치 <b>12%</b> — 역사 평균 9%(내재·실현 EPS 성장 평균) 대비 소폭 상회. 비교: 2021년 13%, TCJA 11%, 닷컴 버블 <b>16%</b>, 2026년 6월 12%.</li>
+      </ul>
+
+      <div class="chart-card">
+        <div class="ct">소프트웨어 Median 종목 ARR YoY 성장률 (%)</div>
+        <svg viewBox="0 0 880 320" width="100%">
+          <line x1="70" y1="280" x2="850" y2="280" stroke="#cfd6e0"/>
+          <line x1="70" y1="200" x2="850" y2="200" stroke="#eef1f5"/>
+          <line x1="70" y1="120" x2="850" y2="120" stroke="#eef1f5"/>
+          <line x1="70" y1="40" x2="850" y2="40" stroke="#eef1f5"/>
+          <text x="60" y="284" font-size="11" fill="#9aa3b2" text-anchor="end">0%</text>
+          <text x="60" y="204" font-size="11" fill="#9aa3b2" text-anchor="end">10%</text>
+          <text x="60" y="124" font-size="11" fill="#9aa3b2" text-anchor="end">20%</text>
+          <text x="60" y="44" font-size="11" fill="#9aa3b2" text-anchor="end">30%</text>
+          <rect x="92" y="96" width="44" height="184" fill="#6b8cae"/>
+          <rect x="168" y="120" width="44" height="160" fill="#6b8cae"/>
+          <rect x="244" y="120" width="44" height="160" fill="#6b8cae"/>
+          <rect x="320" y="120" width="44" height="160" fill="#6b8cae"/>
+          <rect x="396" y="128" width="44" height="152" fill="#6b8cae"/>
+          <rect x="472" y="120" width="44" height="160" fill="#6b8cae"/>
+          <rect x="548" y="136" width="44" height="144" fill="#6b8cae"/>
+          <rect x="624" y="120" width="44" height="160" fill="#6b8cae"/>
+          <rect x="700" y="104" width="44" height="176" fill="#1a2b4a"/>
+          <rect x="776" y="96" width="44" height="184" fill="#1a2b4a"/>
+          <text x="114" y="88" font-size="11.5" font-weight="700" fill="#1a2b4a" text-anchor="middle">23%</text>
+          <text x="190" y="112" font-size="11.5" font-weight="700" fill="#1a2b4a" text-anchor="middle">20%</text>
+          <text x="266" y="112" font-size="11.5" font-weight="700" fill="#1a2b4a" text-anchor="middle">20%</text>
+          <text x="342" y="112" font-size="11.5" font-weight="700" fill="#1a2b4a" text-anchor="middle">20%</text>
+          <text x="418" y="120" font-size="11.5" font-weight="700" fill="#1a2b4a" text-anchor="middle">19%</text>
+          <text x="494" y="112" font-size="11.5" font-weight="700" fill="#1a2b4a" text-anchor="middle">20%</text>
+          <text x="570" y="128" font-size="11.5" font-weight="700" fill="#1a2b4a" text-anchor="middle">18%</text>
+          <text x="646" y="112" font-size="11.5" font-weight="700" fill="#1a2b4a" text-anchor="middle">20%</text>
+          <text x="722" y="96" font-size="11.5" font-weight="700" fill="#1a2b4a" text-anchor="middle">22%</text>
+          <text x="798" y="88" font-size="11.5" font-weight="700" fill="#1a2b4a" text-anchor="middle">23%</text>
+          <text x="114" y="300" font-size="11" fill="#525866" text-anchor="middle">1Q24</text>
+          <text x="190" y="300" font-size="11" fill="#525866" text-anchor="middle">2Q24</text>
+          <text x="266" y="300" font-size="11" fill="#525866" text-anchor="middle">3Q24</text>
+          <text x="342" y="300" font-size="11" fill="#525866" text-anchor="middle">4Q24</text>
+          <text x="418" y="300" font-size="11" fill="#525866" text-anchor="middle">1Q25</text>
+          <text x="494" y="300" font-size="11" fill="#525866" text-anchor="middle">2Q25</text>
+          <text x="570" y="300" font-size="11" fill="#525866" text-anchor="middle">3Q25</text>
+          <text x="646" y="300" font-size="11" fill="#525866" text-anchor="middle">4Q25</text>
+          <text x="722" y="300" font-size="11" fill="#525866" text-anchor="middle">1Q26</text>
+          <text x="798" y="300" font-size="11" fill="#525866" text-anchor="middle">2Q26</text>
+        </svg>
+      </div>
+
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>시장 내재 S&P 500 장기 EPS 성장 기대치</th><th>수준</th></tr></thead>
+        <tbody>
+          <tr><td><b>현재 (2026.9월)</b></td><td class="num">12%</td></tr>
+          <tr><td>2026년 6월</td><td class="num">12%</td></tr>
+          <tr><td>2021년</td><td class="num">13%</td></tr>
+          <tr><td>TCJA (2017~18년)</td><td class="num">11%</td></tr>
+          <tr><td>닷컴 버블</td><td class="num">16%</td></tr>
+          <tr><td><b>역사 평균 (내재·실현 EPS 성장)</b></td><td class="num">9%</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <!-- ================= 리스크 ================= -->
+      <h3 class="sec"><span class="n">!</span>리스크 & 모니터링 포인트</h3>
+      <div class="risk-box">
+        <h4>Key Risks</h4>
+        <ul>
+          <li><b>Capex 제약 리스크:</b> Capex/CFO 100% 초과 → IG 시장 집중도 병목, 사모 크레딧·주식 발행 의존 확대. 데이터센터 규제, 프론티어 모델 롤아웃 지연, 노동·전력·메모리 부족 시 AI 인프라 수혜주 단기 이익 하방.</li>
+          <li><b>토큰 경제학:</b> 오픈소스 경쟁으로 평균 토큰 가격 하락 지속. 토큰 수요 증가율이 가격 하락을 상회하지 못하면 투자 확대 정당화 곤란 (7월 프론티어 수요 둔화 = 인프라주 급락 동반).</li>
+          <li><b>ROI 허들 상승:</b> 2028년 Capex 고성장 지속 시 필요 매출 기준 추가 상승. 누적 Capex 기준 필요 매출은 $3,000억보다 큼. 생산성 이득 $1.8조가 전부 인프라·App Layer에 귀속되지 않을 가능성.</li>
+          <li><b>메모리 시클리컬 리스크:</b> GM 80%는 역사 평균 2배 이상 — 정상화 시 EPS -50% 이상 감소 가능. 과거 사이클 적자 전환 사례 존재. 고beta 영역 재진입에 대한 투자자 회의론.</li>
+          <li><b>인프라 EPS 감속:</b> Capex 증가율 ~100% → 54% → 12%로 둔화 시 반도체 중심 인프라 기업 EPS 성장 감속·컨센서스 상향 폭 축소.</li>
+          <li><b>App Layer 디스럽션 분산:</b> 엔터프라이즈 관리 소프트웨어 전고점 하회 지속. 소비자용 에이전트(Muse 등) 확산 시 Consumer Inertia 기업(보험·통신·여행·구독·핀테크) 사업모델 훼손.</li>
+        </ul>
+        <h4 style="margin-top:14px;">모니터링 포인트</h4>
+        <ul>
+          <li>2027년 Capex 컨센서스 추가 상향 여부 및 상향 폭 (애널리스트 추정 $1.2조 대비 갭 $1,300억)</li>
+          <li>하이퍼스케일러 클라우드 매출 성장률(2Q26 48%) 및 pre-AI 트렌드 초과분($670억) 배증 추세 지속 여부</li>
+          <li>AMZN·GOOGL·MSFT 합산 Backlog $1.7조의 매출 전환 속도</li>
+          <li>토큰 수요 지표(Total vs Frontier) 및 평균 토큰 가격 추이</li>
+          <li>하이퍼스케일러 FCF 전환 시점 — 매출 가속 + Capex 감속 교차 여부</li>
+          <li>메모리 GM 80%의 지속성, Fabless 마진 방향</li>
+          <li>S&P 500 기업 AI 생산성 정량화 사례 증가 여부 및 시장 내재 장기 성장 기대치(12%) 변화</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div>본 문서는 투자 권유를 목적으로 하지 않습니다.</div>
+  </footer>
+
+</div>
+</body>
+</html>
