@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>S&amp;P 500 Q3 2026 실적 프리뷰</title>
+<style>
+  :root{
+    --brand:#002d72;
+    --brand-deep:#001a45;
+    --accent:#4ba3dc;
+    --accent2:#1e6fb0;
+    --paper:#f4f6f9;
+    --card:#ffffff;
+    --ink:#1b1e24;
+    --ink-soft:#525866;
+    --line:#dde3ec;
+    --buy:#1f7a4d;
+    --bear:#c0392b;
+    --bull:#1f6fb2;
+    --warn:#8a4b15;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);font-family:'Helvetica Neue','Pretendard','Noto Sans KR',Arial,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:960px;margin:0 auto;padding:40px 6vw 90px;}
+  .intro{border-left:4px solid var(--accent);padding:8px 0 8px 20px;margin-bottom:48px;}
+  .intro .eyebrow{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent2);font-weight:700;}
+  .intro h1{font-size:26px;margin:8px 0 6px;color:var(--brand);}
+  .report{margin-bottom:64px;scroll-margin-top:70px;}
+  .report-head{background:linear-gradient(135deg,var(--brand) 0%, var(--brand-deep) 100%);color:#fff;border-radius:10px 10px 0 0;padding:28px 30px;}
+  .report-head .tag{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#9fc4e6;font-weight:700;}
+  .report-head h2{margin:8px 0 14px;font-size:23px;line-height:1.35;}
+  .report-head .lede{font-family:'Georgia',serif;font-size:15.5px;color:#e3ebf6;border-top:1px solid rgba(255,255,255,0.16);padding-top:14px;margin:0;}
+  .report-body{background:var(--card);border:1px solid var(--line);border-top:none;border-radius:0 0 10px 10px;padding:30px;}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px;}
+  .chip{border:1px solid var(--line);border-radius:8px;padding:10px 16px;background:#fafbfd;flex:1;min-width:130px;}
+  .chip .k{font-size:10.5px;letter-spacing:0.5px;text-transform:uppercase;color:var(--ink-soft);}
+  .chip .v{font-size:19px;font-weight:700;color:var(--brand);margin-top:2px;}
+  .chip .v.buy{color:var(--buy);}
+  .chip .s{font-size:11px;color:var(--ink-soft);}
+  h3.sec{font-size:17px;color:var(--brand);margin:30px 0 12px;padding-bottom:8px;border-bottom:1.5px solid var(--line);display:flex;align-items:center;gap:10px;}
+  h3.sec .n{background:var(--brand);color:#fff;font-size:12px;font-weight:700;width:24px;height:24px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}
+  ul.pts{margin:0;padding:0;list-style:none;}
+  ul.pts li{position:relative;padding:7px 0 7px 20px;font-size:14.5px;border-bottom:1px dashed var(--line);}
+  ul.pts li:last-child{border-bottom:none;}
+  ul.pts li::before{content:"—";position:absolute;left:0;color:var(--accent2);font-weight:700;}
+  ul.pts b{color:var(--brand);}
+  table.tbl{width:100%;border-collapse:collapse;font-size:13px;margin:6px 0 4px;}
+  table.tbl th{background:var(--brand);color:#fff;text-align:left;padding:8px 10px;font-weight:600;}
+  table.tbl td{padding:7px 10px;border-bottom:1px solid var(--line);}
+  table.tbl tr:nth-child(even) td{background:#f7f9fc;}
+  table.tbl td.num{text-align:right;font-variant-numeric:tabular-nums;}
+  table.tbl td.buy{color:var(--buy);font-weight:700;}
+  table.tbl td.neg{color:var(--bear);font-weight:700;}
+  table.tbl tr.hl td{background:#e8f2fb;font-weight:700;}
+  .tbl-wrap{overflow-x:auto;}
+  .chart-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:22px 22px 14px;margin:14px 0;}
+  .chart-card .ct{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:12px;}
+  .chart-src{font-size:10.5px;color:#9aa3b2;margin-top:8px;}
+  .legend{display:flex;gap:18px;flex-wrap:wrap;font-size:11.5px;color:var(--ink-soft);margin-bottom:4px;}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .legend i{width:11px;height:11px;border-radius:2px;display:inline-block;}
+  .callout{background:#fbf6ec;border:1px solid #e8dcc3;border-radius:8px;padding:14px 18px;font-size:13px;color:var(--ink-soft);margin-top:14px;}
+  .callout .t{font-size:10.5px;font-weight:700;letter-spacing:0.6px;color:var(--warn);text-transform:uppercase;display:block;margin-bottom:5px;}
+  .risk-box{background:var(--brand);color:#dde6f3;border-radius:8px;padding:22px 24px;margin-top:14px;}
+  .risk-box h4{margin:0 0 10px;color:#fff;font-size:14.5px;}
+  .risk-box ul{margin:0;padding-left:18px;}
+  .risk-box li{margin-bottom:8px;font-size:13px;}
+  .risk-box li b{color:#fff;}
+  svg text{font-family:'Helvetica Neue','Pretendard','Noto Sans KR',Arial,sans-serif;}
+  footer{border-top:1px solid var(--line);margin-top:50px;padding-top:20px;font-size:11px;color:#9aa3b2;line-height:1.6;}
+  @media(max-width:560px){
+    .intro h1{font-size:21px;}
+    .report-head h2{font-size:19px;}
+    .report-body{padding:20px 16px;}
+    .chart-card{padding:16px 12px 10px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="intro">
+    <div class="eyebrow">7 October 2026</div>
+    <h1>S&amp;P 500 Q3 2026 실적 프리뷰: 성장 둔화는 없다</h1>
+  </div>
+
+  <section class="report" id="rpt1">
+
+    <div class="report-head">
+      <div class="tag">US Equity Strategy · Earnings Preview</div>
+      <h2>Q3 2026 실적 프리뷰: 감속은 없다 — EPS 성장률 34% 기록적 수준 유지 전망</h2>
+      <p class="lede">AI 수요·경기순환 회복·높은 유가라는 3대 tailwind가 Q3에도 그대로 유지되며 EPS 성장률은 34%로 Q2 수준을 이어갈 전망. 반면 컨센서스(26.7%)는 광범위한 둔화를 가정하고 있어, 또 한 번의 평균 이상 beat 시즌이 예상된다.</p>
+    </div>
+
+    <div class="report-body">
+
+      <div class="chips">
+        <div class="chip"><div class="k">Q3 EPS 성장 추정</div><div class="v buy">+34%</div><div class="s">yoy · Q2와 동일 수준</div></div>
+        <div class="chip"><div class="k">Q3 컨센서스</div><div class="v">+26.7%</div><div class="s">Q2 대비 -7.5pp 둔화 가정</div></div>
+        <div class="chip"><div class="k">추정치 vs 컨센서스</div><div class="v buy">+6.0%</div><div class="s">역사적 평균 beat 3.3%</div></div>
+        <div class="chip"><div class="k">Q2 2026 실적</div><div class="v">+34.2%</div><div class="s">조정 기준 · 미조정 53%</div></div>
+        <div class="chip"><div class="k">관세 환급 기여</div><div class="v">+2pp</div><div class="s">Q2에 이어 Q3도 유사</div></div>
+      </div>
+
+      <h3 class="sec"><span class="n">1</span>Q2 실적 리뷰: 경기침체 회복기를 제외하면 전례 없는 성장</h3>
+      <ul class="pts">
+        <li>S&amp;P 500 EPS 성장률은 Q1 <b>25%</b> yoy에서 Q2 <b>34%</b>로 급가속 — 경기침체 반등기를 제외하면 전례 없는 수준 (1935~2023년 ex-recession median 11%)</li>
+        <li>3대 tailwind의 동시 작용: <b>AI 수요</b> 성장 54% yoy(헤드라인 기여 20pp), <b>경기순환 회복</b> 14%(Tech·Energy &amp; Materials 제외 그룹 8pp 기여), <b>유가·원자재 가격 상승</b> 108%(Energy &amp; Materials 7pp 기여)</li>
+        <li>Q2 수치는 일회성 항목 조정 기준: Alphabet 자산 매각 이익($77.1bn)·Amazon 투자 평가이익($42.2bn) 차감, Gilead 인수 IP R&amp;D 비용($11.2bn) 가산 — <b>미조정 시 Q2 성장률은 53%</b></li>
+        <li>핵심 질문: 이 tailwind들이 Q3에도 동일한 강도로 이어질지, 아니면 성장 둔화가 시작될지</li>
+      </ul>
+
+      <div class="chart-card">
+        <div class="ct">S&amp;P 500 분기 EPS 성장률 (% yoy)</div>
+        <svg viewBox="0 0 880 300" width="100%" role="img" aria-label="S&amp;P 500 분기 EPS 성장률">
+          <g stroke="#e6eaf0" stroke-width="1">
+            <line x1="70" y1="40" x2="850" y2="40"/>
+            <line x1="70" y1="95" x2="850" y2="95"/>
+            <line x1="70" y1="150" x2="850" y2="150"/>
+            <line x1="70" y1="205" x2="850" y2="205"/>
+          </g>
+          <line x1="70" y1="260" x2="850" y2="260" stroke="#9aa3b2"/>
+          <g font-size="11" fill="#7a8394" text-anchor="end">
+            <text x="60" y="44">40</text><text x="60" y="99">30</text><text x="60" y="154">20</text><text x="60" y="209">10</text><text x="60" y="264">0</text>
+          </g>
+          <rect x="135" y="122.5" width="110" height="137.5" fill="#9fb8d6"/>
+          <rect x="315" y="71.9" width="110" height="188.1" fill="#002d72"/>
+          <rect x="495" y="73" width="110" height="187" fill="#4ba3dc"/>
+          <rect x="675" y="113.15" width="110" height="146.85" fill="#c9ced8"/>
+          <g font-size="13" font-weight="700" fill="#1b1e24" text-anchor="middle">
+            <text x="190" y="115">25.0%</text>
+            <text x="370" y="64">34.2%</text>
+            <text x="550" y="65">34%</text>
+            <text x="730" y="106">26.7%</text>
+          </g>
+          <line x1="70" y1="199.5" x2="850" y2="199.5" stroke="#1f7a4d" stroke-width="2" stroke-dasharray="6 4"/>
+          <text x="846" y="193" font-size="11" fill="#1f7a4d" text-anchor="end">Ex-recession median (1935–2023): 11%</text>
+          <g font-size="12" fill="#525866" text-anchor="middle">
+            <text x="190" y="282">Q1 2026 실적</text>
+            <text x="370" y="282">Q2 2026 실적</text>
+            <text x="550" y="282">Q3 2026 추정</text>
+            <text x="730" y="282">Q3 2026 컨센서스</text>
+          </g>
+        </svg>
+        <div class="chart-src">Source: Bloomberg Finance LP</div>
+      </div>
+
+      <h3 class="sec"><span class="n">2</span>Q3에도 고성장 동력은 그대로 유지</h3>
+      <ul class="pts">
+        <li><b>AI 수요 둔화 신호 없음:</b> 한국·대만의 반도체 생산 및 수출 증가율이 Q2 대비 Q3에 오히려 확대, GPU 렌탈 가격 상승으로 수급 타이트 지속 확인 (한국 반도체 PPI와 S&amp;P 500 반도체 EPS 성장률의 상관계수 73%)</li>
+        <li><b>경기순환 성장 추가 개선:</b> S&amp;P 500 EPS의 최적 선행지표인 ISM 제조업지수가 Q3 급등해 <b>4.5년래 최고치</b>, S&amp;P 500 매출 가중 글로벌 제조업 PMI도 약 4년래 최고 수준에서 유지</li>
+        <li>매크로 컨센서스는 미국 GDP 성장률이 Q2 2.2%에서 Q3 <b>2.8%</b>(qoq saar)로 개선될 것으로 보며, Atlanta Fed 추정치는 <b>3.7%</b>로 더 높음 — 소매판매·산업생산·자본재 출하 모두 견조</li>
+        <li>2년간 감소했던 고용의 경기순환 부문은 2월 바닥 이후 반등 흐름 지속</li>
+        <li><b>유가·원자재:</b> 에너지 가격은 매우 높은 수준을 유지했으나 Q2→Q3 상승률은 소폭 둔화 — Energy &amp; Materials 실적을 계속 견인 (유가 = WTI·Brent를 S&amp;P 500 매출 비중에 맞춰 70:30 가중)</li>
+        <li><b>유가 상승의 시차 부정효과는 제한적·국지적:</b> 역사적으로 유가 충격은 2~3분기 시차를 두고 S&amp;P 500의 나머지 업종 실적을 훼손하지만, 가격 인상·생산성 개선 등 대응으로 영향은 소수 업종에 집중</li>
+        <li>항공·자동차·일부 소비 업종은 타격이 빠르고 큼 — 이란 전쟁 이후 이미 추정치 대폭 하향: <b>항공 -17%, 자동차 -9%, 포장 -9%, 항공 제외 여행 -6%</b></li>
+        <li><b>관세 환급 효과 지속:</b> 대법원의 IEEPA 관세 위헌 판결 이후 Q2에 다수 기업이 관세 환급 수혜 → S&amp;P 500 성장률에 <b>+2pp</b> 기여. 미 재무부가 Q3에도 Q2와 비슷한 규모의 환급을 보고($74bn in Q2 → $69bn in Q3), Q3에도 +2pp 기대</li>
+      </ul>
+
+      <div class="chart-card">
+        <div class="ct">Silicon Data H100 GPU Rental Index</div>
+        <svg viewBox="0 0 880 300" width="100%" role="img" aria-label="H100 GPU 렌탈 지수">
+          <g stroke="#e6eaf0" stroke-width="1">
+            <line x1="70" y1="60" x2="850" y2="60"/>
+            <line x1="70" y1="100" x2="850" y2="100"/>
+            <line x1="70" y1="140" x2="850" y2="140"/>
+            <line x1="70" y1="180" x2="850" y2="180"/>
+            <line x1="70" y1="220" x2="850" y2="220"/>
+          </g>
+          <line x1="70" y1="260" x2="850" y2="260" stroke="#9aa3b2"/>
+          <g font-size="11" fill="#7a8394" text-anchor="end">
+            <text x="60" y="64">2.9</text><text x="60" y="104">2.7</text><text x="60" y="144">2.5</text><text x="60" y="184">2.3</text><text x="60" y="224">2.1</text><text x="60" y="264">1.9</text>
+          </g>
+          <polyline fill="none" stroke="#4ba3dc" stroke-width="3" points="90,54 182.5,136 275,218 367.5,178 460,224 552.5,232 645,166 737.5,112 830,102"/>
+          <g fill="#002d72">
+            <circle cx="90" cy="54" r="4"/><circle cx="182.5" cy="136" r="4"/><circle cx="275" cy="218" r="4"/><circle cx="367.5" cy="178" r="4"/><circle cx="460" cy="224" r="4"/><circle cx="552.5" cy="232" r="4"/><circle cx="645" cy="166" r="4"/><circle cx="737.5" cy="112" r="4"/><circle cx="830" cy="102" r="4"/>
+          </g>
+          <g font-size="11" fill="#525866" text-anchor="middle">
+            <text x="90" y="282">Sep-24</text><text x="182.5" y="282">Dec-24</text><text x="275" y="282">Mar-25</text><text x="367.5" y="282">Jun-25</text><text x="460" y="282">Sep-25</text><text x="552.5" y="282">Dec-25</text><text x="645" y="282">Mar-26</text><text x="737.5" y="282">Jun-26</text><text x="830" y="282">Sep-26</text>
+          </g>
+        </svg>
+        <div class="chart-src">Source: Silicon Data, Bloomberg Finance LP</div>
+      </div>
+
+      <h3 class="sec"><span class="n">3</span>이란 전쟁 이후 업종별 Q3 추정치 변화</h3>
+      <ul class="pts">
+        <li>높은 에너지 비용이 전체 성장률에 미치는 영향은 기업들의 대응으로 제한적 — 부정적 영향은 특정 업종에 집중되며, 해당 업종 추정치는 이미 크게 하향</li>
+        <li>S&amp;P 500 전체 Q3 추정치는 2월 27일 이후 오히려 <b>+10%</b> 상향 — Energy(+122%), Semis &amp; Equip(+42%), Tech Hardware(+22%)가 견인</li>
+        <li>하향 폭이 큰 업종: 내구소비재·의류(-14%), 자동차·부품(-10%), 제약·바이오(-8%), 가정·개인용품(-8%)</li>
+      </ul>
+
+      <div class="chart-card">
+        <div class="ct">S&amp;P 500 Q3 2026 추정치 변화 — 이란 전쟁 발발(2/27) 이후 (%)</div>
+        <svg viewBox="0 0 880 580" width="100%" role="img" aria-label="업종별 추정치 변화">
+          <g stroke="#e6eaf0" stroke-width="1">
+            <line x1="263.33" y1="28" x2="263.33" y2="550"/>
+            <line x1="476.67" y1="28" x2="476.67" y2="550"/>
+            <line x1="583.33" y1="28" x2="583.33" y2="550"/>
+            <line x1="690" y1="28" x2="690" y2="550"/>
+            <line x1="796.67" y1="28" x2="796.67" y2="550"/>
+          </g>
+          <line x1="370" y1="28" x2="370" y2="550" stroke="#9aa3b2"/>
+          <g font-size="11" fill="#7a8394" text-anchor="middle">
+            <text x="263.33" y="568">-10</text><text x="370" y="568">0</text><text x="476.67" y="568">10</text><text x="583.33" y="568">20</text><text x="690" y="568">30</text><text x="796.67" y="568">40</text>
+          </g>
+          <g font-size="11.5" fill="#1b1e24" text-anchor="end">
+            <text x="200" y="44">Energy</text>
+            <text x="200" y="64">Semis &amp; Equip</text>
+            <text x="200" y="84">Tech Hardware &amp; Equip</text>
+            <text x="200" y="104" font-weight="700">S&amp;P 500</text>
+            <text x="200" y="124">Materials</text>
+            <text x="200" y="144">Insurance</text>
+            <text x="200" y="164">Software &amp; Services</text>
+            <text x="200" y="184">Equity REITs</text>
+            <text x="200" y="204">Banks</text>
+            <text x="200" y="224">Capital Goods</text>
+            <text x="200" y="244">Cons Disc Retail</text>
+            <text x="200" y="264">Real Est Mgmt &amp; Dvp</text>
+            <text x="200" y="284">Financial Services</text>
+            <text x="200" y="304">Telecom</text>
+            <text x="200" y="324">Utilities</text>
+            <text x="200" y="344">Comm &amp; Prof Serv</text>
+            <text x="200" y="364">Cons Staples Retail</text>
+            <text x="200" y="384">Food, Bev &amp; Tobacco</text>
+            <text x="200" y="404">Media &amp; Entertainment</text>
+            <text x="200" y="424">HC Equip &amp; Serv</text>
+            <text x="200" y="444">Cons Services</text>
+            <text x="200" y="464">Transportation</text>
+            <text x="200" y="484">HH &amp; Pers Products</text>
+            <text x="200" y="504">Pharma &amp; Biotech</text>
+            <text x="200" y="524">Auto &amp; Components</text>
+            <text x="200" y="544">Cons Dur &amp; Apparel</text>
+          </g>
+          <g fill="#002d72">
+            <rect x="370" y="33" width="480" height="13"/>
+            <rect x="370" y="53" width="448" height="13"/>
+            <rect x="370" y="73" width="234.67" height="13"/>
+            <rect x="370" y="93" width="106.67" height="13" fill="#4ba3dc"/>
+            <rect x="370" y="113" width="42.67" height="13"/>
+            <rect x="370" y="133" width="32" height="13"/>
+            <rect x="370" y="153" width="21.33" height="13"/>
+            <rect x="370" y="173" width="21.33" height="13"/>
+            <rect x="370" y="193" width="21.33" height="13"/>
+            <rect x="370" y="213" width="10.67" height="13"/>
+            <rect x="370" y="233" width="10.67" height="13"/>
+            <rect x="370" y="253" width="10.67" height="13"/>
+          </g>
+          <g fill="#c0392b">
+            <rect x="359.33" y="273" width="10.67" height="13"/>
+            <rect x="359.33" y="293" width="10.67" height="13"/>
+            <rect x="359.33" y="313" width="10.67" height="13"/>
+            <rect x="348.67" y="333" width="21.33" height="13"/>
+            <rect x="338" y="353" width="32" height="13"/>
+            <rect x="338" y="373" width="32" height="13"/>
+            <rect x="316.67" y="393" width="53.33" height="13"/>
+            <rect x="316.67" y="413" width="53.33" height="13"/>
+            <rect x="306" y="433" width="64" height="13"/>
+            <rect x="306" y="453" width="64" height="13"/>
+            <rect x="284.67" y="473" width="85.33" height="13"/>
+            <rect x="284.67" y="493" width="85.33" height="13"/>
+            <rect x="263.33" y="513" width="106.67" height="13"/>
+            <rect x="220.67" y="533" width="149.33" height="13"/>
+          </g>
+          <text x="844" y="44" font-size="11" font-weight="700" fill="#fff" text-anchor="end">122 ▸</text>
+          <g font-size="11" fill="#1b1e24">
+            <text x="822" y="64">42</text>
+            <text x="608.67" y="84">22</text>
+            <text x="480.67" y="104" font-weight="700">10</text>
+            <text x="416.67" y="124">4</text>
+            <text x="406" y="144">3</text>
+            <text x="395.33" y="164">2</text>
+            <text x="395.33" y="184">2</text>
+            <text x="395.33" y="204">2</text>
+            <text x="384.67" y="224">1</text>
+            <text x="384.67" y="244">1</text>
+            <text x="384.67" y="264">1</text>
+          </g>
+          <g font-size="11" fill="#c0392b" text-anchor="end">
+            <text x="355.33" y="284">-1</text>
+            <text x="355.33" y="304">-1</text>
+            <text x="355.33" y="324">-1</text>
+            <text x="344.67" y="344">-2</text>
+            <text x="334" y="364">-3</text>
+            <text x="334" y="384">-3</text>
+            <text x="312.67" y="404">-5</text>
+            <text x="312.67" y="424">-5</text>
+            <text x="302" y="444">-6</text>
+            <text x="302" y="464">-6</text>
+            <text x="280.67" y="484">-8</text>
+            <text x="280.67" y="504">-8</text>
+            <text x="259.33" y="524">-10</text>
+            <text x="216.67" y="544">-14</text>
+          </g>
+        </svg>
+        <div class="chart-src">Source: Bloomberg Finance LP</div>
+      </div>
+
+      <h3 class="sec"><span class="n">4</span>업종 그룹별 Q3 성장률: 추정치 vs 컨센서스</h3>
+      <ul class="pts">
+        <li><b>MCG &amp; Tech:</b> AI 수요로 Q2·Q3 모두 54%대 고성장 유지, S&amp;P 500 EPS 내 비중 확대로 전체 성장률 기여도는 <b>19.5pp → 21pp</b>로 상승 (컨센서스는 45.9%로 뚜렷한 둔화 가정)</li>
+        <li><b>Energy &amp; Materials:</b> Energy 138% → 129%, Materials 50% → 38%로 Q2보다는 낮지만 여전히 매우 강한 성장, 기여도는 6.8pp → 5.6pp로 소폭 축소 — 합산 성장률은 세 자릿수 유지</li>
+        <li><b>Consumer Cyclicals</b> 8% → 10%, <b>Industrial Cyclicals</b> 13% → 15%(Boeing 기저효과 제외)로 완만한 가속</li>
+        <li><b>Financials</b>는 23% → 10%로 둔화하나 여전히 두 자릿수, <b>Defensives</b>는 9% → 10%로 소폭 개선</li>
+        <li>컨센서스는 Industrial Cyclicals를 제외한 <b>전 업종 성장률 하락</b>을 가정 — Industrial Cyclicals는 지수 구성종목 변경 및 전년 동기 Boeing 대규모 손실에 따른 기저효과 수혜</li>
+        <li>MCG &amp; Tech·Energy &amp; Materials 제외 S&amp;P 500의 경우 컨센서스는 급격한 둔화(약 6%)를, 추정치는 그보다 완만한 둔화(약 11%)를 제시</li>
+      </ul>
+
+      <div class="chart-card">
+        <div class="ct">업종 그룹별 EPS 성장률 (% yoy, Energy 제외)</div>
+        <div class="legend">
+          <span><i style="background:#9fb8d6"></i>Q2 2026 실적</span>
+          <span><i style="background:#002d72"></i>Q3 2026 추정</span>
+          <span><i style="background:#f0a04b"></i>Q3 2026 컨센서스</span>
+        </div>
+        <svg viewBox="0 0 880 300" width="100%" role="img" aria-label="업종 그룹별 EPS 성장률">
+          <g stroke="#e6eaf0" stroke-width="1">
+            <line x1="70" y1="40" x2="850" y2="40"/>
+            <line x1="70" y1="113.33" x2="850" y2="113.33"/>
+            <line x1="70" y1="186.67" x2="850" y2="186.67"/>
+          </g>
+          <line x1="70" y1="260" x2="850" y2="260" stroke="#9aa3b2"/>
+          <g font-size="11" fill="#7a8394" text-anchor="end">
+            <text x="60" y="44">60</text><text x="60" y="117">40</text><text x="60" y="191">20</text><text x="60" y="264">0</text>
+          </g>
+          <!-- Financials -->
+          <rect x="90" y="175.67" width="30" height="84.33" fill="#9fb8d6"/>
+          <rect x="122" y="221.87" width="30" height="38.13" fill="#002d72"/>
+          <rect x="154" y="255.23" width="30" height="4.77" fill="#f0a04b"/>
+          <!-- Consumer Cyclicals -->
+          <rect x="220" y="229.2" width="30" height="30.8" fill="#9fb8d6"/>
+          <rect x="252" y="222.97" width="30" height="37.03" fill="#002d72"/>
+          <rect x="284" y="246.07" width="30" height="13.93" fill="#f0a04b"/>
+          <!-- Industrial Cyclicals -->
+          <rect x="350" y="211.97" width="30" height="48.03" fill="#9fb8d6"/>
+          <rect x="382" y="131.67" width="30" height="128.33" fill="#002d72"/>
+          <rect x="414" y="140.1" width="30" height="119.9" fill="#f0a04b"/>
+          <!-- Materials -->
+          <rect x="480" y="76.3" width="30" height="183.7" fill="#9fb8d6"/>
+          <rect x="512" y="120.3" width="30" height="139.7" fill="#002d72"/>
+          <rect x="544" y="133.5" width="30" height="126.5" fill="#f0a04b"/>
+          <!-- MCG & Tech -->
+          <rect x="610" y="61.63" width="30" height="198.37" fill="#9fb8d6"/>
+          <rect x="642" y="57.6" width="30" height="202.4" fill="#002d72"/>
+          <rect x="674" y="91.7" width="30" height="168.3" fill="#f0a04b"/>
+          <!-- S&P 500 -->
+          <rect x="740" y="134.6" width="30" height="125.4" fill="#9fb8d6"/>
+          <rect x="772" y="134.97" width="30" height="125.03" fill="#002d72"/>
+          <rect x="804" y="162.1" width="30" height="97.9" fill="#f0a04b"/>
+          <g font-size="10" fill="#1b1e24" text-anchor="middle">
+            <text x="105" y="170">23.0</text><text x="137" y="216">10.4</text><text x="169" y="250">1.3</text>
+            <text x="235" y="223">8.4</text><text x="267" y="217">10.1</text><text x="299" y="240">3.8</text>
+            <text x="365" y="206">13.1</text><text x="397" y="126">35.0</text><text x="429" y="134">32.7</text>
+            <text x="495" y="71">50.1</text><text x="527" y="115">38.1</text><text x="559" y="128">34.5</text>
+            <text x="625" y="56">54.1</text><text x="657" y="52">55.2</text><text x="689" y="86">45.9</text>
+            <text x="755" y="129">34.2</text><text x="787" y="129">34.1</text><text x="819" y="156">26.7</text>
+          </g>
+          <g font-size="11.5" fill="#525866" text-anchor="middle">
+            <text x="137" y="280">Financials</text>
+            <text x="267" y="280">Cons. Cyclicals</text>
+            <text x="397" y="280">Ind. Cyclicals</text>
+            <text x="527" y="280">Materials</text>
+            <text x="657" y="280">MCG &amp; Tech</text>
+            <text x="787" y="280" font-weight="700">S&amp;P 500</text>
+          </g>
+        </svg>
+        <div class="chart-src">Source: Bloomberg Finance LP</div>
+      </div>
+
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>업종 그룹</th><th>Q2 2026 실적</th><th>Q3 2026 추정</th><th>Q3 2026 컨센서스</th></tr></thead>
+        <tbody>
+          <tr><td><b>Energy</b></td><td class="num">138.3%</td><td class="num">128.5%</td><td class="num">122.8%</td></tr>
+          <tr><td><b>MCG &amp; Tech</b></td><td class="num">54.1%</td><td class="num">55.2%</td><td class="num">45.9%</td></tr>
+          <tr><td><b>Materials</b></td><td class="num">50.1%</td><td class="num">38.1%</td><td class="num">34.5%</td></tr>
+          <tr><td><b>Industrial Cyclicals</b></td><td class="num">13.1%</td><td class="num">35.0%</td><td class="num">32.7%</td></tr>
+          <tr><td><b>Financials</b></td><td class="num">23.0%</td><td class="num">10.4%</td><td class="num">1.3%</td></tr>
+          <tr><td><b>Consumer Cyclicals</b></td><td class="num">8.4%</td><td class="num">10.1%</td><td class="num">3.8%</td></tr>
+          <tr><td><b>Defensives</b></td><td class="num">9.0%</td><td class="num">10.0%</td><td class="num">—</td></tr>
+          <tr class="hl"><td>S&amp;P 500</td><td class="num">34.2%</td><td class="num">34.1%</td><td class="num">26.7%</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="callout"><span class="t">Defensives 컨센서스 세부</span>Health Care 7.9% → 3.6%, Consumer Defensives 9.6% → 3.8%, Utilities 12.7% → 6.3%, Real Estate 9.0% → 6.4%, Telecom 8.9% → 7.5% (Q2 실적 → Q3 컨센서스). MCG = MSFT, AAPL, AMZN, GOOGL, GOOG, META, V, MA, NVDA, NFLX, ADBE, TSLA. Industrial Cyclicals 추정치의 경우 Boeing 기저효과 제외 시 13% → 15%.</div>
+
+      <h3 class="sec"><span class="n">5</span>컨센서스는 사상 최고 기대치에도 둔화 가정 → 평균 이상 beat 예상</h3>
+      <ul class="pts">
+        <li>매우 긍정적인 기업 가이던스를 반영해 Q3 bottom-up 컨센서스는 지난 1년간 꾸준히 상향 — 현재 <b>26.7%</b>로, 경기침체 회복기를 제외하면 실적 시즌 진입 시점 기준 <b>역대 최고 컨센서스</b> (net guidance와 컨센서스의 상관계수: 2010년 이후 38%, 2020년 제외 시 74%)</li>
+        <li>다만 컨센서스는 34.2% → 26.7%로 <b>-7.5pp 감속</b>을 내포 — qoq 기준 계절조정 성장률 <b>0.9%</b>(연율 4% 미만)로의 급락을 가정</li>
+        <li>추정치는 컨센서스 대비 <b>6.0% 높음</b> — 실적 시즌의 같은 시점 기준 역사적 평균 beat 3.3%를 크게 상회</li>
+        <li>실적 시즌 중 추정치가 통상 하향 조정되는 점을 감안하면, 발표 당일 기준 beat 폭은 이보다 더 클 가능성</li>
+        <li>업종별: <b>Financials</b> 평균 이상 beat / MCG &amp; Tech·Consumer Cyclicals·Defensives 평균 수준 / Industrial Cyclicals·Energy·Materials 평균 이하 beat</li>
+      </ul>
+
+      <div class="chart-card">
+        <div class="ct">S&amp;P 500 Q3 예상 Earnings Beat (%)</div>
+        <svg viewBox="0 0 880 300" width="100%" role="img" aria-label="업종별 예상 earnings beat">
+          <g stroke="#e6eaf0" stroke-width="1">
+            <line x1="70" y1="40" x2="850" y2="40"/>
+            <line x1="70" y1="84" x2="850" y2="84"/>
+            <line x1="70" y1="128" x2="850" y2="128"/>
+            <line x1="70" y1="172" x2="850" y2="172"/>
+            <line x1="70" y1="216" x2="850" y2="216"/>
+          </g>
+          <line x1="70" y1="260" x2="850" y2="260" stroke="#9aa3b2"/>
+          <g font-size="11" fill="#7a8394" text-anchor="end">
+            <text x="60" y="44">10</text><text x="60" y="88">8</text><text x="60" y="132">6</text><text x="60" y="176">4</text><text x="60" y="220">2</text><text x="60" y="264">0</text>
+          </g>
+          <g fill="#002d72">
+            <rect x="93.75" y="220.4" width="50" height="39.6"/>
+            <rect x="191.25" y="200.6" width="50" height="59.4"/>
+            <rect x="288.75" y="200.6" width="50" height="59.4"/>
+            <rect x="386.25" y="145.6" width="50" height="114.4"/>
+            <rect x="483.75" y="128" width="50" height="132" fill="#4ba3dc"/>
+            <rect x="581.25" y="125.8" width="50" height="134.2"/>
+            <rect x="678.75" y="121.4" width="50" height="138.6"/>
+            <rect x="776.25" y="62" width="50" height="198"/>
+          </g>
+          <line x1="70" y1="187.4" x2="850" y2="187.4" stroke="#f0a04b" stroke-width="2" stroke-dasharray="6 4"/>
+          <text x="74" y="181" font-size="10.5" fill="#b8711f">S&amp;P 500 역사적 평균 beat 3.3%</text>
+          <g font-size="12" font-weight="700" fill="#1b1e24" text-anchor="middle">
+            <text x="118.75" y="214">1.8</text><text x="216.25" y="194">2.7</text><text x="313.75" y="194">2.7</text><text x="411.25" y="139">5.2</text><text x="508.75" y="121">6.0</text><text x="606.25" y="119">6.1</text><text x="703.75" y="115">6.3</text><text x="801.25" y="56">9.0</text>
+          </g>
+          <g font-size="11" fill="#525866" text-anchor="middle">
+            <text x="118.75" y="280">Ind. Cyclicals</text><text x="216.25" y="280">Energy</text><text x="313.75" y="280">Materials</text><text x="411.25" y="280">Defensives</text><text x="508.75" y="280" font-weight="700">S&amp;P 500</text><text x="606.25" y="280">Cons. Cyclicals</text><text x="703.75" y="280">MCG &amp; Tech</text><text x="801.25" y="280">Financials</text>
+          </g>
+        </svg>
+        <div class="chart-src">Source: Bloomberg Finance LP</div>
+      </div>
+
+      <h3 class="sec"><span class="n">6</span>실적 시즌과 주가: 이번에도 step-up 가능할까</h3>
+      <ul class="pts">
+        <li>GFC 이후 S&amp;P 500은 실적 시즌 4번 중 3번 상승(positive 75%), 평균 <b>+2%</b> 랠리</li>
+        <li>최근 1년간 이 패턴이 더 뚜렷 — 실적 시즌에는 지수가 의미 있게 레벨업하고, 시즌 사이에는 좁은 박스권(range width 2.8% / 3.1% / 1.6%)에서 횡보</li>
+        <li>최근 실적 시즌은 <b>랠리 → 소강 → 랠리</b> 패턴: 시즌 첫 4주 상승, 다음 4주 정체·소폭 하락, 남은 기간 재상승 (Q2 2026 시즌은 현재 마지막 구간 진행 중)</li>
+      </ul>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>실적 시즌</th><th>첫 4주</th><th>다음 4주</th><th>남은 기간</th></tr></thead>
+        <tbody>
+          <tr><td><b>Q2 2025</b></td><td class="num buy">+2.8%</td><td class="num buy">+1.0%</td><td class="num buy">+2.2%</td></tr>
+          <tr><td><b>Q3 2025</b></td><td class="num buy">+2.9%</td><td class="num neg">-0.1%</td><td class="num buy">+2.0%</td></tr>
+          <tr><td><b>Q4 2025</b></td><td class="num neg">-0.5%</td><td class="num neg">-2.3%</td><td class="num buy">+1.5%</td></tr>
+          <tr><td><b>Q1 2026</b></td><td class="num buy">+7.5%</td><td class="num neg">-0.2%</td><td class="num buy">+1.7%</td></tr>
+          <tr><td><b>Q2 2026</b></td><td class="num buy">+2.8%</td><td class="num neg">-0.7%</td><td class="num buy">+1.9% (진행 중)</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="callout"><span class="t">기준</span>실적 시즌 시작은 대형 은행들의 실적 발표 시점 기준.</div>
+
+      <h3 class="sec"><span class="n">7</span>동시 이벤트: FOMC와 중간선거</h3>
+      <ul class="pts">
+        <li>이번 시즌은 <b>10월 말 FOMC</b>와 <b>11월 첫째 주 미국 중간선거</b>라는 주요 캘린더 리스크 이벤트와 겹침</li>
+        <li>주요 이벤트 직전에는 변동성 대비 protection·헤지 수요가 쌓이며 시장이 횡보~하락하다가, 이벤트 해소 후 랠리하는 패턴이 반복</li>
+        <li>선거 여론조사와 예측시장 확률이 한쪽으로 치우친 상태가 이어지면, 시장이 선거를 불확실성 이벤트로 받아들이지 않을 가능성</li>
+        <li>중간선거는 역사적으로 집권 행정부에 대한 견제 장치로 작용 — 최근 23번의 선거 연도 중 <b>21번</b> 4분기에 S&amp;P 500 상승, 평균 <b>+7%</b> (선거 -1개월~+2개월 수익률 median 7.0%)</li>
+        <li>종합하면 FOMC·선거로 변동성이 확대될 수 있으나, 실적 시즌 risk-reward는 여전히 우호적</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">!</span>리스크 &amp; 모니터링 포인트</h3>
+      <div class="risk-box">
+        <h4>Key Risks</h4>
+        <ul>
+          <li><b>캘린더 이벤트 변동성:</b> 10월 말 FOMC·11월 초 중간선거 전후 protection 수요 확대로 시즌 중 횡보·조정 가능성</li>
+          <li><b>유가 충격의 시차 효과:</b> 비용 영향은 통상 2~3분기 시차 — 항공·자동차·소비 업종 중심으로 추가 하향 리스크</li>
+          <li><b>에너지 가격 모멘텀 둔화:</b> Q3 유가는 Q2 대비 소폭 하락, Energy·Materials 성장률은 Q2보다 낮아지는 구간이며 beat 폭도 평균 이하 예상</li>
+          <li><b>일회성 요인 의존:</b> Q2 성장률은 대규모 일회성 손익 조정 기준(미조정 53%), 관세 환급 +2pp 효과는 환급 종료 시 소멸</li>
+          <li><b>Industrial Cyclicals 착시:</b> 높은 성장률은 지수 구성종목 변경·Boeing 기저효과 영향이 커 beat 여지는 가장 작음(1.8%)</li>
+        </ul>
+        <h4 style="margin-top:14px;">모니터링 포인트</h4>
+        <ul>
+          <li>GPU 렌탈 가격(H100 지수) 및 한국·대만 반도체 생산·수출 증가율 — AI 수요 지속 여부</li>
+          <li>ISM 제조업지수·글로벌 PMI, GDP nowcast(Atlanta Fed 3.7%) — 경기순환 회복 지속성</li>
+          <li>미 재무부 관세 환급 규모 추이 (Q2 $74bn → Q3 $69bn)</li>
+          <li>실적 시즌 중 Financials beat 폭(9.0% 예상)과 MCG &amp; Tech 성장률의 컨센서스(45.9%) 상회 여부</li>
+          <li>선거 여론조사·예측시장 확률 쏠림 정도</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div>본 문서는 투자 권유를 목적으로 하지 않습니다.</div>
+  </footer>
+
+</div>
+</body>
+</html>
