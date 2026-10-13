@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>U.S. Asset Managers — 9월 자금흐름</title>
+<style>
+  :root{
+    --brand:#0a2240; --brand-deep:#06182e; --accent:#5c1a26; --accent2:#8a3a48;
+    --paper:#f4f6f9; --card:#ffffff; --ink:#1b1e24; --ink-soft:#525866; --line:#dde3ec;
+    --buy:#1f7a4d; --bear:#c0392b; --bull:#1f6fb2; --warn:#8a4b15;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--paper);color:var(--ink);font-family:'Helvetica Neue','Pretendard','Noto Sans KR',Arial,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+  .topbar{background:var(--brand-deep);color:#fff;padding:12px 6vw;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-bottom:3px solid var(--accent);position:sticky;top:0;z-index:50;}
+  .topbar .logo{font-weight:700;font-size:17px;letter-spacing:0.5px;}
+  .topbar .logo span{color:#c98a95;}
+  .topbar nav{display:flex;gap:6px;flex-wrap:wrap;}
+  .topbar nav a{color:#cfd8e6;text-decoration:none;font-size:12px;padding:5px 11px;border:1px solid rgba(255,255,255,0.2);border-radius:20px;transition:all .15s;}
+  .topbar nav a:hover{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .wrap{max-width:960px;margin:0 auto;padding:40px 6vw 90px;}
+  .intro{border-left:4px solid var(--accent);padding:8px 0 8px 20px;margin-bottom:40px;}
+  .intro .eyebrow{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent2);font-weight:700;}
+  .intro h1{font-size:26px;margin:8px 0 6px;color:var(--brand);}
+  .report{margin-bottom:64px;}
+  .report-head{background:linear-gradient(135deg,var(--brand) 0%,var(--brand-deep) 100%);color:#fff;border-radius:10px 10px 0 0;padding:28px 30px;}
+  .report-head .tag{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#9fb4d4;font-weight:700;}
+  .report-head h2{margin:8px 0 14px;font-size:23px;line-height:1.35;}
+  .report-head .lede{font-family:'Georgia',serif;font-size:15.5px;color:#e3ebf6;border-top:1px solid rgba(255,255,255,0.16);padding-top:14px;margin:0;}
+  .report-body{background:var(--card);border:1px solid var(--line);border-top:none;border-radius:0 0 10px 10px;padding:30px;}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px;}
+  .chip{border:1px solid var(--line);border-radius:8px;padding:10px 16px;background:#fafbfd;flex:1;min-width:130px;}
+  .chip .k{font-size:10.5px;letter-spacing:0.5px;text-transform:uppercase;color:var(--ink-soft);}
+  .chip .v{font-size:19px;font-weight:700;color:var(--brand);margin-top:2px;}
+  .chip .v.buy{color:var(--bull);} .chip .v.sell{color:var(--bear);}
+  .chip .s{font-size:11px;color:var(--ink-soft);}
+  h3.sec{font-size:17px;color:var(--brand);margin:34px 0 12px;padding-bottom:8px;border-bottom:1.5px solid var(--line);display:flex;align-items:center;gap:10px;scroll-margin-top:80px;}
+  h3.sec .n{background:var(--brand);color:#fff;font-size:12px;font-weight:700;width:24px;height:24px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}
+  ul.pts{margin:0;padding:0;list-style:none;}
+  ul.pts li{position:relative;padding:7px 0 7px 20px;font-size:14.5px;border-bottom:1px dashed var(--line);}
+  ul.pts li:last-child{border-bottom:none;}
+  ul.pts li::before{content:"—";position:absolute;left:0;color:var(--accent2);font-weight:700;}
+  ul.pts b{color:var(--brand);}
+  table.tbl{width:100%;border-collapse:collapse;font-size:12.5px;margin:6px 0 4px;}
+  table.tbl th{background:var(--brand);color:#fff;text-align:left;padding:8px 10px;font-weight:600;white-space:nowrap;}
+  table.tbl td{padding:6px 10px;border-bottom:1px solid var(--line);white-space:nowrap;}
+  table.tbl tr:nth-child(even) td{background:#f7f9fc;}
+  table.tbl td.num{text-align:right;font-variant-numeric:tabular-nums;}
+  table.tbl td.pos{color:var(--bull);} table.tbl td.neg{color:var(--bear);}
+  table.tbl tr.grp td{background:#efe6e8 !important;color:var(--accent);font-weight:700;font-size:11.5px;letter-spacing:0.4px;}
+  .tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  .chart-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:20px 20px 12px;margin:14px 0;}
+  .chart-card .ct,.ct{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:10px;}
+  .chart-src{font-size:10.5px;color:#9aa3b2;margin-top:8px;}
+  .legend{display:flex;flex-wrap:wrap;gap:16px;font-size:11.5px;color:var(--ink-soft);margin-bottom:4px;}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .legend i{width:11px;height:11px;border-radius:2px;display:inline-block;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0;}
+  @media(max-width:680px){.grid2{grid-template-columns:1fr;}}
+  .mgr{border:1px solid var(--line);border-radius:8px;padding:14px 16px;background:#fafbfd;border-top:3px solid var(--brand);}
+  .mgr.neg{border-top-color:var(--bear);}
+  .mgr .nm{font-weight:700;color:var(--brand);font-size:14px;}
+  .mgr .fl{font-size:20px;font-weight:700;margin:2px 0 6px;}
+  .mgr .fl.p{color:var(--bull);} .mgr .fl.m{color:var(--bear);}
+  .mgr ul{margin:0;padding-left:16px;font-size:12.5px;color:var(--ink-soft);}
+  .mgr li{margin-bottom:3px;}
+  .callout{background:#fbf6ec;border:1px solid #e8dcc3;border-radius:8px;padding:14px 18px;font-size:13px;color:var(--ink-soft);margin-top:14px;}
+  .callout .t{font-size:10.5px;font-weight:700;letter-spacing:0.6px;color:var(--warn);text-transform:uppercase;display:block;margin-bottom:5px;}
+  .risk-box{background:var(--brand);color:#dde6f3;border-radius:8px;padding:22px 24px;margin-top:14px;}
+  .risk-box h4{margin:0 0 10px;color:#fff;font-size:14.5px;}
+  .risk-box ul{margin:0;padding-left:18px;}
+  .risk-box li{margin-bottom:8px;font-size:13px;}
+  .risk-box li b{color:#fff;}
+  footer{border-top:1px solid var(--line);margin-top:50px;padding-top:20px;font-size:11px;color:#9aa3b2;}
+  @media(max-width:560px){.intro h1{font-size:21px;}.report-head h2{font-size:19px;}.report-body{padding:20px 16px;}.report-head{padding:22px 18px;}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">Research<span>·</span>Digest</div>
+  <nav>
+    <a href="#s1">산업 흐름</a>
+    <a href="#s2">주식형</a>
+    <a href="#s3">채권·MMF</a>
+    <a href="#s4">운용사 랭킹</a>
+    <a href="#s5">운용사 코멘트</a>
+    <a href="#s6">자산군 분해</a>
+    <a href="#s7">펀드 성과</a>
+    <a href="#s8">리스크</a>
+  </nav>
+</div>
+
+<div class="wrap">
+
+  <div class="intro">
+    <div class="eyebrow">12 October 2026</div>
+    <h1>미국 자산운용사 9월 월간 성과·자금흐름</h1>
+  </div>
+
+  <section class="report" id="rpt1">
+    <div class="report-head">
+      <div class="tag">Brokers, Asset Managers &amp; Exchanges · North America</div>
+      <h2>9월 뮤추얼펀드 산업, MMF·주식형 주도로 순유출 전환 — Passive 주식 유입 급감, BlackRock 독주</h2>
+      <p class="lede">9월 산업 전체 순유출 $44bn(8월 +$129bn, 7월 +$49bn). MMF -$58bn, 주식형 -$24bn이 악화를 주도했고, 채권형은 +$38bn으로 플러스를 유지했으나 8월(+$85bn) 대비 둔화. BlackRock이 +$42bn으로 업계 1위, Vanguard·T. Rowe·MFS·Capital Group은 하위권.</p>
+    </div>
+
+    <div class="report-body">
+
+      <div class="chips">
+        <div class="chip"><div class="k">산업 순유출입 (Sep)</div><div class="v sell">-$44bn</div><div class="s">Aug +$129bn · Jul +$49bn</div></div>
+        <div class="chip"><div class="k">Money Market</div><div class="v sell">-$58bn</div><div class="s">Aug +$39bn · Jul -$60bn</div></div>
+        <div class="chip"><div class="k">Equity</div><div class="v sell">-$24bn</div><div class="s">Aug +$5bn · Jul +$41bn</div></div>
+        <div class="chip"><div class="k">Fixed Income</div><div class="v buy">+$38bn</div><div class="s">Aug +$85bn · Jul +$67bn</div></div>
+        <div class="chip"><div class="k">BlackRock (LT)</div><div class="v buy">+$41.8bn</div><div class="s">업계 1위 · AUM 대비 0.9%</div></div>
+      </div>
+
+      <!-- 1 -->
+      <h3 class="sec" id="s1"><span class="n">1</span>산업 자금흐름 개관 — 3개 자산군 중 2개 순유출</h3>
+      <ul class="pts">
+        <li>9월 뮤추얼펀드 산업 전체 <b>순유출 $44bn</b> — 8월 순유입 $129bn, 7월 $49bn에서 반전</li>
+        <li>m/m 악화의 주된 요인은 <b>MMF</b>: 8월 +$39bn → 9월 <b>-$58bn</b></li>
+        <li>주식형 9월 <b>-$24bn</b>(8월 +$5bn, 7월 +$41bn), 채권형 <b>+$38bn</b>(8월 +$85bn, 7월 +$67bn)으로 유일하게 플러스 유지</li>
+        <li>운용사별로는 <b>BlackRock</b>이 순유입 1위, State Street·Fidelity가 뒤를 이음. Vanguard는 주식 사업에서 대규모 유출로 peer 최하위, T. Rowe는 또 한 달 큰 폭의 long-term 유출</li>
+        <li>MMF는 높은 금리 전망 하에서 순판매 backdrop이 계속 choppy할 것으로 판단</li>
+      </ul>
+      <div class="chart-card">
+        <div class="ct">미국 뮤추얼펀드 자산군별 월간 순유출입 ($bn)</div>
+        <div class="legend">
+          <span><i style="background:#0a2240"></i>Equity</span>
+          <span><i style="background:#8a96a8"></i>Fixed Income</span>
+          <span><i style="background:#5c1a26"></i>Money Market</span>
+        </div>
+        <svg viewBox="0 0 880 330" width="100%" role="img">
+<line x1="70" y1="280.0" x2="850" y2="280.0" stroke="#e6eaf0" stroke-width="1"/>
+<text x="62" y="284.0" font-size="11" text-anchor="end" fill="#6b7383">-80</text>
+<line x1="70" y1="252.2" x2="850" y2="252.2" stroke="#e6eaf0" stroke-width="1"/>
+<text x="62" y="256.2" font-size="11" text-anchor="end" fill="#6b7383">-60</text>
+<line x1="70" y1="224.4" x2="850" y2="224.4" stroke="#e6eaf0" stroke-width="1"/>
+<text x="62" y="228.4" font-size="11" text-anchor="end" fill="#6b7383">-40</text>
+<line x1="70" y1="196.7" x2="850" y2="196.7" stroke="#e6eaf0" stroke-width="1"/>
+<text x="62" y="200.7" font-size="11" text-anchor="end" fill="#6b7383">-20</text>
+<line x1="70" y1="168.9" x2="850" y2="168.9" stroke="#7d8796" stroke-width="1.4"/>
+<text x="62" y="172.9" font-size="11" text-anchor="end" fill="#6b7383">0</text>
+<line x1="70" y1="141.1" x2="850" y2="141.1" stroke="#e6eaf0" stroke-width="1"/>
+<text x="62" y="145.1" font-size="11" text-anchor="end" fill="#6b7383">20</text>
+<line x1="70" y1="113.3" x2="850" y2="113.3" stroke="#e6eaf0" stroke-width="1"/>
+<text x="62" y="117.3" font-size="11" text-anchor="end" fill="#6b7383">40</text>
+<line x1="70" y1="85.6" x2="850" y2="85.6" stroke="#e6eaf0" stroke-width="1"/>
+<text x="62" y="89.6" font-size="11" text-anchor="end" fill="#6b7383">60</text>
+<line x1="70" y1="57.8" x2="850" y2="57.8" stroke="#e6eaf0" stroke-width="1"/>
+<text x="62" y="61.8" font-size="11" text-anchor="end" fill="#6b7383">80</text>
+<line x1="70" y1="30.0" x2="850" y2="30.0" stroke="#e6eaf0" stroke-width="1"/>
+<text x="62" y="34.0" font-size="11" text-anchor="end" fill="#6b7383">100</text>
+<rect x="123.0" y="111.9" width="46" height="56.9" fill="#0a2240" rx="2"/>
+<text x="146.0" y="105.9" font-size="11.5" font-weight="700" text-anchor="middle" fill="#0a2240">+41</text>
+<rect x="177.0" y="75.8" width="46" height="93.1" fill="#8a96a8" rx="2"/>
+<text x="200.0" y="69.8" font-size="11.5" font-weight="700" text-anchor="middle" fill="#8a96a8">+67</text>
+<rect x="231.0" y="168.9" width="46" height="83.3" fill="#5c1a26" rx="2"/>
+<text x="254.0" y="267.2" font-size="11.5" font-weight="700" text-anchor="middle" fill="#5c1a26">-60</text>
+<text x="200.0" y="310" font-size="12.5" text-anchor="middle" fill="#1b1e24" font-weight="600">Jul'26</text>
+<rect x="383.0" y="161.9" width="46" height="6.9" fill="#0a2240" rx="2"/>
+<text x="406.0" y="155.9" font-size="11.5" font-weight="700" text-anchor="middle" fill="#0a2240">+5</text>
+<rect x="437.0" y="50.8" width="46" height="118.1" fill="#8a96a8" rx="2"/>
+<text x="460.0" y="44.8" font-size="11.5" font-weight="700" text-anchor="middle" fill="#8a96a8">+85</text>
+<rect x="491.0" y="114.7" width="46" height="54.2" fill="#5c1a26" rx="2"/>
+<text x="514.0" y="108.7" font-size="11.5" font-weight="700" text-anchor="middle" fill="#5c1a26">+39</text>
+<text x="460.0" y="310" font-size="12.5" text-anchor="middle" fill="#1b1e24" font-weight="600">Aug'26</text>
+<rect x="643.0" y="168.9" width="46" height="33.3" fill="#0a2240" rx="2"/>
+<text x="666.0" y="217.2" font-size="11.5" font-weight="700" text-anchor="middle" fill="#0a2240">-24</text>
+<rect x="697.0" y="116.1" width="46" height="52.8" fill="#8a96a8" rx="2"/>
+<text x="720.0" y="110.1" font-size="11.5" font-weight="700" text-anchor="middle" fill="#8a96a8">+38</text>
+<rect x="751.0" y="168.9" width="46" height="80.6" fill="#5c1a26" rx="2"/>
+<text x="774.0" y="264.4" font-size="11.5" font-weight="700" text-anchor="middle" fill="#5c1a26">-58</text>
+<text x="720.0" y="310" font-size="12.5" text-anchor="middle" fill="#1b1e24" font-weight="600">Sep'26</text>
+<text x="62" y="18" font-size="10.5" text-anchor="end" fill="#6b7383">$bn</text>
+</svg>
+        <div class="chart-src">Source: Strategic Insight</div>
+      </div>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>구분 ($bn)</th><th>Jul'26</th><th>Aug'26</th><th>Sep'26</th></tr></thead>
+        <tbody>
+          <tr><td><b>Active Equity</b></td><td class="num neg">(55)</td><td class="num neg">(45)</td><td class="num neg">(41)</td></tr>
+          <tr><td><b>Passive Equity</b></td><td class="num pos">96</td><td class="num pos">50</td><td class="num pos">17</td></tr>
+          <tr><td><b>Equity 합계</b></td><td class="num pos">41</td><td class="num pos">5</td><td class="num neg">(24)</td></tr>
+          <tr><td><b>Active Fixed Income</b></td><td class="num pos">38</td><td class="num pos">38</td><td class="num neg">(4)</td></tr>
+          <tr><td><b>Passive Fixed Income</b></td><td class="num pos">29</td><td class="num pos">47</td><td class="num pos">42</td></tr>
+          <tr><td><b>Fixed Income 합계</b></td><td class="num pos">67</td><td class="num pos">85</td><td class="num pos">38</td></tr>
+          <tr><td><b>Gov't MMF</b></td><td class="num">—</td><td class="num pos">36</td><td class="num neg">(63)</td></tr>
+          <tr><td><b>Prime MMF</b></td><td class="num">—</td><td class="num pos">4</td><td class="num neg">(1)</td></tr>
+          <tr><td><b>Money Market 합계</b></td><td class="num neg">(60)</td><td class="num pos">39</td><td class="num neg">(58)</td></tr>
+          <tr><td><b>산업 합계</b></td><td class="num pos">49</td><td class="num pos">129</td><td class="num neg">(44)</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <!-- 2 -->
+      <h3 class="sec" id="s2"><span class="n">2</span>주식형 — Passive 유입 급감, Active 유출 지속</h3>
+      <ul class="pts">
+        <li>주식형 9월 <b>순유출 $24bn</b>, 8월 소폭 순유입 $5bn에서 반전</li>
+        <li><b>Active 주식</b>: 9월 -$41bn (8월 -$45bn, 7월 -$55bn) — 유출 폭은 3개월째 축소</li>
+        <li><b>Passive 주식</b>: 9월 +$17bn (8월 +$50bn, 7월 +$96bn) — 2026 YTD 월평균 <b>+$67bn</b> 대비 뚜렷한 m/m 둔화</li>
+        <li>9월 Passive 유입은 <b>2024년 4월 이후 두 번째로 낮은 수준</b> — 장기적인 active vs. passive 구도는 유지되고 있으나 단기 모멘텀은 크게 꺾임</li>
+        <li>스타일별: <b>Growth -$23bn</b>, <b>Value -$6bn</b> 동반 유출</li>
+        <li>지역별: <b>Global/International +$6bn</b>(8월 +$9bn), <b>Domestic(US Equity) -$31bn</b>(8월 -$22bn)으로 유출 확대</li>
+      </ul>
+      <div class="chart-card">
+        <div class="ct">Active vs. Passive 주식형 월간 순유출입 ($bn)</div>
+        <div class="legend">
+          <span><i style="background:#5c1a26"></i>Active Equity</span>
+          <span><i style="background:#0a2240"></i>Passive Equity</span>
+        </div>
+        <svg viewBox="0 0 880 300" width="100%" role="img">
+<line x1="70" y1="250.0" x2="850" y2="250.0" stroke="#e6eaf0" stroke-width="1"/>
+<text x="62" y="254.0" font-size="11" text-anchor="end" fill="#6b7383">-60</text>
+<line x1="70" y1="221.9" x2="850" y2="221.9" stroke="#e6eaf0" stroke-width="1"/>
+<text x="62" y="225.9" font-size="11" text-anchor="end" fill="#6b7383">-40</text>
+<line x1="70" y1="193.8" x2="850" y2="193.8" stroke="#e6eaf0" stroke-width="1"/>
+<text x="62" y="197.8" font-size="11" text-anchor="end" fill="#6b7383">-20</text>
+<line x1="70" y1="165.6" x2="850" y2="165.6" stroke="#7d8796" stroke-width="1.4"/>
+<text x="62" y="169.6" font-size="11" text-anchor="end" fill="#6b7383">0</text>
+<line x1="70" y1="137.5" x2="850" y2="137.5" stroke="#e6eaf0" stroke-width="1"/>
+<text x="62" y="141.5" font-size="11" text-anchor="end" fill="#6b7383">20</text>
+<line x1="70" y1="109.4" x2="850" y2="109.4" stroke="#e6eaf0" stroke-width="1"/>
+<text x="62" y="113.4" font-size="11" text-anchor="end" fill="#6b7383">40</text>
+<line x1="70" y1="81.2" x2="850" y2="81.2" stroke="#e6eaf0" stroke-width="1"/>
+<text x="62" y="85.2" font-size="11" text-anchor="end" fill="#6b7383">60</text>
+<line x1="70" y1="53.1" x2="850" y2="53.1" stroke="#e6eaf0" stroke-width="1"/>
+<text x="62" y="57.1" font-size="11" text-anchor="end" fill="#6b7383">80</text>
+<line x1="70" y1="25.0" x2="850" y2="25.0" stroke="#e6eaf0" stroke-width="1"/>
+<text x="62" y="29.0" font-size="11" text-anchor="end" fill="#6b7383">100</text>
+<line x1="70" y1="71.4" x2="850" y2="71.4" stroke="#1f6fb2" stroke-dasharray="6 4" stroke-width="1.5"/>
+<text x="850" y="65.4" font-size="11" text-anchor="end" fill="#1f6fb2" font-weight="700">2026 YTD Passive 월평균 +67</text>
+<rect x="135.0" y="165.6" width="60" height="77.3" fill="#5c1a26" rx="2"/>
+<text x="165.0" y="258.0" font-size="11.5" font-weight="700" text-anchor="middle" fill="#5c1a26">-55</text>
+<rect x="205.0" y="30.6" width="60" height="135.0" fill="#0a2240" rx="2"/>
+<text x="235.0" y="24.6" font-size="11.5" font-weight="700" text-anchor="middle" fill="#0a2240">+96</text>
+<text x="200.0" y="280" font-size="12.5" text-anchor="middle" font-weight="600" fill="#1b1e24">Jul'26</text>
+<rect x="395.0" y="165.6" width="60" height="63.3" fill="#5c1a26" rx="2"/>
+<text x="425.0" y="243.9" font-size="11.5" font-weight="700" text-anchor="middle" fill="#5c1a26">-45</text>
+<rect x="465.0" y="95.3" width="60" height="70.3" fill="#0a2240" rx="2"/>
+<text x="495.0" y="89.3" font-size="11.5" font-weight="700" text-anchor="middle" fill="#0a2240">+50</text>
+<text x="460.0" y="280" font-size="12.5" text-anchor="middle" font-weight="600" fill="#1b1e24">Aug'26</text>
+<rect x="655.0" y="165.6" width="60" height="57.7" fill="#5c1a26" rx="2"/>
+<text x="685.0" y="238.3" font-size="11.5" font-weight="700" text-anchor="middle" fill="#5c1a26">-41</text>
+<rect x="725.0" y="141.7" width="60" height="23.9" fill="#0a2240" rx="2"/>
+<text x="755.0" y="135.7" font-size="11.5" font-weight="700" text-anchor="middle" fill="#0a2240">+17</text>
+<text x="720.0" y="280" font-size="12.5" text-anchor="middle" font-weight="600" fill="#1b1e24">Sep'26</text>
+<text x="62" y="14" font-size="10.5" text-anchor="end" fill="#6b7383">$bn</text>
+</svg>
+      </div>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>지역별 ($mn)</th><th>Total Assets 9/26</th><th>Sep'26</th><th>% of Assets</th><th>Aug'26</th><th>Jul'26</th><th>Jun'26</th></tr></thead>
+        <tbody>
+          <tr><td><b>International Equity</b></td><td class="num">6,958,274</td><td class="num pos">5,765</td><td class="num">0.1%</td><td class="num pos">9,510</td><td class="num pos">9,342</td><td class="num pos">10,143</td></tr>
+          <tr><td><b>US Equity</b></td><td class="num">22,504,372</td><td class="num neg">(31,042)</td><td class="num">(0.1%)</td><td class="num neg">(21,822)</td><td class="num pos">24,255</td><td class="num pos">45,483</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-src">Source: Strategic Insight</div>
+
+      <!-- 3 -->
+      <h3 class="sec" id="s3"><span class="n">3</span>채권형 &amp; MMF — 채권 순판매 둔화, 기관 Gov't MMF 대규모 유출</h3>
+      <ul class="pts">
+        <li>채권형 9월 <b>+$38bn</b>, 8월 +$85bn·7월 +$67bn 대비 둔화</li>
+        <li><b>Active 채권</b>: 7·8월 각 +$38bn에서 9월 <b>-$4bn</b>으로 순유출 전환</li>
+        <li><b>Passive 채권</b>: 9월 +$42bn (8월 +$47bn, 7월 +$29bn)으로 견조</li>
+        <li>Income·Treasuries가 이전 몇 달과 마찬가지로 채권형 순판매를 주도</li>
+        <li>MMF 9월 <b>-$58bn</b> (8월 +$39bn, 7월 -$60bn) — 하락 inflection은 <b>Gov't MMF(주로 기관)</b> -$63bn(8월 +$36bn)이 주도</li>
+        <li>Prime MMF는 -$1bn으로 사실상 보합(8월 +$4bn)</li>
+        <li>고금리 환경이 기관 고객의 MMF → <b>direct market</b> 이동을 지지할 것으로 판단, 단기적으로 MMF 순판매의 지속적 개선 가능성은 낮다는 시각</li>
+        <li><b>Federated</b>는 9월(및 3Q26)에도 MMF 시장점유율을 계속 상실</li>
+      </ul>
+
+      <!-- 4 -->
+      <h3 class="sec" id="s4"><span class="n">4</span>운용사별 Long-Term 자금흐름 랭킹 (MMF 제외)</h3>
+      <ul class="pts">
+        <li><b>BlackRock</b> +$41.8bn(AUM 대비 0.9%)으로 압도적 1위 — 8월 +$13.0bn 대비 크게 확대</li>
+        <li>State Street IM +$11.2bn, Fidelity +$4.2bn, Charles Schwab +$3.1bn, PGIM +$2.3bn 순</li>
+        <li>하위권: <b>Vanguard -$15.9bn</b>(8월 +$28.7bn에서 반전, 주식 사업 유출 확대), CapGrp/American Funds -$9.2bn, MFS -$5.7bn, T. Rowe Price -$4.8bn</li>
+        <li>AUM 대비 유출률은 Principal(-1.6%), MFS(-1.5%)가 가장 높음</li>
+      </ul>
+      <div class="chart-card">
+        <div class="ct">9월 Long-Term 순유출입 — 운용사별 ($bn)</div>
+        <svg viewBox="0 0 880 585" width="100%" role="img">
+<line x1="200.0" y1="14" x2="200.0" y2="545" stroke="#eef1f5" stroke-width="1"/>
+<text x="200.0" y="561" font-size="10.5" text-anchor="middle" fill="#6b7383">-20</text>
+<line x1="300.0" y1="14" x2="300.0" y2="545" stroke="#eef1f5" stroke-width="1"/>
+<text x="300.0" y="561" font-size="10.5" text-anchor="middle" fill="#6b7383">-10</text>
+<line x1="400.0" y1="14" x2="400.0" y2="545" stroke="#7d8796" stroke-width="1.4"/>
+<text x="400.0" y="561" font-size="10.5" text-anchor="middle" fill="#6b7383">0</text>
+<line x1="500.0" y1="14" x2="500.0" y2="545" stroke="#eef1f5" stroke-width="1"/>
+<text x="500.0" y="561" font-size="10.5" text-anchor="middle" fill="#6b7383">10</text>
+<line x1="600.0" y1="14" x2="600.0" y2="545" stroke="#eef1f5" stroke-width="1"/>
+<text x="600.0" y="561" font-size="10.5" text-anchor="middle" fill="#6b7383">20</text>
+<line x1="700.0" y1="14" x2="700.0" y2="545" stroke="#eef1f5" stroke-width="1"/>
+<text x="700.0" y="561" font-size="10.5" text-anchor="middle" fill="#6b7383">30</text>
+<line x1="800.0" y1="14" x2="800.0" y2="545" stroke="#eef1f5" stroke-width="1"/>
+<text x="800.0" y="561" font-size="10.5" text-anchor="middle" fill="#6b7383">40</text>
+<text x="190" y="34" font-size="11.5" text-anchor="end" fill="#1b1e24">BlackRock</text>
+<rect x="400.0" y="24" width="418.0" height="13" fill="#1f6fb2" rx="2"/>
+<text x="823.0" y="34" font-size="10.5" font-weight="700" text-anchor="start" fill="#1f6fb2">+41.8</text>
+<text x="190" y="55" font-size="11.5" text-anchor="end" fill="#1b1e24">State Street IM</text>
+<rect x="400.0" y="45" width="112.2" height="13" fill="#1f6fb2" rx="2"/>
+<text x="517.2" y="55" font-size="10.5" font-weight="700" text-anchor="start" fill="#1f6fb2">+11.2</text>
+<text x="190" y="76" font-size="11.5" text-anchor="end" fill="#1b1e24">Fidelity</text>
+<rect x="400.0" y="66" width="42.3" height="13" fill="#1f6fb2" rx="2"/>
+<text x="447.3" y="76" font-size="10.5" font-weight="700" text-anchor="start" fill="#1f6fb2">+4.2</text>
+<text x="190" y="97" font-size="11.5" text-anchor="end" fill="#1b1e24">Charles Schwab</text>
+<rect x="400.0" y="87" width="30.9" height="13" fill="#1f6fb2" rx="2"/>
+<text x="435.9" y="97" font-size="10.5" font-weight="700" text-anchor="start" fill="#1f6fb2">+3.1</text>
+<text x="190" y="118" font-size="11.5" text-anchor="end" fill="#1b1e24">PGIM Investments</text>
+<rect x="400.0" y="108" width="23.4" height="13" fill="#1f6fb2" rx="2"/>
+<text x="428.4" y="118" font-size="10.5" font-weight="700" text-anchor="start" fill="#1f6fb2">+2.3</text>
+<text x="190" y="139" font-size="11.5" text-anchor="end" fill="#1b1e24">Morgan Stanley</text>
+<rect x="400.0" y="129" width="13.7" height="13" fill="#1f6fb2" rx="2"/>
+<text x="418.7" y="139" font-size="10.5" font-weight="700" text-anchor="start" fill="#1f6fb2">+1.4</text>
+<text x="190" y="160" font-size="11.5" text-anchor="end" fill="#1b1e24">Eaton Vance</text>
+<rect x="400.0" y="150" width="11.4" height="13" fill="#1f6fb2" rx="2"/>
+<text x="416.4" y="160" font-size="10.5" font-weight="700" text-anchor="start" fill="#1f6fb2">+1.1</text>
+<text x="190" y="181" font-size="11.5" text-anchor="end" fill="#1b1e24">Goldman Sachs</text>
+<rect x="400.0" y="171" width="10.7" height="13" fill="#1f6fb2" rx="2"/>
+<text x="415.7" y="181" font-size="10.5" font-weight="700" text-anchor="start" fill="#1f6fb2">+1.1</text>
+<text x="190" y="202" font-size="11.5" text-anchor="end" fill="#1b1e24">Cohen &amp; Steers</text>
+<rect x="400.0" y="192" width="3.1" height="13" fill="#1f6fb2" rx="2"/>
+<text x="408.1" y="202" font-size="10.5" font-weight="700" text-anchor="start" fill="#1f6fb2">+0.3</text>
+<text x="190" y="223" font-size="11.5" text-anchor="end" fill="#1b1e24">Federated</text>
+<rect x="400.0" y="213" width="1.2" height="13" fill="#1f6fb2" rx="2"/>
+<text x="405.4" y="223" font-size="10.5" font-weight="700" text-anchor="start" fill="#1f6fb2">+0.0</text>
+<text x="190" y="244" font-size="11.5" text-anchor="end" fill="#1b1e24">Nationwide Funds</text>
+<rect x="400.0" y="234" width="1.2" height="13" fill="#1f6fb2" rx="2"/>
+<text x="405.2" y="244" font-size="10.5" font-weight="700" text-anchor="start" fill="#1f6fb2">+0.0</text>
+<text x="190" y="265" font-size="11.5" text-anchor="end" fill="#1b1e24">Invesco</text>
+<rect x="400.0" y="255" width="1.2" height="13" fill="#1f6fb2" rx="2"/>
+<text x="405.0" y="265" font-size="10.5" font-weight="700" text-anchor="start" fill="#1f6fb2">+0.0</text>
+<text x="190" y="286" font-size="11.5" text-anchor="end" fill="#1b1e24">Northern Trust</text>
+<rect x="399.4" y="276" width="1.2" height="13" fill="#c0392b" rx="2"/>
+<text x="394.4" y="286" font-size="10.5" font-weight="700" text-anchor="end" fill="#c0392b">-0.1</text>
+<text x="190" y="307" font-size="11.5" text-anchor="end" fill="#1b1e24">JPMorgan Funds</text>
+<rect x="397.4" y="297" width="2.6" height="13" fill="#c0392b" rx="2"/>
+<text x="392.4" y="307" font-size="10.5" font-weight="700" text-anchor="end" fill="#c0392b">-0.3</text>
+<text x="190" y="328" font-size="11.5" text-anchor="end" fill="#1b1e24">Dimensional Fund Advisors</text>
+<rect x="392.1" y="318" width="7.9" height="13" fill="#c0392b" rx="2"/>
+<text x="387.1" y="328" font-size="10.5" font-weight="700" text-anchor="end" fill="#c0392b">-0.8</text>
+<text x="190" y="349" font-size="11.5" text-anchor="end" fill="#1b1e24">Hartford Funds</text>
+<rect x="391.3" y="339" width="8.7" height="13" fill="#c0392b" rx="2"/>
+<text x="386.3" y="349" font-size="10.5" font-weight="700" text-anchor="end" fill="#c0392b">-0.9</text>
+<text x="190" y="370" font-size="11.5" text-anchor="end" fill="#1b1e24">John Hancock Invst</text>
+<rect x="391.1" y="360" width="8.9" height="13" fill="#c0392b" rx="2"/>
+<text x="386.1" y="370" font-size="10.5" font-weight="700" text-anchor="end" fill="#c0392b">-0.9</text>
+<text x="190" y="391" font-size="11.5" text-anchor="end" fill="#1b1e24">AllianceBernstein</text>
+<rect x="388.3" y="381" width="11.7" height="13" fill="#c0392b" rx="2"/>
+<text x="383.3" y="391" font-size="10.5" font-weight="700" text-anchor="end" fill="#c0392b">-1.2</text>
+<text x="190" y="412" font-size="11.5" text-anchor="end" fill="#1b1e24">Ameriprise Financial</text>
+<rect x="387.9" y="402" width="12.1" height="13" fill="#c0392b" rx="2"/>
+<text x="382.9" y="412" font-size="10.5" font-weight="700" text-anchor="end" fill="#c0392b">-1.2</text>
+<text x="190" y="433" font-size="11.5" text-anchor="end" fill="#1b1e24">Franklin Templeton</text>
+<rect x="386.2" y="423" width="13.8" height="13" fill="#c0392b" rx="2"/>
+<text x="381.2" y="433" font-size="10.5" font-weight="700" text-anchor="end" fill="#c0392b">-1.4</text>
+<text x="190" y="454" font-size="11.5" text-anchor="end" fill="#1b1e24">Principal Financial Group</text>
+<rect x="375.0" y="444" width="25.0" height="13" fill="#c0392b" rx="2"/>
+<text x="370.0" y="454" font-size="10.5" font-weight="700" text-anchor="end" fill="#c0392b">-2.5</text>
+<text x="190" y="475" font-size="11.5" text-anchor="end" fill="#1b1e24">T Rowe Price</text>
+<rect x="352.3" y="465" width="47.7" height="13" fill="#c0392b" rx="2"/>
+<text x="347.3" y="475" font-size="10.5" font-weight="700" text-anchor="end" fill="#c0392b">-4.8</text>
+<text x="190" y="496" font-size="11.5" text-anchor="end" fill="#1b1e24">MFS</text>
+<rect x="343.5" y="486" width="56.5" height="13" fill="#c0392b" rx="2"/>
+<text x="338.5" y="496" font-size="10.5" font-weight="700" text-anchor="end" fill="#c0392b">-5.7</text>
+<text x="190" y="517" font-size="11.5" text-anchor="end" fill="#1b1e24">CapGrp/AmericanFds</text>
+<rect x="307.6" y="507" width="92.4" height="13" fill="#c0392b" rx="2"/>
+<text x="302.6" y="517" font-size="10.5" font-weight="700" text-anchor="end" fill="#c0392b">-9.2</text>
+<text x="190" y="538" font-size="11.5" text-anchor="end" fill="#1b1e24">Vanguard</text>
+<rect x="241.3" y="528" width="158.7" height="13" fill="#c0392b" rx="2"/>
+<text x="236.3" y="538" font-size="10.5" font-weight="700" text-anchor="end" fill="#c0392b">-15.9</text>
+<text x="850" y="581" font-size="10.5" text-anchor="end" fill="#6b7383">$bn</text>
+</svg>
+        <div class="chart-src">Source: Strategic Insight · Long-term flows exclude money market flows</div>
+      </div>
+      <div class="ct" style="margin-top:16px">운용사별 Long-Term 순유출입 상세 ($mn)</div>
+      <div class="tbl-wrap"><table class="tbl"><thead><tr><th>운용사</th><th>Total Assets<br>9/26</th><th>Net New Flows<br>9/26</th><th>% of Assets<br>9/26</th><th>8/26</th><th>7/26</th><th>6/26</th></tr></thead><tbody>
+<tr><td><b>BlackRock</b></td><td class="num">4,820,336</td><td class="num pos">41,805</td><td class="num">0.9%</td><td class="num pos">12,971</td><td class="num pos">14,097</td><td class="num pos">76,240</td></tr>
+<tr><td><b>State Street IM</b></td><td class="num">2,167,816</td><td class="num pos">11,223</td><td class="num">0.5%</td><td class="num pos">2,572</td><td class="num pos">32,985</td><td class="num pos">6,766</td></tr>
+<tr><td><b>Fidelity</b></td><td class="num">4,130,856</td><td class="num pos">4,233</td><td class="num">0.1%</td><td class="num pos">15,925</td><td class="num pos">3,510</td><td class="num pos">15,509</td></tr>
+<tr><td><b>Charles Schwab</b></td><td class="num">896,706</td><td class="num pos">3,091</td><td class="num">0.3%</td><td class="num pos">9,754</td><td class="num pos">6,927</td><td class="num pos">6,583</td></tr>
+<tr><td><b>PGIM Investments</b></td><td class="num">196,051</td><td class="num pos">2,342</td><td class="num">1.2%</td><td class="num pos">1,780</td><td class="num pos">2,029</td><td class="num pos">1,498</td></tr>
+<tr><td><b>Morgan Stanley</b></td><td class="num">203,934</td><td class="num pos">1,372</td><td class="num">0.7%</td><td class="num pos">815</td><td class="num pos">464</td><td class="num neg">(438)</td></tr>
+<tr><td><b>Eaton Vance</b></td><td class="num">153,760</td><td class="num pos">1,140</td><td class="num">0.7%</td><td class="num pos">312</td><td class="num pos">302</td><td class="num neg">(272)</td></tr>
+<tr><td><b>Goldman Sachs</b></td><td class="num">239,122</td><td class="num pos">1,066</td><td class="num">0.4%</td><td class="num pos">1,328</td><td class="num neg">(290)</td><td class="num neg">(97)</td></tr>
+<tr><td><b>Cohen &amp; Steers</b></td><td class="num">53,744</td><td class="num pos">305</td><td class="num">0.5%</td><td class="num pos">312</td><td class="num pos">95</td><td class="num pos">271</td></tr>
+<tr><td><b>Federated</b></td><td class="num">91,602</td><td class="num pos">37</td><td class="num">0.0%</td><td class="num pos">194</td><td class="num pos">395</td><td class="num pos">614</td></tr>
+<tr><td><b>Nationwide Funds</b></td><td class="num">15,448</td><td class="num pos">23</td><td class="num">0.1%</td><td class="num pos">97</td><td class="num neg">(28)</td><td class="num neg">(60)</td></tr>
+<tr><td><b>Invesco</b></td><td class="num">761,149</td><td class="num pos">2</td><td class="num">0.0%</td><td class="num pos">6,630</td><td class="num pos">6,684</td><td class="num pos">14,784</td></tr>
+<tr><td><b>Northern Trust</b></td><td class="num">81,689</td><td class="num neg">(62)</td><td class="num">-0.1%</td><td class="num neg">(44)</td><td class="num pos">370</td><td class="num neg">(148)</td></tr>
+<tr><td><b>JPMorgan Funds</b></td><td class="num">861,209</td><td class="num neg">(263)</td><td class="num">0.0%</td><td class="num pos">883</td><td class="num pos">1,807</td><td class="num neg">(466)</td></tr>
+<tr><td><b>Dimensional Fund Advisors</b></td><td class="num">786,873</td><td class="num neg">(788)</td><td class="num">-0.1%</td><td class="num pos">3,075</td><td class="num pos">3,934</td><td class="num pos">695</td></tr>
+<tr><td><b>Hartford Funds</b></td><td class="num">140,961</td><td class="num neg">(871)</td><td class="num">-0.6%</td><td class="num neg">(600)</td><td class="num neg">(738)</td><td class="num neg">(220)</td></tr>
+<tr><td><b>John Hancock Invst</b></td><td class="num">175,292</td><td class="num neg">(894)</td><td class="num">-0.5%</td><td class="num neg">(825)</td><td class="num neg">(945)</td><td class="num neg">(661)</td></tr>
+<tr><td><b>AllianceBernstein</b></td><td class="num">130,819</td><td class="num neg">(1,174)</td><td class="num">-0.9%</td><td class="num neg">(190)</td><td class="num neg">(482)</td><td class="num neg">(556)</td></tr>
+<tr><td><b>Ameriprise Financial</b></td><td class="num">253,851</td><td class="num neg">(1,205)</td><td class="num">-0.5%</td><td class="num neg">(1,095)</td><td class="num neg">(720)</td><td class="num neg">(821)</td></tr>
+<tr><td><b>Franklin Templeton</b></td><td class="num">574,608</td><td class="num neg">(1,382)</td><td class="num">-0.2%</td><td class="num neg">(349)</td><td class="num neg">(820)</td><td class="num pos">204</td></tr>
+<tr><td><b>Principal Financial Group</b></td><td class="num">146,202</td><td class="num neg">(2,499)</td><td class="num">-1.6%</td><td class="num neg">(2,092)</td><td class="num neg">(1,951)</td><td class="num neg">(2,277)</td></tr>
+<tr><td><b>T Rowe Price</b></td><td class="num">782,249</td><td class="num neg">(4,773)</td><td class="num">-0.6%</td><td class="num neg">(6,043)</td><td class="num neg">(5,452)</td><td class="num neg">(5,388)</td></tr>
+<tr><td><b>MFS</b></td><td class="num">349,678</td><td class="num neg">(5,654)</td><td class="num">-1.5%</td><td class="num neg">(8,031)</td><td class="num neg">(7,507)</td><td class="num neg">(4,228)</td></tr>
+<tr><td><b>CapGrp/AmericanFds</b></td><td class="num">2,925,937</td><td class="num neg">(9,238)</td><td class="num">-0.3%</td><td class="num neg">(8,364)</td><td class="num neg">(6,858)</td><td class="num neg">(10,342)</td></tr>
+<tr><td><b>Vanguard</b></td><td class="num">11,048,895</td><td class="num neg">(15,871)</td><td class="num">-0.1%</td><td class="num pos">28,658</td><td class="num pos">39,220</td><td class="num pos">13,639</td></tr>
+</tbody></table></div>
+      <div class="chart-src">Source: Strategic Insight · Long-term flows exclude money market flows</div>
+
+      <!-- 5 -->
+      <h3 class="sec" id="s5"><span class="n">5</span>주요 운용사 코멘트</h3>
+      <div class="grid2">
+        <div class="mgr"><div class="nm">BlackRock (BLK)</div><div class="fl p">+$41.8bn</div>
+          <ul><li>8월 +$13.0bn 대비 확대</li><li>주식 +$19.2bn(8월 -$1.2bn), 채권 +$22.6bn(8월 +$14.2bn)</li><li>iShares Core S&amp;P 500 ETF +$3.0bn(8월 -$11.7bn에서 반전)</li><li>0-3 Month Treasury Bond ETF +$6.8bn, Core MSCI EAFE ETF +$2.3bn</li><li>YTD LT 순유입 $297bn</li></ul></div>
+        <div class="mgr"><div class="nm">State Street Global (STT)</div><div class="fl p">+$8.2bn</div>
+          <ul><li>주식 +$4.7bn(8월 -$1.2bn), 채권 +$3.5bn</li><li>YTD LT 순유입 $93.8bn</li></ul></div>
+        <div class="mgr"><div class="nm">Charles Schwab (SCHW)</div><div class="fl p">+$3.1bn</div>
+          <ul><li>8월 +$9.8bn 대비 둔화</li><li>주식 +$3.9bn(8월 +$6.7bn), 채권 -$837mn(8월 +$3.0bn)</li><li>US Dividend Equity ETF +$2.3bn으로 유입 선두(8월 +$3.7bn, YTD +$21bn)</li></ul></div>
+        <div class="mgr"><div class="nm">Invesco (IVZ)</div><div class="fl">+$2mn</div>
+          <ul><li>주식 유입이 채권 유출을 상쇄하며 사실상 보합</li><li>주식 +$1.2bn(8월 +$6.4bn), 채권 -$1.2bn(8월 +$266mn)</li><li>Nasdaq 100 ETF +$2.0bn, S&amp;P 500 Eq Wt ETF -$244mn</li><li>회사 발표 전사 LT 순유출 $1.1bn(8월 +$27.6bn)</li></ul></div>
+        <div class="mgr"><div class="nm">Federated (FHI)</div><div class="fl p">+$37mn</div>
+          <ul><li>MMF -$7bn(8월 +$2bn)</li><li>주식 +$335mn(8월 +$221mn), 채권 -$298mn(8월 -$27mn)</li><li>Inst'l High Yield Bond -$66mn(8월 +$134mn), Hermes Total Return Bond -$237mn(8월 -$220mn)</li></ul></div>
+        <div class="mgr neg"><div class="nm">Franklin (BEN)</div><div class="fl m">-$1.4bn</div>
+          <ul><li>8월 -$531mn 대비 유출 확대</li><li>주식 +$372mn(8월 -$134mn), 채권 -$1.8bn(8월 -$397mn)</li><li>Franklin Income -$328mn(8월 -$268mn)</li><li>회사 발표 전사 LT 순유입 $6bn(8월 +$8bn)</li></ul></div>
+        <div class="mgr neg"><div class="nm">T. Rowe Price (TROW)</div><div class="fl m">-$4.8bn</div>
+          <ul><li>8월 -$6.0bn 대비 개선</li><li>주식 -$5.1bn(8월 -$6.6bn), 채권 +$332mn(8월 +$565mn)</li><li>Capital Appreciation -$443mn, Blue Chip Growth -$1.3bn</li><li>회사 발표 9월 전사 유출 $12.2bn — 대규모 DC target date 유출 포함</li></ul></div>
+        <div class="mgr neg"><div class="nm">MFS</div><div class="fl m">-$5.7bn</div>
+          <ul><li>주식 -$5.1bn(8월 -$8.0bn), 채권 -$541mn</li><li>MFS Value -$1.2bn(8월 -$4.1bn), Growth -$800mn, International Equity -$680mn</li><li>YTD LT 순유출 $45.7bn</li></ul></div>
+      </div>
+
+      <!-- 6 -->
+      <h3 class="sec" id="s6"><span class="n">6</span>운용사별 자산군 분해 — 커버리지 22개사 ($mn)</h3>
+      <ul class="pts">
+        <li>상위 10개 펀드 기준 수익률·Morningstar 순위·자금흐름 데이터를 토대로 운용사별 LT(MMF 제외) 흐름을 Equity/Fixed Income으로 분해</li>
+        <li>주식형 플러스: BLK, STT, SCHW, GS, IVZ, BK, CLMS, CNS, FHI, BEN — 나머지는 주식 유출</li>
+        <li>채권형이 주식 유출을 상쇄한 사례: <b>JPMorgan Funds</b>(주식 -$2.7bn / 채권 +$2.5bn), <b>Prudential</b>(-$377mn / +$2.7bn), <b>Morgan Stanley</b>(-$275mn / +$1.6bn)</li>
+        <li>YTD 기준 최대 유출: <b>MFS -$45.7bn</b>, T. Rowe -$42.6bn, Principal -$20.9bn</li>
+      </ul>
+      <div class="tbl-wrap"><table class="tbl"><thead><tr><th>운용사</th><th>Equity<br>Sep-26</th><th>Fixed Income<br>Sep-26</th><th>LT 합계<br>Sep-26</th><th>LT 합계<br>Aug-26</th><th>LT 합계<br>YTD '26</th><th>LT AUM<br>Sep-26</th></tr></thead><tbody>
+<tr class="grp"><td colspan="7">Asset Managers</td></tr>
+<tr><td><b>AllianceBernstein (AB)</b></td><td class="num neg">(778)</td><td class="num neg">(396)</td><td class="num neg">(1,174)</td><td class="num neg">(190)</td><td class="num neg">(3,261)</td><td class="num">129,483</td></tr>
+<tr><td><b>BlackRock (BLK)</b></td><td class="num pos">19,229</td><td class="num pos">22,575</td><td class="num pos">41,805</td><td class="num pos">12,971</td><td class="num pos">297,286</td><td class="num">4,820,336</td></tr>
+<tr><td><b>Calamos (CLMS)</b></td><td class="num pos">413</td><td class="num neg">(3)</td><td class="num pos">410</td><td class="num pos">569</td><td class="num pos">4,283</td><td class="num">36,242</td></tr>
+<tr><td><b>Cohen &amp; Steers (CNS)</b></td><td class="num pos">206</td><td class="num pos">99</td><td class="num pos">305</td><td class="num pos">312</td><td class="num pos">1,686</td><td class="num">41,713</td></tr>
+<tr><td><b>Federated (FHI)</b></td><td class="num pos">335</td><td class="num neg">(298)</td><td class="num pos">37</td><td class="num pos">194</td><td class="num pos">3,942</td><td class="num">91,602</td></tr>
+<tr><td><b>Franklin (BEN)</b></td><td class="num pos">372</td><td class="num neg">(1,754)</td><td class="num neg">(1,382)</td><td class="num neg">(531)</td><td class="num neg">(8,283)</td><td class="num">574,608</td></tr>
+<tr><td><b>GAMCO (GBL)</b></td><td class="num neg">(76)</td><td class="num">0</td><td class="num neg">(76)</td><td class="num neg">(32)</td><td class="num neg">(527)</td><td class="num">9,883</td></tr>
+<tr><td><b>Invesco (IVZ)</b></td><td class="num pos">1,230</td><td class="num neg">(1,228)</td><td class="num pos">2</td><td class="num pos">6,630</td><td class="num pos">46,496</td><td class="num">761,149</td></tr>
+<tr><td><b>T Rowe Price (TROW)</b></td><td class="num neg">(5,105)</td><td class="num pos">332</td><td class="num neg">(4,773)</td><td class="num neg">(6,043)</td><td class="num neg">(42,554)</td><td class="num">782,257</td></tr>
+<tr class="grp"><td colspan="7">Bank AM Subsidiaries</td></tr>
+<tr><td><b>BNY Funds (BK)</b></td><td class="num pos">440</td><td class="num pos">42</td><td class="num pos">482</td><td class="num pos">149</td><td class="num neg">(1,019)</td><td class="num">72,502</td></tr>
+<tr><td><b>JPMorgan Funds (JPM)</b></td><td class="num neg">(2,713)</td><td class="num pos">2,451</td><td class="num neg">(263)</td><td class="num pos">883</td><td class="num pos">15,699</td><td class="num">860,883</td></tr>
+<tr><td><b>Northern Trust (NTRS)</b></td><td class="num neg">(420)</td><td class="num pos">358</td><td class="num neg">(62)</td><td class="num neg">(44)</td><td class="num pos">2,453</td><td class="num">81,689</td></tr>
+<tr><td><b>State Street Global (STT)</b></td><td class="num pos">4,730</td><td class="num pos">3,468</td><td class="num pos">8,198</td><td class="num pos">1,193</td><td class="num pos">93,765</td><td class="num">1,117,110</td></tr>
+<tr class="grp"><td colspan="7">Insurance AM Subsidiaries</td></tr>
+<tr><td><b>The Hartford (HIG)</b></td><td class="num neg">(740)</td><td class="num neg">(130)</td><td class="num neg">(871)</td><td class="num neg">(600)</td><td class="num neg">(4,259)</td><td class="num">140,961</td></tr>
+<tr><td><b>Manulife/John Hancock (MFC)</b></td><td class="num neg">(616)</td><td class="num neg">(279)</td><td class="num neg">(894)</td><td class="num neg">(825)</td><td class="num pos">56</td><td class="num">171,513</td></tr>
+<tr><td><b>MFS</b></td><td class="num neg">(5,109)</td><td class="num neg">(541)</td><td class="num neg">(5,650)</td><td class="num neg">(8,053)</td><td class="num neg">(45,718)</td><td class="num">351,298</td></tr>
+<tr><td><b>Principal (PFG)</b></td><td class="num neg">(2,025)</td><td class="num neg">(473)</td><td class="num neg">(2,499)</td><td class="num neg">(2,092)</td><td class="num neg">(20,920)</td><td class="num">146,133</td></tr>
+<tr><td><b>Prudential (PRU)</b></td><td class="num neg">(377)</td><td class="num pos">2,719</td><td class="num pos">2,342</td><td class="num pos">1,780</td><td class="num pos">15,840</td><td class="num">194,707</td></tr>
+<tr class="grp"><td colspan="7">Broker AM Subsidiaries</td></tr>
+<tr><td><b>Ameriprise (AMP)</b></td><td class="num neg">(848)</td><td class="num neg">(357)</td><td class="num neg">(1,205)</td><td class="num neg">(1,095)</td><td class="num neg">(7,392)</td><td class="num">250,797</td></tr>
+<tr><td><b>Charles Schwab (SCHW)</b></td><td class="num pos">3,928</td><td class="num neg">(837)</td><td class="num pos">3,091</td><td class="num pos">9,754</td><td class="num pos">59,225</td><td class="num">896,706</td></tr>
+<tr><td><b>Goldman Sachs (GS)</b></td><td class="num pos">1,845</td><td class="num pos">74</td><td class="num pos">1,919</td><td class="num pos">1,628</td><td class="num pos">10,372</td><td class="num">276,162</td></tr>
+<tr><td><b>Morgan Stanley (MS)</b></td><td class="num neg">(275)</td><td class="num pos">1,647</td><td class="num pos">1,372</td><td class="num pos">815</td><td class="num pos">2,998</td><td class="num">180,883</td></tr>
+</tbody></table></div>
+      <div class="chart-src">Source: Strategic Insight</div>
+
+      <!-- 7 -->
+      <h3 class="sec" id="s7"><span class="n">7</span>펀드 성과 — Morningstar 4·5 Star 비중 &amp; 지수 수익률</h3>
+      <ul class="pts">
+        <li>상장 운용사 중 Asset-weighted 4·5 Star 비중은 <b>Invesco 48.8%</b>, BlackRock 48.2%, T. Rowe 43.4%, Franklin 38.2% 순 (Asset Managers 평균 30.8%)</li>
+        <li>Broker 계열 평균 61.0%로 가장 높음 — Ameriprise 67.5%, Goldman Sachs 64.8%</li>
+        <li>Insurance 계열 평균 35.1%, MFS(26.7%)·Principal(27.5%)이 최하위권</li>
+        <li>Fund-weighted 기준 9월 전체 4·5 Star 비중: TROW 42.9%, BLK 41.4%, AB 39.4%, BEN 37.3%, IVZ 32.9%, FII 31.0%</li>
+        <li>AB 채권형 4·5 Star 비중은 Q1'25 72.4% → Sep'26 46.2%로 추세적 하락</li>
+      </ul>
+      <div class="chart-card">
+        <div class="ct">그룹별 4·5 Star 자산 비중 (Asset-weighted)</div>
+        <svg viewBox="0 0 880 590" width="100%" role="img">
+<line x1="260.0" y1="10" x2="260.0" y2="560" stroke="#eef1f5"/>
+<text x="260.0" y="576" font-size="10.5" text-anchor="middle" fill="#6b7383">0%</text>
+<line x1="405.0" y1="10" x2="405.0" y2="560" stroke="#eef1f5"/>
+<text x="405.0" y="576" font-size="10.5" text-anchor="middle" fill="#6b7383">25%</text>
+<line x1="550.0" y1="10" x2="550.0" y2="560" stroke="#eef1f5"/>
+<text x="550.0" y="576" font-size="10.5" text-anchor="middle" fill="#6b7383">50%</text>
+<line x1="695.0" y1="10" x2="695.0" y2="560" stroke="#eef1f5"/>
+<text x="695.0" y="576" font-size="10.5" text-anchor="middle" fill="#6b7383">75%</text>
+<line x1="840.0" y1="10" x2="840.0" y2="560" stroke="#eef1f5"/>
+<text x="840.0" y="576" font-size="10.5" text-anchor="middle" fill="#6b7383">100%</text>
+<text x="10" y="25" font-size="11.5" font-weight="700" fill="#5c1a26">Asset Managers</text>
+<text x="250" y="47" font-size="11.5" text-anchor="end" fill="#1b1e24" font-weight="400">Invesco ($726bn)</text>
+<rect x="260" y="37" width="580.0" height="13" fill="#e3e8ef" rx="2"/>
+<rect x="260" y="37" width="283.0" height="13" fill="#0a2240" rx="2"/>
+<text x="549.0" y="47" font-size="10.5" font-weight="700" fill="#0a2240">48.8%</text>
+<text x="250" y="69" font-size="11.5" text-anchor="end" fill="#1b1e24" font-weight="400">BlackRock ($4,681bn)</text>
+<rect x="260" y="59" width="580.0" height="13" fill="#e3e8ef" rx="2"/>
+<rect x="260" y="59" width="279.6" height="13" fill="#0a2240" rx="2"/>
+<text x="545.6" y="69" font-size="10.5" font-weight="700" fill="#0a2240">48.2%</text>
+<text x="250" y="91" font-size="11.5" text-anchor="end" fill="#1b1e24" font-weight="400">T. Rowe Price ($779bn)</text>
+<rect x="260" y="81" width="580.0" height="13" fill="#e3e8ef" rx="2"/>
+<rect x="260" y="81" width="251.7" height="13" fill="#0a2240" rx="2"/>
+<text x="517.7" y="91" font-size="10.5" font-weight="700" fill="#0a2240">43.4%</text>
+<text x="250" y="113" font-size="11.5" text-anchor="end" fill="#1b1e24" font-weight="400">Franklin Resources ($566bn)</text>
+<rect x="260" y="103" width="580.0" height="13" fill="#e3e8ef" rx="2"/>
+<rect x="260" y="103" width="221.6" height="13" fill="#0a2240" rx="2"/>
+<text x="487.6" y="113" font-size="10.5" font-weight="700" fill="#0a2240">38.2%</text>
+<text x="250" y="135" font-size="11.5" text-anchor="end" fill="#1b1e24" font-weight="400">TIAA ($395bn)</text>
+<rect x="260" y="125" width="580.0" height="13" fill="#e3e8ef" rx="2"/>
+<rect x="260" y="125" width="178.6" height="13" fill="#0a2240" rx="2"/>
+<text x="444.6" y="135" font-size="10.5" font-weight="700" fill="#0a2240">30.8%</text>
+<text x="250" y="157" font-size="11.5" text-anchor="end" fill="#1b1e24" font-weight="700">평균 ($1,429bn)</text>
+<rect x="260" y="147" width="580.0" height="13" fill="#e3e8ef" rx="2"/>
+<rect x="260" y="147" width="178.6" height="13" fill="#5c1a26" rx="2"/>
+<text x="444.6" y="157" font-size="10.5" font-weight="700" fill="#5c1a26">30.8%</text>
+<text x="10" y="179" font-size="11.5" font-weight="700" fill="#5c1a26">Bank AM</text>
+<text x="250" y="201" font-size="11.5" text-anchor="end" fill="#1b1e24" font-weight="400">Northern Trust ($80bn)</text>
+<rect x="260" y="191" width="580.0" height="13" fill="#e3e8ef" rx="2"/>
+<rect x="260" y="191" width="316.1" height="13" fill="#0a2240" rx="2"/>
+<text x="582.1" y="201" font-size="10.5" font-weight="700" fill="#0a2240">54.5%</text>
+<text x="250" y="223" font-size="11.5" text-anchor="end" fill="#1b1e24" font-weight="400">JPMorgan Funds ($832bn)</text>
+<rect x="260" y="213" width="580.0" height="13" fill="#e3e8ef" rx="2"/>
+<rect x="260" y="213" width="293.5" height="13" fill="#0a2240" rx="2"/>
+<text x="559.5" y="223" font-size="10.5" font-weight="700" fill="#0a2240">50.6%</text>
+<text x="250" y="245" font-size="11.5" text-anchor="end" fill="#1b1e24" font-weight="700">평균 ($228bn)</text>
+<rect x="260" y="235" width="580.0" height="13" fill="#e3e8ef" rx="2"/>
+<rect x="260" y="235" width="295.8" height="13" fill="#5c1a26" rx="2"/>
+<text x="561.8" y="245" font-size="10.5" font-weight="700" fill="#5c1a26">51.0%</text>
+<text x="10" y="267" font-size="11.5" font-weight="700" fill="#5c1a26">Insurance AM</text>
+<text x="250" y="289" font-size="11.5" text-anchor="end" fill="#1b1e24" font-weight="400">Nationwide Funds ($15bn)</text>
+<rect x="260" y="279" width="580.0" height="13" fill="#e3e8ef" rx="2"/>
+<rect x="260" y="279" width="317.8" height="13" fill="#0a2240" rx="2"/>
+<text x="583.8" y="289" font-size="10.5" font-weight="700" fill="#0a2240">54.8%</text>
+<text x="250" y="311" font-size="11.5" text-anchor="end" fill="#1b1e24" font-weight="400">John Hancock Invst ($167bn)</text>
+<rect x="260" y="301" width="580.0" height="13" fill="#e3e8ef" rx="2"/>
+<rect x="260" y="301" width="276.1" height="13" fill="#0a2240" rx="2"/>
+<text x="542.1" y="311" font-size="10.5" font-weight="700" fill="#0a2240">47.6%</text>
+<text x="250" y="333" font-size="11.5" text-anchor="end" fill="#1b1e24" font-weight="400">Hartford Funds ($141bn)</text>
+<rect x="260" y="323" width="580.0" height="13" fill="#e3e8ef" rx="2"/>
+<rect x="260" y="323" width="254.0" height="13" fill="#0a2240" rx="2"/>
+<text x="520.0" y="333" font-size="10.5" font-weight="700" fill="#0a2240">43.8%</text>
+<text x="250" y="355" font-size="11.5" text-anchor="end" fill="#1b1e24" font-weight="400">PGIM Investments ($192bn)</text>
+<rect x="260" y="345" width="580.0" height="13" fill="#e3e8ef" rx="2"/>
+<rect x="260" y="345" width="215.8" height="13" fill="#0a2240" rx="2"/>
+<text x="481.8" y="355" font-size="10.5" font-weight="700" fill="#0a2240">37.2%</text>
+<text x="250" y="377" font-size="11.5" text-anchor="end" fill="#1b1e24" font-weight="400">Principal Financial Group ($142bn)</text>
+<rect x="260" y="367" width="580.0" height="13" fill="#e3e8ef" rx="2"/>
+<rect x="260" y="367" width="159.5" height="13" fill="#0a2240" rx="2"/>
+<text x="425.5" y="377" font-size="10.5" font-weight="700" fill="#0a2240">27.5%</text>
+<text x="250" y="399" font-size="11.5" text-anchor="end" fill="#1b1e24" font-weight="400">MFS ($346bn)</text>
+<rect x="260" y="389" width="580.0" height="13" fill="#e3e8ef" rx="2"/>
+<rect x="260" y="389" width="154.9" height="13" fill="#0a2240" rx="2"/>
+<text x="420.9" y="399" font-size="10.5" font-weight="700" fill="#0a2240">26.7%</text>
+<text x="250" y="421" font-size="11.5" text-anchor="end" fill="#1b1e24" font-weight="700">평균 ($143bn)</text>
+<rect x="260" y="411" width="580.0" height="13" fill="#e3e8ef" rx="2"/>
+<rect x="260" y="411" width="203.6" height="13" fill="#5c1a26" rx="2"/>
+<text x="469.6" y="421" font-size="10.5" font-weight="700" fill="#5c1a26">35.1%</text>
+<text x="10" y="443" font-size="11.5" font-weight="700" fill="#5c1a26">Broker AM</text>
+<text x="250" y="465" font-size="11.5" text-anchor="end" fill="#1b1e24" font-weight="400">Ameriprise Financial ($249bn)</text>
+<rect x="260" y="455" width="580.0" height="13" fill="#e3e8ef" rx="2"/>
+<rect x="260" y="455" width="391.5" height="13" fill="#0a2240" rx="2"/>
+<text x="657.5" y="465" font-size="10.5" font-weight="700" fill="#0a2240">67.5%</text>
+<text x="250" y="487" font-size="11.5" text-anchor="end" fill="#1b1e24" font-weight="400">Goldman Sachs ($221bn)</text>
+<rect x="260" y="477" width="580.0" height="13" fill="#e3e8ef" rx="2"/>
+<rect x="260" y="477" width="375.8" height="13" fill="#0a2240" rx="2"/>
+<text x="641.8" y="487" font-size="10.5" font-weight="700" fill="#0a2240">64.8%</text>
+<text x="250" y="509" font-size="11.5" text-anchor="end" fill="#1b1e24" font-weight="400">Charles Schwab ($889bn)</text>
+<rect x="260" y="499" width="580.0" height="13" fill="#e3e8ef" rx="2"/>
+<rect x="260" y="499" width="343.9" height="13" fill="#0a2240" rx="2"/>
+<text x="609.9" y="509" font-size="10.5" font-weight="700" fill="#0a2240">59.3%</text>
+<text x="250" y="531" font-size="11.5" text-anchor="end" fill="#1b1e24" font-weight="400">Morgan Stanley ($186bn)</text>
+<rect x="260" y="521" width="580.0" height="13" fill="#e3e8ef" rx="2"/>
+<rect x="260" y="521" width="323.6" height="13" fill="#0a2240" rx="2"/>
+<text x="589.6" y="531" font-size="10.5" font-weight="700" fill="#0a2240">55.8%</text>
+<text x="250" y="553" font-size="11.5" text-anchor="end" fill="#1b1e24" font-weight="700">평균 ($386bn)</text>
+<rect x="260" y="543" width="580.0" height="13" fill="#e3e8ef" rx="2"/>
+<rect x="260" y="543" width="353.8" height="13" fill="#5c1a26" rx="2"/>
+<text x="619.8" y="553" font-size="10.5" font-weight="700" fill="#5c1a26">61.0%</text>
+</svg>
+        <div class="chart-src">Source: Strategic Insight</div>
+      </div>
+      <div class="ct" style="margin-top:14px">4·5 Star 비중 — Equity (fund-weighted)</div><div class="tbl-wrap"><table class="tbl"><thead><tr><th>운용사</th><th>Q1'25</th><th>Q2'25</th><th>Q3'25</th><th>Q4'25</th><th>Q1'26</th><th>Q2'26</th><th>Q3'26</th><th>Sep'26</th></tr></thead><tbody>
+<tr><td><b>AB</b></td><td class="num">23.9%</td><td class="num">43.2%</td><td class="num">36.8%</td><td class="num">31.6%</td><td class="num">30.0%</td><td class="num">37.5%</td><td class="num">37.5%</td><td class="num">35.0%</td></tr>
+<tr><td><b>BLK</b></td><td class="num">40.3%</td><td class="num">44.9%</td><td class="num">40.8%</td><td class="num">41.1%</td><td class="num">41.6%</td><td class="num">40.4%</td><td class="num">45.4%</td><td class="num">43.9%</td></tr>
+<tr><td><b>FII</b></td><td class="num">32.0%</td><td class="num">36.0%</td><td class="num">44.0%</td><td class="num">42.3%</td><td class="num">42.3%</td><td class="num">46.2%</td><td class="num">40.0%</td><td class="num">40.0%</td></tr>
+<tr><td><b>BEN</b></td><td class="num">34.1%</td><td class="num">39.4%</td><td class="num">39.6%</td><td class="num">37.1%</td><td class="num">40.2%</td><td class="num">40.6%</td><td class="num">41.6%</td><td class="num">41.6%</td></tr>
+<tr><td><b>IVZ</b></td><td class="num">33.7%</td><td class="num">33.2%</td><td class="num">34.2%</td><td class="num">30.0%</td><td class="num">28.6%</td><td class="num">28.9%</td><td class="num">32.1%</td><td class="num">31.0%</td></tr>
+<tr><td><b>TROW</b></td><td class="num">47.1%</td><td class="num">42.9%</td><td class="num">41.4%</td><td class="num">43.5%</td><td class="num">44.1%</td><td class="num">42.9%</td><td class="num">43.7%</td><td class="num">43.7%</td></tr>
+</tbody></table></div>
+<div class="ct" style="margin-top:14px">4·5 Star 비중 — Fixed Income (fund-weighted)</div><div class="tbl-wrap"><table class="tbl"><thead><tr><th>운용사</th><th>Q1'25</th><th>Q2'25</th><th>Q3'25</th><th>Q4'25</th><th>Q1'26</th><th>Q2'26</th><th>Q3'26</th><th>Sep'26</th></tr></thead><tbody>
+<tr><td><b>AB</b></td><td class="num">72.4%</td><td class="num">75.0%</td><td class="num">69.2%</td><td class="num">65.4%</td><td class="num">57.7%</td><td class="num">46.2%</td><td class="num">42.3%</td><td class="num">46.2%</td></tr>
+<tr><td><b>BLK</b></td><td class="num">35.2%</td><td class="num">33.1%</td><td class="num">34.9%</td><td class="num">32.6%</td><td class="num">36.4%</td><td class="num">35.0%</td><td class="num">35.6%</td><td class="num">35.6%</td></tr>
+<tr><td><b>FII</b></td><td class="num">25.7%</td><td class="num">17.1%</td><td class="num">8.6%</td><td class="num">21.2%</td><td class="num">18.2%</td><td class="num">24.2%</td><td class="num">21.2%</td><td class="num">24.2%</td></tr>
+<tr><td><b>BEN</b></td><td class="num">23.9%</td><td class="num">24.6%</td><td class="num">23.7%</td><td class="num">34.2%</td><td class="num">36.8%</td><td class="num">34.8%</td><td class="num">31.9%</td><td class="num">32.8%</td></tr>
+<tr><td><b>IVZ</b></td><td class="num">42.2%</td><td class="num">43.8%</td><td class="num">37.5%</td><td class="num">39.7%</td><td class="num">40.6%</td><td class="num">39.1%</td><td class="num">39.7%</td><td class="num">38.2%</td></tr>
+<tr><td><b>TROW</b></td><td class="num">41.3%</td><td class="num">39.1%</td><td class="num">34.8%</td><td class="num">45.8%</td><td class="num">43.8%</td><td class="num">39.6%</td><td class="num">43.8%</td><td class="num">41.7%</td></tr>
+</tbody></table></div>
+<div class="ct" style="margin-top:14px">4·5 Star 비중 — 전체 (fund-weighted)</div><div class="tbl-wrap"><table class="tbl"><thead><tr><th>운용사</th><th>Q1'25</th><th>Q2'25</th><th>Q3'25</th><th>Q4'25</th><th>Q1'26</th><th>Q2'26</th><th>Q3'26</th><th>Sep'26</th></tr></thead><tbody>
+<tr><td><b>AB</b></td><td class="num">42.7%</td><td class="num">55.7%</td><td class="num">50.0%</td><td class="num">45.3%</td><td class="num">40.9%</td><td class="num">40.9%</td><td class="num">39.4%</td><td class="num">39.4%</td></tr>
+<tr><td><b>BLK</b></td><td class="num">38.7%</td><td class="num">41.0%</td><td class="num">38.8%</td><td class="num">38.3%</td><td class="num">40.1%</td><td class="num">38.8%</td><td class="num">42.4%</td><td class="num">41.4%</td></tr>
+<tr><td><b>FII</b></td><td class="num">28.3%</td><td class="num">25.0%</td><td class="num">23.3%</td><td class="num">30.5%</td><td class="num">28.8%</td><td class="num">33.9%</td><td class="num">29.3%</td><td class="num">31.0%</td></tr>
+<tr><td><b>BEN</b></td><td class="num">29.3%</td><td class="num">32.4%</td><td class="num">32.3%</td><td class="num">35.8%</td><td class="num">38.6%</td><td class="num">37.9%</td><td class="num">36.9%</td><td class="num">37.3%</td></tr>
+<tr><td><b>IVZ</b></td><td class="num">35.7%</td><td class="num">35.7%</td><td class="num">35.0%</td><td class="num">32.5%</td><td class="num">31.8%</td><td class="num">31.7%</td><td class="num">34.1%</td><td class="num">32.9%</td></tr>
+<tr><td><b>TROW</b></td><td class="num">44.8%</td><td class="num">41.4%</td><td class="num">38.8%</td><td class="num">44.4%</td><td class="num">44.0%</td><td class="num">41.5%</td><td class="num">43.7%</td><td class="num">42.9%</td></tr>
+</tbody></table></div>
+      <div class="chart-src">Source: Strategic Insight</div>
+
+      <div class="ct" style="margin-top:18px">주요 지수 수익률 (9/30/2026 기준)</div>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>지수</th><th>3 Years</th><th>1 Year</th><th>6 Months</th><th>3 Months</th></tr></thead>
+        <tbody>
+          <tr><td><b>Large Cap (S&amp;P 500)</b></td><td class="num">78%</td><td class="num">14%</td><td class="num">21%</td><td class="num">2%</td></tr>
+          <tr><td><b>Large Cap (NASDAQ)</b></td><td class="num">103%</td><td class="num">19%</td><td class="num">29%</td><td class="num">2%</td></tr>
+          <tr><td><b>International (MSCI EAFE)</b></td><td class="num">54%</td><td class="num">13%</td><td class="num">11%</td><td class="num">0%</td></tr>
+          <tr><td><b>Small Cap (Russell 2000)</b></td><td class="num">57%</td><td class="num">15%</td><td class="num">16%</td><td class="num neg">-8%</td></tr>
+          <tr><td><b>Russell 3000 Value</b></td><td class="num">62%</td><td class="num">22%</td><td class="num">18%</td><td class="num">2%</td></tr>
+          <tr><td><b>Russell 3000 Growth</b></td><td class="num">86%</td><td class="num">7%</td><td class="num">22%</td><td class="num">0%</td></tr>
+          <tr><td><b>Barclays US Aggregate Bond</b></td><td class="num">13%</td><td class="num neg">-2%</td><td class="num neg">-2%</td><td class="num neg">-4%</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-src">Source: Bloomberg Finance L.P., data as of September 30, 2026</div>
+
+      <!-- risks -->
+      <h3 class="sec" id="s8"><span class="n">!</span>리스크 &amp; 모니터링 포인트</h3>
+      <div class="risk-box">
+        <h4>핵심 체크 포인트</h4>
+        <ul>
+          <li><b>Passive 주식 유입 둔화의 지속성:</b> 9월 +$17bn은 YTD 월평균(+$67bn)의 약 1/4 수준 — 일시적 조정인지 추세 전환인지가 BLK·STT·Vanguard 등 Passive 중심 운용사 flows의 핵심 변수</li>
+          <li><b>MMF 순판매 변동성:</b> 고금리 전망 하 기관 Gov't MMF의 direct market 이동 지속 시 MMF 의존도가 높은 Federated에 부담(시장점유율 상실 지속)</li>
+          <li><b>Active 채권 순유출 전환:</b> 7·8월 각 +$38bn에서 9월 -$4bn — 채권 지수(Barclays Agg) 3개월 -4%로 성과 부진과 맞물려 지속 여부 확인 필요</li>
+          <li><b>Active 주식 운용사 구조적 유출:</b> T. Rowe(YTD -$42.6bn), MFS(-$45.7bn), Principal(-$20.9bn) 등 유출 고착화, DC target date 등 대형 mandate 이탈 리스크</li>
+        </ul>
+        <h4 style="margin-top:14px;">모니터링 포인트</h4>
+        <ul>
+          <li>10월 Passive 주식 유입 회복 여부 및 Vanguard 주식 사업 유출 지속 여부</li>
+          <li>Gov't MMF 기관 자금 흐름과 금리 경로</li>
+          <li>Morningstar 4·5 Star 비중 변화(특히 AB 채권, IVZ·FII 주식)와 향후 flows 간 연계</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div>본 문서는 투자 권유를 목적으로 하지 않습니다.</div>
+  </footer>
+
+</div>
+</body>
+</html>
