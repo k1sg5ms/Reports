@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flows &amp; Liquidity — Bottoming out?</title>
+<style>
+  :root{
+    --brand:#0a2240;
+    --brand-deep:#06182e;
+    --accent:#5c1a26;
+    --accent2:#7a2f3d;
+    --paper:#f4f6f9;
+    --card:#ffffff;
+    --ink:#1b1e24;
+    --ink-soft:#525866;
+    --line:#dde3ec;
+    --buy:#1f7a4d;
+    --bear:#c0392b;
+    --bull:#1f6fb2;
+    --warn:#8a4b15;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);font-family:'Helvetica Neue','Pretendard','Noto Sans KR',Arial,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+  .topbar{background:var(--brand-deep);color:#fff;padding:14px 6vw;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-bottom:3px solid var(--accent);position:sticky;top:0;z-index:50;}
+  .topbar .logo{font-weight:700;font-size:18px;letter-spacing:0.5px;}
+  .topbar .logo span{color:#c8a0a8;}
+  .topbar nav{display:flex;gap:8px;flex-wrap:wrap;}
+  .topbar nav a{color:#cfd8e6;text-decoration:none;font-size:12.5px;padding:6px 12px;border:1px solid rgba(255,255,255,0.2);border-radius:20px;transition:all .15s;}
+  .topbar nav a:hover{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .wrap{max-width:960px;margin:0 auto;padding:40px 6vw 90px;}
+  .intro{border-left:4px solid var(--accent);padding:8px 0 8px 20px;margin-bottom:48px;}
+  .intro .eyebrow{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent2);font-weight:700;}
+  .intro h1{font-size:26px;margin:8px 0 6px;color:var(--brand);}
+  .report{margin-bottom:64px;scroll-margin-top:70px;}
+  .report-head{background:linear-gradient(135deg,var(--brand) 0%, var(--brand-deep) 100%);color:#fff;border-radius:10px 10px 0 0;padding:28px 30px;}
+  .report-head .tag{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#9fb4d4;font-weight:700;}
+  .report-head h2{margin:8px 0 14px;font-size:23px;line-height:1.35;}
+  .report-head .lede{font-family:'Georgia',serif;font-size:15.5px;color:#e3ebf6;border-top:1px solid rgba(255,255,255,0.16);padding-top:14px;margin:0;}
+  .report-body{background:var(--card);border:1px solid var(--line);border-top:none;border-radius:0 0 10px 10px;padding:30px;}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px;}
+  .chip{border:1px solid var(--line);border-radius:8px;padding:10px 16px;background:#fafbfd;flex:1;min-width:130px;}
+  .chip .k{font-size:10.5px;letter-spacing:0.5px;text-transform:uppercase;color:var(--ink-soft);}
+  .chip .v{font-size:19px;font-weight:700;color:var(--brand);margin-top:2px;}
+  .chip .v.buy{color:var(--buy);}
+  .chip .v.sell{color:var(--bear);}
+  .chip .s{font-size:11px;color:var(--ink-soft);}
+  h3.sec{font-size:17px;color:var(--brand);margin:30px 0 12px;padding-bottom:8px;border-bottom:1.5px solid var(--line);display:flex;align-items:center;gap:10px;scroll-margin-top:70px;}
+  h3.sec .n{background:var(--brand);color:#fff;font-size:12px;font-weight:700;width:24px;height:24px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}
+  ul.pts{margin:0;padding:0;list-style:none;}
+  ul.pts li{position:relative;padding:7px 0 7px 20px;font-size:14.5px;border-bottom:1px dashed var(--line);}
+  ul.pts li:last-child{border-bottom:none;}
+  ul.pts li::before{content:"—";position:absolute;left:0;color:var(--accent2);font-weight:700;}
+  ul.pts b{color:var(--brand);}
+  table.tbl{width:100%;border-collapse:collapse;font-size:13px;margin:6px 0 4px;}
+  table.tbl th{background:var(--brand);color:#fff;text-align:left;padding:8px 10px;font-weight:600;}
+  table.tbl td{padding:7px 10px;border-bottom:1px solid var(--line);}
+  table.tbl tr:nth-child(even) td{background:#f7f9fc;}
+  table.tbl td.num{text-align:right;font-variant-numeric:tabular-nums;}
+  table.tbl td.neg{color:var(--bear);}
+  table.tbl td.pos{color:var(--buy);}
+  table.tbl th.num{text-align:right;}
+  .tbl-wrap{overflow-x:auto;}
+  .chart-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:22px 22px 14px;margin:14px 0;}
+  .chart-card .ct{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:12px;}
+  .chart-src{font-size:10.5px;color:#9aa3b2;margin-top:8px;}
+  .legend{display:flex;gap:18px;font-size:11.5px;color:var(--ink-soft);margin-bottom:4px;flex-wrap:wrap;}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .legend i{width:11px;height:11px;border-radius:2px;display:inline-block;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  @media(max-width:680px){.grid2{grid-template-columns:1fr;}}
+  .callout{background:#fbf6ec;border:1px solid #e8dcc3;border-radius:8px;padding:14px 18px;font-size:13px;color:var(--ink-soft);margin-top:14px;}
+  .callout .t{font-size:10.5px;font-weight:700;letter-spacing:0.6px;color:var(--warn);text-transform:uppercase;display:block;margin-bottom:5px;}
+  .risk-box{background:var(--brand);color:#dde6f3;border-radius:8px;padding:22px 24px;margin-top:14px;}
+  .risk-box h4{margin:0 0 10px;color:#fff;font-size:14.5px;}
+  .risk-box ul{margin:0;padding-left:18px;}
+  .risk-box li{margin-bottom:8px;font-size:13px;}
+  .risk-box li b{color:#fff;}
+  footer{border-top:1px solid var(--line);margin-top:50px;padding-top:20px;font-size:11px;color:#9aa3b2;line-height:1.6;}
+  @media(max-width:560px){.intro h1{font-size:21px;}.report-head h2{font-size:19px;}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">Research<span>·</span>Digest</div>
+  <nav>
+    <a href="#sec1">요약</a>
+    <a href="#sec2">Neocloud</a>
+    <a href="#sec3">Positioning</a>
+    <a href="#sec4">미국 자산 Flow</a>
+    <a href="#sec5">Crypto 규제</a>
+    <a href="#sec6">모니터</a>
+    <a href="#risk">리스크</a>
+  </nav>
+</div>
+
+<div class="wrap">
+
+  <div class="intro">
+    <div class="eyebrow">21 October 2026</div>
+    <h1>Flows &amp; Liquidity — 주식 positioning, 바닥을 다지는 중인가?</h1>
+  </div>
+
+  <section class="report" id="rpt1">
+    <div class="report-head">
+      <div class="tag">Global Markets Strategy · Flows &amp; Liquidity · Weekly</div>
+      <h2>Bottoming out? — 9월 중순 고점 대비 크게 낮아진 주식 positioning, Neocloud 우려는 AI capex 사이클을 꺾지 못한다</h2>
+      <p class="lede">단기 역풍은 일부 남아있지만, 헤지펀드·CTA 중심의 반도체 long 해소로 전체 주식 positioning이 이미 상당 부분 조정되어 여기서부터 하방이 제한되기 시작할 수 있다는 신호가 나타나고 있다.</p>
+    </div>
+
+    <div class="report-body">
+
+      <div class="chips">
+        <div class="chip"><div class="k">주식 positioning (composite)</div><div class="v">~65 percentile</div><div class="s">9월 중순 고점 ~80 percentile 대비 큰 폭 하락</div></div>
+        <div class="chip"><div class="k">Tech 섹터 2026 자금조달 흑자</div><div class="v buy">~$400bn</div><div class="s">현금흐름 $2.2tr vs Capex $1.8tr</div></div>
+        <div class="chip"><div class="k">Neocloud 비중 (상장사)</div><div class="v">$80bn</div><div class="s">Capex 기준, Tech 전체 $1.8tr의 ~4%</div></div>
+        <div class="chip"><div class="k">외국인 미국자산 순매수 (2026 YTD 월평균)</div><div class="v">$75bn / $85bn</div><div class="s">주식 / 채권 — 2025 평균($60bn / $75bn) 상회</div></div>
+        <div class="chip"><div class="k">반도체 Risk Capital 비중</div><div class="v sell">~21%</div><div class="s">MSCI ACWI 시총 비중 13% 대비</div></div>
+      </div>
+
+      <h3 class="sec" id="sec1"><span class="n">1</span>핵심 요약</h3>
+      <ul class="pts">
+        <li>cross-asset positioning monitor 기준 <b>전체 주식 positioning 지표는 9월 중순 고점 대비 큰 폭 하락</b>. 지난주 언급한 단기 역풍이 일부 잔존하지만, positioning 조정 신호가 나타나며 여기서부터 하방이 제한되기 시작할 수 있음.</li>
+        <li><b>Neocloud는 전체 AI 생태계에서 결정적(critical)이지도, 규모가 크지도 않은 세그먼트</b>. 자금조달 모델이 무너지는 시나리오에서도 AI capex 사이클은 탈선하지 않는다고 판단.</li>
+        <li><b>미국 자산에서의 분산(diversification) 유출은 총량 기준 징후가 미미</b>. TIC 및 국제수지 데이터 모두 외국인 순매수가 2025년보다 강함.</li>
+        <li>SEC·CFTC·OCC 등 규제기관 주도 조치가 기관의 crypto 참여를 촉진하며 <b>Clarity Act 의회 통과 실패의 부정적 영향을 일부 상쇄</b>. 다만 포괄적 시장구조 입법 전까지 정치·법적 risk premia는 장기 지속 전망.</li>
+      </ul>
+
+      <h3 class="sec" id="sec2"><span class="n">2</span>Neocloud 자금조달 우려 — AI capex 사이클이 꺾이지 않는 두 가지 이유</h3>
+      <ul class="pts">
+        <li>지난 한 주 <b>Neocloud(AI 워크로드용 compute를 임대하는 특화 인프라 사업자)의 자금조달 우려</b>가 시장의 중심 이슈. 세 가지 질문: 자금조달 모델은 지속 불가능한가? Neocloud는 AI 생태계에서 얼마나 중요한가? AI capex 자금조달 전반에 대한 우려는 정당한가?</li>
+        <li>크레딧 리서치 측 답변: <b>하이일드 시장 조달비용 상승</b>으로 상장 Neocloud는 회사채 의존을 줄이고 <b>equity financing·프로젝트 특정 부채(project-specific debt)</b>로 이동하는 등 보다 창의적인 조달이 필요. 주식 리서치 측은 자본비용 상승이 수익 창출 여력을 제한할 수 있으나, 우호적인 compute 수요 환경 덕에 비용 일부를 고객에게 전가 가능하다고 봄.</li>
+        <li><b>이유 ①: 상장 Neocloud는 AI 생태계에서 상대적으로 작은 세그먼트</b>. 올해 글로벌 상장 테크 기업의 애널리스트 추정 현금흐름 약 <b>$2.2tr</b>, capex 약 <b>$1.8tr</b> 가운데 Neocloud는 각각 <b>$30bn, $80bn</b>에 불과. Neocloud가 구축 중인 AI 인프라는 하이퍼스케일러 등 재무구조가 강하고 수익원이 다변화된 다른 테크 기업이 흡수 가능.</li>
+        <li><b>이유 ②: 테크 섹터 전체는 여전히 현금흐름 &gt; capex인 자금조달 흑자(약 $400bn) 상태</b>. 총량 기준 외부 조달이 필요 없으며, 향후 수년간 흑자 유지 가능. 가상 시나리오로 2030년까지 5년간 capex 연 25% 성장·현금흐름 연 20% 성장을 가정해도 2030년에 소폭 흑자가 남음.</li>
+        <li><b>그렇다면 테크 섹터는 왜 부채를 발행하는가?</b> 대규모 <b>자사주 매입(buyback)</b>을 유지하면서 capex를 늘리기 때문. 자금조달 우려가 Neocloud 밖으로 확산되는 역의 시나리오에서는 buyback 연기와 <b>circular financing</b>(흑자 기업인 칩메이커가 적자 기업인 Neocloud 자금 지원)으로 대응 가능 — 테크 섹터는 내부 자금조달 backstop을 보유.</li>
+        <li>AI capex·현금흐름 사이클은 대기업 AI 지출이 뒷받침하며, 서베이 기준 올해 글로벌 <b>$1.5tr</b>에 달할 수 있음 (8월 20일자 노트).</li>
+      </ul>
+
+      <div class="chart-card">
+        <div class="ct">테크 섹터 현금흐름 vs Capex 추정 (2025~2030E, $bn)</div>
+        <div class="legend">
+          <span><i style="background:var(--brand)"></i>현금흐름</span>
+          <span><i style="background:var(--accent)"></i>Capex</span>
+        </div>
+        <svg viewBox="0 0 880 320" width="100%">
+          <line x1="70" y1="280" x2="850" y2="280" stroke="#cfd6e0"/>
+          <line x1="70" y1="224.4" x2="850" y2="224.4" stroke="#eef1f5"/>
+          <line x1="70" y1="168.9" x2="850" y2="168.9" stroke="#eef1f5"/>
+          <line x1="70" y1="113.3" x2="850" y2="113.3" stroke="#eef1f5"/>
+          <line x1="70" y1="57.8" x2="850" y2="57.8" stroke="#eef1f5"/>
+          <text x="62" y="284" font-size="11" fill="#8a93a3" text-anchor="end">0</text>
+          <text x="62" y="228" font-size="11" fill="#8a93a3" text-anchor="end">1,000</text>
+          <text x="62" y="173" font-size="11" fill="#8a93a3" text-anchor="end">2,000</text>
+          <text x="62" y="117" font-size="11" fill="#8a93a3" text-anchor="end">3,000</text>
+          <text x="62" y="62" font-size="11" fill="#8a93a3" text-anchor="end">4,000</text>
+
+          <rect x="93" y="188.2" width="40" height="91.8" fill="#0a2240"/>
+          <rect x="137" y="205.8" width="40" height="74.2" fill="#5c1a26"/>
+          <text x="113" y="183" font-size="10.5" fill="#0a2240" text-anchor="middle" font-weight="700">1,652</text>
+          <text x="157" y="200" font-size="10.5" fill="#5c1a26" text-anchor="middle" font-weight="700">1,336</text>
+          <text x="135" y="300" font-size="11.5" fill="#525866" text-anchor="middle">2025</text>
+
+          <rect x="223" y="160.6" width="40" height="119.4" fill="#0a2240"/>
+          <rect x="267" y="182.8" width="40" height="97.2" fill="#5c1a26"/>
+          <text x="243" y="155" font-size="10.5" fill="#0a2240" text-anchor="middle" font-weight="700">2,150</text>
+          <text x="287" y="177" font-size="10.5" fill="#5c1a26" text-anchor="middle" font-weight="700">1,750</text>
+          <text x="265" y="300" font-size="11.5" fill="#525866" text-anchor="middle">2026E</text>
+
+          <rect x="353" y="133.3" width="40" height="146.7" fill="#0a2240"/>
+          <rect x="397" y="150.4" width="40" height="129.6" fill="#5c1a26"/>
+          <text x="373" y="128" font-size="10.5" fill="#0a2240" text-anchor="middle" font-weight="700">2,640</text>
+          <text x="417" y="145" font-size="10.5" fill="#5c1a26" text-anchor="middle" font-weight="700">2,332</text>
+          <text x="395" y="300" font-size="11.5" fill="#525866" text-anchor="middle">2027E</text>
+
+          <rect x="483" y="106.1" width="40" height="173.9" fill="#0a2240"/>
+          <rect x="527" y="118.1" width="40" height="161.9" fill="#5c1a26"/>
+          <text x="503" y="101" font-size="10.5" fill="#0a2240" text-anchor="middle" font-weight="700">3,130</text>
+          <text x="547" y="113" font-size="10.5" fill="#5c1a26" text-anchor="middle" font-weight="700">2,914</text>
+          <text x="525" y="300" font-size="11.5" fill="#525866" text-anchor="middle">2028E</text>
+
+          <rect x="613" y="78.8" width="40" height="201.2" fill="#0a2240"/>
+          <rect x="657" y="85.8" width="40" height="194.2" fill="#5c1a26"/>
+          <text x="633" y="73" font-size="10.5" fill="#0a2240" text-anchor="middle" font-weight="700">3,621</text>
+          <text x="677" y="80.5" font-size="10.5" fill="#5c1a26" text-anchor="middle" font-weight="700">3,495</text>
+          <text x="655" y="300" font-size="11.5" fill="#525866" text-anchor="middle">2029E</text>
+
+          <rect x="743" y="51.6" width="40" height="228.4" fill="#0a2240"/>
+          <rect x="787" y="53.5" width="40" height="226.5" fill="#5c1a26"/>
+          <text x="763" y="46" font-size="10.5" fill="#0a2240" text-anchor="middle" font-weight="700">4,111</text>
+          <text x="807" y="48.5" font-size="10.5" fill="#5c1a26" text-anchor="middle" font-weight="700">4,077</text>
+          <text x="785" y="300" font-size="11.5" fill="#525866" text-anchor="middle">2030E</text>
+        </svg>
+      </div>
+
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>테크 섹터 자금조달 갭 추정 ($bn)</th><th class="num">2025</th><th class="num">2026</th><th class="num">2027</th><th class="num">2028</th><th class="num">2029</th><th class="num">2030</th></tr></thead>
+        <tbody>
+          <tr><td><b>현금흐름</b></td><td class="num">1,652</td><td class="num">2,150</td><td class="num">2,640</td><td class="num">3,130</td><td class="num">3,621</td><td class="num">4,111</td></tr>
+          <tr><td><b>Capex</b></td><td class="num">1,336</td><td class="num">1,750</td><td class="num">2,332</td><td class="num">2,914</td><td class="num">3,495</td><td class="num">4,077</td></tr>
+          <tr><td><b>현금흐름 − Capex</b></td><td class="num pos">316</td><td class="num pos">400</td><td class="num pos">308</td><td class="num pos">217</td><td class="num pos">125</td><td class="num pos">34</td></tr>
+          <tr><td>Buyback·배당 후 자금조달 갭</td><td class="num neg">-384</td><td class="num neg">-500</td><td class="num neg">-696</td><td class="num neg">-936</td><td class="num neg">-1,176</td><td class="num neg">-1,284</td></tr>
+          <tr><td>갭 충당 필요 순부채</td><td class="num">384</td><td class="num">500</td><td class="num">696</td><td class="num">936</td><td class="num">1,176</td><td class="num">1,284</td></tr>
+          <tr><td>— 대출/SPV/프라이빗 크레딧 조달</td><td class="num">230</td><td class="num">175</td><td class="num">348</td><td class="num">468</td><td class="num">588</td><td class="num">642</td></tr>
+          <tr><td>— 회사채 발행 조달</td><td class="num">154</td><td class="num">325</td><td class="num">348</td><td class="num">468</td><td class="num">588</td><td class="num">642</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="callout"><span class="t">가정</span>2026년 이후는 capex 연 25%, 현금흐름 연 20% 성장의 가상 시나리오. 이 보수적 가정에서도 영업현금흐름이 capex를 계속 상회하며, 자금조달 갭은 전적으로 buyback·배당 유지에서 비롯됨.</div>
+
+      <h3 class="sec" id="sec3"><span class="n">3</span>반도체 VaR 쇼크와 positioning 조정 — "Bottoming out?"</h3>
+      <ul class="pts">
+        <li>최근 AI 인프라 주식 조정은 <b>반도체 VaR 쇼크 빈도 증가</b>라는 맥락에서 해석 필요. 6월 17일자 노트에서 밝혔듯, 올해 2분기부터 AI 사이클 펀더멘털이 견조하더라도 반도체 VaR 쇼크가 잦아지는 새로운 국면에 진입 — 메모리를 포함한 <b>반도체 주식의 전체 주식시장 내 비중이 급등</b>했기 때문.</li>
+        <li>VaR 쇼크는 펀더멘털 트리거 없이도 <b>positioning 조정만으로 발생</b> 가능. 주식 배분 확대 + 낮은 순 주식 공급이라는 두 구조적 요인이 변동성을 낮추면서, VaR 프레임워크를 쓰는 투자자들이 저변동성 구간에 포지션을 키웠다가 변동성 상승 시 강제 축소 → <b>자기강화적 변동성 매도</b> 유발.</li>
+        <li><b>Risk capital 기준 반도체 중요도는 시총 비중을 크게 상회</b>. MSCI ACWI 내 섹터별 risk capital 비중(시총 비중 × 6개월 연율화 변동성)으로 추정 시 IT 섹터는 <b>약 40%(시총 비중 28%)</b>, 그중 반도체 산업군은 <b>약 21%(시총 비중 13%)</b>. 즉 반도체가 글로벌 주식시장 risk capital의 약 1/5을 소비.</li>
+        <li>VaR 민감 투자자(헤지펀드·자산운용사)의 취약성은 <b>SMH(반도체 ETF)와 HFRX 주식 헤지 지수의 동조성</b>으로 확인 — 9월 말 이후 두 지수가 밀접하게 동행(올해 4월 초~7월 말과 유사). 상승 국면에서는 헤지펀드의 높은 positioning을, 조정 국면에서는 타이트한 리스크 한도에 따른 <b>강제 de-risking이 낙폭을 증폭</b>시킴을 시사.</li>
+        <li>최근 반도체 하락으로 <b>CTA 등 모멘텀 투자자를 포함한 헤지펀드의 반도체 long 과잉 포지션은 대부분 해소</b>된 것으로 추정 (SMH 모멘텀 signal 급락).</li>
+        <li>cross-asset positioning monitor의 광범위 주식 positioning proxy(2016년 이후 composite percentile)는 <b>9월 중순 고점(~80 percentile) 대비 현재 ~65 percentile</b>로 크게 하락. 10월 14일자 노트의 단기 역풍은 일부 유효하나, 하방을 제한하기 시작할 수 있는 조정 신호.</li>
+      </ul>
+
+      <div class="grid2">
+        <div class="chart-card">
+          <div class="ct">Cross Asset Positioning Monitor (현재 percentile, 10/20 기준)</div>
+          <svg viewBox="0 0 880 340" width="100%">
+            <line x1="180" y1="10" x2="180" y2="330" stroke="#cfd6e0"/>
+            <line x1="500" y1="10" x2="500" y2="330" stroke="#eef1f5" stroke-dasharray="3,3"/>
+            <line x1="820" y1="10" x2="820" y2="330" stroke="#eef1f5"/>
+            <text x="180" y="338" font-size="10" fill="#8a93a3" text-anchor="middle">0</text>
+            <text x="500" y="338" font-size="10" fill="#8a93a3" text-anchor="middle">0.5</text>
+            <text x="820" y="338" font-size="10" fill="#8a93a3" text-anchor="middle">1.0</text>
+            <text x="170" y="31" font-size="12" fill="#1b1e24" text-anchor="end">Equities</text><rect x="180" y="20" width="416" height="16" fill="#0a2240"/><text x="602" y="32" font-size="11" fill="#0a2240" font-weight="700">0.65</text>
+            <text x="170" y="59" font-size="12" fill="#1b1e24" text-anchor="end">Govt Bonds</text><rect x="180" y="48" width="371" height="16" fill="#0a2240"/><text x="557" y="60" font-size="11" fill="#0a2240" font-weight="700">0.58</text>
+            <text x="170" y="87" font-size="12" fill="#1b1e24" text-anchor="end">Credit</text><rect x="180" y="76" width="77" height="16" fill="#5c1a26"/><text x="263" y="88" font-size="11" fill="#5c1a26" font-weight="700">0.12</text>
+            <text x="170" y="115" font-size="12" fill="#1b1e24" text-anchor="end">Dollar</text><rect x="180" y="104" width="544" height="16" fill="#0a2240"/><text x="730" y="116" font-size="11" fill="#0a2240" font-weight="700">0.85</text>
+            <text x="170" y="143" font-size="12" fill="#1b1e24" text-anchor="end">Commodities ex Gold</text><rect x="180" y="132" width="499" height="16" fill="#0a2240"/><text x="685" y="144" font-size="11" fill="#0a2240" font-weight="700">0.78</text>
+            <text x="170" y="171" font-size="12" fill="#1b1e24" text-anchor="end">Gold</text><rect x="180" y="160" width="250" height="16" fill="#5c1a26"/><text x="436" y="172" font-size="11" fill="#5c1a26" font-weight="700">0.39</text>
+            <text x="170" y="199" font-size="12" fill="#1b1e24" text-anchor="end">Bitcoin</text><rect x="180" y="188" width="538" height="16" fill="#0a2240"/><text x="724" y="200" font-size="11" fill="#0a2240" font-weight="700">0.84</text>
+            <text x="170" y="227" font-size="12" fill="#1b1e24" text-anchor="end">EM Equities</text><rect x="180" y="216" width="518" height="16" fill="#0a2240"/><text x="704" y="228" font-size="11" fill="#0a2240" font-weight="700">0.81</text>
+            <text x="170" y="255" font-size="12" fill="#1b1e24" text-anchor="end">EM Bonds/FX</text><rect x="180" y="244" width="32" height="16" fill="#5c1a26"/><text x="218" y="256" font-size="11" fill="#5c1a26" font-weight="700">0.05</text>
+            <text x="170" y="283" font-size="12" fill="#1b1e24" text-anchor="end">Japan Equities</text><rect x="180" y="272" width="378" height="16" fill="#0a2240"/><text x="564" y="284" font-size="11" fill="#0a2240" font-weight="700">0.59</text>
+            <text x="170" y="311" font-size="12" fill="#1b1e24" text-anchor="end">Europe Equities</text><rect x="180" y="300" width="371" height="16" fill="#0a2240"/><text x="557" y="312" font-size="11" fill="#0a2240" font-weight="700">0.58</text>
+          </svg>
+        </div>
+        <div class="chart-card">
+          <div class="ct">US Equity Sectors Positioning (현재 percentile, 10/20 기준)</div>
+          <svg viewBox="0 0 880 340" width="100%">
+            <line x1="180" y1="10" x2="180" y2="330" stroke="#cfd6e0"/>
+            <line x1="500" y1="10" x2="500" y2="330" stroke="#eef1f5" stroke-dasharray="3,3"/>
+            <line x1="820" y1="10" x2="820" y2="330" stroke="#eef1f5"/>
+            <text x="180" y="338" font-size="10" fill="#8a93a3" text-anchor="middle">0</text>
+            <text x="500" y="338" font-size="10" fill="#8a93a3" text-anchor="middle">0.5</text>
+            <text x="820" y="338" font-size="10" fill="#8a93a3" text-anchor="middle">1.0</text>
+            <text x="170" y="31" font-size="12" fill="#1b1e24" text-anchor="end">Energy</text><rect x="180" y="20" width="493" height="16" fill="#0a2240"/><text x="679" y="32" font-size="11" fill="#0a2240" font-weight="700">0.77</text>
+            <text x="170" y="62" font-size="12" fill="#1b1e24" text-anchor="end">Discretionary</text><rect x="180" y="51" width="416" height="16" fill="#0a2240"/><text x="602" y="63" font-size="11" fill="#0a2240" font-weight="700">0.65</text>
+            <text x="170" y="93" font-size="12" fill="#1b1e24" text-anchor="end">Health Care</text><rect x="180" y="82" width="365" height="16" fill="#0a2240"/><text x="551" y="94" font-size="11" fill="#0a2240" font-weight="700">0.57</text>
+            <text x="170" y="124" font-size="12" fill="#1b1e24" text-anchor="end">Materials</text><rect x="180" y="113" width="346" height="16" fill="#0a2240"/><text x="532" y="125" font-size="11" fill="#0a2240" font-weight="700">0.54</text>
+            <text x="170" y="155" font-size="12" fill="#1b1e24" text-anchor="end">Technology</text><rect x="180" y="144" width="339" height="16" fill="#0a2240"/><text x="525" y="156" font-size="11" fill="#0a2240" font-weight="700">0.53</text>
+            <text x="170" y="186" font-size="12" fill="#1b1e24" text-anchor="end">Comm. Services</text><rect x="180" y="175" width="275" height="16" fill="#0a2240"/><text x="461" y="187" font-size="11" fill="#0a2240" font-weight="700">0.43</text>
+            <text x="170" y="217" font-size="12" fill="#1b1e24" text-anchor="end">Utilities</text><rect x="180" y="206" width="230" height="16" fill="#5c1a26"/><text x="416" y="218" font-size="11" fill="#5c1a26" font-weight="700">0.36</text>
+            <text x="170" y="248" font-size="12" fill="#1b1e24" text-anchor="end">Industrials</text><rect x="180" y="237" width="218" height="16" fill="#5c1a26"/><text x="404" y="249" font-size="11" fill="#5c1a26" font-weight="700">0.34</text>
+            <text x="170" y="279" font-size="12" fill="#1b1e24" text-anchor="end">Staples</text><rect x="180" y="268" width="198" height="16" fill="#5c1a26"/><text x="384" y="280" font-size="11" fill="#5c1a26" font-weight="700">0.31</text>
+            <text x="170" y="310" font-size="12" fill="#1b1e24" text-anchor="end">Financials</text><rect x="180" y="299" width="141" height="16" fill="#5c1a26"/><text x="327" y="311" font-size="11" fill="#5c1a26" font-weight="700">0.22</text>
+          </svg>
+        </div>
+      </div>
+      <div class="callout"><span class="t">읽는 법</span>positioning monitor는 선물 포지션, CTA 모멘텀 signal, 뮤추얼펀드·헤지펀드 beta, risk-parity 레버리지, 고객 서베이, 비은행 투자자 자산배분, short interest 등을 집계한 percentile(0=최소, 1=최대). Dollar(0.85)·Bitcoin(0.84)·EM Equities(0.81)·Commodities ex Gold(0.78)는 여전히 높은 반면, Credit(0.12)·EM Bonds/FX(0.05)는 극단적으로 낮은 수준.</div>
+
+      <h3 class="sec" id="sec4"><span class="n">4</span>미국 자산 분산 유출 — 총량 기준 징후 미미</h3>
+      <ul class="pts">
+        <li>지난해 "Liberation Day" 관세 발표 이후 부상한 <b>미국 자산 분산(diversification) 논의</b>가 올해 그린란드 갈등·중동 분쟁 개시 이후 재점화. 실제 데이터는 어떠한가?</li>
+        <li><b>TIC 데이터(2026년 8월까지)</b>: 외국인의 미국 주식·채권 순매수는 최근 수개월 견조 유지. 7월 합산 순매수 <b>$40bn</b>은 2025년 4월 순매도 이후 가장 약했으나, <b>8월 약 $300bn</b>으로 강하게 반등.</li>
+        <li>월별 변동을 걷어낸 <b>2026년 YTD 월평균 순매수는 주식 약 $75bn, 채권 약 $85bn 미만</b> — 2025년 평균(주식 $60bn 소폭 상회, 채권 $75bn 소폭 하회)을 모두 상회. 즉 "de-dollarization" 우려가 총량 기준 지속적 유출로 이어진 징후는 거의 없음.</li>
+        <li>국제수지 기준 <b>미국·유로존·일본 모두 외국인 포트폴리오 유입이 YTD 견조</b>. 유로존 채권은 YTD 유입이 2025년 연간을 이미 상회했으나, 9월 프랑스-독일 스프레드 확대 본격화 전인 <b>8월에 소폭 유출(-$8bn)</b>.</li>
+        <li>미국 자산 이탈 증거가 있는 곳은 <b>외환보유고 운용기관</b>(달러 비중 하락) — 다만 이는 장기 추세이며, 총 보유고 기준 <b>최대 수혜는 금</b>(금 비중이 달러 외 통화 비중을 상회하는 수준까지 상승).</li>
+        <li><b>FX 헤지 비율</b>: 1H25 덴마크·핀란드 연기금, 2H25 호주 슈퍼애뉴에이션 펀드에서 헤지 비율 상승 증거가 있었으나, <b>올해 덴마크·핀란드는 반전(하락)</b>, 호주는 거의 변화 없음.</li>
+        <li>헤지 수요가 급증하면 <b>cross-currency basis</b>에 나타나야 하나, 주요 DM 통화(EUR·JPY·GBP·AUD·CAD·CHF)의 1y 달러 basis는 달러 익스포저 헤지 성향이 완만한 수준에 그침을 시사.</li>
+        <li>미국 외 상장 <b>통화헤지형 vs 비헤지형 미국 주식 ETF</b> 유입도 2025년 초 이후 헤지 수요 증가 징후 없음. 오히려 4월 말 이후 <b>비헤지형 ETF로의 유입이 비례적으로 더 컸으며</b>, 10월 초 헤지형 유입 반등에도 이 흐름은 지속.</li>
+      </ul>
+
+      <div class="chart-card">
+        <div class="ct">외국인의 미국 주식·채권 순매수 — 2026년 월별 ($bn)</div>
+        <div class="legend">
+          <span><i style="background:var(--brand)"></i>US Equities</span>
+          <span><i style="background:var(--accent)"></i>US Bonds</span>
+        </div>
+        <svg viewBox="0 0 880 300" width="100%">
+          <line x1="70" y1="30" x2="850" y2="30" stroke="#eef1f5"/>
+          <line x1="70" y1="126" x2="850" y2="126" stroke="#eef1f5"/>
+          <line x1="70" y1="222" x2="850" y2="222" stroke="#cfd6e0"/>
+          <line x1="70" y1="270" x2="850" y2="270" stroke="#eef1f5"/>
+          <text x="62" y="34" font-size="11" fill="#8a93a3" text-anchor="end">200</text>
+          <text x="62" y="130" font-size="11" fill="#8a93a3" text-anchor="end">100</text>
+          <text x="62" y="226" font-size="11" fill="#8a93a3" text-anchor="end">0</text>
+          <text x="62" y="274" font-size="11" fill="#8a93a3" text-anchor="end">-50</text>
+
+          <rect x="84.75" y="222" width="32" height="8.64" fill="#0a2240"/>
+          <rect x="120.75" y="154.8" width="32" height="67.2" fill="#5c1a26"/>
+          <text x="100.75" y="241" font-size="10" fill="#0a2240" text-anchor="middle">-9</text>
+          <text x="136.75" y="150" font-size="10" fill="#5c1a26" text-anchor="middle">70</text>
+          <text x="118.75" y="290" font-size="11.5" fill="#525866" text-anchor="middle">Jan</text>
+
+          <rect x="182.25" y="199.92" width="32" height="22.08" fill="#0a2240"/>
+          <rect x="218.25" y="147.12" width="32" height="74.88" fill="#5c1a26"/>
+          <text x="198.25" y="195" font-size="10" fill="#0a2240" text-anchor="middle">23</text>
+          <text x="234.25" y="142" font-size="10" fill="#5c1a26" text-anchor="middle">78</text>
+          <text x="216.25" y="290" font-size="11.5" fill="#525866" text-anchor="middle">Feb</text>
+
+          <rect x="279.75" y="212.4" width="32" height="9.6" fill="#0a2240"/>
+          <rect x="315.75" y="139.44" width="32" height="82.56" fill="#5c1a26"/>
+          <text x="295.75" y="207" font-size="10" fill="#0a2240" text-anchor="middle">10</text>
+          <text x="331.75" y="134" font-size="10" fill="#5c1a26" text-anchor="middle">86</text>
+          <text x="313.75" y="290" font-size="11.5" fill="#525866" text-anchor="middle">Mar</text>
+
+          <rect x="377.25" y="116.4" width="32" height="105.6" fill="#0a2240"/>
+          <rect x="413.25" y="127.92" width="32" height="94.08" fill="#5c1a26"/>
+          <text x="393.25" y="111" font-size="10" fill="#0a2240" text-anchor="middle">110</text>
+          <text x="429.25" y="123" font-size="10" fill="#5c1a26" text-anchor="middle">98</text>
+          <text x="411.25" y="290" font-size="11.5" fill="#525866" text-anchor="middle">Apr</text>
+
+          <rect x="474.75" y="92.4" width="32" height="129.6" fill="#0a2240"/>
+          <rect x="510.75" y="99.12" width="32" height="122.88" fill="#5c1a26"/>
+          <text x="490.75" y="87" font-size="10" fill="#0a2240" text-anchor="middle">135</text>
+          <text x="526.75" y="94" font-size="10" fill="#5c1a26" text-anchor="middle">128</text>
+          <text x="508.75" y="290" font-size="11.5" fill="#525866" text-anchor="middle">May</text>
+
+          <rect x="572.25" y="46.32" width="32" height="175.68" fill="#0a2240"/>
+          <rect x="608.25" y="196.08" width="32" height="25.92" fill="#5c1a26"/>
+          <text x="588.25" y="41" font-size="10" fill="#0a2240" text-anchor="middle">183</text>
+          <text x="624.25" y="191" font-size="10" fill="#5c1a26" text-anchor="middle">27</text>
+          <text x="606.25" y="290" font-size="11.5" fill="#525866" text-anchor="middle">Jun</text>
+
+          <rect x="669.75" y="218.16" width="32" height="3.84" fill="#0a2240"/>
+          <rect x="705.75" y="186.48" width="32" height="35.52" fill="#5c1a26"/>
+          <text x="685.75" y="213" font-size="10" fill="#0a2240" text-anchor="middle">4</text>
+          <text x="721.75" y="181" font-size="10" fill="#5c1a26" text-anchor="middle">37</text>
+          <text x="703.75" y="290" font-size="11.5" fill="#525866" text-anchor="middle">Jul</text>
+
+          <rect x="767.25" y="74.16" width="32" height="147.84" fill="#0a2240"/>
+          <rect x="803.25" y="80.88" width="32" height="141.12" fill="#5c1a26"/>
+          <text x="783.25" y="69" font-size="10" fill="#0a2240" text-anchor="middle">154</text>
+          <text x="819.25" y="76" font-size="10" fill="#5c1a26" text-anchor="middle">147</text>
+          <text x="801.25" y="290" font-size="11.5" fill="#525866" text-anchor="middle">Aug</text>
+        </svg>
+        <div class="chart-src">Source: US TIC</div>
+      </div>
+
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>외국인 포트폴리오 순유입 ($bn)</th><th class="num">US 주식</th><th class="num">US 채권</th><th class="num">유로존 주식</th><th class="num">유로존 채권</th><th class="num">일본 주식</th><th class="num">일본 채권</th></tr></thead>
+        <tbody>
+          <tr><td><b>2025 연간</b></td><td class="num">742</td><td class="num">877</td><td class="num">415</td><td class="num">441</td><td class="num">58</td><td class="num">144</td></tr>
+          <tr><td>Jan</td><td class="num neg">-9</td><td class="num">70</td><td class="num">69</td><td class="num">69</td><td class="num">18</td><td class="num">34</td></tr>
+          <tr><td>Feb</td><td class="num">23</td><td class="num">78</td><td class="num">73</td><td class="num">79</td><td class="num">22</td><td class="num">19</td></tr>
+          <tr><td>Mar</td><td class="num">10</td><td class="num">86</td><td class="num neg">-23</td><td class="num">76</td><td class="num neg">-46</td><td class="num">12</td></tr>
+          <tr><td>Apr</td><td class="num">110</td><td class="num">98</td><td class="num">28</td><td class="num">3</td><td class="num">59</td><td class="num">27</td></tr>
+          <tr><td>May</td><td class="num">135</td><td class="num">128</td><td class="num">82</td><td class="num">47</td><td class="num">14</td><td class="num">4</td></tr>
+          <tr><td>Jun</td><td class="num">183</td><td class="num">27</td><td class="num">72</td><td class="num">218</td><td class="num neg">-18</td><td class="num neg">-11</td></tr>
+          <tr><td>Jul</td><td class="num">4</td><td class="num">37</td><td class="num">50</td><td class="num">54</td><td class="num">11</td><td class="num">7</td></tr>
+          <tr><td>Aug</td><td class="num">154</td><td class="num">147</td><td class="num">11</td><td class="num neg">-8</td><td class="num">0</td><td class="num">1</td></tr>
+          <tr><td><b>2026 YTD</b></td><td class="num"><b>608</b></td><td class="num"><b>671</b></td><td class="num"><b>362</b></td><td class="num"><b>538</b></td><td class="num"><b>61</b></td><td class="num"><b>94</b></td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="callout"><span class="t">주목</span>8개월 만에 유로존 채권(538)은 2025년 연간(441)을 이미 넘어섰고, 미국 주식(608)·채권(671)도 연환산 시 2025년을 상회하는 속도. 분산 유출 논의와 달리 실제 돈은 미국·유럽·일본 모두로 유입 중.</div>
+
+      <h3 class="sec" id="sec5"><span class="n">5</span>Crypto 규제 — 단기는 규제기관 주도, 장기 내구성은 입법에 달려</h3>
+      <ul class="pts">
+        <li>9월 15일 상원의 <b>CLARITY Act 진전 실패</b>는 크립토 시장에 큰 악재가 될 수 있었으나, 올해 통과 가능성이 낮아지고 기대가 2027년으로 이연된 가운데서도 <b>시장 심리는 비교적 건설적</b>으로 유지. 관심은 "규제기관이 지금 할 수 있는 것"으로 이동.</li>
+        <li><b>SEC·CFTC·OCC</b>가 기존 권한을 활용해 기관 참여를 가로막던 실무적 마찰을 제거 중. 시장 입장에서 핵심은 법적 명칭이 아니라 <b>기관 참여를 위한 실행 가능한 규제 채널</b>이 만들어지느냐.</li>
+        <li><b>SEC — 규제된 토큰화</b>: 5년 한시 Innovation Exemption을 통해 상장 주식의 토큰화 버전이 엄격히 통제된 venue에서 <b>24/7에 가까운 장시간 거래·신속 결제</b>로 거래되는 경로를 마련 중. 토큰은 기초 주식과 동일한 경제적 익스포저·의결권을 유지해야 하며, synthetic 토큰은 제외. venue별 지원 종목 수와 전통시장 대비 거래 규모에 상한.</li>
+        <li><b>발행사는 토큰화 opt-out 가능</b>하며 최근 수주간 이를 행사하는 기업이 증가 → 이더리움 등 application 토큰 심리 훼손: <b>ETH ETF 유출</b> 및 <b>ETH 선물 포지션 proxy 악화</b>(9월 15일 SEC 발표 직후 ETF 유입·선물 포지션이 모두 증가했던 초기 국면과 대조).</li>
+        <li><b>CFTC — 레버리지 크립토 거래 onshore화</b>: 현재 대부분 미국 참여자가 접근 불가한 offshore venue에서 이뤄지는 레버리지 거래를 compliant 미국 플랫폼(등록 중개기관 통한 계좌·자산 보관)으로 가져오는 새 시장 카테고리 구상. 초기 단계·의견수렴 성격이며 <b>의미 있는 시행은 2027년 이전 어려움</b>. 다만 onshore 이동은 유동성 심화·가격 형성 개선·기관 친화적 venue 발전이라는 간접적이지만 중요한 효과.</li>
+        <li><b>스테이블코인 — 규제 측면에서 가장 내구성 있는 세그먼트</b>: GENIUS Act와 관련 조치로 결제·유동성 수단으로 자리매김. OCC는 스테이블코인 발행사·디지털자산 기업에 <b>national trust charter</b>를 확대 부여(커스터디·준비금 운용·발행을 연방 감독 하에). 지역은행 단체 ICBA가 OCC를 상대로 승인 관련 소송을 제기했으나, 일단 부여된 charter는 실무상 되돌리기 어려움.</li>
+        <li><b>FASB</b>는 적격 스테이블코인을 기업 재무제표상 <b>현금성자산(cash equivalents)</b>으로 분류하는 회계처리를 검토 중(의견수렴 <b>11월 19일</b>까지). 채택 시 크립토 거래를 넘어 기업·기관의 결제·유동성 관리로 활용 확대.</li>
+        <li><b>결론</b>: 규제기관 조치가 Clarity Act 실패의 부정적 영향을 일부 상쇄하지만, 포괄적 시장구조 입법 전까지 <b>정치·법적 risk premia는 지속</b>. 현재 크립토 산업은 <b>빠르면 2년 뒤 민주당 집권 시 뒤집힐 수 있는 규제 조치의 patchwork</b>에 의존하는 상황.</li>
+      </ul>
+
+      <h3 class="sec" id="sec6"><span class="n">6</span>주요 모니터 — Fund Flow · 투자자 성과 · 기타</h3>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Cross Asset Fund Flow Monitor (10/14 기준)</th><th class="num">4주 평균 ($bn)</th><th class="num">2025 평균 ($bn)</th><th>최근 percentile</th></tr></thead>
+        <tbody>
+          <tr><td><b>All Equities</b></td><td class="num">2.0</td><td class="num">8.1</td><td>낮음</td></tr>
+          <tr><td><b>All Bonds</b></td><td class="num">7.7</td><td class="num">11.3</td><td>중립</td></tr>
+          <tr><td>US Equities</td><td class="num neg">-3.6</td><td class="num">3.5</td><td>낮음 (순유출)</td></tr>
+          <tr><td>US Bonds</td><td class="num">5.6</td><td class="num">4.3</td><td>중립~높음</td></tr>
+          <tr><td>Non-US Equities</td><td class="num">5.6</td><td class="num">4.6</td><td>높음</td></tr>
+          <tr><td>US HG Bonds</td><td class="num pos">13.9</td><td class="num">3.4</td><td>최대 수준</td></tr>
+          <tr><td>US HY Bonds</td><td class="num neg">-0.3</td><td class="num">0.4</td><td>낮음</td></tr>
+          <tr><td>US MMFs</td><td class="num">0.0</td><td class="num">4.0</td><td>낮음</td></tr>
+          <tr><td>EM Equities</td><td class="num neg">-0.7</td><td class="num">0.9</td><td>낮음</td></tr>
+          <tr><td>Japan Equities</td><td class="num neg">-0.5</td><td class="num neg">-0.1</td><td>낮음</td></tr>
+          <tr><td>China Equities</td><td class="num neg">-0.62</td><td class="num neg">-0.15</td><td>낮음</td></tr>
+          <tr><td>Europe Equities</td><td class="num">0.1</td><td class="num">0.9</td><td>중립~높음</td></tr>
+          <tr><td>Europe MMFs</td><td class="num">1.0</td><td class="num">3.8</td><td>낮음</td></tr>
+          <tr><td>Other Equities</td><td class="num pos">7.00</td><td class="num">3.00</td><td>높음</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-src">Source: Lipper, ICI, Bloomberg Finance L.P. (중국 역내 A-share ETF 제외)</div>
+
+      <div class="tbl-wrap" style="margin-top:18px;">
+      <table class="tbl">
+        <thead><tr><th>투자자 유형별 성과 (%, 10/19 기준)</th><th class="num">2022</th><th class="num">2023</th><th class="num">2024</th><th class="num">2025</th><th class="num">2026 YTD</th></tr></thead>
+        <tbody>
+          <tr><td>Equity L/S</td><td class="num neg">-7.0</td><td class="num">11.3</td><td class="num">13.0</td><td class="num">15.5</td><td class="num">6.6</td></tr>
+          <tr><td>Macro ex-CTAs</td><td class="num">11.5</td><td class="num">1.3</td><td class="num">6.0</td><td class="num">10.2</td><td class="num">7.1</td></tr>
+          <tr><td>CTAs</td><td class="num">14.7</td><td class="num neg">-2.5</td><td class="num">2.9</td><td class="num neg">-1.1</td><td class="num pos">13.7</td></tr>
+          <tr><td>Risk Parity Funds</td><td class="num neg">-18.6</td><td class="num">6.0</td><td class="num">5.0</td><td class="num">17.3</td><td class="num">6.1</td></tr>
+          <tr><td>US Balanced MFs</td><td class="num neg">-13.0</td><td class="num">13.8</td><td class="num">11.4</td><td class="num">14.4</td><td class="num">7.1</td></tr>
+          <tr><td><b>MSCI AC World</b></td><td class="num neg">-18.4</td><td class="num">22.2</td><td class="num">17.5</td><td class="num">22.3</td><td class="num">12.6</td></tr>
+          <tr><td><b>Barclays Global Agg</b></td><td class="num neg">-11.2</td><td class="num">7.1</td><td class="num">3.4</td><td class="num">4.9</td><td class="num neg">-0.6</td></tr>
+          <tr><td><b>S&amp;P Riskparity Vol 10</b></td><td class="num neg">-16.2</td><td class="num">15.0</td><td class="num">5.4</td><td class="num">15.9</td><td class="num">15.8</td></tr>
+          <tr><td><b>60/40 (US)</b></td><td class="num neg">-15.4</td><td class="num">18.6</td><td class="num">16.4</td><td class="num">12.7</td><td class="num">7.8</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-src">Source: Bloomberg Finance L.P., HFR, Pivotal Path</div>
+
+      <ul class="pts" style="margin-top:18px;">
+        <li><b>Spec position (10/13)</b>: Gasoline·US 10YR·USD·US 5YR·US Equities long이 Z-score 상위, WTI·GBP·NZD·AUD·Silver short이 하위. <b>USD 순 spec long은 2014년 이후 최고 수준 근접</b>, 금 spec long은 급감.</li>
+        <li><b>변동성 (10/19)</b>: S&amp;P 500 3m implied vol 15%(1y 저점 14%, 9/3), implied/realized 1.55x. 10y US swaps vol은 1y 고점(108%, 10/5) 부근인 100%로 downside 38%. CDX IG 2.15x·CDX HY 2.07x로 크레딧 implied vol이 realized 대비 가장 비쌈.</li>
+        <li><b>Short interest</b>: SPY·QQQ short interest는 2018년 이후 최저권 부근(10/20 기준). S&amp;P 500 섹터별로는 Utilities·Staples·Industrials의 short interest Z-score가 가장 높고, Discretionary·Comm Services·Energy가 가장 낮음.</li>
+        <li><b>Bitcoin</b>: CME 선물 OI 기반 포지션 proxy는 2026년 중 급등 후 고점권 횡보. 현재 시장가 <b>$83k</b>는 생산원가 추정치 <b>$88k</b>를 하회. CME Bitcoin·Ethereum 거래대금 y/y -33%·-20%.</li>
+        <li><b>Equity market health map (10/16)</b>: Economic momentum·Positions(inverse) 축이 양호한 반면 Value(inverse)·Flows(inverse)·Price momentum(inverse) 축은 열위. 6개월 S&amp;P 500 상승 확률(로지스틱 모델)은 75% cutoff 상회 유지.</li>
+        <li><b>기업활동</b>: 글로벌 M&amp;A 4주 평균 $97.2bn, YTD y/y +32%(US target +44%). 2026 YTD 글로벌 buyback 발표액은 전년 수준을 하회하나 US 비중 여전히 압도적. 미국 HG 채권 10월 순발행은 10/15까지 전년 동기 대비 크게 둔화(USD 순발행 y/y -50%).</li>
+      </ul>
+
+      <h3 class="sec" id="risk"><span class="n">!</span>리스크 &amp; 모니터링 포인트</h3>
+      <div class="risk-box">
+        <h4>Key Risks</h4>
+        <ul>
+          <li><b>VaR 쇼크 재발:</b> 반도체가 글로벌 주식 risk capital의 ~1/5을 차지하는 구조가 바뀌지 않는 한, 펀더멘털 트리거 없이도 positioning 조정발 변동성 쇼크가 반복될 수 있음. "바닥 다지기"는 positioning 관점의 판단이며 펀더멘털 전환 신호는 아님.</li>
+          <li><b>Neocloud 전염:</b> 하이일드 조달비용 상승이 Neocloud를 넘어 테크 전반으로 확산되면 buyback 연기·circular financing 등 대응이 불가피 — 주주환원 축소는 그 자체로 주가에 부담.</li>
+          <li><b>헤지펀드 de-risking 증폭:</b> HFRX–SMH 동조가 지속되는 한 추가 조정 시 타이트한 리스크 한도가 낙폭을 키울 수 있음.</li>
+          <li><b>유럽 소버린:</b> 9월 프랑스-독일 스프레드 확대가 유로존 채권 외국인 유입(8월 -$8bn) 반전으로 이어질 가능성.</li>
+          <li><b>Crypto 정치 리스크:</b> 규제기관 조치는 입법이 아니므로 정권 교체 시 2년 내 번복 가능. ICBA의 OCC charter 소송, 발행사 토큰화 opt-out 확산에 따른 ETH 심리 악화 지속 여부.</li>
+        </ul>
+        <h4 style="margin-top:14px;">모니터링 포인트</h4>
+        <ul>
+          <li>주식 positioning composite percentile의 추가 하락/반등 여부 (9월 중순 고점 ~80 → 현재 ~65).</li>
+          <li>SMH 모멘텀 signal 및 HFRX–SMH 동조성 해소 시점.</li>
+          <li>TIC 9월 데이터 — 8월 $300bn 반등의 지속성, 유로존 채권 유입 반전 여부.</li>
+          <li>Cross-currency basis 및 통화헤지형 ETF 유입 추이 — 달러 헤지 수요 급증 신호 유무.</li>
+          <li>FASB 스테이블코인 회계처리 의견수렴 마감(11/19), ETH ETF 유출·선물 포지션 proxy, CFTC onshore 레버리지 거래 제안 진행 상황.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div>본 문서는 투자 권유를 목적으로 하지 않습니다.</div>
+  </footer>
+
+</div>
+</body>
+</html>
