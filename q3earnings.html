@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Q3 2026 Midseason Earnings Update</title>
+<style>
+  :root{
+    --brand:#1a2b4a;
+    --brand-deep:#0e1729;
+    --accent:#6b8cae;
+    --accent2:#3d5a80;
+    --paper:#f4f6f9;
+    --card:#ffffff;
+    --ink:#1b1e24;
+    --ink-soft:#525866;
+    --line:#dde3ec;
+    --buy:#1f7a4d;
+    --bear:#c0392b;
+    --bull:#1f6fb2;
+    --warn:#8a4b15;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);font-family:'Helvetica Neue','Pretendard','Noto Sans KR',Arial,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:960px;margin:0 auto;padding:40px 6vw 90px;}
+  .intro{border-left:4px solid var(--accent);padding:8px 0 8px 20px;margin-bottom:48px;}
+  .intro .eyebrow{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent2);font-weight:700;}
+  .intro h1{font-size:26px;margin:8px 0 6px;color:var(--brand);}
+  .report{margin-bottom:64px;scroll-margin-top:70px;}
+  .report-head{background:linear-gradient(135deg,var(--brand) 0%, var(--brand-deep) 100%);color:#fff;border-radius:10px 10px 0 0;padding:28px 30px;}
+  .report-head .tag{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#9fb4d4;font-weight:700;}
+  .report-head h2{margin:8px 0 14px;font-size:23px;line-height:1.35;}
+  .report-head .lede{font-family:'Georgia',serif;font-size:15.5px;color:#e3ebf6;border-top:1px solid rgba(255,255,255,0.16);padding-top:14px;margin:0;}
+  .report-body{background:var(--card);border:1px solid var(--line);border-top:none;border-radius:0 0 10px 10px;padding:30px;}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px;}
+  .chip{border:1px solid var(--line);border-radius:8px;padding:10px 16px;background:#fafbfd;flex:1;min-width:130px;}
+  .chip .k{font-size:10.5px;letter-spacing:0.5px;text-transform:uppercase;color:var(--ink-soft);}
+  .chip .v{font-size:19px;font-weight:700;color:var(--brand);margin-top:2px;}
+  .chip .v.buy{color:var(--buy);}
+  .chip .v.sell{color:var(--bear);}
+  .chip .s{font-size:11px;color:var(--ink-soft);}
+  h3.sec{font-size:17px;color:var(--brand);margin:30px 0 12px;padding-bottom:8px;border-bottom:1.5px solid var(--line);display:flex;align-items:center;gap:10px;}
+  h3.sec .n{background:var(--brand);color:#fff;font-size:12px;font-weight:700;width:24px;height:24px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}
+  ul.pts{margin:0;padding:0;list-style:none;}
+  ul.pts li{position:relative;padding:7px 0 7px 20px;font-size:14.5px;border-bottom:1px dashed var(--line);}
+  ul.pts li:last-child{border-bottom:none;}
+  ul.pts li::before{content:"—";position:absolute;left:0;color:var(--accent2);font-weight:700;}
+  ul.pts b{color:var(--brand);}
+  table.tbl{width:100%;border-collapse:collapse;font-size:13px;margin:6px 0 4px;}
+  table.tbl th{background:var(--brand);color:#fff;text-align:left;padding:8px 10px;font-weight:600;}
+  table.tbl th.num{text-align:right;}
+  table.tbl td{padding:7px 10px;border-bottom:1px solid var(--line);}
+  table.tbl tr:nth-child(even) td{background:#f7f9fc;}
+  table.tbl td.num{text-align:right;font-variant-numeric:tabular-nums;}
+  table.tbl td.buy{color:var(--buy);font-weight:700;}
+  table.tbl td.neg{color:var(--bear);}
+  table.tbl tr.total td{font-weight:700;background:#eef2f8;}
+  .tbl-wrap{overflow-x:auto;}
+  .tbl-note{font-size:11px;color:#9aa3b2;margin:4px 0 0;}
+  .chart-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:22px 22px 14px;margin:14px 0;}
+  .chart-card .ct{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:12px;}
+  .chart-src{font-size:10.5px;color:#9aa3b2;margin-top:8px;}
+  .legend{display:flex;gap:18px;font-size:11.5px;color:var(--ink-soft);margin-bottom:4px;flex-wrap:wrap;}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .legend i{width:11px;height:11px;border-radius:2px;display:inline-block;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media(max-width:680px){.grid2{grid-template-columns:1fr;}}
+  .callout{background:#fbf6ec;border:1px solid #e8dcc3;border-radius:8px;padding:14px 18px;font-size:13px;color:var(--ink-soft);margin-top:14px;}
+  .callout .t{font-size:10.5px;font-weight:700;letter-spacing:0.6px;color:var(--warn);text-transform:uppercase;display:block;margin-bottom:5px;}
+  .risk-box{background:var(--brand);color:#dde6f3;border-radius:8px;padding:22px 24px;margin-top:14px;}
+  .risk-box h4{margin:0 0 10px;color:#fff;font-size:14.5px;}
+  .risk-box ul{margin:0;padding-left:18px;}
+  .risk-box li{margin-bottom:8px;font-size:13px;}
+  .risk-box li b{color:#fff;}
+  svg text{font-family:'Helvetica Neue','Pretendard','Noto Sans KR',Arial,sans-serif;}
+  footer{border-top:1px solid var(--line);margin-top:50px;padding-top:20px;font-size:11px;color:#9aa3b2;line-height:1.6;}
+  @media(max-width:560px){.intro h1{font-size:21px;}.report-head h2{font-size:19px;}.report-body{padding:20px 16px;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="intro">
+    <div class="eyebrow">30 October 2026</div>
+    <h1>Q3 2026 어닝시즌 중간 점검</h1>
+  </div>
+
+  <section class="report" id="rpt1">
+    <div class="report-head">
+      <div class="tag">US Portfolio Strategy</div>
+      <h2>Q3 2026 어닝시즌 중간 점검 — 이익 성장은 여전히 강하지만, 더 이상 가속하지 않는다</h2>
+      <p class="lede">S&amp;P 500 Q3 EPS 성장률은 33% y/y로 Q2와 함께 수십 년 내 최강 수준이나, 몇 분기째 이어진 '가속' 패턴은 끝났다. 추정치 상향 폭과 AI Capex 증가율 모두 정점을 지나고 있으며, 시장 breadth는 'catch up'과 'catch down'을 통해 동시에 확산되는 중이다.</p>
+    </div>
+    <div class="report-body">
+
+      <div class="chips">
+        <div class="chip"><div class="k">Q3 EPS Growth</div><div class="v">+33% y/y</div><div class="s">S&amp;P 500 전체, 60% 발표 기준</div></div>
+        <div class="chip"><div class="k">2026E / 2027E EPS</div><div class="v">$375 / $415</div><div class="s">+36% / +11% (Top-down)</div></div>
+        <div class="chip"><div class="k">S&amp;P 500 (10/29)</div><div class="v">7,720</div><div class="s">NTM P/E 19x</div></div>
+        <div class="chip"><div class="k">Target</div><div class="v">8,000 / 8,700</div><div class="s">YE 2026 (+4%) / 12개월 (+13%)</div></div>
+        <div class="chip"><div class="k">Hyperscaler Capex</div><div class="v">$806bn</div><div class="s">2026E, +96% y/y</div></div>
+      </div>
+
+      <h3 class="sec"><span class="n">1</span>핵심 메시지</h3>
+      <ul class="pts">
+        <li>Q3 실적이 드러낸 투자자들의 근본적 과제: <b>이익 성장은 강하지만 더 이상 가속하지 않는다.</b> 변동성 큰 매크로 환경과 밸류에이션 배수 하락에도 이익 전망 개선 덕에 S&amp;P 500은 <b>4년 연속 두 자릿수 수익률</b>을 향해 가는 중.</li>
+        <li>S&amp;P 500 기업 60%가 발표한 현재 Q3 EPS 성장률은 <b>33% y/y</b>로, Q2와 함께 침체 직후 회복기를 제외하면 수십 년 내 최강 분기. 다만 지난 몇 분기의 가속 패턴은 여기서 멈춤. 비경상 항목 제외 시 <b>2026년 ~30% → 2027년 18%</b>로 둔화 전망.</li>
+        <li>애널리스트들은 이번 시즌에도 선행 추정치를 상향했으나 <b>상향 속도는 둔화</b>. 시즌 시작 이후 2027년 S&amp;P 500 EPS 컨센서스 +2%. 상향 기업이 하향 기업보다 여전히 많지만 revision breadth는 최근 몇 달 대비 축소, 특히 에너지 가격 상승과 함께 <b>마진 추정치 하향</b>이 다수.</li>
+        <li>Q3 결과는 <b>AI 투자 지출은 계속 늘지만 증가율은 정점</b>이라는 시각을 뒷받침. 하이퍼스케일러 Capex 2026년 ~$800bn(+96%) → 2027년 $1.2tn(+44%). 이번 시즌 추정치는 거의 변하지 않았음(최근 분기들의 상향 패턴과 대조). AI 인프라 종목 EPS 성장률은 <b>이번 분기 80%로 피크 → 2027년 ~40%</b>로 둔화.</li>
+        <li>계속 가속하는 영역은 <b>하이퍼스케일러 클라우드 매출</b>(AMZN·GOOGL·MSFT Q3 <b>+54% y/y</b>)로 AI 투자 ROI 신호가 강화되는 중. 다만 높은 기대치와 crowded positioning이 주가에 높은 허들로 작용했고, Q3 결과는 특히 TMT에서 <b>AI disruption 리스크</b>에 대한 관심을 높임.</li>
+        <li>주가 반응은 'catch up'과 'catch down'을 통해 좁았던 breadth를 부분적으로 해소. EPS beat 종목의 median은 발표 후 S&amp;P 500 대비 <b>+150bp</b> 초과수익(기술주는 예외). 시즌 시작 이후 <b>70% 종목이 플러스</b>였지만 이들의 시총 비중은 50%에 불과 → 지수는 <b>-3%</b>, S&amp;P 500 ex-AI는 <b>+5%</b>. 향후 비(非)테크 영역의 상승 지속 여부는 <b>에너지 가격과 금리</b>가 좌우.</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">2</span>어닝 서프라이즈 &amp; 주가 반응</h3>
+      <ul class="pts">
+        <li>S&amp;P 500 기업의 <b>60%</b>가 컨센서스 EPS를 1 표준편차 이상 상회 — 역사적 평균 50%를 웃돌지만 직전 4개 분기 평균 <b>64%</b>에서는 후퇴. Miss는 9%(평균 13%).</li>
+        <li>지수 전체 Q3 EPS도 컨센서스를 상회했으나 <b>서프라이즈 규모는 Q1·Q2보다 작음</b>.</li>
+        <li>EPS beat 종목의 median은 발표 익일 S&amp;P 500 대비 <b>+152bp</b>(역사적 median 95bp 상회). 몇 분기 동안 이어진 'beat에 대한 낮은 보상' 패턴의 반전.</li>
+        <li>헤지펀드 positioning이 크게 줄었던 <b>경기민감 섹터</b>가 beat 이후 가장 강한 반응, 반면 <b>TMT의 beat는 보상받지 못함</b>(TMT -76bp vs Non-TMT +172bp).</li>
+        <li>다음 주 143개 기업(시총 21%) 발표 예정. 이번 주(10/26~30)에 시총 38%가 집중 발표되며 최고 피크 주간 통과.</li>
+      </ul>
+      <div class="grid2">
+        <div class="tbl-wrap">
+        <table class="tbl">
+          <thead><tr><th>섹터</th><th class="num">EPS beat 후 익일 초과수익(bp)</th></tr></thead>
+          <tbody>
+            <tr><td>Industrials</td><td class="num buy">371</td></tr>
+            <tr><td>Consumer Discretionary</td><td class="num buy">326</td></tr>
+            <tr><td>Materials</td><td class="num buy">204</td></tr>
+            <tr><td>Financials</td><td class="num buy">183</td></tr>
+            <tr><td>Utilities</td><td class="num">81</td></tr>
+            <tr><td>Real Estate</td><td class="num">69</td></tr>
+            <tr><td>Health Care</td><td class="num">40</td></tr>
+            <tr><td>Energy</td><td class="num">19</td></tr>
+            <tr><td>Information Technology</td><td class="num neg">(60)</td></tr>
+            <tr><td>Consumer Staples</td><td class="num neg">(181)</td></tr>
+            <tr><td>Communication Services</td><td class="num neg">(419)</td></tr>
+            <tr class="total"><td>Median S&amp;P 500 종목</td><td class="num">152</td></tr>
+            <tr><td>TMT / Non-TMT</td><td class="num">(76) / 172</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <div class="tbl-wrap">
+        <table class="tbl">
+          <thead><tr><th>Q3 2026 서프라이즈 (동일가중, 1σ 기준)</th><th class="num">Beat</th><th class="num">Miss</th><th class="num">In-line</th></tr></thead>
+          <tbody>
+            <tr><td>Information Technology</td><td class="num">85%</td><td class="num">3%</td><td class="num">12%</td></tr>
+            <tr><td>Consumer Staples</td><td class="num">73%</td><td class="num">0%</td><td class="num">27%</td></tr>
+            <tr><td>Industrials</td><td class="num">68%</td><td class="num">6%</td><td class="num">26%</td></tr>
+            <tr><td>Health Care</td><td class="num">65%</td><td class="num">0%</td><td class="num">35%</td></tr>
+            <tr><td>Utilities</td><td class="num">64%</td><td class="num">14%</td><td class="num">21%</td></tr>
+            <tr><td>Communication Services</td><td class="num">56%</td><td class="num">22%</td><td class="num">22%</td></tr>
+            <tr><td>Consumer Discretionary</td><td class="num">55%</td><td class="num">24%</td><td class="num">21%</td></tr>
+            <tr><td>Energy</td><td class="num">55%</td><td class="num">0%</td><td class="num">45%</td></tr>
+            <tr><td>Financials</td><td class="num">51%</td><td class="num">7%</td><td class="num">42%</td></tr>
+            <tr><td>Materials</td><td class="num">38%</td><td class="num">6%</td><td class="num">56%</td></tr>
+            <tr><td>Real Estate</td><td class="num">33%</td><td class="num">29%</td><td class="num">33%</td></tr>
+            <tr class="total"><td>S&amp;P 500 (301/500 발표)</td><td class="num">60%</td><td class="num">9%</td><td class="num">31%</td></tr>
+            <tr><td>참고: 2Q26 / 1Q26 / 4Q25</td><td class="num">69 / 65 / 55%</td><td class="num">7 / 7 / 12%</td><td class="num">25 / 28 / 33%</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+      <div class="callout"><span class="t">Breadth 확산의 구조</span>Communication Services는 시가총액 기준으로 85%가 EPS miss(1σ)를 기록하며 지수 전체의 발목을 잡았고(시총가중 EPS 서프라이즈 -27%), 반대로 Industrials·Consumer Discretionary·Materials 등 경기민감 섹터는 beat 시 300bp 안팎의 초과수익을 기록. 종목 70%가 올랐지만 지수가 3% 하락한 배경.</div>
+
+      <h3 class="sec"><span class="n">3</span>이익 성장 — 강하지만 가속은 종료</h3>
+      <ul class="pts">
+        <li>S&amp;P 500 Q3 EPS 성장률 <b>33% y/y</b>(비경상 항목 왜곡 제외 시 Q2 실현치와 동일). 10년 median 10% 대비 압도적이지만 Q1·Q2의 급격한 가속과는 대조.</li>
+        <li>Median 종목 EPS 성장률 <b>12% y/y</b> — 10년 median 8% 상회하나 직전 분기 14%에서 둔화.</li>
+        <li>Median 종목 매출 성장률은 소폭 둔화(Q2 7.2% → Q3 <b>7.0%</b>), 반면 <b>순이익률은 사상 최고치 16%</b>로 확대. Industrials median 마진은 몇 분기 연속 확대 후 Q3 재차 상승, Consumer Staples 마진은 부진.</li>
+        <li><b>TMT와 Energy가 지수 이익 성장을 견인</b>: Info Tech + Comm Services가 Q3 EPS 성장의 60% 이상, Energy가 추가 20% 기여.</li>
+      </ul>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>섹터 (Q3 2026 실현+컨센서스, y/y)</th><th class="num">EPS 성장</th><th class="num">매출 성장</th><th class="num">마진 변화</th><th class="num">Median 종목 EPS 성장</th></tr></thead>
+        <tbody>
+          <tr><td>Energy</td><td class="num buy">138%</td><td class="num">25%</td><td class="num">+736bp</td><td class="num">51%</td></tr>
+          <tr><td>Info Tech</td><td class="num buy">67%</td><td class="num">43%</td><td class="num">+454bp</td><td class="num">33%</td></tr>
+          <tr><td>Comm Services</td><td class="num">46%</td><td class="num">15%</td><td class="num neg">(75)bp</td><td class="num">34%</td></tr>
+          <tr><td>Materials</td><td class="num">39%</td><td class="num">13%</td><td class="num">+232bp</td><td class="num">6%</td></tr>
+          <tr><td>Industrials</td><td class="num">23%</td><td class="num">14%</td><td class="num">+81bp</td><td class="num">14%</td></tr>
+          <tr><td>Real Estate</td><td class="num">18%</td><td class="num">NM</td><td class="num">NM</td><td class="num">4%</td></tr>
+          <tr><td>Consumer Discretionary</td><td class="num">16%</td><td class="num">3%</td><td class="num neg">(16)bp</td><td class="num">6%</td></tr>
+          <tr><td>Utilities</td><td class="num">11%</td><td class="num">NM</td><td class="num">NM</td><td class="num">10%</td></tr>
+          <tr><td>Health Care</td><td class="num">4%</td><td class="num">3%</td><td class="num">+5bp</td><td class="num">9%</td></tr>
+          <tr><td>Financials</td><td class="num">4%</td><td class="num">NM</td><td class="num">NM</td><td class="num">10%</td></tr>
+          <tr><td>Consumer Staples</td><td class="num">2%</td><td class="num">5%</td><td class="num neg">(19)bp</td><td class="num">7%</td></tr>
+          <tr class="total"><td>S&amp;P 500</td><td class="num">33%</td><td class="num">—</td><td class="num">—</td><td class="num">12%</td></tr>
+          <tr><td>ex. Financials &amp; Utilities</td><td class="num">43%</td><td class="num">14%</td><td class="num">+238bp</td><td class="num">14%</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="tbl-note">메가캡 테크의 '기타수익(other income)' 제외. Source: FactSet</p>
+
+      <div class="grid2">
+        <div class="chart-card">
+          <div class="ct">Median S&amp;P 500 종목 매출 성장률 (y/y, ex. Financials &amp; Utilities)</div>
+          <svg viewBox="0 0 440 240" width="100%">
+            <line x1="40" y1="200" x2="420" y2="200" stroke="#cfd6e0"/>
+            <line x1="40" y1="140" x2="420" y2="140" stroke="#eef1f5"/>
+            <line x1="40" y1="80" x2="420" y2="80" stroke="#eef1f5"/>
+            <text x="34" y="204" font-size="10" fill="#9aa3b2" text-anchor="end">0%</text>
+            <text x="34" y="144" font-size="10" fill="#9aa3b2" text-anchor="end">4%</text>
+            <text x="34" y="84" font-size="10" fill="#9aa3b2" text-anchor="end">8%</text>
+            <rect x="52" y="158" width="30" height="42" fill="#1a2b4a"/>
+            <rect x="98" y="131" width="30" height="69" fill="#1a2b4a"/>
+            <rect x="144" y="113" width="30" height="87" fill="#1a2b4a"/>
+            <rect x="190" y="110" width="30" height="90" fill="#1a2b4a"/>
+            <rect x="236" y="89" width="30" height="111" fill="#1a2b4a"/>
+            <rect x="282" y="92" width="30" height="108" fill="#1a2b4a"/>
+            <rect x="328" y="95" width="30" height="105" fill="#1a2b4a"/>
+            <rect x="374" y="104" width="30" height="96" fill="#6b8cae"/>
+            <text x="67" y="152" font-size="10" fill="#1a2b4a" text-anchor="middle">2.8%</text>
+            <text x="113" y="125" font-size="10" fill="#1a2b4a" text-anchor="middle">4.6%</text>
+            <text x="159" y="107" font-size="10" fill="#1a2b4a" text-anchor="middle">5.8%</text>
+            <text x="205" y="104" font-size="10" fill="#1a2b4a" text-anchor="middle">6.0%</text>
+            <text x="251" y="83" font-size="10" fill="#1a2b4a" text-anchor="middle">7.4%</text>
+            <text x="297" y="86" font-size="10" fill="#1a2b4a" text-anchor="middle">7.2%</text>
+            <text x="343" y="89" font-size="10" fill="#1a2b4a" text-anchor="middle">7.0%</text>
+            <text x="389" y="98" font-size="10" fill="#3d5a80" text-anchor="middle">6.4%</text>
+            <text x="67" y="216" font-size="10" fill="#525866" text-anchor="middle">1Q25</text>
+            <text x="113" y="216" font-size="10" fill="#525866" text-anchor="middle">2Q</text>
+            <text x="159" y="216" font-size="10" fill="#525866" text-anchor="middle">3Q</text>
+            <text x="205" y="216" font-size="10" fill="#525866" text-anchor="middle">4Q</text>
+            <text x="251" y="216" font-size="10" fill="#525866" text-anchor="middle">1Q26</text>
+            <text x="297" y="216" font-size="10" fill="#525866" text-anchor="middle">2Q</text>
+            <text x="343" y="216" font-size="10" fill="#525866" text-anchor="middle">3Q</text>
+            <text x="389" y="216" font-size="10" fill="#525866" text-anchor="middle">4QE</text>
+            <text x="389" y="230" font-size="9" fill="#9aa3b2" text-anchor="middle">컨센서스</text>
+          </svg>
+          <div class="chart-src">Source: FactSet</div>
+        </div>
+        <div class="chart-card">
+          <div class="ct">Median S&amp;P 500 종목 분기 순이익률 (ex. Financials &amp; Utilities)</div>
+          <svg viewBox="0 0 440 240" width="100%">
+            <line x1="40" y1="200" x2="420" y2="200" stroke="#cfd6e0"/>
+            <line x1="40" y1="140" x2="420" y2="140" stroke="#eef1f5"/>
+            <line x1="40" y1="80" x2="420" y2="80" stroke="#eef1f5"/>
+            <line x1="40" y1="20" x2="420" y2="20" stroke="#eef1f5"/>
+            <text x="34" y="204" font-size="10" fill="#9aa3b2" text-anchor="end">10%</text>
+            <text x="34" y="144" font-size="10" fill="#9aa3b2" text-anchor="end">12%</text>
+            <text x="34" y="84" font-size="10" fill="#9aa3b2" text-anchor="end">14%</text>
+            <text x="34" y="24" font-size="10" fill="#9aa3b2" text-anchor="end">16%</text>
+            <polyline fill="none" stroke="#1a2b4a" stroke-width="2.5" points="67,110 113,80 159,80 205,110 251,110 297,50 343,20"/>
+            <polyline fill="none" stroke="#6b8cae" stroke-width="2.5" stroke-dasharray="5,4" points="343,20 389,50"/>
+            <circle cx="67" cy="110" r="4" fill="#1a2b4a"/><circle cx="113" cy="80" r="4" fill="#1a2b4a"/><circle cx="159" cy="80" r="4" fill="#1a2b4a"/><circle cx="205" cy="110" r="4" fill="#1a2b4a"/><circle cx="251" cy="110" r="4" fill="#1a2b4a"/><circle cx="297" cy="50" r="4" fill="#1a2b4a"/><circle cx="343" cy="20" r="4.5" fill="#1a2b4a"/><circle cx="389" cy="50" r="4" fill="#6b8cae"/>
+            <text x="67" y="128" font-size="10" fill="#1a2b4a" text-anchor="middle">13%</text>
+            <text x="113" y="98" font-size="10" fill="#1a2b4a" text-anchor="middle">14%</text>
+            <text x="159" y="98" font-size="10" fill="#1a2b4a" text-anchor="middle">14%</text>
+            <text x="205" y="128" font-size="10" fill="#1a2b4a" text-anchor="middle">13%</text>
+            <text x="251" y="128" font-size="10" fill="#1a2b4a" text-anchor="middle">13%</text>
+            <text x="297" y="68" font-size="10" fill="#1a2b4a" text-anchor="middle">15%</text>
+            <text x="343" y="40" font-size="10" fill="#1a2b4a" text-anchor="middle" font-weight="700">16%</text>
+            <text x="389" y="68" font-size="10" fill="#3d5a80" text-anchor="middle">15%</text>
+            <text x="67" y="216" font-size="10" fill="#525866" text-anchor="middle">1Q25</text>
+            <text x="113" y="216" font-size="10" fill="#525866" text-anchor="middle">2Q</text>
+            <text x="159" y="216" font-size="10" fill="#525866" text-anchor="middle">3Q</text>
+            <text x="205" y="216" font-size="10" fill="#525866" text-anchor="middle">4Q</text>
+            <text x="251" y="216" font-size="10" fill="#525866" text-anchor="middle">1Q26</text>
+            <text x="297" y="216" font-size="10" fill="#525866" text-anchor="middle">2Q</text>
+            <text x="343" y="216" font-size="10" fill="#525866" text-anchor="middle">3Q</text>
+            <text x="389" y="216" font-size="10" fill="#525866" text-anchor="middle">4QE</text>
+            <text x="389" y="230" font-size="9" fill="#9aa3b2" text-anchor="middle">컨센서스</text>
+          </svg>
+          <div class="chart-src">Source: FactSet</div>
+        </div>
+      </div>
+
+      <h3 class="sec"><span class="n">4</span>추정치 리비전 — 상향은 지속, 폭은 축소</h3>
+      <ul class="pts">
+        <li>시즌 시작 이후 <b>2027년 S&amp;P 500 EPS 컨센서스 +2%</b>. 직전 두 분기보다는 약한 수준.</li>
+        <li>상향 기업 수가 하향을 계속 앞서지만, revision breadth는 최근 몇 달 대비 축소되어 <b>11개 섹터 중 절반에서만 플러스</b>.</li>
+        <li>Q3 발표 종목에 대해 애널리스트들은 대체로 <b>2027년 매출 추정치는 상향</b>(Energy·Info Tech 상향폭 최대), <b>마진 기대치는 하향</b>. 투입원가 상승 압력이 경영진 코멘트와 애널리스트 마진 추정치 양쪽에 반영.</li>
+        <li>2027년 median 종목 기준 매출·마진 리비전: Info Tech는 매출 +1.5%대·마진 +10bp 안팎으로 양쪽 모두 상향, Energy는 매출 상향폭이 가장 크나 마진은 소폭 하향, Comm Services·Materials·Health Care는 마진 -10~-15bp 수준의 하향.</li>
+      </ul>
+      <div class="chart-card">
+        <div class="ct">S&amp;P 500 섹터별 FY2 EPS revision breadth (최근 1개월, 상향 기업 비중 - 하향 기업 비중)</div>
+        <svg viewBox="0 0 880 410" width="100%">
+          <line x1="430" y1="10" x2="430" y2="392" stroke="#cfd6e0"/>
+          <line x1="230" y1="10" x2="230" y2="392" stroke="#eef1f5"/>
+          <line x1="330" y1="10" x2="330" y2="392" stroke="#eef1f5"/>
+          <line x1="530" y1="10" x2="530" y2="392" stroke="#eef1f5"/>
+          <line x1="630" y1="10" x2="630" y2="392" stroke="#eef1f5"/>
+          <line x1="730" y1="10" x2="730" y2="392" stroke="#eef1f5"/>
+          <text x="230" y="406" font-size="10" fill="#9aa3b2" text-anchor="middle">(40)%</text>
+          <text x="330" y="406" font-size="10" fill="#9aa3b2" text-anchor="middle">(20)%</text>
+          <text x="430" y="406" font-size="10" fill="#9aa3b2" text-anchor="middle">0%</text>
+          <text x="530" y="406" font-size="10" fill="#9aa3b2" text-anchor="middle">20%</text>
+          <text x="630" y="406" font-size="10" fill="#9aa3b2" text-anchor="middle">40%</text>
+          <text x="730" y="406" font-size="10" fill="#9aa3b2" text-anchor="middle">60%</text>
+          <!-- rows: y = 20 + i*31, bar height 20, scale 5px per 1% -->
+          <rect x="430" y="20" width="320" height="20" fill="#1a2b4a"/><text x="756" y="34" font-size="11" fill="#1a2b4a">64%</text><text x="424" y="34" font-size="11.5" fill="#1b1e24" text-anchor="end">Info Tech</text>
+          <rect x="430" y="51" width="215" height="20" fill="#1a2b4a"/><text x="651" y="65" font-size="11" fill="#1a2b4a">43%</text><text x="424" y="65" font-size="11.5" fill="#1b1e24" text-anchor="end">Energy</text>
+          <rect x="430" y="82" width="120" height="20" fill="#1a2b4a"/><text x="556" y="96" font-size="11" fill="#1a2b4a">24%</text><text x="424" y="96" font-size="11.5" fill="#1b1e24" text-anchor="end">Industrials</text>
+          <rect x="430" y="113" width="100" height="20" fill="#1a2b4a"/><text x="536" y="127" font-size="11" fill="#1a2b4a">20%</text><text x="424" y="127" font-size="11.5" fill="#1b1e24" text-anchor="end">Financials</text>
+          <rect x="430" y="144" width="50" height="20" fill="#3d5a80"/><text x="486" y="158" font-size="11" fill="#1a2b4a" font-weight="700">10%</text><text x="424" y="158" font-size="11.5" fill="#1b1e24" text-anchor="end" font-weight="700">S&amp;P 500</text>
+          <rect x="430" y="175" width="15" height="20" fill="#1a2b4a"/><text x="451" y="189" font-size="11" fill="#1a2b4a">3%</text><text x="424" y="189" font-size="11.5" fill="#1b1e24" text-anchor="end">Health Care</text>
+          <rect x="415" y="206" width="15" height="20" fill="#c0392b"/><text x="436" y="220" font-size="11" fill="#c0392b">(3)%</text><text x="409" y="220" font-size="11.5" fill="#1b1e24" text-anchor="end">Utilities</text>
+          <rect x="365" y="237" width="65" height="20" fill="#c0392b"/><text x="436" y="251" font-size="11" fill="#c0392b">(13)%</text><text x="359" y="251" font-size="11.5" fill="#1b1e24" text-anchor="end">Materials</text>
+          <rect x="340" y="268" width="90" height="20" fill="#c0392b"/><text x="436" y="282" font-size="11" fill="#c0392b">(18)%</text><text x="334" y="282" font-size="11.5" fill="#1b1e24" text-anchor="end">Comm Services</text>
+          <rect x="290" y="299" width="140" height="20" fill="#c0392b"/><text x="436" y="313" font-size="11" fill="#c0392b">(28)%</text><text x="284" y="313" font-size="11.5" fill="#1b1e24" text-anchor="end">Consumer Discr</text>
+          <rect x="250" y="330" width="180" height="20" fill="#c0392b"/><text x="436" y="344" font-size="11" fill="#c0392b">(36)%</text><text x="244" y="344" font-size="11.5" fill="#1b1e24" text-anchor="end">Consumer Staples</text>
+          <rect x="235" y="361" width="195" height="20" fill="#c0392b"/><text x="436" y="375" font-size="11" fill="#c0392b">(39)%</text><text x="229" y="375" font-size="11.5" fill="#1b1e24" text-anchor="end">Real Estate</text>
+        </svg>
+        <div class="chart-src">Source: FactSet</div>
+      </div>
+
+      <h3 class="sec"><span class="n">5</span>AI 투자와 수익화 — Capex 증가율의 피크, 클라우드 매출의 가속</h3>
+      <ul class="pts">
+        <li>최근 분기들과 달리 <b>하이퍼스케일러 Capex 전망은 이번 시즌 거의 변하지 않음</b>. 2026년 ~$800bn, 2027년 $1.2tn(하이퍼스케일러 발표 전 추정치 대비 소폭 상향에 그침). 2027년 지출은 크게 늘겠지만 <b>Capex 증가율과 컨센서스 상회 서프라이즈 모두 정점 통과</b>라는 시각과 부합.</li>
+        <li>AI 투자 둔화는 곧 <b>AI 인프라 복합체의 이익 성장 둔화</b> 신호. 반도체·전력·AI 빌드아웃 직결 기업의 Q3 EPS 성장률은 <b>80% y/y</b>로 나머지 S&amp;P 500(15%)의 5배 이상이나, 컨센서스는 2027년 말 <b>40%</b>까지 급격한 둔화를 반영.</li>
+        <li><b>하이퍼스케일러(AMZN·GOOGL·META·MSFT·ORCL) 합산 FCF가 Q3 2026 마이너스(-$31bn)</b>로 전환. Capex가 영업현금흐름을 초과하며, 컨센서스는 2027년 FCF 추가 감소 → <b>2028년 플러스 전환</b> 전망.</li>
+        <li>ROI 신호는 강화: AMZN·GOOGL·MSFT 합산 클라우드 매출 성장률 <b>Q3 +54% y/y</b>(1Q25 24% → 11분기 연속 가속), 수주잔고(backlog) 역시 ~$2tn 수준으로 고성장. 다만 클라우드 매출이 애널리스트 컨센서스는 상회했어도 발표 전 집중된 헤지펀드 positioning이 보여주듯 <b>투자자 기대치가 더 높은 허들</b>이었고, backlog 성장률은 Q2 대비 소폭 둔화.</li>
+        <li>Q3 결과는 <b>AI disruption 리스크</b>에 대한 관심도 재점화: Alphabet 검색 매출 실망, Reddit 검색 유입 트래픽 감소, 그리고 AI 관련 노동시장 교란의 초기 징후.</li>
+      </ul>
+      <div class="chart-card">
+        <div class="ct">하이퍼스케일러 Capex 컨센서스 추정치 ($bn, y/y 증가율)</div>
+        <div class="legend">
+          <span><i style="background:#c9d3e2"></i>Q3 어닝시즌 시작</span>
+          <span><i style="background:#6b8cae"></i>Q4 어닝시즌 시작</span>
+          <span><i style="background:#1a2b4a"></i>현재</span>
+        </div>
+        <svg viewBox="0 0 880 320" width="100%">
+          <line x1="70" y1="280" x2="850" y2="280" stroke="#cfd6e0"/>
+          <line x1="70" y1="211" x2="850" y2="211" stroke="#eef1f5"/>
+          <line x1="70" y1="143" x2="850" y2="143" stroke="#eef1f5"/>
+          <line x1="70" y1="74" x2="850" y2="74" stroke="#eef1f5"/>
+          <text x="64" y="284" font-size="10" fill="#9aa3b2" text-anchor="end">$0</text>
+          <text x="64" y="215" font-size="10" fill="#9aa3b2" text-anchor="end">$400</text>
+          <text x="64" y="147" font-size="10" fill="#9aa3b2" text-anchor="end">$800</text>
+          <text x="64" y="78" font-size="10" fill="#9aa3b2" text-anchor="end">$1,200</text>
+          <!-- 2026 -->
+          <rect x="140" y="150" width="50" height="130" fill="#c9d3e2"/>
+          <rect x="196" y="142" width="50" height="138" fill="#6b8cae"/>
+          <rect x="252" y="141" width="50" height="139" fill="#1a2b4a"/>
+          <text x="165" y="144" font-size="10" fill="#525866" text-anchor="middle">$758</text>
+          <text x="165" y="133" font-size="9" fill="#9aa3b2" text-anchor="middle">+84%</text>
+          <text x="221" y="136" font-size="10" fill="#3d5a80" text-anchor="middle">$806</text>
+          <text x="221" y="125" font-size="9" fill="#9aa3b2" text-anchor="middle">+96%</text>
+          <text x="277" y="135" font-size="10" fill="#1a2b4a" text-anchor="middle" font-weight="700">$808</text>
+          <text x="277" y="124" font-size="9" fill="#9aa3b2" text-anchor="middle">+96%</text>
+          <text x="221" y="298" font-size="12" fill="#1b1e24" text-anchor="middle" font-weight="700">2026E</text>
+          <!-- 2027 -->
+          <rect x="400" y="121" width="50" height="159" fill="#c9d3e2"/>
+          <rect x="456" y="91" width="50" height="189" fill="#6b8cae"/>
+          <rect x="512" y="81" width="50" height="199" fill="#1a2b4a"/>
+          <text x="425" y="115" font-size="10" fill="#525866" text-anchor="middle">$929</text>
+          <text x="425" y="104" font-size="9" fill="#9aa3b2" text-anchor="middle">+23%</text>
+          <text x="481" y="85" font-size="10" fill="#3d5a80" text-anchor="middle">$1,105</text>
+          <text x="481" y="74" font-size="9" fill="#9aa3b2" text-anchor="middle">+37%</text>
+          <text x="537" y="75" font-size="10" fill="#1a2b4a" text-anchor="middle" font-weight="700">$1,163</text>
+          <text x="537" y="64" font-size="9" fill="#9aa3b2" text-anchor="middle">+44%</text>
+          <text x="481" y="298" font-size="12" fill="#1b1e24" text-anchor="middle" font-weight="700">2027E</text>
+          <!-- 2028 -->
+          <rect x="660" y="120" width="50" height="160" fill="#c9d3e2"/>
+          <rect x="716" y="66" width="50" height="214" fill="#6b8cae"/>
+          <rect x="772" y="59" width="50" height="221" fill="#1a2b4a"/>
+          <text x="685" y="114" font-size="10" fill="#525866" text-anchor="middle">$931</text>
+          <text x="685" y="103" font-size="9" fill="#9aa3b2" text-anchor="middle">+0%</text>
+          <text x="741" y="60" font-size="10" fill="#3d5a80" text-anchor="middle">$1,251</text>
+          <text x="741" y="49" font-size="9" fill="#9aa3b2" text-anchor="middle">+13%</text>
+          <text x="797" y="53" font-size="10" fill="#1a2b4a" text-anchor="middle" font-weight="700">$1,289</text>
+          <text x="797" y="42" font-size="9" fill="#9aa3b2" text-anchor="middle">+11%</text>
+          <text x="741" y="298" font-size="12" fill="#1b1e24" text-anchor="middle" font-weight="700">2028E</text>
+        </svg>
+        <div class="chart-src">Source: FactSet</div>
+      </div>
+      <div class="chart-card">
+        <div class="ct">AMZN·GOOGL·MSFT 합산 클라우드 매출 성장률 (y/y)</div>
+        <svg viewBox="0 0 880 300" width="100%">
+          <line x1="70" y1="260" x2="850" y2="260" stroke="#cfd6e0"/>
+          <line x1="70" y1="180" x2="850" y2="180" stroke="#eef1f5"/>
+          <line x1="70" y1="100" x2="850" y2="100" stroke="#eef1f5"/>
+          <line x1="70" y1="20" x2="850" y2="20" stroke="#eef1f5"/>
+          <text x="64" y="264" font-size="10" fill="#9aa3b2" text-anchor="end">0%</text>
+          <text x="64" y="184" font-size="10" fill="#9aa3b2" text-anchor="end">20%</text>
+          <text x="64" y="104" font-size="10" fill="#9aa3b2" text-anchor="end">40%</text>
+          <text x="64" y="24" font-size="10" fill="#9aa3b2" text-anchor="end">60%</text>
+          <!-- scale 4px/% ; x start 92, step 70, width 46 -->
+          <rect x="92" y="164" width="46" height="96" fill="#6b8cae"/>
+          <rect x="162" y="160" width="46" height="100" fill="#6b8cae"/>
+          <rect x="232" y="156" width="46" height="104" fill="#6b8cae"/>
+          <rect x="302" y="160" width="46" height="100" fill="#6b8cae"/>
+          <rect x="372" y="164" width="46" height="96" fill="#6b8cae"/>
+          <rect x="442" y="152" width="46" height="108" fill="#6b8cae"/>
+          <rect x="512" y="144" width="46" height="116" fill="#6b8cae"/>
+          <rect x="582" y="128" width="46" height="132" fill="#3d5a80"/>
+          <rect x="652" y="104" width="46" height="156" fill="#3d5a80"/>
+          <rect x="722" y="68" width="46" height="192" fill="#1a2b4a"/>
+          <rect x="792" y="44" width="46" height="216" fill="#1a2b4a"/>
+          <text x="115" y="158" font-size="10" fill="#525866" text-anchor="middle">24%</text>
+          <text x="185" y="154" font-size="10" fill="#525866" text-anchor="middle">25%</text>
+          <text x="255" y="150" font-size="10" fill="#525866" text-anchor="middle">26%</text>
+          <text x="325" y="154" font-size="10" fill="#525866" text-anchor="middle">25%</text>
+          <text x="395" y="158" font-size="10" fill="#525866" text-anchor="middle">24%</text>
+          <text x="465" y="146" font-size="10" fill="#525866" text-anchor="middle">27%</text>
+          <text x="535" y="138" font-size="10" fill="#525866" text-anchor="middle">29%</text>
+          <text x="605" y="122" font-size="10" fill="#525866" text-anchor="middle">33%</text>
+          <text x="675" y="98" font-size="10" fill="#525866" text-anchor="middle">39%</text>
+          <text x="745" y="62" font-size="10" fill="#1a2b4a" text-anchor="middle">48%</text>
+          <text x="815" y="38" font-size="11" fill="#1a2b4a" text-anchor="middle" font-weight="700">54%</text>
+          <text x="115" y="278" font-size="10" fill="#525866" text-anchor="middle">1Q24</text>
+          <text x="185" y="278" font-size="10" fill="#525866" text-anchor="middle">2Q</text>
+          <text x="255" y="278" font-size="10" fill="#525866" text-anchor="middle">3Q</text>
+          <text x="325" y="278" font-size="10" fill="#525866" text-anchor="middle">4Q</text>
+          <text x="395" y="278" font-size="10" fill="#525866" text-anchor="middle">1Q25</text>
+          <text x="465" y="278" font-size="10" fill="#525866" text-anchor="middle">2Q</text>
+          <text x="535" y="278" font-size="10" fill="#525866" text-anchor="middle">3Q</text>
+          <text x="605" y="278" font-size="10" fill="#525866" text-anchor="middle">4Q</text>
+          <text x="675" y="278" font-size="10" fill="#525866" text-anchor="middle">1Q26</text>
+          <text x="745" y="278" font-size="10" fill="#525866" text-anchor="middle">2Q</text>
+          <text x="815" y="278" font-size="10" fill="#525866" text-anchor="middle">3Q</text>
+        </svg>
+        <div class="chart-src">Source: Company filings</div>
+      </div>
+      <div class="callout"><span class="t">AI 인프라 vs 나머지</span>AI 인프라 복합체(하이퍼스케일러·반도체·전력 등)의 EPS 성장률은 2025년 후반부터 급등해 3Q26 ~80%로 정점을 형성한 뒤 2027년 후반 ~40%로 수렴하는 경로이고, S&amp;P 500 ex-AI 인프라는 10%대 중반에서 완만히 움직이는 구조. 성장률 격차가 좁혀지는 국면에서 breadth 확산이 지속될 수 있다는 점이 핵심.</div>
+
+      <h3 class="sec"><span class="n">6</span>S&amp;P 500 EPS·지수 전망</h3>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>S&amp;P 500</th><th class="num">Top-down 전망</th><th class="num">Bottom-up 컨센서스</th><th class="num">Top-down 스트래티지스트 컨센서스</th></tr></thead>
+        <tbody>
+          <tr><td><b>2026E EPS</b> (y/y)</td><td class="num">$375 (+36%)</td><td class="num">$367 (+33%)</td><td class="num">$356 (+30%)</td></tr>
+          <tr><td><b>2027E EPS</b> (y/y)</td><td class="num">$415 (+11%)</td><td class="num">$425 (+16%)</td><td class="num">$410 (+15%)</td></tr>
+          <tr><td><b>2028E EPS</b> (y/y)</td><td class="num">$460 (+11%)</td><td class="num">$495 (+16%)</td><td class="num">NA</td></tr>
+          <tr><td>현재 NTM P/E</td><td class="num">19x</td><td class="num">19x</td><td class="num">NA</td></tr>
+          <tr><td>YE 2026 목표 (수익률)</td><td class="num">8,000 (+4%)</td><td class="num">NA</td><td class="num">8,000 (+4%)</td></tr>
+          <tr><td>12개월 목표 (수익률)</td><td class="num">8,700 (+13%)</td><td class="num">NA</td><td class="num">9,150 (+19%)</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="tbl-note">2025A EPS $275. 가격 기준일 2026-10-29. Source: Bloomberg, FactSet</p>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>섹터별 EPS 기여 ($)</th><th class="num">2025</th><th class="num">2026E</th><th class="num">2027E</th><th class="num">'26 성장</th><th class="num">'27 성장</th><th class="num">BU 컨센 '26 / '27</th></tr></thead>
+        <tbody>
+          <tr><td>Info Tech</td><td class="num">70</td><td class="num">118</td><td class="num">157</td><td class="num buy">68%</td><td class="num">33%</td><td class="num">62% / 41%</td></tr>
+          <tr><td>Financials</td><td class="num">52</td><td class="num">60</td><td class="num">64</td><td class="num">15%</td><td class="num">7%</td><td class="num">13% / 7%</td></tr>
+          <tr><td>Comm Services</td><td class="num">29</td><td class="num">48</td><td class="num">39</td><td class="num buy">64%</td><td class="num neg">(18)%</td><td class="num">48% / (9)%</td></tr>
+          <tr><td>Health Care</td><td class="num">33</td><td class="num">33</td><td class="num">39</td><td class="num">0%</td><td class="num">17%</td><td class="num">(0)% / 21%</td></tr>
+          <tr><td>Cons Discretionary</td><td class="num">23</td><td class="num">31</td><td class="num">27</td><td class="num">36%</td><td class="num neg">(10)%</td><td class="num">33% / (4)%</td></tr>
+          <tr><td>Industrials</td><td class="num">21</td><td class="num">25</td><td class="num">29</td><td class="num">17%</td><td class="num">16%</td><td class="num">15% / 15%</td></tr>
+          <tr><td>Energy</td><td class="num">12</td><td class="num">21</td><td class="num">19</td><td class="num buy">82%</td><td class="num neg">(9)%</td><td class="num">102% / (4)%</td></tr>
+          <tr><td>Consumer Staples</td><td class="num">15</td><td class="num">15</td><td class="num">16</td><td class="num">4%</td><td class="num">4%</td><td class="num">4% / 7%</td></tr>
+          <tr><td>Utilities</td><td class="num">8</td><td class="num">9</td><td class="num">9</td><td class="num">11%</td><td class="num">7%</td><td class="num">14% / 6%</td></tr>
+          <tr><td>Materials</td><td class="num">5</td><td class="num">7</td><td class="num">8</td><td class="num">36%</td><td class="num">12%</td><td class="num">32% / 9%</td></tr>
+          <tr><td>Real Estate</td><td class="num">6</td><td class="num">7</td><td class="num">7</td><td class="num">7%</td><td class="num">6%</td><td class="num">17% / 8%</td></tr>
+          <tr class="total"><td>S&amp;P 500</td><td class="num">275</td><td class="num">375</td><td class="num">415</td><td class="num">36%</td><td class="num">11%</td><td class="num">33% / 16%</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="tbl-note">기여도·성장률은 Top-down 추정 기준, 마지막 열은 Bottom-up 컨센서스. Source: FactSet</p>
+      <div class="callout"><span class="t">주목</span>2027년 Top-down EPS 성장률(+11%)이 Bottom-up 컨센서스(+16%)보다 보수적. 특히 Comm Services·Energy·Consumer Discretionary는 2027년 역성장을 전제하고 있어, 2026년 이익 급증의 기저효과가 2027년 성장률 둔화의 핵심 변수.</div>
+
+      <h3 class="sec"><span class="n">7</span>섹터 수익률·밸류에이션 &amp; 이번 주 주요 종목</h3>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>섹터</th><th class="num">지수 비중</th><th class="num">1주</th><th class="num">1개월</th><th class="num">3개월</th><th class="num">12개월</th><th class="num">YTD</th><th class="num">Fwd P/E</th><th class="num">10y %ile</th><th>배분</th></tr></thead>
+        <tbody>
+          <tr class="total"><td>S&amp;P 500</td><td class="num">100%</td><td class="num">0.8%</td><td class="num">1%</td><td class="num">6%</td><td class="num">13%</td><td class="num">14%</td><td class="num">19x</td><td class="num">46%</td><td></td></tr>
+          <tr><td>Information Technology</td><td class="num">38%</td><td class="num">2.9%</td><td class="num neg">(2)%</td><td class="num">13%</td><td class="num">17%</td><td class="num">25%</td><td class="num">19x</td><td class="num">39%</td><td></td></tr>
+          <tr><td>Industrials</td><td class="num">8%</td><td class="num">2.0%</td><td class="num">1%</td><td class="num neg">(3)%</td><td class="num">11%</td><td class="num">11%</td><td class="num">23x</td><td class="num">66%</td><td></td></tr>
+          <tr><td>Real Estate</td><td class="num">2%</td><td class="num">1.8%</td><td class="num">4%</td><td class="num neg">(5)%</td><td class="num">14%</td><td class="num">14%</td><td class="num">17x</td><td class="num">34%</td><td></td></tr>
+          <tr><td>Energy</td><td class="num">4%</td><td class="num">1.6%</td><td class="num">12%</td><td class="num">18%</td><td class="num buy">61%</td><td class="num buy">57%</td><td class="num">13x</td><td class="num">36%</td><td></td></tr>
+          <tr><td>Health Care</td><td class="num">10%</td><td class="num">1.6%</td><td class="num">8%</td><td class="num">11%</td><td class="num">30%</td><td class="num">20%</td><td class="num">20x</td><td class="num">96%</td><td class="buy">OW</td></tr>
+          <tr><td>Materials</td><td class="num">2%</td><td class="num">1.0%</td><td class="num">6%</td><td class="num">3%</td><td class="num">21%</td><td class="num">16%</td><td class="num">17x</td><td class="num">59%</td><td class="buy">OW</td></tr>
+          <tr><td>Utilities</td><td class="num">2%</td><td class="num">0.7%</td><td class="num">9%</td><td class="num neg">(3)%</td><td class="num neg">(1)%</td><td class="num">3%</td><td class="num">17x</td><td class="num">52%</td><td></td></tr>
+          <tr><td>Financials</td><td class="num">12%</td><td class="num">0.5%</td><td class="num">5%</td><td class="num">1%</td><td class="num">11%</td><td class="num">5%</td><td class="num">15x</td><td class="num">39%</td><td></td></tr>
+          <tr><td>Consumer Discretionary</td><td class="num">9%</td><td class="num">0.4%</td><td class="num">5%</td><td class="num">6%</td><td class="num neg">(1)%</td><td class="num neg">(1)%</td><td class="num">24x</td><td class="num">34%</td><td></td></tr>
+          <tr><td>Consumer Staples</td><td class="num">5%</td><td class="num neg">(1.5)%</td><td class="num">8%</td><td class="num">3%</td><td class="num">19%</td><td class="num">17%</td><td class="num">23x</td><td class="num">92%</td><td></td></tr>
+          <tr><td>Communication Services</td><td class="num">8%</td><td class="num neg">(8.8)%</td><td class="num neg">(14)%</td><td class="num neg">(10)%</td><td class="num neg">(8)%</td><td class="num neg">(10)%</td><td class="num">16x</td><td class="num">4%</td><td></td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="tbl-note">Fwd P/E는 컨센서스 12개월 선행 기준, %ile은 10년 분포 내 위치. Source: Compustat, FactSet, IBES</p>
+      <ul class="pts">
+        <li>산업그룹 기준 이번 주: <b>Automobiles &amp; Components +7.6%</b>, Semiconductors +4.9%, Capital Goods +3.2%, Pharma/Biotech +2.9% 강세. <b>Media &amp; Entertainment -9.1%</b>, Telecom -5.3%, Commercial &amp; Professional Svcs -3.6% 약세.</li>
+        <li>YTD 기준 Semiconductors +33%, Tech Hardware +37%, Energy +57%, Pharma/Biotech +31%가 선두. Media &amp; Entertainment -11%, Consumer Durables -9%, Autos -9% 부진.</li>
+        <li>지수 P/E 20년 분포 대비: Russell 2000 22x, Nasdaq 100 22x, S&amp;P 500 19x, 동일가중 S&amp;P 500 16x, S&amp;P Midcap 400 15x.</li>
+      </ul>
+      <div class="grid2">
+        <div class="tbl-wrap">
+        <table class="tbl">
+          <thead><tr><th>이번 주 상승 Top 10</th><th class="num">1주</th><th class="num">12M</th><th class="num">Fwd P/E</th></tr></thead>
+          <tbody>
+            <tr><td>Pentair (PNR)</td><td class="num buy">20%</td><td class="num neg">(38)%</td><td class="num">13x</td></tr>
+            <tr><td>Vertiv (VRT)</td><td class="num buy">20%</td><td class="num">24%</td><td class="num">25x</td></tr>
+            <tr><td>Carvana (CVNA)</td><td class="num buy">18%</td><td class="num neg">(4)%</td><td class="num">33x</td></tr>
+            <tr><td>Gen Digital (GEN)</td><td class="num buy">17%</td><td class="num">11%</td><td class="num">9x</td></tr>
+            <tr><td>Global Payments (GPN)</td><td class="num buy">17%</td><td class="num">10%</td><td class="num">7x</td></tr>
+            <tr><td>Norwegian Cruise (NCLH)</td><td class="num buy">16%</td><td class="num neg">(18)%</td><td class="num">14x</td></tr>
+            <tr><td>Chipotle (CMG)</td><td class="num buy">16%</td><td class="num neg">(21)%</td><td class="num">25x</td></tr>
+            <tr><td>Huntington Ingalls (HII)</td><td class="num buy">16%</td><td class="num">8%</td><td class="num">16x</td></tr>
+            <tr><td>Regeneron (REGN)</td><td class="num buy">15%</td><td class="num">26%</td><td class="num">13x</td></tr>
+            <tr><td>General Motors (GM)</td><td class="num buy">15%</td><td class="num">25%</td><td class="num">6x</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <div class="tbl-wrap">
+        <table class="tbl">
+          <thead><tr><th>이번 주 하락 Bottom 10</th><th class="num">1주</th><th class="num">12M</th><th class="num">Fwd P/E</th></tr></thead>
+          <tbody>
+            <tr><td>ServiceNow (NOW)</td><td class="num neg">(34)%</td><td class="num neg">(40)%</td><td class="num">23x</td></tr>
+            <tr><td>F5 (FFIV)</td><td class="num neg">(26)%</td><td class="num">40%</td><td class="num">19x</td></tr>
+            <tr><td>Fortinet (FTNT)</td><td class="num neg">(24)%</td><td class="num">65%</td><td class="num">36x</td></tr>
+            <tr><td>Intel (INTC)</td><td class="num neg">(24)%</td><td class="num">123%</td><td class="num">44x</td></tr>
+            <tr><td>Twilio (TWLO)</td><td class="num neg">(22)%</td><td class="num">117%</td><td class="num">31x</td></tr>
+            <tr><td>Xylem (XYL)</td><td class="num neg">(15)%</td><td class="num neg">(40)%</td><td class="num">16x</td></tr>
+            <tr><td>HP (HPQ)</td><td class="num neg">(14)%</td><td class="num">21%</td><td class="num">10x</td></tr>
+            <tr><td>Marvell (MRVL)</td><td class="num neg">(14)%</td><td class="num">143%</td><td class="num">35x</td></tr>
+            <tr><td>Fair Isaac (FICO)</td><td class="num neg">(13)%</td><td class="num neg">(55)%</td><td class="num">15x</td></tr>
+            <tr><td>Datadog (DDOG)</td><td class="num neg">(13)%</td><td class="num">70%</td><td class="num">88x</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+      <p class="tbl-note">Median S&amp;P 500 종목: 1주 +1%, 12M +14%, Fwd P/E 18x. 10/30 기준. Source: FactSet</p>
+
+      <h3 class="sec"><span class="n">8</span>센티먼트·매크로·시장 구조 대시보드</h3>
+      <ul class="pts">
+        <li><b>US Equity Sentiment Indicator: +0.2</b>(Z-score; +1.0 이상 stretched, -1.0 이하 light) — 중립권.</li>
+        <li>최근 12개월 미국 펀드·ETF 누적 자금흐름: 주식 <b>+$380bn</b>(AUM $28tn), MMF +$501bn($10tn), 채권 +$839bn($9tn).</li>
+        <li>미국 실질 GDP 성장률 전망(하우스 vs 컨센서스): 2026년 <b>2.3% vs 2.3%</b>, 2027년 <b>2.4% vs 2.3%</b>. 전방 4분기 GDP 전망 2.2%.</li>
+        <li>금리: <b>10년물 미 국채 5.0%</b>, 12개월 후 4.5% 전망. 2027년 말 Fed Funds 시장 프라이싱 병행 모니터링. 금융여건지수(FCI)는 2026년 중반 이후 완만한 긴축 방향.</li>
+        <li>집중도: <b>상위 10개 종목이 시총 39%, 이익 37%</b> 차지(역대 최고권). 52주 breadth는 -1 표준편차 부근까지 좁았다가 확산 중.</li>
+        <li>3개월 실현 평균 종목 상관계수 <b>0.08</b>(극히 낮음 — 종목 차별화 국면). 지수 내재변동성은 개별 종목 변동성 대비 낮은 수준 유지.</li>
+        <li>IPO Barometer <b>146</b>(100 = 역사적 median IPO 건수; 매크로가 IPO에 우호적). 대형주 액티브 펀드 YTD 벤치마크 초과 비율: Core 35%, Growth 71%, Value 6%, 소형주 Core 49%.</li>
+        <li>YTD 총수익률: Crude Oil +128%, Energy +57%, Russell 1000 Value +26%, Info Tech +25%, S&amp;P 500 +14% vs Comm Services -10%, Bitcoin -11%, Gold -7%, 10년물 국채 -3%. 위험조정 기준 1위는 Energy(2.7), Russell 1000 Value(2.5).</li>
+      </ul>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>글로벌 매크로 전망</th><th class="num">현재</th><th class="num">3M</th><th class="num">6M</th><th class="num">12M</th><th class="num">12M 변화</th></tr></thead>
+        <tbody>
+          <tr><td>S&amp;P 500</td><td class="num">7,720</td><td class="num">8,000</td><td class="num">8,300</td><td class="num">8,700</td><td class="num buy">+13%</td></tr>
+          <tr><td>MXAPJ</td><td class="num">829</td><td class="num">880</td><td class="num">960</td><td class="num">1,040</td><td class="num buy">+25%</td></tr>
+          <tr><td>TOPIX</td><td class="num">4,003</td><td class="num">4,400</td><td class="num">4,500</td><td class="num">4,600</td><td class="num buy">+15%</td></tr>
+          <tr><td>STOXX Europe 600</td><td class="num">649</td><td class="num">670</td><td class="num">680</td><td class="num">695</td><td class="num">+7%</td></tr>
+          <tr><td>미 10년물 (%)</td><td class="num">5.0</td><td class="num">4.8</td><td class="num">4.7</td><td class="num">4.5</td><td class="num">(53)bp</td></tr>
+          <tr><td>독일 10년물 (%)</td><td class="num">3.3</td><td class="num">3.3</td><td class="num">3.3</td><td class="num">3.3</td><td class="num">(9)bp</td></tr>
+          <tr><td>일본 10년물 (%)</td><td class="num">2.8</td><td class="num">3.0</td><td class="num">3.0</td><td class="num">2.9</td><td class="num">+3bp</td></tr>
+          <tr><td>IG / HY 스프레드 (bp)</td><td class="num">89 / 323</td><td class="num">82 / 295</td><td class="num">80 / 290</td><td class="num">NA</td><td class="num">NA</td></tr>
+          <tr><td>EUR/USD · USD/JPY</td><td class="num">1.12 · 158</td><td class="num">1.14 · 158</td><td class="num">1.12 · 155</td><td class="num">1.12 · 150</td><td class="num">0% · (5)%</td></tr>
+          <tr><td>COMEX Gold ($/oz)</td><td class="num">4,031</td><td class="num">4,650</td><td class="num">4,810</td><td class="num">5,140</td><td class="num buy">+27%</td></tr>
+          <tr><td>LME Copper ($/mt)</td><td class="num">14,560</td><td class="num">14,700</td><td class="num">15,245</td><td class="num">15,565</td><td class="num">+7%</td></tr>
+          <tr><td>Brent ($/bbl)</td><td class="num">111</td><td class="num">88</td><td class="num">83</td><td class="num">75</td><td class="num neg">(32)%</td></tr>
+          <tr><td>NYMEX 천연가스 ($/mmBtu)</td><td class="num">3</td><td class="num">3.00</td><td class="num">2.85</td><td class="num">2.75</td><td class="num neg">(7)%</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="tbl-note">Source: FactSet</p>
+
+      <h3 class="sec"><span class="n">!</span>리스크 &amp; 모니터링 포인트</h3>
+      <div class="risk-box">
+        <h4>Key Risks</h4>
+        <ul>
+          <li><b>에너지 가격·금리:</b> Brent $111, 10년물 5.0%는 마진 추정치 하향의 직접적 원인. 비(非)테크 영역의 추가 상승 여부는 두 변수에 달려 있으며, 전망(Brent $75·10y 4.5%)이 빗나갈 경우 breadth 확산 논리가 약화.</li>
+          <li><b>AI Capex 증가율 둔화:</b> 2027년 +44% → 2028년 +11%로 급감하는 컨센서스 경로. AI 인프라 종목 EPS 성장률 80% → 40% 둔화 과정에서 밸류에이션 재조정 리스크.</li>
+          <li><b>하이퍼스케일러 FCF 마이너스:</b> Capex &gt; 영업현금흐름 상태가 2027년까지 지속. 2028년 FCF 회복이 지연되면 자본배분·주주환원 논쟁 재점화 가능.</li>
+          <li><b>Crowded positioning:</b> 하이퍼스케일러 beat에도 주가가 미반응한 사례처럼, TMT 전반에 걸쳐 높은 기대치가 이미 가격에 반영. 상위 10개 종목 시총 39%의 극단적 집중도.</li>
+          <li><b>AI disruption:</b> Alphabet 검색 매출 부진, Reddit 유입 감소, 노동시장 초기 교란 신호 — 소프트웨어·미디어·검색 중심으로 피해 종목 확산 가능(이번 주 NOW -34%, FTNT -24%, DDOG -13% 등 소프트웨어 급락).</li>
+          <li><b>2027년 이익 기저효과:</b> Comm Services·Energy·Cons Discretionary의 2027년 역성장 전망. 2026년 이익 급증 후 성장률 정상화 과정에서 '둔화 = 실망'으로 해석될 위험.</li>
+        </ul>
+        <h4 style="margin-top:14px;">모니터링 포인트</h4>
+        <ul>
+          <li>다음 주 143개 기업(시총 21%) 실적 발표 — Info Tech 29%, Utilities 46%, Energy 27%가 집중.</li>
+          <li>2027년 EPS 컨센서스 리비전 폭(현재 +2%)과 섹터별 revision breadth 변화 — 플러스 섹터 수가 절반 이하로 줄어드는지 여부.</li>
+          <li>하이퍼스케일러 2027년 Capex 가이던스 추가 상향 여부 및 클라우드 backlog 성장률 궤적.</li>
+          <li>Median 종목 순이익률(현 16%) 유지 여부와 투입원가 상승의 4Q 가이던스 반영 정도.</li>
+          <li>S&amp;P 500 ex-AI 대비 AI 바스켓의 상대 성과 — catch up/catch down 순환의 지속 여부.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div>본 문서는 투자 권유를 목적으로 하지 않습니다.</div>
+  </footer>
+
+</div>
+</body>
+</html>
