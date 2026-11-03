@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>US Equity Strategy Weekly — 조정의 마지막 국면</title>
+<style>
+  :root{
+    --brand:#00264d;
+    --brand-deep:#001a36;
+    --accent:#0077c8;
+    --accent2:#005a99;
+    --paper:#f4f6f9;
+    --card:#ffffff;
+    --ink:#1b1e24;
+    --ink-soft:#525866;
+    --line:#dde3ec;
+    --buy:#1f7a4d;
+    --bear:#c0392b;
+    --bull:#1f6fb2;
+    --warn:#8a4b15;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);font-family:'Helvetica Neue','Pretendard','Noto Sans KR',Arial,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:960px;margin:0 auto;padding:40px 6vw 90px;}
+  .intro{border-left:4px solid var(--accent);padding:8px 0 8px 20px;margin-bottom:48px;}
+  .intro .eyebrow{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent2);font-weight:700;}
+  .intro h1{font-size:26px;margin:8px 0 6px;color:var(--brand);}
+  .report{margin-bottom:64px;scroll-margin-top:70px;}
+  .report-head{background:linear-gradient(135deg,var(--brand) 0%, var(--brand-deep) 100%);color:#fff;border-radius:10px 10px 0 0;padding:28px 30px;}
+  .report-head .tag{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#9fb4d4;font-weight:700;}
+  .report-head h2{margin:8px 0 14px;font-size:23px;line-height:1.35;}
+  .report-head .lede{font-family:'Georgia',serif;font-size:15.5px;color:#e3ebf6;border-top:1px solid rgba(255,255,255,0.16);padding-top:14px;margin:0;}
+  .report-body{background:var(--card);border:1px solid var(--line);border-top:none;border-radius:0 0 10px 10px;padding:30px;}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px;}
+  .chip{border:1px solid var(--line);border-radius:8px;padding:10px 16px;background:#fafbfd;flex:1;min-width:130px;}
+  .chip .k{font-size:10.5px;letter-spacing:0.5px;text-transform:uppercase;color:var(--ink-soft);}
+  .chip .v{font-size:19px;font-weight:700;color:var(--brand);margin-top:2px;}
+  .chip .v.buy{color:var(--buy);}
+  .chip .v.sell{color:var(--bear);}
+  .chip .s{font-size:11px;color:var(--ink-soft);}
+  h3.sec{font-size:17px;color:var(--brand);margin:30px 0 12px;padding-bottom:8px;border-bottom:1.5px solid var(--line);display:flex;align-items:center;gap:10px;}
+  h3.sec .n{background:var(--brand);color:#fff;font-size:12px;font-weight:700;width:24px;height:24px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}
+  ul.pts{margin:0;padding:0;list-style:none;}
+  ul.pts li{position:relative;padding:7px 0 7px 20px;font-size:14.5px;border-bottom:1px dashed var(--line);}
+  ul.pts li:last-child{border-bottom:none;}
+  ul.pts li::before{content:"—";position:absolute;left:0;color:var(--accent2);font-weight:700;}
+  ul.pts b{color:var(--brand);}
+  table.tbl{width:100%;border-collapse:collapse;font-size:13px;margin:6px 0 4px;}
+  table.tbl th{background:var(--brand);color:#fff;text-align:left;padding:8px 10px;font-weight:600;}
+  table.tbl td{padding:7px 10px;border-bottom:1px solid var(--line);}
+  table.tbl tr:nth-child(even) td{background:#f7f9fc;}
+  table.tbl td.num{text-align:right;font-variant-numeric:tabular-nums;}
+  table.tbl td.pos{color:var(--buy);font-weight:600;}
+  table.tbl td.neg{color:var(--bear);font-weight:600;}
+  table.tbl td.buy{color:var(--buy);font-weight:700;}
+  table.tbl td.hold{color:var(--warn);font-weight:700;}
+  table.tbl td.sell{color:var(--bear);font-weight:700;}
+  .tbl-wrap{overflow-x:auto;}
+  .chart-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:22px 22px 14px;margin:14px 0;}
+  .chart-card .ct{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:12px;}
+  .chart-src{font-size:10.5px;color:#9aa3b2;margin-top:8px;}
+  .legend{display:flex;gap:18px;font-size:11.5px;color:var(--ink-soft);margin-bottom:4px;}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .legend i{width:11px;height:11px;border-radius:2px;display:inline-block;}
+  .bbgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0;}
+  @media(max-width:680px){.bbgrid{grid-template-columns:1fr;}}
+  .bb{border-radius:8px;padding:16px;border:1px solid var(--line);background:#fafbfd;}
+  .bb.bull{border-top:3px solid var(--bull);}
+  .bb.base{border-top:3px solid var(--ink-soft);}
+  .bb.bear{border-top:3px solid var(--bear);}
+  .bb .lbl{font-size:11px;letter-spacing:0.6px;text-transform:uppercase;font-weight:700;color:var(--ink-soft);}
+  .bb .px{font-size:22px;font-weight:700;color:var(--brand);margin:4px 0;}
+  .bb .ret{font-size:13px;font-weight:600;}
+  .bb.bull .ret{color:var(--bull);}
+  .bb.bear .ret{color:var(--bear);}
+  .bb ul{margin:8px 0 0;padding-left:16px;font-size:12px;color:var(--ink-soft);}
+  .bb li{margin-bottom:4px;}
+  .callout{background:#fbf6ec;border:1px solid #e8dcc3;border-radius:8px;padding:14px 18px;font-size:13px;color:var(--ink-soft);margin-top:14px;}
+  .callout .t{font-size:10.5px;font-weight:700;letter-spacing:0.6px;color:var(--warn);text-transform:uppercase;display:block;margin-bottom:5px;}
+  .risk-box{background:var(--brand);color:#dde6f3;border-radius:8px;padding:22px 24px;margin-top:14px;}
+  .risk-box h4{margin:0 0 10px;color:#fff;font-size:14.5px;}
+  .risk-box ul{margin:0;padding-left:18px;}
+  .risk-box li{margin-bottom:8px;font-size:13px;}
+  .risk-box li b{color:#fff;}
+  footer{border-top:1px solid var(--line);margin-top:50px;padding-top:20px;font-size:11px;color:#9aa3b2;line-height:1.6;}
+  @media(max-width:560px){.intro h1{font-size:21px;}.report-head h2{font-size:19px;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="intro">
+    <div class="eyebrow">2 November 2026</div>
+    <h1>美 주식 전략 Weekly — 조정은 마지막 국면, 클리어링 이벤트 이후 Quality Cyclical 비중확대 기회</h1>
+  </div>
+
+  <section class="report" id="rpt1">
+    <div class="report-head">
+      <div class="tag">US Equity Strategy / North America</div>
+      <h2>Weekly Warm-up: Enter Sandman — 지수가 Breadth에 수렴하는 'Catch-Down'은 조정의 최종 단계</h2>
+      <p class="lede">6월에 시작된 조정은 마지막 이닝에 진입했다. S&amp;P 500이 아래로 내려오고 평균 종목(Breadth)은 개선되며 양쪽이 중간에서 만나는 국면. Fed·유동성·중간선거 등 단기 클리어링 이벤트가 지나면 이미 De-rating된 Quality Cyclical(특히 산업재)에 리스크를 더할 매력적인 기회가 열린다.</p>
+    </div>
+
+    <div class="report-body">
+
+      <div class="chips">
+        <div class="chip"><div class="k">S&amp;P 500 현재</div><div class="v">7,580</div><div class="s">Current P/E 18.7x</div></div>
+        <div class="chip"><div class="k">연말 Base Case</div><div class="v">8,000</div><div class="s">12M Base 8,300 (+9%)</div></div>
+        <div class="chip"><div class="k">전술적 하방 타깃</div><div class="v">7,100–7,300</div><div class="s">공격적 리스크 추가 전 확인 구간</div></div>
+        <div class="chip"><div class="k">2026 / 2027 EPS 성장</div><div class="v">+32% / +16%</div><div class="s">Bottom-up 컨센서스</div></div>
+        <div class="chip"><div class="k">Top Pick 섹터</div><div class="v buy">Industrials</div><div class="s">Quality Cyclical 선호</div></div>
+      </div>
+
+      <h3 class="sec"><span class="n">1</span>인덱스 Catch-Down = 조정의 최종 단계</h3>
+      <ul class="pts">
+        <li>6월에 시작된 조정이 <b>마지막 이닝(final innings)</b>에 들어섰다는 판단. 미드사이클 전환기의 전형대로 S&amp;P 500이 약한 Breadth 쪽으로 내려오면서(catch-down) 지수와 Breadth가 중간에서 수렴 중</li>
+        <li>조정 피해는 <b>Early Cycle 그룹</b>에 집중 — 반도체, 자본재, 운송, 은행, 리테일이 여름 고점 대비 큰 폭 하락. 최근에는 Cyclical Tech 등 여전히 Crowded한 영역이 Catch-down하면서 항복(Capitulation) 과정이 진행 중</li>
+        <li>9월 말 이후 <b>10년물 금리 약 40bp 하락</b>, 200일선 상회 S&amp;P 500 종목 비중은 <b>약 20%p 상승한 62%</b>. 같은 기간 동일가중 S&amp;P 500은 <b>약 5% 상승</b>, 시총가중 지수를 <b>약 6%</b> 아웃퍼폼하며 Broadening 트레이드의 가장 매력적 표현이라는 10월 진입 시 뷰를 뒷받침</li>
+        <li>동일가중 S&amp;P는 저품질 Russell 2000 대비 <b>4% 아웃퍼폼</b>. Russell 2000은 추가적인 금리 하락이 필요하지만, 동일가중 S&amp;P는 장기물의 안정화만으로도 작동 가능</li>
+        <li>자체 시장 심리 지표(Sentiment Indicator)는 조정 종료를 알리는 수준에 <b>근접했으나 아직 도달하지 않음</b> — 최종 Capitulation 이벤트 가능성은 여전히 열려 있음. 심리 지표의 추가 확인 또는 S&amp;P 500의 <b>7,100–7,300 전술적 하방 타깃</b> 도달 중 하나를 보고 공격적으로 리스크 추가. 연말 Base Case는 <b>8,000</b> 유지</li>
+        <li>눈에 띄는 통계: Russell 3000 종목의 <b>60%가 6월 이후 이미 20% 이상 조정</b>을 경험했고, S&amp;P 500 P/E는 1년 전 고점 대비 <b>20% 하락</b></li>
+      </ul>
+
+      <h3 class="sec"><span class="n">2</span>금융여건이 Fed의 역할을 대신 — 유동성은 여전히 리스크</h3>
+      <ul class="pts">
+        <li>지난주 FOMC에서 Warsh 의장은 금융여건이 이미 가져온 긴축 효과를 일부 인정했으나, 발언의 중심은 여전히 인플레이션 대응. 금융여건이 "tighter(더 타이트해졌다)"와 "tight(타이트하다)"를 구분 — 현재 진행 중인 조정에 <b>편안함을 느끼고 있다</b>는 신호</li>
+        <li>가장 중요한 포인트는 잭슨홀의 "인플레이션을 <b>빠르게</b> 목표로 되돌리겠다"는 메시지를 <b>재강조하지 않았다</b>는 것. Fed는 당분간 Pause할 유연성을 확보했으나, 추가 유동성 지원의 문턱은 여전히 높음 → Dovish Pivot 기대는 시기상조</li>
+        <li><b>TGA(재무부 일반계정) Drawdown</b>이 Fed 정책 변화 없이도 가능한 완화 경로. 7월 중순 이후 TGA는 <b>약 $244bn 증가</b>, 은행 지준은 <b>$249bn 감소</b>(Fed 자산은 사실상 불변). 재무부는 10월 말 TGA 정점 <b>~$1.05tn</b> → 연말 <b>~$850bn</b>으로의 감소를 예상</li>
+        <li>핵심 질문 ① Drawdown이 금리·에너지 시장 전반의 금융여건 완화와 동시에 나타날 것인가 — 그렇지 않으면 결국 Fed 유동성이 필요. ② 그 형태가 작년처럼 Fed의 질서 있고 선제적인 대응일지, 2018년처럼 더 파괴적일지</li>
+        <li>결론: 지난주 Fed 회의는 유동성에 대한 <b>완전한 클리어링 이벤트가 아니었음</b>. 해소에는 추가 압력이 필요하거나, 앞으로 예정된 막대한 국채 발행 공급이 줄어야 함 → 이번 주 <b>Quarterly Refunding Announcement(장기물 발행 축소 여부)</b>가 중요</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">3</span>중간선거 — 또 하나의 중요한 오버행 해소</h3>
+      <ul class="pts">
+        <li>1982년 이후 중간선거 후 6개월간 대형주는 시총가중 <b>+15%</b>, 동일가중 <b>+16%</b> 상승, 이후 12개월로는 두 지표 모두 <b>약 +22%</b> — 지수와 평균 종목 모두에서 강세</li>
+        <li>근소한 상원 다수를 통한 <b>민주당 Sweep은 이미 투자자들이 예상</b>하는 시나리오라 큰 서프라이즈는 아님. 다만 상원에서 훨씬 결정적인 승리가 나오면 시장은 2028년 규제완화 역행 가능성까지 선반영할 수 있음</li>
+        <li>지난 2년간 시장을 가장 크게 움직인 관세·외교·기관 주도 규제완화는 대부분 <b>행정부 권한 하에 유지</b>. 주식시장은 2년 앞을 자주, 오래 보지 않음. 데이터센터 반대 역시 당파보다 지역 기득권 역학이 주도</li>
+        <li>민주당 다수의 업사이드 리스크: Medicaid·SNAP 삭감 지연·되돌리기 → 소비 지지. 2028년 정책환경 변화 전망이 투자·M&amp;A를 앞당길 가능성</li>
+        <li>더 큰 리스크는 <b>선거 이후</b> — 이란과의 군사적 긴장 재고조 또는 추가 관세. 특히 에너지 가격 상승이 기대인플레이션과 장기금리를 끌어올리는 전자의 시나리오</li>
+      </ul>
+
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>중간선거 전후 상대성과 (1982년 이후 평균, Top 1000 동일가중)</th><th>Prior 6M</th><th>Next 3M</th><th>Next 6M</th><th>Next 12M</th></tr></thead>
+        <tbody>
+          <tr><td><b>Top 1000 (시총가중)</b></td><td class="num">-3.0%</td><td class="num pos">7.0%</td><td class="num pos">15.3%</td><td class="num pos">21.9%</td></tr>
+          <tr><td><b>Top 1000 (동일가중)</b></td><td class="num">-5.1%</td><td class="num pos">7.2%</td><td class="num pos">16.4%</td><td class="num pos">22.4%</td></tr>
+          <tr><td>반도체 &amp; 장비</td><td class="num neg">-9.3%</td><td class="num pos">8.4%</td><td class="num pos">21.7%</td><td class="num pos">39.5%</td></tr>
+          <tr><td>소프트웨어 &amp; 서비스</td><td class="num">-1.7%</td><td class="num pos">6.0%</td><td class="num pos">11.3%</td><td class="num pos">17.4%</td></tr>
+          <tr><td>테크 하드웨어</td><td class="num">-3.9%</td><td class="num pos">6.6%</td><td class="num pos">10.9%</td><td class="num pos">16.8%</td></tr>
+          <tr><td>자본재</td><td class="num">-2.7%</td><td class="num">0.6%</td><td class="num">0.7%</td><td class="num pos">2.8%</td></tr>
+          <tr><td>금융서비스</td><td class="num">-2.1%</td><td class="num pos">2.4%</td><td class="num pos">6.2%</td><td class="num pos">5.7%</td></tr>
+          <tr><td>은행</td><td class="num">-1.8%</td><td class="num neg">-3.5%</td><td class="num neg">-8.3%</td><td class="num neg">-8.8%</td></tr>
+          <tr><td>에너지</td><td class="num">2.4%</td><td class="num neg">-7.8%</td><td class="num neg">-8.2%</td><td class="num neg">-10.7%</td></tr>
+          <tr><td>유틸리티</td><td class="num">5.2%</td><td class="num">-0.9%</td><td class="num neg">-7.2%</td><td class="num neg">-7.3%</td></tr>
+          <tr><td>REITs</td><td class="num">2.8%</td><td class="num">-2.3%</td><td class="num neg">-4.2%</td><td class="num neg">-8.1%</td></tr>
+          <tr><td>Cyclical vs Defensive</td><td class="num neg">-6.2%</td><td class="num">1.1%</td><td class="num pos">4.1%</td><td class="num pos">5.7%</td></tr>
+          <tr><td>Quality vs Junk</td><td class="num pos">7.1%</td><td class="num">0.2%</td><td class="num neg">-4.7%</td><td class="num neg">-5.7%</td></tr>
+          <tr><td>Small vs Large</td><td class="num neg">-4.9%</td><td class="num">0.0%</td><td class="num">2.7%</td><td class="num">2.1%</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-src">Source: Compustat</div>
+      <div class="callout"><span class="t">주목</span>선거 이후 12개월 기준 반도체(+39.5%)·소프트웨어(+17.4%)·하드웨어(+16.8%) 등 테크가 역사적으로 가장 강했고, Cyclical이 Defensive를 아웃퍼폼. 반면 에너지·유틸리티·REITs·은행은 상대 성과가 부진했던 패턴.</div>
+
+      <h3 class="sec"><span class="n">4</span>실적 시즌은 Quality, 특히 FCF를 선호</h3>
+      <ul class="pts">
+        <li>7월 이후의 Quality 로테이션 콜과 일치 — 사이클이 진행되면서 시장은 더 까다로워지고 있음. 3Q 실적 시즌에서 <b>FCF 서프라이즈가 EPS 서프라이즈보다 큰 익일 주가 반응</b>을 유발</li>
+        <li>FCF 최대 Beat는 의미 있는 업사이드, Miss는 과거보다 <b>더 무겁게 처벌</b>. 투자자들이 사이클 초반처럼 FCF 부족을 더 이상 눈감지 않음 — 실적 내구성과 현금전환이 중요한 전형적인 Mid-to-Late Cycle 환경</li>
+        <li>지수(SPX·NDX)가 평균 종목을 언더퍼폼하는 가운데서도 시장은 Quality를 선호 — 리포트가 예상했던 그대로이며, 조정의 끝에 가까워졌다는 확신을 높임</li>
+        <li>최근 시총가중 지수를 누른 변수: AI Capex 속도, AI 트레이드 일부의 신용스프레드 확대, 타이트한 유동성, 중동 불확실성, 중간선거. EPS 성장률의 2차 미분(둔화)은 내년에 예상되나 <b>지난주 가격 움직임의 주된 원인은 아님</b></li>
+        <li>성장률이 0% 위에 있는 한 성장 둔화 국면에서도 증시는 강세를 유지 — 다만 리더십은 High Quality로 이동. 경기민감 섹터를 더 타격하는 것은 <b>자본비용의 급격한 상승</b>. Cyclical은 잭슨홀~10월 초 자본비용 조정을 가장 먼저 반영했고, 10월 초 금리 정점 이후 동일가중 S&amp;P가 급반등</li>
+        <li>신용시장은 발행에 대해 더 선별적이지만 IG 수요는 견조하고 하이퍼스케일러 공급은 아직 시장의 작은 비중 → 광범위한 신용 문제가 아니라 <b>Quality 차별화 심화</b>로 해석</li>
+        <li>남은 정책·유동성 불확실성이 걷히면 <b>공격적으로 리스크를 추가할 기회</b>가 다가오며, 결국 실적 성장이 수익률의 주 동인으로 복귀. 이익수정 개선 중인 Quality Cyclical 선호 — <b>산업재가 Top Pick</b>, Crowded 영역은 최종 Capitulation 과정에서 추가 하락 여지</li>
+      </ul>
+
+      <div class="chart-card">
+        <div class="ct">3Q26: 서프라이즈 5분위별 T+1 상대 주가반응 중앙값 — FCF 서프라이즈가 EPS보다 승자·패자를 더 크게 가름</div>
+        <div class="legend">
+          <span><i style="background:var(--brand)"></i>EPS Surprise: 3Q26</span>
+          <span><i style="background:#d9b35a"></i>FCF Surprise: 3Q26</span>
+        </div>
+        <svg viewBox="0 0 880 320" width="100%">
+          <g stroke="#e4e9f0" stroke-width="1">
+            <line x1="70" y1="40" x2="850" y2="40"/><line x1="70" y1="80" x2="850" y2="80"/><line x1="70" y1="120" x2="850" y2="120"/><line x1="70" y1="160" x2="850" y2="160"/><line x1="70" y1="240" x2="850" y2="240"/><line x1="70" y1="280" x2="850" y2="280"/>
+          </g>
+          <line x1="70" y1="200" x2="850" y2="200" stroke="#8a93a3" stroke-width="1.2"/>
+          <g font-size="11" fill="#6b7280" text-anchor="end">
+            <text x="62" y="44">4.0%</text><text x="62" y="84">3.0%</text><text x="62" y="124">2.0%</text><text x="62" y="164">1.0%</text><text x="62" y="204">0.0%</text><text x="62" y="244">-1.0%</text><text x="62" y="284">-2.0%</text>
+          </g>
+          <g fill="#00264d">
+            <rect x="104" y="200" width="40" height="24"/><rect x="260" y="200" width="40" height="24"/><rect x="416" y="116" width="40" height="84"/><rect x="572" y="164" width="40" height="36"/><rect x="728" y="180" width="40" height="20"/>
+          </g>
+          <g fill="#d9b35a">
+            <rect x="152" y="200" width="40" height="32"/><rect x="308" y="200" width="40" height="48"/><rect x="464" y="200" width="40" height="4"/><rect x="620" y="60" width="40" height="140"/><rect x="776" y="180" width="40" height="20"/>
+          </g>
+          <g font-size="11" font-weight="700" fill="#1b1e24" text-anchor="middle">
+            <text x="124" y="236">-0.6%</text><text x="172" y="244">-0.8%</text>
+            <text x="280" y="236">-0.6%</text><text x="328" y="260">-1.2%</text>
+            <text x="436" y="110">2.1%</text><text x="484" y="216">-0.1%</text>
+            <text x="592" y="158">0.9%</text><text x="640" y="54">3.5%</text>
+            <text x="748" y="174">0.5%</text><text x="796" y="174">0.5%</text>
+          </g>
+          <g font-size="11.5" fill="#525866" text-anchor="middle">
+            <text x="148" y="302">Q1 (Biggest Miss)</text><text x="304" y="302">Q2</text><text x="460" y="302">Q3 (Middle)</text><text x="616" y="302">Q4</text><text x="772" y="302">Q5 (Biggest Beat)</text>
+          </g>
+        </svg>
+        <div class="chart-src">Source: FactSet</div>
+      </div>
+
+      <div class="callout"><span class="t">FCF Miss에 대한 민감도</span>S&amp;P 500의 FCF Miss에 대한 T+1 상대 주가반응 중앙값은 3Q26 <b>-0.8%</b>로, 2025년 4Q(+0.9%)·2026년 1Q(+0.1%)·2Q(-0.1%)에서 다시 음(-)의 영역으로 하락. 과거 평균 대비 FCF Miss에 대한 처벌이 뚜렷해진 분기.</div>
+
+      <h3 class="sec"><span class="n">5</span>3Q 실적 시즌 Chartbook — 핵심 수치</h3>
+      <ul class="pts">
+        <li>T+1 주가반응 중앙값 <b>절대 +0.1% / 상대 +0.4%</b>. 양(+)의 반응 Breadth는 <b>51%</b></li>
+        <li>EPS 서프라이즈 <b>+3.9~4%</b> — 역사적 평균(4.4%)을 소폭 하회하고 최근 분기 대비 크게 낮음. 매출 서프라이즈 <b>+2.0%</b>는 역사적 평균(+1.3%) 상회. 직전 2Q26 EPS 서프라이즈는 <b>+26%</b>(사모 AI 투자 비영업이익이 1Q/2Q를 왜곡했으나 이를 제외해도 역사적으로 강한 분기)</li>
+        <li>3Q 컨센서스: EPS <b>+28% Y/Y</b>, 매출 <b>+12% Y/Y</b>. 캘린더 2026/2027 EPS 성장은 <b>32% / 16%</b>, 매출 성장은 <b>12% / 8%</b></li>
+        <li>이익수정 Breadth(ERB, FY2)는 <b>+7%</b>로 직전 6개월 수준 대비 낮음 — 3Q 시즌 중 ERB가 강하게 반등하지 못해 <b>2027 상향 수정이 둔화</b>되었음을 시사. 추정치 모멘텀 둔화 + FCF 서프라이즈가 이번 시즌의 핵심 동인. 이번 주가 S&amp;P 500 실적의 마지막 주요 주간 → ERB 추이 집중 모니터링</li>
+        <li>최근 2주 ERB가 가장 양호한 섹터는 <b>산업재·부동산</b>, 가장 부진한 섹터는 <b>커뮤니케이션 서비스·경기소비재</b></li>
+        <li><b>Mag 7 vs SP493</b>: 3Q26 순이익 성장 25% vs 22%로 둘 다 역사적으로 강함. 2027년에는 <b>SP493 17% vs Mag 7 12%로 역전</b> — Mag 7의 일회성 비영업이익에 따른 역기저 효과가 주원인. 2027 S&amp;P 500 순이익 성장 기여도는 Mag 7 24% / SP493 76%</li>
+        <li>애널리스트 Preview는 긍정적이나 전 분기보다 약화: Net EPS Preview <b>+21%</b>(전 분기 +27%). 실적 반응도 <b>+15%</b>(2Q +30%)로 유사한 패턴</li>
+        <li>Russell 3000 중앙값 종목의 매출 성장 <b>7%</b>, EPS 성장 <b>14%</b>로 가속 중 — 평균 종목의 펀더멘털은 견조</li>
+      </ul>
+
+      <div class="chart-card">
+        <div class="ct">S&amp;P 500 컨센서스 EPS Y/Y — 3Q 컨센서스 +28%</div>
+        <div class="legend">
+          <span><i style="background:var(--brand)"></i>실적치</span>
+          <span><i style="background:#d9b35a"></i>추정치</span>
+        </div>
+        <svg viewBox="0 0 880 320" width="100%">
+          <g stroke="#e4e9f0" stroke-width="1">
+            <line x1="70" y1="40" x2="850" y2="40"/><line x1="70" y1="88" x2="850" y2="88"/><line x1="70" y1="136" x2="850" y2="136"/><line x1="70" y1="184" x2="850" y2="184"/><line x1="70" y1="232" x2="850" y2="232"/>
+          </g>
+          <line x1="70" y1="280" x2="850" y2="280" stroke="#8a93a3" stroke-width="1.2"/>
+          <g font-size="11" fill="#6b7280" text-anchor="end">
+            <text x="62" y="44">50%</text><text x="62" y="92">40%</text><text x="62" y="140">30%</text><text x="62" y="188">20%</text><text x="62" y="236">10%</text><text x="62" y="284">0%</text>
+          </g>
+          <g fill="#00264d">
+            <rect x="81" y="252.2" width="34" height="27.8"/>
+            <rect x="136.7" y="227.2" width="34" height="52.8"/>
+            <rect x="192.4" y="248.3" width="34" height="31.7"/>
+            <rect x="248.1" y="191.7" width="34" height="88.3"/>
+            <rect x="303.8" y="218.6" width="34" height="61.4"/>
+            <rect x="359.5" y="214.7" width="34" height="65.3"/>
+            <rect x="415.2" y="217.6" width="34" height="62.4"/>
+            <rect x="470.9" y="217.1" width="34" height="62.9"/>
+            <rect x="526.6" y="149.4" width="34" height="130.6"/>
+            <rect x="582.3" y="60.2" width="34" height="219.8"/>
+          </g>
+          <g fill="#d9b35a">
+            <rect x="638" y="147" width="34" height="133"/>
+            <rect x="693.7" y="148.5" width="34" height="131.5"/>
+            <rect x="749.4" y="185.4" width="34" height="94.6"/>
+            <rect x="805.1" y="261.8" width="34" height="18.2"/>
+          </g>
+          <g font-size="10.5" font-weight="700" fill="#1b1e24" text-anchor="middle">
+            <text x="98" y="246">5.8%</text><text x="153.7" y="221">11.0%</text><text x="209.4" y="242">6.6%</text><text x="265.1" y="186">18.4%</text><text x="320.8" y="213">12.8%</text><text x="376.5" y="209">13.6%</text><text x="432.2" y="212">13.0%</text><text x="487.9" y="211">13.1%</text><text x="543.6" y="144">27.2%</text><text x="599.3" y="55">45.8%</text><text x="655" y="141">27.7%</text><text x="710.7" y="143">27.4%</text><text x="766.4" y="180">19.7%</text><text x="822.1" y="256">3.8%</text>
+          </g>
+          <g font-size="10" fill="#525866" text-anchor="middle">
+            <text x="98" y="298">1Q24</text><text x="153.7" y="298">2Q24</text><text x="209.4" y="298">3Q24</text><text x="265.1" y="298">4Q24</text><text x="320.8" y="298">1Q25</text><text x="376.5" y="298">2Q25</text><text x="432.2" y="298">3Q25</text><text x="487.9" y="298">4Q25</text><text x="543.6" y="298">1Q26</text><text x="599.3" y="298">2Q26</text><text x="655" y="298">3Q26E</text><text x="710.7" y="298">4Q26E</text><text x="766.4" y="298">1Q27E</text><text x="822.1" y="298">2Q27E</text>
+          </g>
+        </svg>
+        <div class="chart-src">Source: FactSet</div>
+      </div>
+
+      <h3 class="sec"><span class="n">6</span>섹터별 3Q26 Scorecard (S&amp;P 500, 297/493사 발표 기준)</h3>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>섹터</th><th>발표 비중</th><th>EPS Beat 비율</th><th>EPS 실적 vs 추정</th><th>EPS Y/Y (Blended)</th><th>매출 Beat 비율</th><th>매출 Y/Y</th></tr></thead>
+        <tbody>
+          <tr><td><b>S&amp;P 500</b></td><td class="num">60%</td><td class="num">94%</td><td class="num pos">+3.9%</td><td class="num pos">+36.3%</td><td class="num">84%</td><td class="num pos">+13.9%</td></tr>
+          <tr><td>Information Technology</td><td class="num">45%</td><td class="num">100%</td><td class="num pos">+8.0%</td><td class="num pos">+97.9%</td><td class="num">100%</td><td class="num pos">+41.5%</td></tr>
+          <tr><td>Energy</td><td class="num">52%</td><td class="num">100%</td><td class="num pos">+11.4%</td><td class="num pos">+150.7%</td><td class="num">91%</td><td class="num pos">+31.7%</td></tr>
+          <tr><td>Health Care</td><td class="num">52%</td><td class="num">97%</td><td class="num pos">+53.9%</td><td class="num pos">+10.2%</td><td class="num">97%</td><td class="num pos">+5.3%</td></tr>
+          <tr><td>Industrials</td><td class="num">75%</td><td class="num">100%</td><td class="num pos">+7.8%</td><td class="num pos">+50.5%</td><td class="num">88%</td><td class="num pos">+14.2%</td></tr>
+          <tr><td>Financials</td><td class="num">79%</td><td class="num">92%</td><td class="num pos">+3.2%</td><td class="num pos">+9.2%</td><td class="num">71%</td><td class="num pos">+7.8%</td></tr>
+          <tr><td>Consumer Discretionary</td><td class="num">61%</td><td class="num">82%</td><td class="num pos">+4.7%</td><td class="num pos">+2.7%</td><td class="num">75%</td><td class="num pos">+6.3%</td></tr>
+          <tr><td>Communication Services</td><td class="num">45%</td><td class="num">78%</td><td class="num neg">-19.7%</td><td class="num pos">+13.4%</td><td class="num">89%</td><td class="num pos">+15.5%</td></tr>
+          <tr><td>Consumer Staples</td><td class="num">47%</td><td class="num">93%</td><td class="num pos">+3.9%</td><td class="num pos">+6.3%</td><td class="num">93%</td><td class="num pos">+7.5%</td></tr>
+          <tr><td>Materials</td><td class="num">67%</td><td class="num">88%</td><td class="num pos">+1.4%</td><td class="num pos">+59.7%</td><td class="num">69%</td><td class="num pos">+10.9%</td></tr>
+          <tr><td>Real Estate</td><td class="num">70%</td><td class="num">100%</td><td class="num pos">+3.0%</td><td class="num pos">+127.8%</td><td class="num">81%</td><td class="num pos">+11.4%</td></tr>
+          <tr><td>Utilities</td><td class="num">45%</td><td class="num">100%</td><td class="num pos">+21.1%</td><td class="num pos">+11.8%</td><td class="num">64%</td><td class="num pos">+5.9%</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-src">Source: FactSet</div>
+      <div class="callout"><span class="t">주목</span>S&amp;P 500 전체 EPS 성장 기여도(36.3%p) 중 IT가 <b>15.8%p</b>로 압도적, 에너지 7.5%p·산업재 3.9%p·금융 2.3%p가 뒤를 이음. 산업그룹 중 반도체(+389.6%)·테크 하드웨어(+233.7%)·자본재(+76.7%) Y/Y가 특히 두드러짐.</div>
+
+      <h3 class="sec"><span class="n">7</span>섹터별 EPS 성장 컨센서스 &amp; 이익 수정</h3>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>섹터</th><th>3Q26 EPS Y/Y</th><th>2026 EPS 성장</th><th>2027 EPS 성장</th><th>2026 EPS 수정 (5/31 이후)</th><th>2027 EPS 수정 (5/31 이후)</th></tr></thead>
+        <tbody>
+          <tr><td><b>S&amp;P 500</b></td><td class="num pos">+28%</td><td class="num pos">+32%</td><td class="num pos">+16%</td><td class="num pos">+7.7%</td><td class="num pos">+8.5%</td></tr>
+          <tr><td>Energy</td><td class="num pos">~+140%</td><td class="num pos">~+100%</td><td class="num neg">-9%</td><td class="num pos">+27.7%</td><td class="num pos">+27.0%</td></tr>
+          <tr><td>Information Technology</td><td class="num pos">+65%</td><td class="num pos">+59%</td><td class="num pos">~+40%</td><td class="num pos">+7.7%</td><td class="num pos">+20.1%</td></tr>
+          <tr><td>Materials</td><td class="num pos">+41%</td><td class="num pos">+38%</td><td class="num pos">+11%</td><td class="num">-0.4%</td><td class="num">-0.1%</td></tr>
+          <tr><td>Communication Services</td><td class="num pos">+19%</td><td class="num pos">+46%</td><td class="num neg">-9%</td><td class="num pos">+18.4%</td><td class="num">+1.5%</td></tr>
+          <tr><td>Industrials</td><td class="num pos">+8%</td><td class="num pos">+10%</td><td class="num pos">+15%</td><td class="num">+0.6%</td><td class="num">+0.2%</td></tr>
+          <tr><td>Consumer Discretionary</td><td class="num">+5%</td><td class="num pos">+35%</td><td class="num neg">-3%</td><td class="num pos">+17.8%</td><td class="num">+1.3%</td></tr>
+          <tr><td>Financials</td><td class="num">+5%</td><td class="num pos">+16%</td><td class="num pos">+8%</td><td class="num pos">+5.3%</td><td class="num">+2.7%</td></tr>
+          <tr><td>Utilities</td><td class="num">+6%</td><td class="num pos">+11%</td><td class="num pos">+8%</td><td class="num">-0.1%</td><td class="num">-1.1%</td></tr>
+          <tr><td>Health Care</td><td class="num">+3%</td><td class="num">0%</td><td class="num pos">+23%</td><td class="num">-2.2%</td><td class="num">+0.4%</td></tr>
+          <tr><td>Real Estate (REITs)</td><td class="num">+4%</td><td class="num">+6%</td><td class="num">+6%</td><td class="num">+0.7%</td><td class="num">+0.3%</td></tr>
+          <tr><td>Consumer Staples</td><td class="num">+2%</td><td class="num">+6%</td><td class="num">+6%</td><td class="num">-0.5%</td><td class="num">-1.8%</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-src">Source: FactSet</div>
+      <ul class="pts">
+        <li>YTD 기준 S&amp;P 500 2026/2027 EPS 추정치는 각각 <b>+16.9% / +18.6%</b> 상향. 5/31 이후로도 +7.7% / +8.5% 추가 상향 — 상향의 대부분은 <b>테크(반도체 2027 +31.9%)와 에너지</b>가 주도</li>
+        <li>2026 순이익 추정 수정 지수(2024년 7월=100): S&amp;P 500 <b>117.4</b>, Mag 7 <b>155.7</b>, SP493 <b>105.9</b>, Mag 7 ex NVDA 142.5. 2027 기준으로는 S&amp;P 500 132.0, Mag 7 142.5, SP493 128.0</li>
+        <li>마진: LTM EBIT 마진 <b>20.2%</b> → FY26E 20.6% → FY27E 22.8%. LTM 순마진 <b>15.8%</b> → FY26E 16.2% → FY27E 17.2%. 3Q 컨센서스 순마진 15.6%. 2026 순마진 추정은 연초 14.4%에서 10월 말 16.2%로 <b>+1.8%p</b> 상향(에너지 +4.6p, 미디어 +11.3p, 반도체 +4.4p 주도; 제약·바이오 -5.3p)</li>
+        <li>S&amp;P 500 실적은 <b>사모 AI 투자 미실현 이익(비영업이익)</b>으로 왜곡 — 2Q26 순이익 Y/Y 54% 중 비영업이익 제외 시 27%. 2027년 1Q/2Q에는 역기저 효과로 성장률 압박</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">8</span>3Q Systematic Earnings — 커버리지 전체 Preview &amp; 결과</h3>
+      <ul class="pts">
+        <li>방법론: 애널리스트별로 종목의 KPI와 NTM EPS 영향을 5단계(very negative~very positive)로 예측·반응 제출 → (positive-negative)/total로 Net Score 산출. 모집단은 S&amp;P 500보다 넓은 美 커버리지 전체(Russell 1000과 유사)</li>
+        <li><b>Preview</b>: Net KPI Preview <b>+19%</b>(2Q26 +32%), Net NTM EPS Preview <b>+21%</b>(2Q26 +27%). KPI 분포는 In-line 51%, Likely upside 32%, Likely downside 14%. Materials를 제외한 전 섹터가 Net Positive. 섹터별 Net KPI: Tech 56%, Comm Services 50%, Energy 50%, Health Care 39%, Real Estate 38% / Materials -50%</li>
+        <li><b>결과</b>: 커버리지 전체 Net NTM EPS 수정 <b>+15%</b>(2Q26 +27%). 11개 섹터 중 8개가 양(+), 3개는 중립. <b>Real Estate +56%, Tech +38%</b>가 최상위, Industrials·Materials·Comm Services는 0%. 실적 Net Beat는 80%(278개 결과, 10/29 기준)</li>
+      </ul>
+
+      <div class="chart-card">
+        <div class="ct">3Q26 실적 발표 후 섹터별 Net NTM EPS 수정 (커버리지 전체)</div>
+        <svg viewBox="0 0 880 320" width="100%">
+          <g stroke="#e4e9f0" stroke-width="1">
+            <line x1="70" y1="40" x2="850" y2="40"/><line x1="70" y1="80" x2="850" y2="80"/><line x1="70" y1="120" x2="850" y2="120"/><line x1="70" y1="160" x2="850" y2="160"/><line x1="70" y1="200" x2="850" y2="200"/><line x1="70" y1="240" x2="850" y2="240"/>
+          </g>
+          <line x1="70" y1="280" x2="850" y2="280" stroke="#8a93a3" stroke-width="1.2"/>
+          <g font-size="11" fill="#6b7280" text-anchor="end">
+            <text x="62" y="44">60%</text><text x="62" y="84">50%</text><text x="62" y="124">40%</text><text x="62" y="164">30%</text><text x="62" y="204">20%</text><text x="62" y="244">10%</text><text x="62" y="284">0%</text>
+          </g>
+          <g fill="#00264d">
+            <rect x="82" y="56" width="40" height="224"/>
+            <rect x="147" y="80" width="40" height="200"/>
+            <rect x="212" y="128" width="40" height="152"/>
+            <rect x="277" y="188" width="40" height="92"/>
+            <rect x="407" y="228" width="40" height="52"/>
+            <rect x="472" y="236" width="40" height="44"/>
+            <rect x="537" y="260" width="40" height="20"/>
+            <rect x="602" y="268" width="40" height="12"/>
+          </g>
+          <rect x="342" y="220" width="40" height="60" fill="#d9b35a"/>
+          <g font-size="11" font-weight="700" fill="#1b1e24" text-anchor="middle">
+            <text x="102" y="50">56%</text><text x="167" y="74">50%</text><text x="232" y="122">38%</text><text x="297" y="182">23%</text><text x="362" y="214">15%</text><text x="427" y="222">13%</text><text x="492" y="230">11%</text><text x="557" y="254">5%</text><text x="622" y="262">3%</text><text x="687" y="274">0%</text><text x="752" y="274">0%</text><text x="817" y="274">0%</text>
+          </g>
+          <g font-size="9.5" fill="#525866" text-anchor="middle">
+            <text x="102" y="296">Real Estate</text><text x="167" y="296">Utilities</text><text x="232" y="296">Info. Tech.</text><text x="297" y="296">Energy</text><text x="362" y="296">전체 커버리지</text><text x="427" y="296">Financials</text><text x="492" y="296">Cons. Staples</text><text x="557" y="296">Health Care</text><text x="622" y="296">Cons. Disc.</text><text x="687" y="296">Industrials</text><text x="752" y="296">Comm. Svcs.</text><text x="817" y="296">Materials</text>
+          </g>
+        </svg>
+      </div>
+
+      <h3 class="sec"><span class="n">9</span>S&amp;P 500 12M 전망 — Bull/Base/Bear</h3>
+      <div class="bbgrid">
+        <div class="bb bull"><div class="lbl">🐂 Bull</div><div class="px">9,400</div><div class="ret">+24% vs 7,580</div>
+          <ul><li>12M 목표 P/E 21.0x</li><li>Top-down EPS: 2026 $352(+28%) / 2027 $416(+18%) / 2028 $480(+16%)</li></ul></div>
+        <div class="bb base"><div class="lbl">⊕ Base</div><div class="px">8,300</div><div class="ret">+9% (연말 8,000)</div>
+          <ul><li>12M 목표 P/E 20.5x (현재 18.7x)</li><li>Top-down EPS: 2026 $339(+23%) / 2027 $380(+12%) / 2028 $429(+13%)</li></ul></div>
+        <div class="bb bear"><div class="lbl">🐻 Bear</div><div class="px">5,900</div><div class="ret">-22% Downside</div>
+          <ul><li>12M 목표 P/E 19.0x</li><li>Top-down EPS: 2026 $299(+9%) / 2027 $300(0%) / 2028 $322(+7%)</li></ul></div>
+      </div>
+      <div class="callout"><span class="t">참고</span>Bottom-up 컨센서스 EPS는 2026 $364(+32%) / 2027 $424(+16%) / 2028 $497(+17%)로 Top-down Base($339/$380/$429)보다 높음. S&amp;P 500 Equity Risk Premium(12M 선행 이익수익률 - 10년물)은 1998년 이후 최저권인 0bp 부근까지 하락.</div>
+
+      <h3 class="sec"><span class="n">10</span>섹터 추천 &amp; 핵심 Long 리스트</h3>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Rating</th><th colspan="3">섹터</th></tr></thead>
+        <tbody>
+          <tr><td class="buy">Overweight</td><td>Financials</td><td>Industrials</td><td>Consumer Discretionary Goods</td></tr>
+          <tr><td class="hold" rowspan="3">Equal-weight</td><td>Tech</td><td>Comm. Services</td><td>Health Care</td></tr>
+          <tr><td>Materials</td><td>Utilities</td><td>Consumer Services</td></tr>
+          <tr><td>Energy</td><td></td><td></td></tr>
+          <tr><td class="sell">Underweight</td><td>Staples</td><td>Real Estate</td><td></td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="tbl-wrap" style="margin-top:14px;">
+      <table class="tbl">
+        <thead><tr><th>종목</th><th>Ticker</th><th>Rating</th><th>섹터</th><th>시총($bn)</th><th>주가</th><th>목표가</th><th>업사이드</th><th>편입일</th><th>편입 후 절대/상대 수익</th></tr></thead>
+        <tbody>
+          <tr><td>Abbvie</td><td>ABBV</td><td class="buy">OW</td><td>Health Care</td><td class="num">506.1</td><td class="num">$286.40</td><td class="num">310</td><td class="num pos">+8.2%</td><td>24.08.12</td><td class="num">+66.9% / +21.1%</td></tr>
+          <tr><td>American Tower</td><td>AMT</td><td class="buy">OW</td><td>Real Estate</td><td class="num">85.2</td><td class="num">$183.75</td><td class="num">220</td><td class="num pos">+19.7%</td><td>25.04.07</td><td class="num">-9.0% / -61.1%</td></tr>
+          <tr><td>CenterPoint Energy</td><td>CNP</td><td class="hold">EW</td><td>Utilities</td><td class="num">27.2</td><td class="num">$41.61</td><td class="num">39</td><td class="num neg">-6.3%</td><td>22.03.21</td><td class="num">+63.5% / -17.6%</td></tr>
+          <tr><td>Delta Air Lines</td><td>DAL</td><td class="buy">OW</td><td>Industrials</td><td class="num">52.9</td><td class="num">$80.36</td><td class="num">125</td><td class="num pos">+55.6%</td><td>25.11.17</td><td class="num">+38.6% / +24.9%</td></tr>
+          <tr><td>EQT</td><td>EQT</td><td class="buy">OW</td><td>Energy</td><td class="num">35.2</td><td class="num">$56.22</td><td class="num">67</td><td class="num pos">+19.2%</td><td>25.11.17</td><td class="num">-6.7% / -20.5%</td></tr>
+          <tr><td>Knight-Swift Transportation</td><td>KNX</td><td class="buy">OW</td><td>Industrials</td><td class="num">9.9</td><td class="num">$60.88</td><td class="num">100</td><td class="num pos">+64.3%</td><td>25.11.17</td><td class="num">+43.1% / +29.3%</td></tr>
+          <tr><td>Northrop Grumman</td><td>NOC</td><td class="buy">OW</td><td>Industrials</td><td class="num">78.5</td><td class="num">$552.77</td><td class="num">765</td><td class="num pos">+38.4%</td><td>24.08.12</td><td class="num">+17.2% / -28.6%</td></tr>
+          <tr><td>Atlassian</td><td>TEAM</td><td class="buy">OW</td><td>Information Technology</td><td class="num">55.4</td><td class="num">$220.12</td><td class="num">180</td><td class="num neg">-18.2%</td><td>25.11.17</td><td class="num">+26.3% / +12.5%</td></tr>
+          <tr><td>Target</td><td>TGT</td><td class="buy">OW</td><td>Consumer Staples</td><td class="num">67.7</td><td class="num">$148.95</td><td class="num">170</td><td class="num pos">+14.1%</td><td>25.11.17</td><td class="num">+76.2% / +62.4%</td></tr>
+          <tr><td>Walmart</td><td>WMT</td><td class="buy">OW</td><td>Consumer Staples</td><td class="num">942.3</td><td class="num">$118.77</td><td class="num">125</td><td class="num pos">+5.2%</td><td>23.03.27</td><td class="num">+171.6% / +71.5%</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-src">Source: Bloomberg</div>
+      <div class="callout"><span class="t">리스트 성과</span>현재 리스트 동일가중 평균 수익률 <b>+48.8%(상대 +9.4%)</b>, 중앙값 +40.9%(상대 +16.8%), 양(+) 절대수익 비중 80%, 평균 보유기간 23.1개월. 역대 리스트 기준 평균 +32.5%(상대 +6.4%), 절대수익 양(+) 비중 77%.</div>
+
+      <h3 class="sec"><span class="n">!</span>리스크 &amp; 모니터링 포인트</h3>
+      <div class="risk-box">
+        <h4>Key Risks to the View</h4>
+        <ul>
+          <li><b>유동성 긴축 지속:</b> TGA Drawdown이 금융여건 완화와 동반되지 않거나, Fed의 대응이 2018년식으로 파괴적일 경우. 지난주 FOMC는 유동성에 대한 완전한 클리어링 이벤트가 아니었음</li>
+          <li><b>선거 후 지정학·관세 리스크:</b> 이란과의 군사적 긴장 재고조 또는 추가 관세 → 에너지 가격 상승이 기대인플레이션·장기금리를 밀어올리는 시나리오가 가장 큰 리스크</li>
+          <li><b>자본비용 재상승:</b> 경기민감 섹터를 가장 크게 타격하는 변수. 장기금리 재반등 시 Cyclical의 추가 De-rating 가능</li>
+          <li><b>AI Capex 속도·신용스프레드:</b> AI 트레이드 일부의 스프레드 확대. 현재는 Quality 차별화로 해석하나 광범위한 신용 문제로 번질 경우 시나리오 변경</li>
+          <li><b>추정치 모멘텀 둔화:</b> ERB +7%로 2027 상향 수정 둔화. Mag 7의 2027 역기저 효과(비영업이익)와 EPS 성장 2차 미분 둔화</li>
+          <li><b>최종 Capitulation 미완:</b> 심리 지표가 조정 종료 수준에 미달 — Crowded 영역의 추가 하락 여지</li>
+        </ul>
+        <h4 style="margin-top:14px;">모니터링 포인트</h4>
+        <ul>
+          <li>S&amp;P 500의 <b>7,100–7,300</b> 전술적 하방 타깃 도달 여부 또는 심리 지표의 Capitulation 수준 도달 — 공격적 리스크 추가의 트리거</li>
+          <li>이번 주 <b>Quarterly Refunding Announcement</b>(장기물 발행 축소 여부)와 연말까지의 TGA 감소(~$1.05tn → ~$850bn) 경로</li>
+          <li>중간선거 결과 — 상원 다수의 규모, 선거 후 관세·중동 관련 정책 움직임</li>
+          <li>실적 시즌 마지막 주요 주간의 <b>ERB 반등 여부</b> 및 산업재·부동산 vs 커뮤니케이션·경기소비재의 수정 Breadth 격차</li>
+          <li>10년물 금리 안정화 여부 — 동일가중 S&amp;P(장기물 안정화로 충분) vs Russell 2000(추가 금리 하락 필요)의 상대 성과</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div>본 문서는 투자 권유를 목적으로 하지 않습니다.</div>
+  </footer>
+
+</div>
+</body>
+</html>
