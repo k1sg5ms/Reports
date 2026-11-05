@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>US Midterms &amp; Data Centers</title>
+<style>
+  :root{
+    --brand:#1f2a3a;
+    --brand-deep:#121a26;
+    --accent:#b8322f;
+    --accent2:#3d5a80;
+    --paper:#f4f6f9;
+    --card:#ffffff;
+    --ink:#1b1e24;
+    --ink-soft:#525866;
+    --line:#dde3ec;
+    --buy:#1f7a4d;
+    --bear:#c0392b;
+    --bull:#1f6fb2;
+    --warn:#8a4b15;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);font-family:'Helvetica Neue','Pretendard','Noto Sans KR',Arial,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+  .topbar{background:var(--brand-deep);color:#fff;padding:14px 6vw;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-bottom:3px solid var(--accent);position:sticky;top:0;z-index:50;}
+  .topbar .logo{font-weight:700;font-size:18px;letter-spacing:0.5px;}
+  .topbar .logo span{color:var(--accent);}
+  .topbar nav{display:flex;gap:8px;flex-wrap:wrap;}
+  .topbar nav a{color:#cfd8e6;text-decoration:none;font-size:12.5px;padding:6px 12px;border:1px solid rgba(255,255,255,0.2);border-radius:20px;transition:all .15s;}
+  .topbar nav a:hover{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .wrap{max-width:960px;margin:0 auto;padding:40px 6vw 90px;}
+  .intro{border-left:4px solid var(--accent);padding:8px 0 8px 20px;margin-bottom:48px;}
+  .intro .eyebrow{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent2);font-weight:700;}
+  .intro h1{font-size:26px;margin:8px 0 6px;color:var(--brand);}
+  .report{margin-bottom:64px;scroll-margin-top:70px;}
+  .report-head{background:linear-gradient(135deg,var(--brand) 0%, var(--brand-deep) 100%);color:#fff;border-radius:10px 10px 0 0;padding:28px 30px;}
+  .report-head .tag{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#9fb4d4;font-weight:700;}
+  .report-head h2{margin:8px 0 14px;font-size:23px;line-height:1.35;}
+  .report-head .lede{font-family:'Georgia',serif;font-size:15.5px;color:#e3ebf6;border-top:1px solid rgba(255,255,255,0.16);padding-top:14px;margin:0;}
+  .report-body{background:var(--card);border:1px solid var(--line);border-top:none;border-radius:0 0 10px 10px;padding:30px;}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px;}
+  .chip{border:1px solid var(--line);border-radius:8px;padding:10px 16px;background:#fafbfd;flex:1;min-width:130px;}
+  .chip .k{font-size:10.5px;letter-spacing:0.5px;text-transform:uppercase;color:var(--ink-soft);}
+  .chip .v{font-size:19px;font-weight:700;color:var(--brand);margin-top:2px;}
+  .chip .v.buy{color:var(--buy);}
+  .chip .v.sell{color:var(--bear);}
+  .chip .s{font-size:11px;color:var(--ink-soft);}
+  h3.sec{font-size:17px;color:var(--brand);margin:30px 0 12px;padding-bottom:8px;border-bottom:1.5px solid var(--line);display:flex;align-items:center;gap:10px;}
+  h3.sec .n{background:var(--brand);color:#fff;font-size:12px;font-weight:700;width:24px;height:24px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}
+  ul.pts{margin:0;padding:0;list-style:none;}
+  ul.pts li{position:relative;padding:7px 0 7px 20px;font-size:14.5px;border-bottom:1px dashed var(--line);}
+  ul.pts li:last-child{border-bottom:none;}
+  ul.pts li::before{content:"—";position:absolute;left:0;color:var(--accent2);font-weight:700;}
+  ul.pts b{color:var(--brand);}
+  table.tbl{width:100%;border-collapse:collapse;font-size:13px;margin:6px 0 4px;}
+  table.tbl th{background:var(--brand);color:#fff;text-align:left;padding:8px 10px;font-weight:600;}
+  table.tbl td{padding:7px 10px;border-bottom:1px solid var(--line);}
+  table.tbl tr:nth-child(even) td{background:#f7f9fc;}
+  table.tbl td.num{text-align:right;font-variant-numeric:tabular-nums;}
+  table.tbl td.buy{color:var(--buy);font-weight:700;}
+  table.tbl td.pos{color:var(--buy);font-weight:600;}
+  table.tbl td.neg{color:var(--bear);font-weight:600;}
+  table.tbl td.mid{color:var(--warn);font-weight:600;}
+  .tbl-wrap{overflow-x:auto;}
+  .chart-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:22px 22px 14px;margin:14px 0;}
+  .chart-card .ct{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:12px;}
+  .chart-src{font-size:10.5px;color:#9aa3b2;margin-top:8px;}
+  .legend{display:flex;gap:18px;font-size:11.5px;color:var(--ink-soft);margin-bottom:4px;flex-wrap:wrap;}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .legend i{width:11px;height:11px;border-radius:2px;display:inline-block;}
+  .bbgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0;}
+  @media(max-width:680px){.bbgrid{grid-template-columns:1fr;}}
+  .bb{border-radius:8px;padding:16px;border:1px solid var(--line);background:#fafbfd;}
+  .bb.bull{border-top:3px solid var(--bull);}
+  .bb.base{border-top:3px solid var(--ink-soft);}
+  .bb.bear{border-top:3px solid var(--bear);}
+  .bb .lbl{font-size:11px;letter-spacing:0.6px;text-transform:uppercase;font-weight:700;color:var(--ink-soft);}
+  .bb .px{font-size:16px;font-weight:700;color:var(--brand);margin:4px 0;}
+  .bb ul{margin:8px 0 0;padding-left:16px;font-size:12px;color:var(--ink-soft);}
+  .bb li{margin-bottom:4px;}
+  .callout{background:#fbf6ec;border:1px solid #e8dcc3;border-radius:8px;padding:14px 18px;font-size:13px;color:var(--ink-soft);margin-top:14px;}
+  .callout .t{font-size:10.5px;font-weight:700;letter-spacing:0.6px;color:var(--warn);text-transform:uppercase;display:block;margin-bottom:5px;}
+  .risk-box{background:var(--brand);color:#dde6f3;border-radius:8px;padding:22px 24px;margin-top:14px;}
+  .risk-box h4{margin:0 0 10px;color:#fff;font-size:14.5px;}
+  .risk-box ul{margin:0;padding-left:18px;}
+  .risk-box li{margin-bottom:8px;font-size:13px;}
+  .risk-box li b{color:#fff;}
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0;}
+  @media(max-width:680px){.twocol{grid-template-columns:1fr;}}
+  .pane{border:1px solid var(--line);border-radius:8px;padding:14px 16px;background:#fafbfd;}
+  .pane.can{border-top:3px solid var(--buy);}
+  .pane.cannot{border-top:3px solid var(--bear);}
+  .pane .lbl{font-size:11px;letter-spacing:0.6px;text-transform:uppercase;font-weight:700;color:var(--ink-soft);margin-bottom:6px;}
+  .pane ul{margin:0;padding-left:16px;font-size:12.5px;color:var(--ink);}
+  .pane li{margin-bottom:6px;}
+  footer{border-top:1px solid var(--line);margin-top:50px;padding-top:20px;font-size:11px;color:#9aa3b2;line-height:1.6;}
+  @media(max-width:560px){.intro h1{font-size:21px;}.report-head h2{font-size:19px;}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">Research<span>·</span>Digest</div>
+  <nav>
+    <a href="#rpt1">Texas After Abbott</a>
+    <a href="#rpt2">US Digital Infra</a>
+    <a href="#rpt3">NIMBYism</a>
+    <a href="#rpt4">US Economics</a>
+  </nav>
+</div>
+
+<div class="wrap">
+
+  <div class="intro">
+    <div class="eyebrow">4 November 2026</div>
+    <h1>2026 미국 중간선거 결과: 데이터센터 규제 강화 시사점</h1>
+  </div>
+
+  <!-- ============================ RPT 1 ============================ -->
+  <section class="report" id="rpt1">
+    <div class="report-head">
+      <div class="tag">AI Infrastructure · Industry Report</div>
+      <h2>Texas After Abbott — 텍사스 데이터센터 규제, '일시 감사'에서 '상시 심사'로 바뀔 위험</h2>
+      <p class="lede">텍사스 주지사 선거에서 Gina Hinojosa가 Greg Abbott를 꺾으며 1990년 이후 첫 민주당 주지사 탄생. 텍사스 데이터센터 기회가 사라지는 것은 아니지만 re-priced·re-sequenced되며, 다음 리스는 텍사스 밖에서 체결될 확률이 높아져 WULF·HUT·KEEL이 상대적 수혜, CIFR이 가장 큰 타격.</p>
+    </div>
+    <div class="report-body">
+
+      <div class="chips">
+        <div class="chip"><div class="k">상대적 수혜</div><div class="v buy">WULF · HUT · KEEL</div><div class="s">텍사스 외 사이트 보유</div></div>
+        <div class="chip"><div class="k">상대적 절연</div><div class="v">RIOT</div><div class="s">ERCOT/TCEQ 비의존</div></div>
+        <div class="chip"><div class="k">최대 타격</div><div class="v sell">CIFR</div><div class="s">파이프라인 대부분 ERCOT/TCEQ 의존</div></div>
+        <div class="chip"><div class="k">핵심 분기점</div><div class="v">Dec 10 / Dec 31</div><div class="s">ERCOT 보고서 / PUC SB 6 룰</div></div>
+      </div>
+
+      <h3 class="sec"><span class="n">1</span>선거 결과의 의미 — 이미 가장 엄격했던 Abbott, 그보다 더 가려는 Hinojosa</h3>
+      <ul class="pts">
+        <li>Abbott는 낙선 시점에 이미 미국에서 가장 규제적인 데이터센터 주지사 중 한 명이었음. <b>6월</b> 물·전력 관련 '기대사항' 발표 → <b>8월</b> ERCOT·PUC에 interconnection queue 내 모든 대형 부하 감사 지시 및 승인 중단 → <b>9월</b> 신규·계류 TCEQ 허가 전면 동결, 미보고 시 형사처벌을 포함한 Water Development Board 동원, 정부 전체 standstill 선언 → <b>10월 말</b> local-veto 입법 지지 및 세제 인센티브 폐지 추진.</li>
+        <li>Hinojosa는 매 단계마다 "충분하지 않다"고 대응. 따라서 핵심 질문은 텍사스가 더 엄격해지느냐가 아니라, <b>Abbott가 '정치적으로 생존 가능한 일시 감사'로 설계한 pause가 업계 반대를 공약한 인물 아래 영구화되느냐</b>.</li>
+        <li>단, Hinojosa의 공약 어디에도 "데이터센터 금지"는 없음. 규칙(납세자 그리드 비용 비부담, 물·전력 사용 공개, 지역사회 발언권, 판매세 보조 폐지, 노조 인력 사용)이 마련될 때까지의 '일시 중단'이 공식 입장이며, 커버리지 기업 대부분은 이미 그 방향을 따르고 있거나 지지하는 수준.</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">2</span>바뀌는 세 가지 — Time / Terms / Who gets picked</h3>
+      <ul class="pts">
+        <li><b>Time:</b> "입법부가 규정을 법제화할 때까지" pause → 정규 회기 1월 개시, 법안은 2/3 긴급조항이 없으면 <b>2027년 9월 발효</b>, 이후 PUC 룰 제정. 1~2월 특별회기가 잘 진행돼도 신규 승인은 <b>2027년 중반</b>으로 밀림. Hyperscaler들은 이를 이미 알고 있어 조지아·켄터키·루이지애나·펜실베이니아 발표가 가속화. 프로젝트는 죽지 않고 <b>2027 vintage는 타주로, 텍사스는 2028 vintage를 더 나은 조건으로</b> 받게 되는 구조.</li>
+        <li><b>Terms:</b> PUC의 SB 6 cost-allocation 룰이 <b>12월 31일</b> 마감. 대형 부하가 송전 증설비 전액 + 물 surcharge + curtailment 의무 + <b>MW당 $10M 장비의 판매세 면제 폐지</b>를 부담하면 텍사스 MW당 all-in 비용 상승 → 건설이 멈추진 않지만 landlord의 yield on cost를 압축하거나 임대료를 올리며 타주와의 격차 축소.</li>
+        <li><b>Who gets picked:</b> 검증된 attestation·물/전력 공개·지역 협약·ratepayer-neutral 비용배분 중심 체제는 이미 그것을 갖춘 사업자에게 유리 — 체결된 interconnection 계약, investment-grade 테넌트, closed-loop 냉각, 카운티 세제 협약, queue position이 아닌 utility-tariff 전력. 해당 사례: <b>HUT Beacon Point, GLXY Helios I/II, IREN Childress, RIOT 기연결 사이트, CIFR Barber Lake·Black Pearl, CORZ Denton</b>.</li>
+        <li>ERCOT 12월 분류도 같은 선별 작업 수행 — <b>204개 "base load" 프로젝트 진행, 373개는 이미 제외</b>. Hinojosa 행정부는 수백억 달러 capex와 공약한 교육 재정의 세원을 두고 자당 입법부와 싸우기보다 조건부로 이 리스트를 통과시킬 가능성이 높다는 판단. 패자는 프로젝트가 아닌 <b>queue position 자체에 가치가 있던</b> 이름들.</li>
+      </ul>
+      <div class="callout"><span class="t">Base case vs. "dead" 시나리오</span>Base case는 업계를 과세·규제하는 모습을 보이려는 주지사이지 업계를 없애려는 주지사가 아님. "dead"에 가까운 유일한 시나리오는 감사 pause가 입법부보다 오래 지속되는 경우 — 서명할 법안이 하나도 나오지 않는 회기 동안 TCEQ·PUC 레버를 쥔 채 교착이 2028년까지 이어지는 상황. 상원 구성상 가능성은 있으며, 인수위 발언에서 주시할 포인트.</div>
+
+      <h3 class="sec"><span class="n">3</span>Hinojosa의 데이터센터 공약</h3>
+      <ul class="pts">
+        <li>입법부가 보호장치를 통과시킬 때까지 신규 데이터센터 허가·승인 <b>모라토리엄</b> — 당초 Abbott에게 긴급 행정명령으로 요구했고, 취임 시 직접 시행하겠다고 언급.</li>
+        <li>데이터센터 관련 <b>특별회기</b> 소집 (8월 El Paso에서 요구).</li>
+        <li>데이터센터 <b>주 판매세 면제 폐지</b> 및 "Abbott가 승인한 과도한 보조금" 종료.</li>
+        <li><b>Local control:</b> 농촌 지역을 포함해 시·카운티·주민에게 프로젝트 협상 또는 거부 권한 부여.</li>
+        <li><b>투명성:</b> 물·전력 소비를 숨기는 NDA 금지, 양자 모두 의무 공개.</li>
+        <li><b>Ratepayer 보호:</b> 데이터센터발 요금 인상으로부터 소비자 보호 — 실질적으로 PUC의 cost-allocation 룰.</li>
+        <li><b>노동:</b> licensed American union labor로 건설. "텍사스인에게 좋은 거래가 아니거나" 주민 발언권이 없는 허가는 차단하겠다고 언급.</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">4</span>주지사가 혼자 할 수 있는 것 vs 할 수 없는 것 (2027년 1월부터)</h3>
+      <div class="twocol">
+        <div class="pane can">
+          <div class="lbl">혼자 할 수 있는 것</div>
+          <ul>
+            <li><b>Pause 유지:</b> Abbott의 감사·TCEQ 동결은 주지사가 임명하는 기관에 대한 행정 지시. 무기한 연장·범위 확대·'유보' 대신 '거부' 지시 가능. <b>메커니즘이 이미 존재하고 이를 그대로 물려받는 것이 진짜 리스크.</b></li>
+            <li><b>특별회기 소집 및 의제 설정:</b> 주지사만 가능. 1~2월 데이터센터 단일 의제 회기 가능.</li>
+            <li><b>거부권:</b> 업계 자체 개선안을 포함해 규제를 완화하는 법안은 모두 폐기 가능. 입법부는 1979년 이후 거부권을 뒤집은 적 없음.</li>
+            <li><b>임명권:</b> PUC·TCEQ·TWDB 위원은 6년 staggered 임기라 즉시 교체는 불가하나 공석 발생 시 임명으로 모든 룰메이킹의 톤 결정. ERCOT 이사 선정위원회에도 영향.</li>
+            <li><b>Bully pulpit:</b> Abbott의 "Texans come first" 게시물만으로 Diode가 Henderson County에서 철수. 이 이슈로 당선된 주지사는 더 할 수 있음.</li>
+          </ul>
+        </div>
+        <div class="pane cannot">
+          <div class="lbl">혼자 할 수 없는 것</div>
+          <ul>
+            <li><b>판매세 면제·Chapter 403/JETI abatement 폐지:</b> 법률 사항. 양원 모두 공화당, 상원은 Dan Patrick 주도. Sid Miller 등 공화당 일부가 "laws with teeth"를 요구해 초당적 법안은 가능하나 입법부의 법안이지 Hinojosa의 법안은 아님.</li>
+            <li><b>노조 인력 의무화·local veto:</b> 모두 입법 필요. 입법부는 10년간 local control을 박탈해 왔고 노조 의무화는 공화당 지지층이 없음.</li>
+            <li><b>ERCOT 관할 밖 behind-the-meter 프로젝트:</b> 감사는 그리드 연결만 다룸. 완전 islanded 가스 캠퍼스도 TCEQ 대기 허가는 필요(그래서 9월 동결이 8월보다 중요)하지만, 사유지의 사설 발전기가 사설 부하에 공급하는 것을 입법부 도움 없이 막을 수는 없음.</li>
+            <li><b>SB 6 무효화:</b> 2025 large-load 법이 이미 PUC·ERCOT에 curtailment·cost-allocation 권한 부여. 이 룰메이킹이 어떤 행정명령보다 경제성을 좌우하며, Abbott 임명 위원들로 이미 진행 중.</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 class="sec"><span class="n">5</span>사이트별로 다르게 작용하는 세 가지 텍사스 조치</h3>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>조치</th><th>일자</th><th>내용</th><th>영향 범위</th></tr></thead>
+        <tbody>
+          <tr><td><b>ERCOT Batch Zero 검증</b></td><td>8월 3일</td><td>≥75MW 미연결 데이터센터·크립토 시설의 energization을 적격성 검증 전까지 중단. 362개 대형 부하(~194GW)가 잠정 Batch Zero — "base load" 204개(66.4GW), "studied load" 158개(127.9GW), 이미 제외 373개(302GW). Eligibility Verification Report·Community Impact Review를 <b>12월 10일</b>까지 PUC에 제출, 최종 분류 12월. 연구 자체는 2027년 4월 9일 마감이었으며 지연 가능.</td><td>이미 energized된 부하는 미포함. interconnection 계약 체결 프로젝트는 감사 밖으로 취급(Hut 8은 Beacon Point가 그 이유로 감사 대상이 아님을 ERCOT가 확인했다고 밝힘)</td></tr>
+          <tr><td><b>TCEQ 허가 동결</b></td><td>9월 21일</td><td>데이터센터 프로젝트의 모든 계류·신규 주 환경허가를 ERCOT 감사 종료까지 중단.</td><td>가스터빈은 TCEQ 대기 허가가 필요하므로 BTM 가스 프로젝트와 ERCOT 밖 사이트(Panhandle은 SPP)까지 도달 — FRMI, CORZ·CIFR이 언급한 BTM 성장</td></tr>
+          <tr><td><b>PUC SB 6 cost-allocation 룰</b></td><td>12월 31일 마감</td><td>대형 부하가 송전 비용을 얼마나 부담할지 결정.</td><td>텍사스 MW 경제성 전반</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="callout"><span class="t">핵심</span>Hinojosa 행정부는 공화당 입법부 없이 새 법을 만들 수 없지만, 세 레버를 모두 물려받아 계속 당겨둘 수 있음. 실질적 리스크는 새 모라토리엄이 아니라 <b>12월 보고서가 '해제'가 아닌 '영구 심사'가 되는 것</b>.</div>
+
+      <h3 class="sec"><span class="n">6</span>종목별 영향</h3>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Ticker</th><th>Price</th><th>Rating</th><th>Target</th><th>영향</th><th>코멘트</th></tr></thead>
+        <tbody>
+          <tr><td><b>HUT</b></td><td class="num">$63.75</td><td class="buy">OW</td><td class="num">$151.00</td><td class="pos">영향 미미</td><td>Beacon Point 1GW 전체에 대한 AEP interconnection 계약 체결. ERCOT가 감사 비대상임을 확인했다고 밝혔고 파트너 Jacobs가 건설 중 → 허가 수령 가정. 잔여 노출은 2차 500MW의 TCEQ 허가뿐. 향후 리스 catalyst는 주로 텍사스 밖, 다음 리스는 Riverbend 확장 예상.</td></tr>
+          <tr><td><b>CORZ</b></td><td class="num">$14.24</td><td class="buy">OW</td><td class="num">$30.00</td><td class="mid">혼재</td><td>가동 중인 Austin·Denton은 무영향. AMD 리스의 Pecos 전력은 이미 확보돼 무영향이나 Hunt County 전력은 ERCOT/TCEQ 동결 영향 가능. 잔여 ~2GW AMD 확장의 대부분이 BTM이라 동결 시 불확실.</td></tr>
+          <tr><td><b>CIFR</b></td><td class="num">$8.12</td><td class="buy">OW</td><td class="num">$15.00</td><td class="neg">최대 영향</td><td>Barber Lake·Black Pearl은 문제없고 두 리스 가치가 현 밸류에이션을 뒷받침하나, 파이프라인 거의 전부(Colchis, McLenna, Mikeska, Apollo, 2.5GW BTM optionality)가 ERCOT/TCEQ 의존.</td></tr>
+          <tr><td><b>RIOT</b></td><td class="num">$14.02</td><td class="buy">OW</td><td class="num">$24.00</td><td class="pos">무영향</td><td>두 사이트 모두 완전 energized, ERCOT·TCEQ 비의존. 테넌트의 텍사스 리스 체결 의지에는 영향 가능하나 사이트 자체는 무영향.</td></tr>
+          <tr><td><b>CLSK</b></td><td class="num">$8.15</td><td class="buy">OW</td><td class="num">$19.00</td><td class="mid">Catalyst 노출</td><td>유일한 체결 리스는 GA라 기존 사업에는 문제없음. 다만 같은 테넌트(META)가 Sealy·Brazoria에 옵션을 보유해 catalyst 경로는 TX 동결에 노출.</td></tr>
+          <tr><td><b>GLXY</b></td><td class="num">$16.83</td><td class="buy">OW</td><td class="num">$30.00</td><td class="mid">Phase 2 노출</td><td>Dickens County Helios 캠퍼스 건설 중, 2028년 완공 리스는 문제없음. Phase 2와 나머지 포트폴리오(Caspian, Selene, McGregor)는 허가 동결 기간·Abbott 감사 완료에 의존.</td></tr>
+          <tr><td><b>FRMI</b></td><td class="num">—</td><td class="buy">OW</td><td class="num">—</td><td class="pos">무영향</td><td>ERCOT 밖에 위치하고 대기·수자원 허가 기수령. TensorWave(비상장)와의 pending 리스 이행에 문제 없음.</td></tr>
+          <tr><td><b>WULF</b></td><td class="num">$12.53</td><td class="buy">OW</td><td class="num">$30.00</td><td class="pos">상대적 수혜</td><td>1GW Muskie 사이트.</td></tr>
+          <tr><td><b>KEEL</b></td><td class="num">$2.19</td><td class="buy">OW</td><td class="num">$4.00</td><td class="pos">상대적 수혜</td><td>PA 복수 사이트.</td></tr>
+          <tr><td><b>IREN</b></td><td class="num">$24.46</td><td class="buy">OW</td><td class="num">$99.00</td><td class="pos">기연결</td><td>Childress 기연결 사이트 보유.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3 class="sec"><span class="n">!</span>리스크 &amp; 모니터링 포인트</h3>
+      <div class="risk-box">
+        <h4>Key Risks</h4>
+        <ul>
+          <li><b>Pause 영구화:</b> 12월 ERCOT 보고서가 release가 아닌 permanent review로 전환되고, 교착이 2028년까지 이어지는 시나리오.</li>
+          <li><b>경제성 악화:</b> SB 6 룰에서 송전비 전액 부담 + 판매세 면제 폐지가 결합될 경우 텍사스 MW당 all-in 비용 급등.</li>
+          <li><b>테넌트 심리:</b> 사이트 자체가 안전해도 hyperscaler·neocloud가 텍사스 리스 체결을 회피할 가능성.</li>
+        </ul>
+        <h4 style="margin-top:14px;">모니터링 포인트</h4>
+        <ul>
+          <li>12월 10일 ERCOT Eligibility Verification Report 및 12월 최종 분류 — conditional base load 프로젝트 진행 여부(12월 전까지 완전한 가시성 없음).</li>
+          <li>12월 31일 PUC SB 6 cost-allocation 룰.</li>
+          <li>Hinojosa 인수위 발언 — pause 연장·범위 확대 시사 여부, 1~2월 특별회기 소집 여부.</li>
+          <li>PUC·TCEQ·TWDB 공석 발생과 임명 성향.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ RPT 2 ============================ -->
+  <section class="report" id="rpt2">
+    <div class="report-head">
+      <div class="tag">Technology Hardware &amp; Equipment · US Digital Infrastructure</div>
+      <h2>2026 중간선거 결과의 시사점 — 승인된 파이프라인의 희소가치는 오히려 상승</h2>
+      <p class="lede">텍사스·조지아·오하이오 주지사 당선인 모두 정도는 다르지만 데이터센터 모라토리엄을 제안. 투기적·계류 파이프라인과 비용에 가장 큰 영향이 있지만, 결과적으로 규제보다는 'social license' 대가 징수의 성격이 강하며 이미 승인·허가된 용량의 가치는 더 높아진다는 판단 — 섹터 bullish 유지.</p>
+    </div>
+    <div class="report-body">
+
+      <div class="chips">
+        <div class="chip"><div class="k">섹터 뷰</div><div class="v buy">Bullish 유지</div><div class="s">전 커버리지 Outperform</div></div>
+        <div class="chip"><div class="k">ERCOT 감사 종료</div><div class="v">Dec 10</div><div class="s">PUCT에 결과 보고</div></div>
+        <div class="chip"><div class="k">TCEQ 위원 임기</div><div class="v">2027.8 이전 만료 없음</div><div class="s">6년 staggered</div></div>
+        <div class="chip"><div class="k">최대 영향</div><div class="v">Studied Load</div><div class="s">Batch Zero 하위 사이트</div></div>
+      </div>
+
+      <h3 class="sec"><span class="n">1</span>What's new — 주지사 선거 결과가 가장 큰 변수</h3>
+      <ul class="pts">
+        <li>텍사스 주지사 당선인 <b>Gina Hinojosa</b>(현직 Greg Abbott 낙선), 조지아 <b>Keisha Bottoms</b>, 오하이오 <b>Amy Acton</b> 모두 데이터센터 모라토리엄을 제안. 강도는 <b>조건부·덜 제한적일 수 있는 오하이오</b>부터 <b>더 엄격한 텍사스</b>까지 다양.</li>
+        <li>백업 전력 배출, zoning, 물, interconnect/grid, 세제는 대부분 주 규제당국이 관할한다는 점을 상기.</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">2</span>Why it matters</h3>
+      <ul class="pts">
+        <li><b>기존 프로세스의 타이밍:</b> 텍사스 ERCOT 데이터센터 감사는 <b>12월 10일</b> 종료, 결과는 PUCT에 보고. 발전기 배출 허가를 담당하는 TCEQ 위원들은 6년 staggered 임기로 <b>2027년 8월 이전 만료되는 임기 없음</b>. 집중도 때문에 텍사스에 초점(SPCX, CIFR의 BTM 코멘트 포함), 오하이오(MARA의 Long Ridge)·조지아(CORZ·CLSK의 Dalton)도 관련.</li>
+        <li><b>최대 영향은 투기적·계류 파이프라인과 비용:</b> 텍사스에서 Batch Zero의 Studied Load 지정 사이트와 그 하위는 승인/energization 일정이 길어져 추가 포트폴리오 사이트의 리스크 평가·투자 케이스와 관련 비용에 영향. 다만 궁극적으로는 제한보다 <b>세금·전력요금·환경·지역사회 지원을 통한 'social license to operate' 대가 징수</b>의 성격이 더 클 수 있음.</li>
+        <li><b>승인·허가된 파이프라인은 훨씬 더 가치 있어짐:</b> 완전 승인됐으나 미리스된 포트폴리오 용량과 그리드 연결 사이트의 텍사스 Batch Zero Base Load 지정(감사 확정 조건)은 새로운 산업·정치 환경에서 더 가치가 높아질 수 있음 — 수요 코멘트는 디지털 인프라의 critical undersupply 지속을 시사. Neocloud는 GPUaaS 약정을 위해 powered shell 리스에 더 높은 가격을 지불(비용 전가)하고, hyperscaler/AI lab 수요는 더 제한된 공급을 두고 경쟁을 심화시켜 <b>MW 가격 상승</b> 또는 대체 토지·전력·냉각 솔루션 모색을 유도.</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">3</span>What now — 섹터 bullish 유지</h3>
+      <ul class="pts">
+        <li>평판 있고 자본력 있는 고품질 사업자가 <b>운영 조건을 미리 감안한 신규 사이트 행정절차 계획·관리</b>를 통해, 또는 <b>수급 불균형 확대로 보유 인벤토리의 희소가치가 상승</b>하면서 outsized value를 실현할 것이라는 판단.</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">4</span>Digital Infrastructure 커버리지</h3>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Ticker</th><th>Rating</th><th>Current Price</th><th>Price Target</th><th>Upside</th></tr></thead>
+        <tbody>
+          <tr><td><b>CRWV-US</b></td><td class="buy">Outperform</td><td class="num">$50.46</td><td class="num">$130.00</td><td class="num">+158%</td></tr>
+          <tr><td><b>CIFR-US</b></td><td class="buy">Outperform</td><td class="num">$6.70</td><td class="num">$30.00</td><td class="num">+348%</td></tr>
+          <tr><td><b>CLSK-US</b></td><td class="buy">Outperform</td><td class="num">$7.24</td><td class="num">$23.00</td><td class="num">+218%</td></tr>
+          <tr><td><b>CORZ-US</b></td><td class="buy">Outperform</td><td class="num">$12.90</td><td class="num">$38.00</td><td class="num">+195%</td></tr>
+          <tr><td><b>FRMI-US</b></td><td class="buy">Outperform</td><td class="num">$1.90</td><td class="num">$15.00</td><td class="num">+689%</td></tr>
+          <tr><td><b>IREN-US</b></td><td class="buy">Outperform</td><td class="num">$22.38</td><td class="num">$90.00</td><td class="num">+302%</td></tr>
+          <tr><td><b>MARA-US</b></td><td class="buy">Outperform</td><td class="num">$6.98</td><td class="num">$26.00</td><td class="num">+272%</td></tr>
+          <tr><td><b>RIOT-US</b></td><td class="buy">Outperform</td><td class="num">$15.92</td><td class="num">$35.00</td><td class="num">+120%</td></tr>
+          <tr><td><b>9984-JP</b></td><td class="buy">Outperform</td><td class="num">¥4,269</td><td class="num">¥8,850</td><td class="num">+107%</td></tr>
+          <tr><td><b>WYFI-US</b></td><td class="buy">Outperform</td><td class="num">$10.02</td><td class="num">$44.00</td><td class="num">+339%</td></tr>
+          <tr><td><b>SPCX-US</b></td><td class="buy">Outperform</td><td class="num">$138.95</td><td class="num">$265.00</td><td class="num">+91%</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-src">Source: FactSet. Pricing as of intraday Wednesday, November 4, 2026</div>
+
+      <h3 class="sec"><span class="n">!</span>리스크 &amp; 모니터링 포인트</h3>
+      <div class="risk-box">
+        <h4>Key Risks</h4>
+        <ul>
+          <li><b>Studied Load·하위 사이트 지연:</b> 승인/energization 일정 장기화로 추가 사이트 투자 케이스 및 비용 악화.</li>
+          <li><b>Social license 비용:</b> 세금·전력요금·환경·지역사회 요구로 MW당 비용 상승.</li>
+          <li><b>오하이오·조지아 확산:</b> Long Ridge(MARA), Dalton(CORZ·CLSK) 등 타주 사이트로의 규제 확산.</li>
+        </ul>
+        <h4 style="margin-top:14px;">모니터링 포인트</h4>
+        <ul>
+          <li>12월 10일 ERCOT 감사 종료 및 PUCT 보고 — Base Load 지정 확정 여부.</li>
+          <li>TCEQ 위원 교체 시점(2027년 8월 이후)과 발전기 배출 허가 기조 변화.</li>
+          <li>Neocloud·hyperscaler의 MW 가격 및 리스 체결 동향 — 희소가치 상승 확인.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ RPT 3 ============================ -->
+  <section class="report" id="rpt3">
+    <div class="report-head">
+      <div class="tag">U.S. Communications Infrastructure · Data Centers</div>
+      <h2>중간선거 결과가 보여주는 NIMBYism 확산 — 건설 제한은 커버리지의 pricing power로</h2>
+      <p class="lede">유권자들은 데이터센터 개발에 반대하는 후보와 주민투표 안건을 대체로 지지(37/38 통과). 업계 전반의 건설 속도는 둔화될 수 있으나, 전국 모라토리엄이 없는 한 건설은 우호적 지역에 집중되며 EQIX·IRM·DLR 등 기존 사업자는 pricing power 확대의 순수혜자.</p>
+    </div>
+    <div class="report-body">
+
+      <div class="chips">
+        <div class="chip"><div class="k">섹터 뷰</div><div class="v">NEUTRAL</div><div class="s">U.S. Comm. Infrastructure</div></div>
+        <div class="chip"><div class="k">주민투표 통과</div><div class="v">37 / 38</div><div class="s">데이터센터 금지·제한 안건</div></div>
+        <div class="chip"><div class="k">건설 중 용량 집중</div><div class="v">~25%</div><div class="s">TX·OH·GA 합산</div></div>
+        <div class="chip"><div class="k">커버리지 영향</div><div class="v buy">순수혜</div><div class="s">EQIX·IRM 파이프라인 사실상 승인 완료</div></div>
+      </div>
+
+      <h3 class="sec"><span class="n">1</span>Our view — 반대는 확산되지만, 건설은 우호 지역으로 집중</h3>
+      <ul class="pts">
+        <li>결과는 미국 전역의 데이터센터 개발 반대 확산을 반영. 그러나 <b>전국 모라토리엄(가능성 낮음)</b>이 없는 한 건설은 지속되며 개발을 여전히 지지하는 지자체·주에 집중될 전망.</li>
+        <li>시행·제안된 제한 다수는 <b>일시적</b>이며 주목할 만한 carve-out 보유(예: 뉴욕주 <b>50MW 미만 면제</b>). Ratepayer 보호·환경 기준 등 요구사항 다수는 <b>개발비 상승으로 해결 가능</b>하며, 공급 부족이 지속되는 한 테넌트에 전가 가능.</li>
+        <li>개발 속도가 둔화되면 커버리지는 <b>1) pricing power 확대, 2) 경험 있는 개발자의 경쟁우위 강화, 3) 공급과잉 리스크 감소</b>로 수혜. 이미 승인된 프로젝트 대부분은 건설될 것이므로 개발 파이프라인 리스크 제한적 — <b>EQIX·IRM 파이프라인은 사실상 완전 승인</b>, <b>DLR</b>은 수년 뒤 착공 프로젝트에만 제한적 허가 리스크.</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">2</span>주지사 선거 — 최고 성장 시장에서 규제 강화 후보 당선</h3>
+      <ul class="pts">
+        <li>미국 건설 중 용량의 약 <b>25%</b>가 텍사스(~10GW)·오하이오(~5GW)·조지아(~2GW)에 위치(451 Research). 세 주 모두 규제 강화를 지지하는 주지사 선출. 당선인은 모두 민주당이며 민주당은 데이터센터가 쟁점이 아닌 곳에서도 폭넓게 승리했으나, 데이터센터 논쟁은 유권자 판단에 영향을 미친 요인으로 판단.</li>
+        <li><b>텍사스 — Gina Hinojosa:</b> 데이터센터 모라토리엄과 신규 건설 요건(물·전력 공급 보호, 전기 ratepayer 보호, 지역 의견 수렴·투명성) 공약. 당선은 현직 Abbott의 '그리드 감사 완료까지 허가 중단'이 불충분하다는 신호.</li>
+        <li><b>조지아 — Keisha Lance Bottoms:</b> 전기요금·그리드·환경·지역사회 영향 평가 기간 동안 신규 건설의 일시적 주 전체 중단 요구. 상대 Rick Jackson은 지역 단위 결정을 주장하고 세수 효과를 강조했으며 본인도 데이터센터에 투자.</li>
+        <li><b>오하이오 — Amy Acton:</b> 개발자가 자체 유틸리티 비용 부담, 환경 기준 충족, community benefit agreement 체결 등을 요구하는 조건부 모라토리엄 공약. 오하이오 전역의 다수 지역 제한 통과와 함께 신규 개발에 추가 조건을 부과하려는 지지 확산을 시사.</li>
+        <li><b>추가 승리:</b> 뉴욕 Kathy Hochul(50MW 초과 시설 건설 1년 금지), 펜실베이니아 Josh Shapiro(지역사회 참여부터 에너지 affordability까지 요건 부과) 등 기존 제한을 시행한 현직 주지사 재선.</li>
+      </ul>
+
+      <div class="chart-card">
+        <div class="ct">주요 주별 건설 중 데이터센터 용량 (GW)</div>
+        <svg viewBox="0 0 880 260" width="100%">
+          <line x1="80" y1="220" x2="840" y2="220" stroke="#cfd6e0"/>
+          <line x1="80" y1="40" x2="840" y2="40" stroke="#eef1f5" stroke-dasharray="3,3"/>
+          <line x1="80" y1="100" x2="840" y2="100" stroke="#eef1f5" stroke-dasharray="3,3"/>
+          <line x1="80" y1="160" x2="840" y2="160" stroke="#eef1f5" stroke-dasharray="3,3"/>
+          <text x="70" y="44" font-size="11" fill="#9aa3b2" text-anchor="end">12</text>
+          <text x="70" y="104" font-size="11" fill="#9aa3b2" text-anchor="end">8</text>
+          <text x="70" y="164" font-size="11" fill="#9aa3b2" text-anchor="end">4</text>
+          <text x="70" y="224" font-size="11" fill="#9aa3b2" text-anchor="end">0</text>
+          <rect x="160" y="70" width="140" height="150" fill="#1f2a3a" rx="3"/>
+          <text x="230" y="62" font-size="13" font-weight="700" fill="#1f2a3a" text-anchor="middle">~10 GW</text>
+          <text x="230" y="242" font-size="12" fill="#525866" text-anchor="middle">Texas</text>
+          <rect x="390" y="145" width="140" height="75" fill="#3d5a80" rx="3"/>
+          <text x="460" y="137" font-size="13" font-weight="700" fill="#1f2a3a" text-anchor="middle">~5 GW</text>
+          <text x="460" y="242" font-size="12" fill="#525866" text-anchor="middle">Ohio</text>
+          <rect x="620" y="190" width="140" height="30" fill="#b8322f" rx="3"/>
+          <text x="690" y="182" font-size="13" font-weight="700" fill="#1f2a3a" text-anchor="middle">~2 GW</text>
+          <text x="690" y="242" font-size="12" fill="#525866" text-anchor="middle">Georgia</text>
+        </svg>
+        <div class="chart-src">Source: 451 Research</div>
+      </div>
+
+      <h3 class="sec"><span class="n">3</span>주민투표 안건 — 금지·제한 안건 37/38 통과</h3>
+      <ul class="pts">
+        <li>집계 완료된 데이터센터 금지·제한 안건 <b>38건 중 37건 통과</b>(Redbud Consulting). 주로 시 단위이며 오하이오·메인·일리노이·캔자스에 집중.</li>
+        <li><b>오하이오:</b> 주 전체 21건. 19개 지자체에서 제한 강화 가결(2건 집계 중), 평균 <b>~70%</b> 찬성. 약 절반은 신규 시설 건설 금지(주로 <b>25MW 초과</b> 대상).</li>
+        <li><b>일리노이 7개</b>, <b>메인 6개</b>(2건 집계 중), <b>캔자스 3개</b>(1건 집계 중) 지자체에서 개발 제한 가결.</li>
+        <li><b>노스다코타</b>는 Harwood시의 프로젝트 평가·승인·관리 방식에 새 제한과 의무를 부과하려던 안건이 부결된 유일한 주. 미집계 8건 중 최소 6건은 데이터센터 제한이 우세.</li>
+      </ul>
+
+      <div class="chart-card">
+        <div class="ct">2026 주별 데이터센터 주민투표 안건 (건수)</div>
+        <div class="legend">
+          <span><i style="background:#1f6fb2"></i>Ban/pause</span>
+          <span><i style="background:#7fc4ef"></i>Vote on them</span>
+          <span><i style="background:#7cb342"></i>Advise officials</span>
+          <span><i style="background:#1f2a3a"></i>Establish conditions</span>
+        </div>
+        <svg viewBox="0 0 880 330" width="100%">
+          <line x1="60" y1="260" x2="860" y2="260" stroke="#cfd6e0"/>
+          <line x1="60" y1="60" x2="860" y2="60" stroke="#eef1f5" stroke-dasharray="3,3"/>
+          <line x1="60" y1="110" x2="860" y2="110" stroke="#eef1f5" stroke-dasharray="3,3"/>
+          <line x1="60" y1="160" x2="860" y2="160" stroke="#eef1f5" stroke-dasharray="3,3"/>
+          <line x1="60" y1="210" x2="860" y2="210" stroke="#eef1f5" stroke-dasharray="3,3"/>
+          <text x="50" y="64" font-size="11" fill="#9aa3b2" text-anchor="end">20</text>
+          <text x="50" y="114" font-size="11" fill="#9aa3b2" text-anchor="end">15</text>
+          <text x="50" y="164" font-size="11" fill="#9aa3b2" text-anchor="end">10</text>
+          <text x="50" y="214" font-size="11" fill="#9aa3b2" text-anchor="end">5</text>
+          <text x="50" y="264" font-size="11" fill="#9aa3b2" text-anchor="end">0</text>
+          <!-- Ohio 21: ban 11, vote 6, advise 1, cond 3 -->
+          <rect x="80" y="150" width="34" height="110" fill="#1f6fb2"/>
+          <rect x="80" y="90" width="34" height="60" fill="#7fc4ef"/>
+          <rect x="80" y="80" width="34" height="10" fill="#7cb342"/>
+          <rect x="80" y="50" width="34" height="30" fill="#1f2a3a"/>
+          <text x="97" y="44" font-size="11" font-weight="700" fill="#1f2a3a" text-anchor="middle">21</text>
+          <!-- Illinois 7 advise -->
+          <rect x="140" y="190" width="34" height="70" fill="#7cb342"/>
+          <text x="157" y="184" font-size="11" font-weight="700" fill="#1f2a3a" text-anchor="middle">7</text>
+          <!-- Maine 5 ban -->
+          <rect x="200" y="210" width="34" height="50" fill="#1f6fb2"/>
+          <text x="217" y="204" font-size="11" font-weight="700" fill="#1f2a3a" text-anchor="middle">5</text>
+          <!-- Wisconsin 3: vote 2, advise 1 -->
+          <rect x="260" y="240" width="34" height="20" fill="#7fc4ef"/>
+          <rect x="260" y="230" width="34" height="10" fill="#7cb342"/>
+          <text x="277" y="224" font-size="11" font-weight="700" fill="#1f2a3a" text-anchor="middle">3</text>
+          <!-- Kansas 3 ban -->
+          <rect x="320" y="230" width="34" height="30" fill="#1f6fb2"/>
+          <text x="337" y="224" font-size="11" font-weight="700" fill="#1f2a3a" text-anchor="middle">3</text>
+          <!-- California 2 ban -->
+          <rect x="380" y="240" width="34" height="20" fill="#1f6fb2"/>
+          <text x="397" y="234" font-size="11" font-weight="700" fill="#1f2a3a" text-anchor="middle">2</text>
+          <!-- New Hampshire 2 ban -->
+          <rect x="440" y="240" width="34" height="20" fill="#1f6fb2"/>
+          <text x="457" y="234" font-size="11" font-weight="700" fill="#1f2a3a" text-anchor="middle">2</text>
+          <!-- Arkansas 2 vote -->
+          <rect x="500" y="240" width="34" height="20" fill="#7fc4ef"/>
+          <text x="517" y="234" font-size="11" font-weight="700" fill="#1f2a3a" text-anchor="middle">2</text>
+          <!-- Florida 1 ban -->
+          <rect x="560" y="250" width="34" height="10" fill="#1f6fb2"/>
+          <text x="577" y="244" font-size="11" font-weight="700" fill="#1f2a3a" text-anchor="middle">1</text>
+          <!-- Michigan 1 vote -->
+          <rect x="620" y="250" width="34" height="10" fill="#7fc4ef"/>
+          <text x="637" y="244" font-size="11" font-weight="700" fill="#1f2a3a" text-anchor="middle">1</text>
+          <!-- Nevada 1 vote -->
+          <rect x="680" y="250" width="34" height="10" fill="#7fc4ef"/>
+          <text x="697" y="244" font-size="11" font-weight="700" fill="#1f2a3a" text-anchor="middle">1</text>
+          <!-- New Jersey 1 advise -->
+          <rect x="740" y="250" width="34" height="10" fill="#7cb342"/>
+          <text x="757" y="244" font-size="11" font-weight="700" fill="#1f2a3a" text-anchor="middle">1</text>
+          <!-- North Dakota 1 cond -->
+          <rect x="800" y="250" width="34" height="10" fill="#1f2a3a"/>
+          <text x="817" y="244" font-size="11" font-weight="700" fill="#1f2a3a" text-anchor="middle">1</text>
+          <!-- labels -->
+          <g font-size="10" fill="#525866">
+            <text transform="translate(97,268) rotate(45)">Ohio</text>
+            <text transform="translate(157,268) rotate(45)">Illinois</text>
+            <text transform="translate(217,268) rotate(45)">Maine</text>
+            <text transform="translate(277,268) rotate(45)">Wisconsin</text>
+            <text transform="translate(337,268) rotate(45)">Kansas</text>
+            <text transform="translate(397,268) rotate(45)">California</text>
+            <text transform="translate(457,268) rotate(45)">New Hampshire</text>
+            <text transform="translate(517,268) rotate(45)">Arkansas</text>
+            <text transform="translate(577,268) rotate(45)">Florida</text>
+            <text transform="translate(637,268) rotate(45)">Michigan</text>
+            <text transform="translate(697,268) rotate(45)">Nevada</text>
+            <text transform="translate(757,268) rotate(45)">New Jersey</text>
+            <text transform="translate(817,268) rotate(45)">North Dakota</text>
+          </g>
+        </svg>
+        <div class="chart-src">Note: 특별선거 통과 안건 및 중간선거 안건 포함. Source: Ballotpedia, Bloomberg</div>
+      </div>
+
+      <h3 class="sec"><span class="n">!</span>리스크 &amp; 모니터링 포인트</h3>
+      <div class="risk-box">
+        <h4>Key Risks</h4>
+        <ul>
+          <li><b>전국 단위 모라토리엄:</b> 가능성은 낮으나 현실화 시 '우호 지역 집중' 논리가 깨짐.</li>
+          <li><b>비용 전가 실패:</b> 공급 부족이 해소되면 ratepayer 보호·환경 기준 비용을 테넌트에 전가하기 어려워짐.</li>
+          <li><b>DLR 장기 파이프라인:</b> 수년 뒤 착공 프로젝트는 허가 리스크에 노출.</li>
+        </ul>
+        <h4 style="margin-top:14px;">모니터링 포인트</h4>
+        <ul>
+          <li>오하이오·메인·캔자스·노스다코타 미집계 안건 결과(총 8건 미발표).</li>
+          <li>뉴욕(50MW 초과 1년 금지)·펜실베이니아 요건의 연장·확대 여부.</li>
+          <li>주 단위 제한의 임시성·carve-out 유지 여부 및 리스 가격 상승폭.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ RPT 4 ============================ -->
+  <section class="report" id="rpt4">
+    <div class="report-head">
+      <div class="tag">Economics · US Economic Perspectives</div>
+      <h2>중간선거 리캡 — 'Blue tidal wave'도 미국 성장 전망을 바꾸지는 못한다</h2>
+      <p class="lede">민주당 압승(상원 54~56석, 하원 +27석 이상)에도 대통령 거부권으로 재정은 gridlock. 데이터센터 모라토리엄은 미허가 신규 프로젝트에 집중돼 2027년 실질 비주거 고정투자 6.4% 전망에 큰 하방 리스크는 아니지만 2028년 불확실성은 확대, Fed 인사 측면에선 dovish 리스크 축소.</p>
+    </div>
+    <div class="report-body">
+
+      <div class="chips">
+        <div class="chip"><div class="k">상원 (민주)</div><div class="v">54~56석</div><div class="s">+7~9석 (작성 시점)</div></div>
+        <div class="chip"><div class="k">하원 (민주)</div><div class="v">+27석</div><div class="s">60석 이상 미확정</div></div>
+        <div class="chip"><div class="k">2027 비주거 고정투자</div><div class="v">6.4%</div><div class="s">Q4/Q4 실질, 전망 유지</div></div>
+        <div class="chip"><div class="k">Fiscal base case</div><div class="v">Gridlock</div><div class="s">거부권 override 불가</div></div>
+      </div>
+
+      <h3 class="sec"><span class="n">1</span>Outcome — affordability가 지배한 선거, 민주당 압승</h3>
+      <ul class="pts">
+        <li>작성 시점 기준 민주당 상원 <b>54~56석</b>(금년 대비 7~9석 획득), 하원 <b>+27석</b>에 60개 이상 선거구 미확정. 결과는 여론조사 기대를 검증(혹은 상회)했으며, 대통령 지지율/generic ballot과 중간선거 의석 변동의 역사적 관계에 부합.</li>
+        <li>전국 선거 외에 <b>텍사스·조지아</b> 등 다수 주지사직을 민주당이 확보 — 향후 수년간 데이터센터 buildout에 영향 가능.</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">2</span>Near-term watchpoints — lame duck 세션</h3>
+      <ul class="pts">
+        <li>또 다른 shutdown 방지를 위해 <b>12월 11일</b>까지 continuing resolution 필요.</li>
+        <li>공화당은 국방비 증액(백악관 요청 <b>$300bn</b> 추가)과 <b>2027년 중반</b>경 도래할 debt ceiling 상향을 담은 reconciliation 패키지 추진 가능. 전망은 공화당이 국방 요청액의 <b>약 절반</b>에 합의한다고 가정.</li>
+        <li>lame duck 기간에 debt ceiling을 처리하면 민주당이 내년 예산 논의에서 자당 재정 목표를 관철할 leverage가 사라짐.</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">3</span>Fiscal — gridlock이 base case</h3>
+      <ul class="pts">
+        <li>대통령 거부권을 뒤집을 super-majority가 없어 트럼프 임기 잔여 2년간 세제·지출의 실질적 변화는 제한적. OBBBA의 <b>~$200bn</b> 감세는 되돌려지지 않을 전망.</li>
+        <li>단, 민주당은 2025년 법안의 Medicaid 및 의료 보조금 <b>~$1.2조</b> 지출 삭감 되돌리기를 추진할 가능성 — 핵심 선거 메시지였으며, 차기 하원의장 후보가 될 Jeffries 현 소수당 원내대표가 선거 직후 같은 취지로 발언.</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">4</span>AI capex / 데이터센터 buildout</h3>
+      <ul class="pts">
+        <li>텍사스 주지사·주의회 등 주 선거에서의 민주당 outperformance가 미국 데이터센터 capex 전망에 의문을 제기. 다만 제안된 '모라토리엄' 대부분은 <b>아직 허가받지 않은 신규 프로젝트</b> 대상이며 기허가 프로젝트에는 영향 없음.</li>
+        <li>Semianalysis 인용: 상위 20개 주에서 예정된 <b>33.8GW의 약 3/4은 이미 건설 중</b>.</li>
+        <li>SpaceX 관련: 현재 가정은 내년 텍사스에 <b>2~3GW</b>(10~13GW 중) 설치이며 이 부분이 리스크에 놓일 수 있음. 규제 강화로 capex가 목표치 <b>~$35/W</b>를 상회할 가능성.</li>
+        <li>결론: 중간선거 결과가 <b>2027년 실질 비주거 고정투자 6.4%(Q4/Q4)</b> 전망에 상당한 하방 리스크를 주지는 않음. 다만 <b>2028년</b> 비주거 고정투자 전망은 더 불확실해짐. AI capex가 지연될수록 수급 불균형이 지속돼 Fed가 길게 논의해 온 인플레이션 압력이 가중될 수 있음.</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">5</span>Fed implications</h3>
+      <ul class="pts">
+        <li>민주당의 상원 장악으로 트럼프 대통령의 인사(Fed 이사회 포함)가 제약 → 2027년 현 이사들(예: Barr, Cook, Jefferson, Powell)이 물러날 경우 발생할 수 있는 Fed 반응함수의 <b>dovish 리스크 축소</b>.</li>
+        <li>인사 외에 중간선거가 Fed에 미치는 직접적 영향은 크지 않으며, 통화정책 함의는 위 이슈들이 물가안정·완전고용 이중 책무에 미치는 영향을 통해 간접적으로 나타날 전망.</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">!</span>리스크 &amp; 모니터링 포인트</h3>
+      <div class="risk-box">
+        <h4>Key Risks</h4>
+        <ul>
+          <li><b>2028년 capex 가시성 저하:</b> 2027년 vintage 이후 신규 허가 프로젝트의 지연·비용 상승.</li>
+          <li><b>인플레이션:</b> AI capex 지연에 따른 수급 불균형 장기화가 물가 압력으로 전이.</li>
+          <li><b>Shutdown:</b> 12월 11일 CR 불발 시 정부 셧다운.</li>
+        </ul>
+        <h4 style="margin-top:14px;">모니터링 포인트</h4>
+        <ul>
+          <li>Lame duck 세션의 reconciliation(국방비·debt ceiling) 처리 여부.</li>
+          <li>Medicaid 삭감 되돌리기 관련 민주당 입법 시도.</li>
+          <li>2027년 Fed 이사 공석 발생 시 상원 인준 구도.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div>본 문서는 투자 권유를 목적으로 하지 않습니다.</div>
+  </footer>
+
+</div>
+</body>
+</html>
