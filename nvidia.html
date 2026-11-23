@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NVDA — Jensen Huang CEO 복귀</title>
+<style>
+  :root{
+    --brand:#1a2b4a;--brand-deep:#0e1729;--accent:#6b8cae;--accent2:#3d5a80;
+    --paper:#f4f6f9;--card:#ffffff;--ink:#1b1e24;--ink-soft:#525866;--line:#dde3ec;
+    --buy:#1f7a4d;--bear:#c0392b;--bull:#1f6fb2;--warn:#8a4b15;
+  }
+  #rpt2{--brand:#2b2d33;--brand-deep:#17181c;--accent:#c8102e;--accent2:#8f1d2c;}
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);font-family:'Helvetica Neue','Pretendard','Noto Sans KR',Arial,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;word-break:keep-all;}
+  .topbar{background:var(--brand-deep);color:#fff;padding:14px 6vw;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-bottom:3px solid var(--accent);position:sticky;top:0;z-index:50;}
+  .topbar .logo{font-weight:700;font-size:18px;letter-spacing:0.5px;}
+  .topbar .logo span{color:var(--accent);}
+  .topbar nav{display:flex;gap:8px;flex-wrap:wrap;}
+  .topbar nav a{color:#cfd8e6;text-decoration:none;font-size:12.5px;padding:6px 12px;border:1px solid rgba(255,255,255,0.2);border-radius:20px;transition:all .15s;}
+  .topbar nav a:hover{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .wrap{max-width:960px;margin:0 auto;padding:40px 6vw 90px;}
+  .intro{border-left:4px solid var(--accent);padding:8px 0 8px 20px;margin-bottom:48px;}
+  .intro .eyebrow{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent2);font-weight:700;}
+  .intro h1{font-size:26px;margin:8px 0 6px;color:var(--brand);}
+  .report{margin-bottom:64px;scroll-margin-top:70px;}
+  .report-head{background:linear-gradient(135deg,var(--brand) 0%, var(--brand-deep) 100%);color:#fff;border-radius:10px 10px 0 0;padding:28px 30px;border-bottom:3px solid var(--accent);}
+  .report-head .tag{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#b9c4d6;font-weight:700;}
+  .report-head h2{margin:8px 0 14px;font-size:23px;line-height:1.35;}
+  .report-head .lede{font-family:'Georgia','Noto Serif KR',serif;font-size:15.5px;color:#e9eef6;border-top:1px solid rgba(255,255,255,0.16);padding-top:14px;margin:0;}
+  .report-body{background:var(--card);border:1px solid var(--line);border-top:none;border-radius:0 0 10px 10px;padding:30px;}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px;}
+  .chip{border:1px solid var(--line);border-radius:8px;padding:10px 16px;background:#fafbfd;flex:1;min-width:130px;}
+  .chip .k{font-size:10.5px;letter-spacing:0.5px;text-transform:uppercase;color:var(--ink-soft);}
+  .chip .v{font-size:19px;font-weight:700;color:var(--brand);margin-top:2px;}
+  .chip .v.buy{color:var(--buy);}
+  .chip .s{font-size:11px;color:var(--ink-soft);}
+  h3.sec{font-size:17px;color:var(--brand);margin:30px 0 12px;padding-bottom:8px;border-bottom:1.5px solid var(--line);display:flex;align-items:center;gap:10px;}
+  h3.sec .n{background:var(--brand);color:#fff;font-size:12px;font-weight:700;width:24px;height:24px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}
+  ul.pts{margin:0;padding:0;list-style:none;}
+  ul.pts li{position:relative;padding:7px 0 7px 20px;font-size:14.5px;border-bottom:1px dashed var(--line);}
+  ul.pts li:last-child{border-bottom:none;}
+  ul.pts li::before{content:"—";position:absolute;left:0;color:var(--accent2);font-weight:700;}
+  ul.pts b{color:var(--brand);}
+  table.tbl{width:100%;border-collapse:collapse;font-size:13px;margin:6px 0 4px;}
+  table.tbl th{background:var(--brand);color:#fff;text-align:left;padding:8px 10px;font-weight:600;white-space:nowrap;}
+  table.tbl th.num{text-align:right;}
+  table.tbl td{padding:7px 10px;border-bottom:1px solid var(--line);white-space:nowrap;}
+  table.tbl tr:nth-child(even) td{background:#f7f9fc;}
+  table.tbl td.num{text-align:right;font-variant-numeric:tabular-nums;}
+  table.tbl tr.tot td{font-weight:700;border-top:1.5px solid var(--brand);}
+  .tbl-wrap{overflow-x:auto;}
+  .tbl-cap{font-size:12.5px;font-weight:700;color:var(--brand);margin:16px 0 6px;}
+  .chart-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:22px 22px 14px;margin:14px 0;}
+  .chart-card .ct{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:12px;}
+  .chart-src{font-size:10.5px;color:#9aa3b2;margin-top:8px;}
+  .legend{display:flex;gap:18px;flex-wrap:wrap;font-size:11.5px;color:var(--ink-soft);margin-bottom:4px;}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .legend i{width:11px;height:11px;border-radius:2px;display:inline-block;}
+  .callout{background:#fbf6ec;border:1px solid #e8dcc3;border-radius:8px;padding:14px 18px;font-size:13px;color:var(--ink-soft);margin-top:14px;}
+  .callout .t{font-size:10.5px;font-weight:700;letter-spacing:0.6px;color:var(--warn);text-transform:uppercase;display:block;margin-bottom:5px;}
+  .risk-box{background:var(--brand);color:#dde6f3;border-radius:8px;padding:22px 24px;margin-top:14px;}
+  .risk-box h4{margin:0 0 10px;color:#fff;font-size:14.5px;}
+  .risk-box ul{margin:0;padding-left:18px;}
+  .risk-box li{margin-bottom:8px;font-size:13px;}
+  .risk-box li b{color:#fff;}
+  footer{border-top:1px solid var(--line);margin-top:50px;padding-top:20px;font-size:11px;color:#9aa3b2;line-height:1.6;}
+  @media(max-width:560px){
+    .intro h1{font-size:21px;}
+    .report-head{padding:22px 20px;}
+    .report-head h2{font-size:19px;}
+    .report-body{padding:20px 16px;}
+    .chart-card{padding:16px 10px 10px;}
+    .chip{min-width:44%;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">Research<span>·</span>Digest</div>
+  <nav>
+    <a href="#rpt1">NVDA ① CEO 복귀 발표</a>
+    <a href="#rpt2">NVDA ② 복귀의 의미</a>
+  </nav>
+</div>
+
+<div class="wrap">
+
+  <div class="intro">
+    <div class="eyebrow">23 November 2026</div>
+    <h1>NVIDIA (NVDA) — Jensen Huang CEO 복귀</h1>
+  </div>
+
+  <!-- ===================== REPORT 1 ===================== -->
+  <section class="report" id="rpt1">
+    <div class="report-head">
+      <div class="tag">Americas Semiconductors &amp; IT Services</div>
+      <h2>Nvidia (NVDA): Jensen Huang 사장 겸 CEO 복귀 발표</h2>
+      <p class="lede">CEO 복귀는 주가와 AI 생태계 전반에 긍정적. multiple re-rating을 기대하나, DOJ·SEC 조사가 해소되기 전까지 overhang은 남는다.</p>
+    </div>
+    <div class="report-body">
+
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Buy</div><div class="s">유지</div></div>
+        <div class="chip"><div class="k">12M Target Price</div><div class="v">$220</div><div class="s">유지 · Upside 75.3%</div></div>
+        <div class="chip"><div class="k">Price (20 Nov 2026 종가)</div><div class="v">$125.53</div><div class="s">FY1/27E P/E 13.0x</div></div>
+        <div class="chip"><div class="k">Valuation</div><div class="v">22x P/E</div><div class="s">normalized EPS $10.00 기준</div></div>
+        <div class="chip"><div class="k">Market Cap / EV</div><div class="v">$3.0tr</div><div class="s">3m ADTV $32.9bn</div></div>
+      </div>
+
+      <h3 class="sec"><span class="n">1</span>무슨 일이 있었나</h3>
+      <ul class="pts">
+        <li>11월 23일 Nvidia가 <b>8-K</b>를 공시: 이사회가 Jen-Hsun(Jensen) Huang을 <b>President, CEO 및 이사회 멤버</b>로 복귀시켰으며 <b>즉시 발효</b></li>
+        <li>복귀 이후에도 Kress는 <b>Executive Vice President 겸 CFO</b> 직을 그대로 수행</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">2</span>시사점 — 세 가지 차원</h3>
+      <ul class="pts">
+        <li><b>전략·생태계:</b> Huang의 비전, 영향력 범위, 외부 결집력(convening power)은 Nvidia뿐 아니라 AI 생태계 전체에 중요했다는 기존 견해 재확인</li>
+        <li>다만 생태계 파트너 간 <b>신규 다자간 투자(multi-party investments)</b> 협상을 이전과 같은 규모로 이어갈지는 지켜봐야 할 사안</li>
+        <li><b>리더십·문화:</b> Huang은 Nvidia의 기업 문화와 ethos의 핵심 — 복귀는 기존 문화를 대체로 강화할 전망</li>
+        <li>기존에 발표된 <b>제품 로드맵은 계속 실행</b>될 것으로 예상</li>
+        <li><b>재무·규제 ① DOJ:</b> 미 법무부가 싱가포르 등 관할권으로의 제품 출하 이후 일부 고객사가 <b>수출통제를 위반</b>했는지 조사 중(기존 언론 보도) — 특정 관할권 내 Nvidia 사업에 대한 감시가 앞으로 더 강화될 수 있음</li>
+        <li><b>재무·규제 ② SEC:</b> 회사의 <b>과거 공시</b>에 대한 SEC 조사가 진행 중이라는 언론 보도</li>
+        <li>두 조사는 결론이 나거나 회사가 관련 공시를 확대하기 전까지 주가의 <b>overhang</b>으로 작용할 가능성이 높음</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">3</span>투자의견</h3>
+      <ul class="pts">
+        <li>현 펀더멘털 판단과 Huang의 CEO 복귀를 감안할 때 risk/reward가 긍정적 — <b>Buy 유지</b></li>
+        <li>이번 발표 이후 <b>multiple re-rating</b>을 예상하나, 위 조사가 진행되는 동안에는 multiple이 계속 영향을 받을 전망</li>
+        <li>주요 고객사로부터의 추가 정보, 진행 중인 내부·외부 조사 결과가 나오는 대로 투자의견을 지속 재점검</li>
+        <li>12개월 목표가 <b>$220</b> = normalized EPS 추정치 <b>$10.00</b> × P/E <b>22x</b></li>
+      </ul>
+
+      <h3 class="sec"><span class="n">4</span>실적 추정 및 밸류에이션</h3>
+      <div class="chart-card">
+        <div class="ct">연간 매출 추정 ($bn) 및 EPS</div>
+        <div class="legend">
+          <span><i style="background:var(--brand)"></i>실적</span>
+          <span><i style="background:var(--accent)"></i>추정</span>
+        </div>
+        <svg viewBox="0 0 880 300" width="100%" role="img" aria-label="연간 매출 추정"><line x1="70" y1="250.0" x2="850" y2="250.0" stroke="#e6ebf2"/><text x="62" y="254.0" font-size="11" fill="#7b8494" text-anchor="end">0</text><line x1="70" y1="197.5" x2="850" y2="197.5" stroke="#e6ebf2"/><text x="62" y="201.5" font-size="11" fill="#7b8494" text-anchor="end">250</text><line x1="70" y1="145.0" x2="850" y2="145.0" stroke="#e6ebf2"/><text x="62" y="149.0" font-size="11" fill="#7b8494" text-anchor="end">500</text><line x1="70" y1="92.5" x2="850" y2="92.5" stroke="#e6ebf2"/><text x="62" y="96.5" font-size="11" fill="#7b8494" text-anchor="end">750</text><line x1="70" y1="40.0" x2="850" y2="40.0" stroke="#e6ebf2"/><text x="62" y="44.0" font-size="11" fill="#7b8494" text-anchor="end">1000</text><rect x="115" y="204.7" width="100" height="45.3" rx="3" fill="var(--brand)"/><text x="165" y="196.7" font-size="13" font-weight="700" fill="#1a2b4a" text-anchor="middle">$215.9bn</text><text x="165" y="268" font-size="12" fill="#525866" text-anchor="middle">FY1/26</text><text x="165" y="285" font-size="11.5" fill="#3d5a80" text-anchor="middle">EPS $4.52</text><rect x="310" y="160.5" width="100" height="89.5" rx="3" fill="var(--accent)"/><text x="360" y="152.5" font-size="13" font-weight="700" fill="#1a2b4a" text-anchor="middle">$426.1bn</text><text x="360" y="268" font-size="12" fill="#525866" text-anchor="middle">FY1/27E</text><text x="360" y="285" font-size="11.5" fill="#3d5a80" text-anchor="middle">EPS $9.65</text><rect x="505" y="90.5" width="100" height="159.5" rx="3" fill="var(--accent)"/><text x="555" y="82.5" font-size="13" font-weight="700" fill="#1a2b4a" text-anchor="middle">$759.6bn</text><text x="555" y="268" font-size="12" fill="#525866" text-anchor="middle">FY1/28E</text><text x="555" y="285" font-size="11.5" fill="#3d5a80" text-anchor="middle">EPS $18.00</text><rect x="700" y="49.0" width="100" height="201.0" rx="3" fill="var(--accent)"/><text x="750" y="41.0" font-size="13" font-weight="700" fill="#1a2b4a" text-anchor="middle">$957.1bn</text><text x="750" y="268" font-size="12" fill="#525866" text-anchor="middle">FY1/29E</text><text x="750" y="285" font-size="11.5" fill="#3d5a80" text-anchor="middle">EPS $23.10</text><line x1="70" y1="250" x2="850" y2="250" stroke="#aab3c2"/></svg>
+        <div class="chart-src">Source: Company data, FactSet</div>
+      </div>
+
+      <div class="tbl-cap">연간 실적 추정</div>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>항목</th><th class="num">FY1/26</th><th class="num">FY1/27E</th><th class="num">FY1/28E</th><th class="num">FY1/29E</th></tr></thead>
+        <tbody>
+          <tr><td><b>Revenue ($mn)</b></td><td class="num">215,938.0</td><td class="num">426,095.1</td><td class="num">759,564.8</td><td class="num">957,127.2</td></tr>
+          <tr><td><b>EBITDA ($mn)</b></td><td class="num">133,755.0</td><td class="num">284,636.0</td><td class="num">507,095.4</td><td class="num">637,433.0</td></tr>
+          <tr><td><b>EBIT ($mn)</b></td><td class="num">130,913.0</td><td class="num">279,999.0</td><td class="num">502,009.4</td><td class="num">632,267.0</td></tr>
+          <tr><td><b>EPS ($)</b></td><td class="num">4.52</td><td class="num">9.65</td><td class="num">18.00</td><td class="num">23.10</td></tr>
+          <tr><td><b>P/E (x)</b></td><td class="num">35.0</td><td class="num">13.0</td><td class="num">7.0</td><td class="num">5.4</td></tr>
+          <tr><td><b>EV/EBITDA (x)</b></td><td class="num">28.8</td><td class="num">10.6</td><td class="num">5.6</td><td class="num">3.9</td></tr>
+          <tr><td><b>FCF yield (%)</b></td><td class="num">2.5</td><td class="num">5.8</td><td class="num">12.2</td><td class="num">18.0</td></tr>
+          <tr><td><b>Dividend yield (%)</b></td><td class="num">0.0</td><td class="num">0.6</td><td class="num">0.8</td><td class="num">1.2</td></tr>
+          <tr><td><b>Net debt/EBITDA (x)</b></td><td class="num">(0.0)</td><td class="num">(0.1)</td><td class="num">(0.2)</td><td class="num">(0.5)</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="tbl-cap">분기 EPS 추정</div>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>항목</th><th class="num">10/26</th><th class="num">1/27E</th><th class="num">4/27E</th><th class="num">7/27E</th></tr></thead>
+        <tbody>
+          <tr><td><b>EPS ($)</b></td><td class="num">2.68</td><td class="num">2.88</td><td class="num">3.42</td><td class="num">4.09</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="chart-src">Source: Company data, FactSet. Price as of 20 Nov 2026 close.</div>
+
+      <h3 class="sec"><span class="n">5</span>목표가 변경 이력</h3>
+      <div class="chart-card">
+        <div class="ct">목표가 및 변경일 종가 추이 ($)</div>
+        <div class="legend">
+          <span><i style="background:#1a2b4a"></i>목표가</span>
+          <span><i style="background:#6b8cae"></i>종가</span>
+        </div>
+        <svg viewBox="0 0 880 285" width="100%" role="img" aria-label="목표가 및 종가 추이"><line x1="70" y1="250.0" x2="850" y2="250.0" stroke="#e6ebf2"/><text x="62" y="254.0" font-size="11" fill="#7b8494" text-anchor="end">$100</text><line x1="70" y1="200.0" x2="850" y2="200.0" stroke="#e6ebf2"/><text x="62" y="204.0" font-size="11" fill="#7b8494" text-anchor="end">$150</text><line x1="70" y1="150.0" x2="850" y2="150.0" stroke="#e6ebf2"/><text x="62" y="154.0" font-size="11" fill="#7b8494" text-anchor="end">$200</text><line x1="70" y1="100.0" x2="850" y2="100.0" stroke="#e6ebf2"/><text x="62" y="104.0" font-size="11" fill="#7b8494" text-anchor="end">$250</text><line x1="70" y1="50.0" x2="850" y2="50.0" stroke="#e6ebf2"/><text x="62" y="54.0" font-size="11" fill="#7b8494" text-anchor="end">$300</text><polyline points="100,229.1 173,215.2 246,203.3 319,185.9 392,169.2 465,164.5 538,147.5 611,169.4 684,130.5 757,122.0 830,183.8" fill="none" stroke="#6b8cae" stroke-width="2.2"/><polyline points="100,215.0 173,200.0 246,185.0 319,165.0 392,150.0 465,140.0 538,110.0 611,100.0 684,65.0 757,50.0 830,130.0" fill="none" stroke="#1a2b4a" stroke-width="2.4"/><circle cx="100" cy="215.0" r="4" fill="#1a2b4a"/><circle cx="100" cy="229.1" r="3.5" fill="#6b8cae"/><text x="100" y="206.0" font-size="10.5" font-weight="700" fill="#1a2b4a" text-anchor="middle">135</text><text x="100" y="245.1" font-size="10" fill="#4f6f92" text-anchor="middle">121</text><text x="100" y="268" font-size="10" fill="#525866" text-anchor="middle">Jun-24</text><circle cx="173" cy="200.0" r="4" fill="#1a2b4a"/><circle cx="173" cy="215.2" r="3.5" fill="#6b8cae"/><text x="173" y="191.0" font-size="10.5" font-weight="700" fill="#1a2b4a" text-anchor="middle">150</text><text x="173" y="231.2" font-size="10" fill="#4f6f92" text-anchor="middle">135</text><text x="173" y="268" font-size="10" fill="#525866" text-anchor="middle">Oct-24</text><circle cx="246" cy="185.0" r="4" fill="#1a2b4a"/><circle cx="246" cy="203.3" r="3.5" fill="#6b8cae"/><text x="246" y="176.0" font-size="10.5" font-weight="700" fill="#1a2b4a" text-anchor="middle">165</text><text x="246" y="219.3" font-size="10" fill="#4f6f92" text-anchor="middle">147</text><text x="246" y="268" font-size="10" fill="#525866" text-anchor="middle">Nov-24</text><circle cx="319" cy="165.0" r="4" fill="#1a2b4a"/><circle cx="319" cy="185.9" r="3.5" fill="#6b8cae"/><text x="319" y="156.0" font-size="10.5" font-weight="700" fill="#1a2b4a" text-anchor="middle">185</text><text x="319" y="201.9" font-size="10" fill="#4f6f92" text-anchor="middle">164</text><text x="319" y="268" font-size="10" fill="#525866" text-anchor="middle">Jul-25</text><circle cx="392" cy="150.0" r="4" fill="#1a2b4a"/><circle cx="392" cy="169.2" r="3.5" fill="#6b8cae"/><text x="392" y="141.0" font-size="10.5" font-weight="700" fill="#1a2b4a" text-anchor="middle">200</text><text x="392" y="185.2" font-size="10" fill="#4f6f92" text-anchor="middle">181</text><text x="392" y="268" font-size="10" fill="#525866" text-anchor="middle">Aug-25</text><circle cx="465" cy="140.0" r="4" fill="#1a2b4a"/><circle cx="465" cy="164.5" r="3.5" fill="#6b8cae"/><text x="465" y="131.0" font-size="10.5" font-weight="700" fill="#1a2b4a" text-anchor="middle">210</text><text x="465" y="180.5" font-size="10" fill="#4f6f92" text-anchor="middle">186</text><text x="465" y="268" font-size="10" fill="#525866" text-anchor="middle">6-Oct-25</text><circle cx="538" cy="110.0" r="4" fill="#1a2b4a"/><circle cx="538" cy="147.5" r="3.5" fill="#6b8cae"/><text x="538" y="101.0" font-size="10.5" font-weight="700" fill="#1a2b4a" text-anchor="middle">240</text><text x="538" y="163.5" font-size="10" fill="#4f6f92" text-anchor="middle">202</text><text x="538" y="268" font-size="10" fill="#525866" text-anchor="middle">31-Oct-25</text><circle cx="611" cy="100.0" r="4" fill="#1a2b4a"/><circle cx="611" cy="169.4" r="3.5" fill="#6b8cae"/><text x="611" y="91.0" font-size="10.5" font-weight="700" fill="#1a2b4a" text-anchor="middle">250</text><text x="611" y="185.4" font-size="10" fill="#4f6f92" text-anchor="middle">181</text><text x="611" y="268" font-size="10" fill="#525866" text-anchor="middle">Nov-25</text><circle cx="684" cy="65.0" r="4" fill="#1a2b4a"/><circle cx="684" cy="130.5" r="3.5" fill="#6b8cae"/><text x="684" y="56.0" font-size="10.5" font-weight="700" fill="#1a2b4a" text-anchor="middle">285</text><text x="684" y="146.5" font-size="10" fill="#4f6f92" text-anchor="middle">220</text><text x="684" y="268" font-size="10" fill="#525866" text-anchor="middle">May-26</text><circle cx="757" cy="50.0" r="4" fill="#1a2b4a"/><circle cx="757" cy="122.0" r="3.5" fill="#6b8cae"/><text x="757" y="41.0" font-size="10.5" font-weight="700" fill="#1a2b4a" text-anchor="middle">300</text><text x="757" y="138.0" font-size="10" fill="#4f6f92" text-anchor="middle">228</text><text x="757" y="268" font-size="10" fill="#525866" text-anchor="middle">Aug-26</text><circle cx="830" cy="130.0" r="4" fill="#1a2b4a"/><circle cx="830" cy="183.8" r="3.5" fill="#6b8cae"/><text x="830" y="121.0" font-size="10.5" font-weight="700" fill="#1a2b4a" text-anchor="middle">220</text><text x="830" y="199.8" font-size="10" fill="#4f6f92" text-anchor="middle">166</text><text x="830" y="268" font-size="10" fill="#525866" text-anchor="middle">12-Nov-26</text><line x1="70" y1="250" x2="850" y2="250" stroke="#aab3c2"/></svg>
+      </div>
+      <ul class="pts">
+        <li>목표가는 2024년 6월 $135에서 2026년 8월 27일 <b>$300</b>까지 상향된 뒤, 11월 12일 <b>$220</b>으로 하향(당일 종가 $166.19)</li>
+        <li>11월 20일 종가는 <b>$125.53</b>로, 8월 27일 종가 $227.98 대비 낮은 수준</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">!</span>리스크 &amp; 모니터링 포인트</h3>
+      <div class="risk-box">
+        <h4>Key Downside Risks</h4>
+        <ul>
+          <li><b>경영진 교체 불확실성:</b> management transition을 둘러싼 불확실성 지속</li>
+          <li><b>운영·실행 리스크:</b> operational 및 execution 리스크 확대</li>
+          <li><b>고객 수요:</b> 고객 활동 또는 주문 수준의 둔화 가능성</li>
+          <li><b>조사:</b> 진행 중인 내부 및 외부 조사</li>
+        </ul>
+        <h4 style="margin-top:14px;">모니터링 포인트</h4>
+        <ul>
+          <li>DOJ 수출통제 조사 및 SEC 과거 공시 조사의 진행·결론, 회사의 추가 공시 여부</li>
+          <li>주요 고객사로부터 나오는 추가 정보</li>
+          <li>생태계 파트너 간 신규 다자간 투자 협상이 이전 규모로 재개되는지 여부</li>
+          <li>기발표 제품 로드맵의 실행</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================== REPORT 2 ===================== -->
+  <section class="report" id="rpt2">
+    <div class="report-head">
+      <div class="tag">Semiconductors &amp; Semiconductor Equipment · Company Update</div>
+      <h2>세상이 다시 제자리로 (그리고 아주 기쁜 날)</h2>
+      <p class="lede">Jensen Huang 복귀는 NVDA와 미국 모두에 최선의 결과. 인재·로드맵·점유율·마진 우려가 해소되며 Overweight와 목표가 $250 유지, 최선호주(Top Pick) 재편입.</p>
+    </div>
+    <div class="report-body">
+
+      <div class="chips">
+        <div class="chip"><div class="k">Rating</div><div class="v buy">Overweight</div><div class="s">재확인 · Top Pick 재편입</div></div>
+        <div class="chip"><div class="k">Target Price</div><div class="v">$250</div><div class="s">유지 · 현재가 대비 +99.2%</div></div>
+        <div class="chip"><div class="k">Price</div><div class="v">$125.53</div><div class="s">52주 범위 $124.50 – $243.37</div></div>
+        <div class="chip"><div class="k">Valuation</div><div class="v">~10x</div><div class="s">CY28 EPS 기준</div></div>
+        <div class="chip"><div class="k">Market Cap</div><div class="v">$3,025bn</div><div class="s">Shares 24,100M · ADV(3m) 160.2M주</div></div>
+      </div>
+
+      <h3 class="sec"><span class="n">1</span>복귀 결정</h3>
+      <ul class="pts">
+        <li>11월 23일 개장 전, NVDA 이사회가 <b>만장일치</b>로 Jensen Huang을 <b>CEO, President, Board Director</b>로 복귀시키기로 결정</li>
+        <li>지난 2주간 극심한 혼란을 거친 끝에 나온 결론</li>
+        <li>보도자료에 따르면 이사회는 <b>미 정부 고위급</b>으로부터 Huang의 복귀가 <b>국가안보 리스크가 아니라는 의견</b>을 전달받음</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">2</span>NVDA에 대한 의미</h3>
+      <ul class="pts">
+        <li>이번 복귀가 NVDA와 미국에 최선이라는 기존 견해 유지</li>
+        <li><b>인재 유지(talent retention), 향후 제품 로드맵, 시장점유율, 마진</b>에 대한 우려가 모두 해소</li>
+        <li>NVDA가 AI 기술에 대해 가장 낙관적이고 영감을 주는 입장으로 미국의 AI를 계속 선도할 전망</li>
+        <li>회사 측 변화 ①: <b>Chief Compliance Officer</b> 채용</li>
+        <li>회사 측 변화 ②(가능성): 보다 중량감 있는 <b>Chairman 선임</b>, 나아가 <b>이사회 전체 재검토</b></li>
+        <li>회사 측 변화 ③(가능성): 신설 <b>National Security and Export Control Committee</b>가 Chairman에게 직접 보고하는 체계</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">3</span>AI 시장 전반에 대한 의미</h3>
+      <ul class="pts">
+        <li>혁신의 승리이자, <b>Compute for Super Intelligence</b>에 필요한 지출(및 지출에 대한 지지)에 대한 신뢰 회복</li>
+        <li>미국의 글로벌 위상에 결정적으로 중요하며, 단기적으로 현 <b>AI 인프라 지출 전망의 지속성</b>에 대한 신뢰를 추가로 높이는 요인</li>
+        <li><b>open-source 모델</b>이 closed-source 대비 추가로 유리해지는 결과</li>
+        <li>NVDA의 <b>Hugging Face 인수</b>는 예정대로 종결될 것으로 예상</li>
+        <li>강한 NVDA는 frontier-model 단계에서의 <b>regulatory capture</b> 리스크를 낮추며, 미국과 전 세계에서 AI의 민주화에 긍정적</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">4</span>실적 추정</h3>
+      <div class="chart-card">
+        <div class="ct">분기별 매출 ($bn)</div>
+        <div class="legend">
+          <span><i style="background:#2b2d33"></i>실적(A)</span>
+          <span><i style="background:#c8102e"></i>추정(E)</span>
+        </div>
+        <svg viewBox="0 0 880 285" width="100%" role="img" aria-label="분기별 매출"><line x1="70" y1="240.0" x2="850" y2="240.0" stroke="#ececef"/><text x="62" y="244.0" font-size="11" fill="#7b8494" text-anchor="end">0</text><line x1="70" y1="199.0" x2="850" y2="199.0" stroke="#ececef"/><text x="62" y="203.0" font-size="11" fill="#7b8494" text-anchor="end">50</text><line x1="70" y1="158.0" x2="850" y2="158.0" stroke="#ececef"/><text x="62" y="162.0" font-size="11" fill="#7b8494" text-anchor="end">100</text><line x1="70" y1="117.0" x2="850" y2="117.0" stroke="#ececef"/><text x="62" y="121.0" font-size="11" fill="#7b8494" text-anchor="end">150</text><line x1="70" y1="76.0" x2="850" y2="76.0" stroke="#ececef"/><text x="62" y="80.0" font-size="11" fill="#7b8494" text-anchor="end">200</text><line x1="70" y1="35.0" x2="850" y2="35.0" stroke="#ececef"/><text x="62" y="39.0" font-size="11" fill="#7b8494" text-anchor="end">250</text><rect x="89" y="203.9" width="42" height="36.1" rx="2" fill="#2b2d33"/><text x="110" y="197.9" font-size="10.5" font-weight="700" fill="#2b2d33" text-anchor="middle">44.1</text><text x="110" y="256" font-size="10.5" fill="#525866" text-anchor="middle">1Q</text><rect x="151" y="201.7" width="42" height="38.3" rx="2" fill="#2b2d33"/><text x="172" y="195.7" font-size="10.5" font-weight="700" fill="#2b2d33" text-anchor="middle">46.7</text><text x="172" y="256" font-size="10.5" fill="#525866" text-anchor="middle">2Q</text><rect x="213" y="193.3" width="42" height="46.7" rx="2" fill="#2b2d33"/><text x="234" y="187.3" font-size="10.5" font-weight="700" fill="#2b2d33" text-anchor="middle">57.0</text><text x="234" y="256" font-size="10.5" fill="#525866" text-anchor="middle">3Q</text><rect x="275" y="184.1" width="42" height="55.9" rx="2" fill="#2b2d33"/><text x="296" y="178.1" font-size="10.5" font-weight="700" fill="#2b2d33" text-anchor="middle">68.1</text><text x="296" y="256" font-size="10.5" fill="#525866" text-anchor="middle">4Q</text><rect x="351" y="173.1" width="42" height="66.9" rx="2" fill="#2b2d33"/><text x="372" y="167.1" font-size="10.5" font-weight="700" fill="#2b2d33" text-anchor="middle">81.6</text><text x="372" y="256" font-size="10.5" fill="#525866" text-anchor="middle">1Q</text><rect x="413" y="161.1" width="42" height="78.9" rx="2" fill="#2b2d33"/><text x="434" y="155.1" font-size="10.5" font-weight="700" fill="#2b2d33" text-anchor="middle">96.2</text><text x="434" y="256" font-size="10.5" fill="#525866" text-anchor="middle">2Q</text><rect x="475" y="145.0" width="42" height="95.0" rx="2" fill="#2b2d33"/><text x="496" y="139.0" font-size="10.5" font-weight="700" fill="#2b2d33" text-anchor="middle">115.8</text><text x="496" y="256" font-size="10.5" fill="#525866" text-anchor="middle">3Q</text><rect x="537" y="133.4" width="42" height="106.6" rx="2" fill="#c8102e"/><text x="558" y="127.4" font-size="10.5" font-weight="700" fill="#2b2d33" text-anchor="middle">130.0</text><text x="558" y="256" font-size="10.5" fill="#525866" text-anchor="middle">4Q</text><rect x="613" y="121.1" width="42" height="118.9" rx="2" fill="#c8102e"/><text x="634" y="115.1" font-size="10.5" font-weight="700" fill="#2b2d33" text-anchor="middle">145.0</text><text x="634" y="256" font-size="10.5" fill="#525866" text-anchor="middle">1Q</text><rect x="675" y="100.6" width="42" height="139.4" rx="2" fill="#c8102e"/><text x="696" y="94.6" font-size="10.5" font-weight="700" fill="#2b2d33" text-anchor="middle">170.0</text><text x="696" y="256" font-size="10.5" fill="#525866" text-anchor="middle">2Q</text><rect x="737" y="80.1" width="42" height="159.9" rx="2" fill="#c8102e"/><text x="758" y="74.1" font-size="10.5" font-weight="700" fill="#2b2d33" text-anchor="middle">195.0</text><text x="758" y="256" font-size="10.5" fill="#525866" text-anchor="middle">3Q</text><rect x="799" y="51.4" width="42" height="188.6" rx="2" fill="#c8102e"/><text x="820" y="45.4" font-size="10.5" font-weight="700" fill="#2b2d33" text-anchor="middle">230.0</text><text x="820" y="256" font-size="10.5" fill="#525866" text-anchor="middle">4Q</text><text x="203" y="274" font-size="11.5" font-weight="700" fill="#2b2d33" text-anchor="middle">FY2026A</text><text x="465" y="274" font-size="11.5" font-weight="700" fill="#2b2d33" text-anchor="middle">FY2027E</text><text x="727" y="274" font-size="11.5" font-weight="700" fill="#2b2d33" text-anchor="middle">FY2028E</text><line x1="70" y1="240" x2="850" y2="240" stroke="#aab3c2"/></svg>
+      </div>
+
+      <div class="tbl-cap">매출 ($M, FYE Jan)</div>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>분기</th><th class="num">2026A</th><th class="num">2027E</th><th class="num">2028E</th></tr></thead>
+        <tbody>
+          <tr><td><b>1Q</b></td><td class="num">44,062.0</td><td class="num">81,615.0A</td><td class="num">145,000.0</td></tr>
+          <tr><td><b>2Q</b></td><td class="num">46,743.0</td><td class="num">96,221.0A</td><td class="num">170,000.0</td></tr>
+          <tr><td><b>3Q</b></td><td class="num">57,006.0</td><td class="num">115,844.0A</td><td class="num">195,000.0</td></tr>
+          <tr><td><b>4Q</b></td><td class="num">68,127.0</td><td class="num">130,000.0E</td><td class="num">230,000.0</td></tr>
+          <tr class="tot"><td>Year</td><td class="num">215,938.0</td><td class="num">423,680.0E</td><td class="num">740,000.0</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="tbl-cap">Pro Forma EPS ($, FYE Jan)</div>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>분기</th><th class="num">2026A</th><th class="num">2027E</th><th class="num">2028E</th></tr></thead>
+        <tbody>
+          <tr><td><b>1Q</b></td><td class="num">0.75</td><td class="num">1.87A</td><td class="num">3.24</td></tr>
+          <tr><td><b>2Q</b></td><td class="num">0.99</td><td class="num">2.22A</td><td class="num">3.87</td></tr>
+          <tr><td><b>3Q</b></td><td class="num">1.23</td><td class="num">2.68A</td><td class="num">4.51</td></tr>
+          <tr><td><b>4Q</b></td><td class="num">1.55</td><td class="num">2.87E</td><td class="num">5.40</td></tr>
+          <tr class="tot"><td>Year</td><td class="num">4.51</td><td class="num">9.64E</td><td class="num">17.00</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3 class="sec"><span class="n">5</span>밸류에이션</h3>
+      <ul class="pts">
+        <li>목표가 <b>$250</b>은 CY28 EPS 추정치의 <b>약 10x</b>에 해당</li>
+        <li><b>Overweight</b> 및 목표가 $250 재확인, NVDA를 <b>최선호주(Top Pick)</b>에 재편입</li>
+      </ul>
+
+      <h3 class="sec"><span class="n">!</span>리스크 &amp; 모니터링 포인트</h3>
+      <div class="risk-box">
+        <h4>Key Risks</h4>
+        <ul>
+          <li><b>수요 소화 국면:</b> Data Center발 GPU 수요의 digestion 구간 진입 — 시장이 우려해 온 "air pocket" 현실화</li>
+          <li><b>중국:</b> 대중국 embargo 심화</li>
+          <li><b>경쟁:</b> 가속 컴퓨팅(accelerated compute) 분야에서 보다 의미 있는 경쟁 등장</li>
+        </ul>
+        <h4 style="margin-top:14px;">모니터링 포인트</h4>
+        <ul>
+          <li>Chief Compliance Officer 선임 이후 지배구조 변화 — Chairman 교체 및 이사회 재편 여부</li>
+          <li>National Security and Export Control Committee의 보고 체계</li>
+          <li>Hugging Face 인수 종결 시점</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div>본 문서는 투자 권유를 목적으로 하지 않습니다.</div>
+  </footer>
+
+</div>
+</body>
+</html>
